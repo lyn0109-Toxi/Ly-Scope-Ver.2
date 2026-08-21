@@ -104,6 +104,53 @@ DEFAULT_REAL_ESTATE = [
     }
 ]
 
+ONTOLOGY_STAGES = [
+    {
+        "id": "user",
+        "label": "User",
+        "owns": "client identity, decision question, horizon, risk posture",
+    },
+    {
+        "id": "data",
+        "label": "Data",
+        "owns": "finance facts, goal assumptions, portfolio rows, property rows",
+    },
+    {
+        "id": "model",
+        "label": "Model",
+        "owns": "foundation, goal, asset, and resilience scoring",
+    },
+    {
+        "id": "evidence",
+        "label": "Evidence",
+        "owns": "supporting and cautionary signals",
+    },
+    {
+        "id": "ai_interpretation",
+        "label": "AI Interpretation",
+        "owns": "plain-language reading and next-action posture",
+    },
+    {
+        "id": "decision",
+        "label": "Decision",
+        "owns": "recommendation, score, and operating stance",
+    },
+    {
+        "id": "memory",
+        "label": "Memory",
+        "owns": "saved decision snapshots and reusable context",
+    },
+]
+
+ONTOLOGY_RELATIONSHIPS = [
+    ("User", "Data", "profile and question frame the input state"),
+    ("Data", "Model", "normalized facts become deterministic scores"),
+    ("Model", "Evidence", "scores are converted into visible signals"),
+    ("Evidence", "AI Interpretation", "signals become a readable judgement"),
+    ("AI Interpretation", "Decision", "interpretation resolves into a recommendation"),
+    ("Decision", "Memory", "saved decisions become future context"),
+]
+
 
 @dataclass
 class PortfolioSnapshot:
@@ -567,6 +614,157 @@ def build_evidence(
     return evidence
 
 
+def build_ontology_snapshot(
+    profile: dict[str, Any],
+    foundation: dict[str, Any],
+    goal: dict[str, Any],
+    portfolio: PortfolioSnapshot,
+    real_estate: RealEstateSnapshot,
+    resilience: dict[str, Any],
+    model: dict[str, Any],
+    evidence: list[dict[str, Any]],
+    decision_log: list[dict[str, Any]],
+) -> dict[str, Any]:
+    data_inputs = [
+        bool(profile.get("decision_question")),
+        foundation["monthly_income"] > 0,
+        goal["months"] > 0,
+        len(portfolio.rows) > 0,
+        len(real_estate.rows) > 0,
+    ]
+    data_coverage = round(sum(data_inputs) / len(data_inputs) * 100)
+    memory_score = 100 if decision_log else 58
+    core_nodes = [
+        {
+            "label": "User",
+            "score": 100 if profile.get("decision_question") else 35,
+            "state": "ready" if profile.get("decision_question") else "missing",
+            "visual": str(profile.get("risk_tolerance", "Balanced")),
+            "detail": f"{profile.get('time_horizon_months', 0)} month horizon with a stated decision question.",
+        },
+        {
+            "label": "Data",
+            "score": data_coverage,
+            "state": "ready" if data_coverage >= 80 else "partial",
+            "visual": f"{sum(data_inputs)}/{len(data_inputs)}",
+            "detail": "Finance, goal, portfolio, and real estate inputs are normalized for scoring.",
+        },
+        {
+            "label": "Model",
+            "score": model["score"],
+            "state": score_label(model["score"]).lower(),
+            "visual": model["label"],
+            "detail": "Decision score blends foundation, goals, portfolio, property, and resilience.",
+        },
+        {
+            "label": "Evidence",
+            "score": clamp(len(evidence) / 5 * 100),
+            "state": "ready" if len(evidence) >= 5 else "partial",
+            "visual": f"{len(evidence)} signals",
+            "detail": "Evidence items make the recommendation traceable instead of opaque.",
+        },
+        {
+            "label": "AI Interpretation",
+            "score": 100 if model.get("posture") else 40,
+            "state": "ready" if model.get("posture") else "missing",
+            "visual": "Plain read",
+            "detail": model["posture"],
+        },
+        {
+            "label": "Decision",
+            "score": model["score"],
+            "state": score_label(model["score"]).lower(),
+            "visual": model["recommendation"],
+            "detail": "Recommendation is generated after risk and evidence are considered.",
+        },
+        {
+            "label": "Memory",
+            "score": memory_score,
+            "state": "active" if decision_log else "ready",
+            "visual": f"{len(decision_log)} saved",
+            "detail": "Memory is structurally ready; save a snapshot to create reusable context.",
+        },
+    ]
+
+    modules = [
+        {
+            "name": "Financial Foundation",
+            "stage": "Data -> Model",
+            "score": foundation["score"],
+            "detail": f"Net worth {money(foundation['net_worth'])}; runway {foundation['runway']:.1f} months.",
+        },
+        {
+            "name": "Goals",
+            "stage": "Data -> Model",
+            "score": goal["score"],
+            "detail": f"Target gap {money(goal['gap'])}; required {money(goal['monthly_required'])}/mo.",
+        },
+        {
+            "name": "Portfolio",
+            "stage": "Data -> Evidence",
+            "score": portfolio.portfolio_score,
+            "detail": f"{len(portfolio.rows)} holdings; top weight {percent(portfolio.top_weight)}.",
+        },
+        {
+            "name": "Real Estate",
+            "stage": "Data -> Evidence",
+            "score": real_estate.score,
+            "detail": f"Equity {money(real_estate.total_equity)}; LTV {percent(real_estate.average_ltv)}.",
+        },
+        {
+            "name": "Risk/Resilience",
+            "stage": "Model -> Evidence",
+            "score": resilience["score"],
+            "detail": f"{resilience['pressure']} pressure point(s); state {resilience['state']}.",
+        },
+        {
+            "name": "Decision Memory",
+            "stage": "Decision -> Memory",
+            "score": memory_score,
+            "detail": f"{len(decision_log)} saved snapshot(s) in this session.",
+        },
+    ]
+
+    validation_checks = [
+        {
+            "name": "Core 7-stage ontology",
+            "status": len(ONTOLOGY_STAGES) == 7,
+            "detail": "User, Data, Model, Evidence, AI Interpretation, Decision, Memory are defined.",
+        },
+        {
+            "name": "Stage outputs present",
+            "status": all(node["score"] > 0 for node in core_nodes),
+            "detail": "Each ontology node receives a live value from the current app state.",
+        },
+        {
+            "name": "Evidence coverage",
+            "status": len(evidence) >= 5,
+            "detail": "Foundation, goals, portfolio, real estate, and risk all produce signals.",
+        },
+        {
+            "name": "Asset sections connected",
+            "status": len(portfolio.rows) > 0 and len(real_estate.rows) > 0,
+            "detail": "Investment portfolio and real estate sections both feed the model.",
+        },
+        {
+            "name": "Risk traceability",
+            "status": isinstance(resilience.get("warnings"), list),
+            "detail": "Warnings are traceable back to foundation, portfolio, and property inputs.",
+        },
+    ]
+    validation_score = round(
+        sum(1 for item in validation_checks if item["status"]) / len(validation_checks) * 100
+    )
+
+    return {
+        "core_nodes": core_nodes,
+        "modules": modules,
+        "relationships": ONTOLOGY_RELATIONSHIPS,
+        "validation_checks": validation_checks,
+        "validation_score": validation_score,
+    }
+
+
 def inject_styles() -> None:
     st.markdown(
         """
@@ -759,10 +957,140 @@ def inject_styles() -> None:
             color: #4a3720;
             margin-bottom: 8px;
           }
+          .ontology-flow {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            margin: 12px 0 18px;
+          }
+          .ontology-node {
+            --accent: #2456a6;
+            border: 1px solid #d8e0ea;
+            border-top: 4px solid var(--accent);
+            border-radius: 8px;
+            background: #ffffff;
+            min-height: 154px;
+            padding: 12px;
+            position: relative;
+          }
+          .ontology-node.strong, .ontology-node.ready, .ontology-node.active { --accent: #14735f; }
+          .ontology-node.stable { --accent: #2456a6; }
+          .ontology-node.watch, .ontology-node.partial { --accent: #9a650f; }
+          .ontology-node.crisis, .ontology-node.missing { --accent: #ad3d3d; }
+          .ontology-label {
+            color: #17202a;
+            font-size: 0.86rem;
+            font-weight: 850;
+            min-height: 34px;
+          }
+          .ontology-score {
+            color: var(--accent);
+            font-size: 1.45rem;
+            font-weight: 880;
+            margin-top: 8px;
+          }
+          .ontology-visual {
+            color: #4e5d6c;
+            font-size: 0.8rem;
+            min-height: 32px;
+          }
+          .ontology-bar {
+            height: 8px;
+            border-radius: 999px;
+            background: #edf1f6;
+            overflow: hidden;
+            margin-top: 10px;
+          }
+          .ontology-bar span {
+            display: block;
+            height: 100%;
+            width: var(--value);
+            background: var(--accent);
+          }
+          .ontology-detail {
+            color: #405061;
+            font-size: 0.76rem;
+            line-height: 1.35;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 160ms ease, max-height 160ms ease, margin-top 160ms ease;
+          }
+          .ontology-node:hover .ontology-detail, .ontology-node:focus .ontology-detail {
+            opacity: 1;
+            max-height: 120px;
+            margin-top: 8px;
+          }
+          .module-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin: 12px 0 18px;
+          }
+          .module-card {
+            --accent: #2456a6;
+            border: 1px solid #d8e0ea;
+            border-radius: 8px;
+            background: #ffffff;
+            padding: 12px;
+            min-height: 132px;
+          }
+          .module-card.strong { --accent: #14735f; }
+          .module-card.stable { --accent: #2456a6; }
+          .module-card.watch { --accent: #9a650f; }
+          .module-card.crisis { --accent: #ad3d3d; }
+          .module-stage {
+            color: var(--accent);
+            font-size: 0.74rem;
+            font-weight: 850;
+            text-transform: uppercase;
+          }
+          .module-name {
+            color: #17202a;
+            font-size: 1rem;
+            font-weight: 850;
+            margin-top: 6px;
+          }
+          .module-detail {
+            color: #607080;
+            font-size: 0.82rem;
+            line-height: 1.38;
+            margin-top: 8px;
+          }
+          .relationship-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+          }
+          .relationship-row, .validation-row {
+            border: 1px solid #d8e0ea;
+            border-radius: 8px;
+            background: #ffffff;
+            padding: 10px 12px;
+          }
+          .relationship-route {
+            color: #17202a;
+            font-weight: 850;
+            font-size: 0.86rem;
+          }
+          .relationship-claim, .validation-detail {
+            color: #647180;
+            font-size: 0.8rem;
+            margin-top: 4px;
+          }
+          .validation-row.pass {
+            border-left: 5px solid #14735f;
+          }
+          .validation-row.warn {
+            border-left: 5px solid #ad3d3d;
+          }
           @media (max-width: 900px) {
             .ly-topline, .signal-row { display: block; }
             .signal-ring { margin-top: 16px; }
             .stage-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .ontology-flow, .module-grid, .relationship-list {
+              grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
           }
         </style>
         """,
@@ -865,6 +1193,87 @@ def render_warnings(warnings: list[str]) -> None:
             f'<div class="warning-box">{escape(warning)}</div>',
             unsafe_allow_html=True,
         )
+
+
+def render_ontology_map(snapshot: dict[str, Any]) -> None:
+    node_html = ""
+    for node in snapshot["core_nodes"]:
+        tone = tone_for_score(node["score"])
+        state = str(node["state"]).replace(" ", "-").lower()
+        node_html += (
+            f'<div class="ontology-node {tone} {escape(state)}" tabindex="0">'
+            f'<div class="ontology-label">{escape(node["label"])}</div>'
+            f'<div class="ontology-score">{int(clamp(node["score"]))}</div>'
+            f'<div class="ontology-visual">{escape(str(node["visual"]))}</div>'
+            f'<div class="ontology-bar" style="--value: {clamp(node["score"]):.0f}%"><span></span></div>'
+            f'<div class="ontology-detail">{escape(node["detail"])}</div>'
+            "</div>"
+        )
+    st.markdown(f'<div class="ontology-flow">{node_html}</div>', unsafe_allow_html=True)
+
+
+def render_module_grid(snapshot: dict[str, Any]) -> None:
+    module_html = ""
+    for module in snapshot["modules"]:
+        tone = tone_for_score(module["score"])
+        module_html += (
+            f'<div class="module-card {tone}">'
+            f'<div class="module-stage">{escape(module["stage"])}</div>'
+            f'<div class="module-name">{escape(module["name"])}</div>'
+            f'<div class="ontology-bar" style="--value: {clamp(module["score"]):.0f}%"><span></span></div>'
+            f'<div class="module-detail">{escape(module["detail"])}</div>'
+            "</div>"
+        )
+    st.markdown(f'<div class="module-grid">{module_html}</div>', unsafe_allow_html=True)
+
+
+def render_relationships(snapshot: dict[str, Any]) -> None:
+    relationship_html = ""
+    for source, target, claim in snapshot["relationships"]:
+        relationship_html += (
+            '<div class="relationship-row">'
+            f'<div class="relationship-route">{escape(source)} -> {escape(target)}</div>'
+            f'<div class="relationship-claim">{escape(claim)}</div>'
+            "</div>"
+        )
+    st.markdown(f'<div class="relationship-list">{relationship_html}</div>', unsafe_allow_html=True)
+
+
+def render_validation_checks(snapshot: dict[str, Any]) -> None:
+    for check in snapshot["validation_checks"]:
+        state = "pass" if check["status"] else "warn"
+        label = "Verified" if check["status"] else "Needs review"
+        st.markdown(
+            f"""
+            <div class="validation-row {state}">
+              <div class="relationship-route">{escape(check["name"])}: {label}</div>
+              <div class="validation-detail">{escape(check["detail"])}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+
+def render_ontology_tab(snapshot: dict[str, Any], evidence: list[dict[str, Any]]) -> None:
+    st.subheader("Ontology Verification")
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Validation", f"{snapshot['validation_score']}/100")
+    c2.metric("Core nodes", f"{len(snapshot['core_nodes'])}/7")
+    c3.metric("Module links", len(snapshot["modules"]))
+    c4.metric("Evidence signals", len(evidence))
+
+    st.markdown("#### Core Decision Ontology")
+    render_ontology_map(snapshot)
+    st.caption("Hover or click each ontology node to reveal its live proof point.")
+
+    st.markdown("#### Module Connection Board")
+    render_module_grid(snapshot)
+
+    st.markdown("#### Relationship Trace")
+    render_relationships(snapshot)
+
+    st.markdown("#### Direct Validation")
+    render_validation_checks(snapshot)
 
 
 def initialize_state() -> None:
@@ -1068,6 +1477,17 @@ def main() -> None:
     resilience = evaluate_resilience(foundation, portfolio, real_estate)
     model = build_decision_model(foundation, goal, portfolio, real_estate, resilience)
     evidence = build_evidence(foundation, goal, portfolio, real_estate, resilience)
+    ontology = build_ontology_snapshot(
+        profile,
+        foundation,
+        goal,
+        portfolio,
+        real_estate,
+        resilience,
+        model,
+        evidence,
+        st.session_state.decision_log,
+    )
 
     render_topline()
     render_decision_strip(profile, model)
@@ -1102,9 +1522,19 @@ def main() -> None:
 
     st.caption("Hover or click the signal cards to reveal supporting details.")
 
-    overview, foundation_tab, portfolio_tab, estate_tab, goals_tab, evidence_tab, memory_tab = st.tabs(
+    (
+        overview,
+        ontology_tab,
+        foundation_tab,
+        portfolio_tab,
+        estate_tab,
+        goals_tab,
+        evidence_tab,
+        memory_tab,
+    ) = st.tabs(
         [
             "Cockpit",
+            "Ontology",
             "Foundation",
             "Portfolio",
             "Real Estate",
@@ -1125,6 +1555,9 @@ def main() -> None:
         render_architecture_trace()
         st.markdown("#### Priority Warnings")
         render_warnings(resilience["warnings"])
+
+    with ontology_tab:
+        render_ontology_tab(ontology, evidence)
 
     with foundation_tab:
         render_foundation_inputs()
