@@ -1,0 +1,12 @@
+{
+  "name": "ly-scope-ver2",
+  "version": "0.1.0",
+  "description": "LY-Scope Ver.2 personal decision intelligence application.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node tools/dev-server.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "find src tests tools -name '*.js' -o -name '*.mjs' | xargs -n 1 node --check"
+  }
+}
