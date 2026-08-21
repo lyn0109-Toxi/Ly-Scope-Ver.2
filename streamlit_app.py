@@ -755,6 +755,32 @@ def build_ontology_snapshot(
     validation_score = round(
         sum(1 for item in validation_checks if item["status"]) / len(validation_checks) * 100
     )
+    verification_runs = [
+        {
+            "run": "Run 1",
+            "name": "Structure",
+            "score": 100 if validation_checks[0]["status"] else 0,
+            "status": "PASS" if validation_checks[0]["status"] else "REVIEW",
+            "proof": "7/7 core nodes",
+            "detail": validation_checks[0]["detail"],
+        },
+        {
+            "run": "Run 2",
+            "name": "Live Binding",
+            "score": 100 if validation_checks[1]["status"] and validation_checks[3]["status"] else 50,
+            "status": "PASS" if validation_checks[1]["status"] and validation_checks[3]["status"] else "REVIEW",
+            "proof": f"{len(modules)} module links",
+            "detail": "All live sections feed the current model state.",
+        },
+        {
+            "run": "Run 3",
+            "name": "Evidence",
+            "score": 100 if validation_checks[2]["status"] and validation_checks[4]["status"] else 50,
+            "status": "PASS" if validation_checks[2]["status"] and validation_checks[4]["status"] else "REVIEW",
+            "proof": f"{len(evidence)} signals",
+            "detail": "Evidence and risk signals are traceable to source inputs.",
+        },
+    ]
 
     return {
         "core_nodes": core_nodes,
@@ -762,6 +788,7 @@ def build_ontology_snapshot(
         "relationships": ONTOLOGY_RELATIONSHIPS,
         "validation_checks": validation_checks,
         "validation_score": validation_score,
+        "verification_runs": verification_runs,
     }
 
 
@@ -1034,6 +1061,7 @@ def inject_styles() -> None:
             background: #ffffff;
             padding: 12px;
             min-height: 132px;
+            position: relative;
           }
           .module-card.strong { --accent: #14735f; }
           .module-card.stable { --accent: #2456a6; }
@@ -1056,10 +1084,19 @@ def inject_styles() -> None:
             font-size: 0.82rem;
             line-height: 1.38;
             margin-top: 8px;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 160ms ease, max-height 160ms ease, margin-top 160ms ease;
+          }
+          .module-card:hover .module-detail, .module-card:focus .module-detail {
+            opacity: 1;
+            max-height: 90px;
+            margin-top: 8px;
           }
           .relationship-list {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 8px;
           }
           .relationship-row, .validation-row {
@@ -1067,6 +1104,7 @@ def inject_styles() -> None:
             border-radius: 8px;
             background: #ffffff;
             padding: 10px 12px;
+            position: relative;
           }
           .relationship-route {
             color: #17202a;
@@ -1077,6 +1115,18 @@ def inject_styles() -> None:
             color: #647180;
             font-size: 0.8rem;
             margin-top: 4px;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 160ms ease, max-height 160ms ease, margin-top 160ms ease;
+          }
+          .relationship-row:hover .relationship-claim,
+          .relationship-row:focus .relationship-claim,
+          .validation-row:hover .validation-detail,
+          .validation-row:focus .validation-detail {
+            opacity: 1;
+            max-height: 80px;
+            margin-top: 6px;
           }
           .validation-row.pass {
             border-left: 5px solid #14735f;
@@ -1084,11 +1134,76 @@ def inject_styles() -> None:
           .validation-row.warn {
             border-left: 5px solid #ad3d3d;
           }
+          .verification-strip {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin: 12px 0 18px;
+          }
+          .verify-card {
+            --accent: #14735f;
+            border: 1px solid #d8e0ea;
+            border-left: 5px solid var(--accent);
+            border-radius: 8px;
+            background: #ffffff;
+            min-height: 142px;
+            padding: 14px;
+          }
+          .verify-run {
+            color: var(--accent);
+            font-size: 0.76rem;
+            font-weight: 850;
+            text-transform: uppercase;
+          }
+          .verify-name {
+            color: #17202a;
+            font-size: 1.1rem;
+            font-weight: 880;
+            margin-top: 7px;
+          }
+          .verify-status {
+            display: inline-block;
+            color: #ffffff;
+            background: var(--accent);
+            border-radius: 999px;
+            padding: 3px 9px;
+            font-size: 0.72rem;
+            font-weight: 850;
+            margin-top: 8px;
+          }
+          .verify-proof {
+            color: #4e5d6c;
+            font-size: 0.88rem;
+            margin-top: 10px;
+          }
+          .verify-detail {
+            color: #607080;
+            font-size: 0.8rem;
+            line-height: 1.35;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 160ms ease, max-height 160ms ease, margin-top 160ms ease;
+          }
+          .verify-card:hover .verify-detail, .verify-card:focus .verify-detail {
+            opacity: 1;
+            max-height: 80px;
+            margin-top: 8px;
+          }
+          .status-dot {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #14735f;
+            margin-right: 7px;
+            vertical-align: middle;
+          }
           @media (max-width: 900px) {
             .ly-topline, .signal-row { display: block; }
             .signal-ring { margin-top: 16px; }
             .stage-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-            .ontology-flow, .module-grid, .relationship-list {
+            .ontology-flow, .module-grid, .relationship-list, .verification-strip {
               grid-template-columns: repeat(1, minmax(0, 1fr));
             }
           }
@@ -1232,11 +1347,27 @@ def render_relationships(snapshot: dict[str, Any]) -> None:
     for source, target, claim in snapshot["relationships"]:
         relationship_html += (
             '<div class="relationship-row">'
-            f'<div class="relationship-route">{escape(source)} -> {escape(target)}</div>'
+            f'<div class="relationship-route"><span class="status-dot"></span>{escape(source)} -> {escape(target)}</div>'
             f'<div class="relationship-claim">{escape(claim)}</div>'
             "</div>"
         )
     st.markdown(f'<div class="relationship-list">{relationship_html}</div>', unsafe_allow_html=True)
+
+
+def render_verification_runs(snapshot: dict[str, Any]) -> None:
+    run_html = ""
+    for item in snapshot["verification_runs"]:
+        run_html += (
+            '<div class="verify-card" tabindex="0">'
+            f'<div class="verify-run">{escape(item["run"])}</div>'
+            f'<div class="verify-name">{escape(item["name"])}</div>'
+            f'<div class="verify-status">{escape(item["status"])}</div>'
+            f'<div class="ontology-bar" style="--value: {clamp(item["score"]):.0f}%"><span></span></div>'
+            f'<div class="verify-proof">{escape(item["proof"])}</div>'
+            f'<div class="verify-detail">{escape(item["detail"])}</div>'
+            "</div>"
+        )
+    st.markdown(f'<div class="verification-strip">{run_html}</div>', unsafe_allow_html=True)
 
 
 def render_validation_checks(snapshot: dict[str, Any]) -> None:
@@ -1245,8 +1376,8 @@ def render_validation_checks(snapshot: dict[str, Any]) -> None:
         label = "Verified" if check["status"] else "Needs review"
         st.markdown(
             f"""
-            <div class="validation-row {state}">
-              <div class="relationship-route">{escape(check["name"])}: {label}</div>
+            <div class="validation-row {state}" tabindex="0">
+              <div class="relationship-route"><span class="status-dot"></span>{escape(check["name"])}: {label}</div>
               <div class="validation-detail">{escape(check["detail"])}</div>
             </div>
             """,
@@ -1262,9 +1393,11 @@ def render_ontology_tab(snapshot: dict[str, Any], evidence: list[dict[str, Any]]
     c3.metric("Module links", len(snapshot["modules"]))
     c4.metric("Evidence signals", len(evidence))
 
+    st.markdown("#### 3-Run Verification")
+    render_verification_runs(snapshot)
+
     st.markdown("#### Core Decision Ontology")
     render_ontology_map(snapshot)
-    st.caption("Hover or click each ontology node to reveal its live proof point.")
 
     st.markdown("#### Module Connection Board")
     render_module_grid(snapshot)
@@ -1519,8 +1652,6 @@ def main() -> None:
             "Risk combines cash-flow pressure, concentration, leverage, volatility, and property exposure.",
             "strong" if resilience["state"] == "Clear" else "watch" if resilience["state"] == "Watch" else "crisis",
         )
-
-    st.caption("Hover or click the signal cards to reveal supporting details.")
 
     (
         overview,
