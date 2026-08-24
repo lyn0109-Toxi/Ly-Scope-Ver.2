@@ -1,6 +1,6 @@
 # REIT Ontology Structure
 
-This is a ToxiGuard-NORA sub-ontology under:
+This is a LY-Scope-Ver.2 sub-ontology under:
 
 ```text
 User -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
