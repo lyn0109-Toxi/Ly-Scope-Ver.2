@@ -1,13 +1,21 @@
 # ToxiGuard-NORA
 
-ToxiGuard-NORA is the current LY-Scope Ver.2 application and deployment name.
+ToxiGuard-NORA is the user-facing product and deployment name for the new LY-Scope Ver.2 architecture.
 The production app is:
 
 ```text
 https://toxiguard-nora.streamlit.app/
 ```
 
-The app combines Ver.1 market-asset logic with a new personal decision intelligence structure: stock and portfolio valuation, REIT/real-estate exposure, personal finance, goals, scenario stress tests, advisor-style reports, calculation transparency, AI interpretation readiness, and decision memory.
+Product class:
+
+```text
+Personal Decision Intelligence Application
+```
+
+The app combines useful Ver.1 market-asset logic with a new personal decision intelligence structure: stock and portfolio valuation, REIT/real-estate exposure, personal finance, goals, scenario stress tests, advisor-style reports, calculation transparency, AI interpretation readiness, and decision memory.
+
+Ver.1 remains a reference prototype only. Ver.2 should not modify Ver.1 directly.
 
 ## Core Ontology
 
@@ -24,6 +32,8 @@ This ontology means every output should answer five customer-facing questions:
 - What evidence or warning supports it?
 - What direction should I consider next?
 - What should be remembered for later review?
+
+See the full product foundation in [`docs/PRODUCT_BLUEPRINT.md`](docs/PRODUCT_BLUEPRINT.md).
 
 ## Section Map
 
@@ -71,7 +81,8 @@ Because the founder is considering venture creation while in F-1 student status,
 - `personal_finance_module.py`: Personal Finance Streamlit UI module.
 - `advisor_report_engine.py`: Virtual client advisor report engine with PDF export support.
 - `data/virtual_clients.json`: Bilingual fictional client dataset with life situation, finance profile, portfolio sample, valuation upside, and real estate stress inputs.
-- `docs/`: REIT analysis blueprint and data dictionary.
+- `docs/PRODUCT_BLUEPRINT.md`: Canonical Ver.2 product blueprint, target users, ontology, engine map, data schema direction, MVP scope, and Ver.1 migration rule.
+- `docs/`: REIT analysis blueprint, personal finance structure, and data dictionary.
 - `ontology/`: NORA core ontology and REIT sub-ontology.
 - `DATA_SOURCES.md`: Data source, API, limitation, and usage notice.
 - `PROFESSOR_REVIEW_AUDIT.md`: Pre-share audit for data provenance, warnings,
