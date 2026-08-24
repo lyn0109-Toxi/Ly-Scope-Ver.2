@@ -7642,12 +7642,12 @@ def render_nora_ontology(active_key: str) -> None:
         detail = step["detail_ko"] if language == "ko" else step["detail_en"]
         step_nodes.append(
             f"""
-            <button class="nora-node" type="button" title="{escape(detail, quote=True)}" style="--nora-color: {escape(step['color'])};">
+            <div class="nora-node" role="button" tabindex="0" title="{escape(detail, quote=True)}" style="--nora-color: {escape(step['color'])};">
                 <div class="nora-glyph">{escape(step['glyph'])}</div>
                 <strong>{ui_html(step['label'])}</strong>
                 <span>{ui_html(step['tag'])}</span>
                 <div class="nora-detail">{escape(detail)}</div>
-            </button>
+            </div>
             """
         )
 
