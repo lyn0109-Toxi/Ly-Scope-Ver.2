@@ -1070,4 +1070,3 @@ def text_report_pdf_bytes(title: str, body: str, subtitle: str = "", language: s
     )
     document.build(story)
     return buffer.getvalue()
-ToxiGuard-NORA Advisor Report
