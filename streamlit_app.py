@@ -129,6 +129,37 @@ KO_TRANSLATIONS = {
     "Ticker or company name: NVDA, AAPL, 삼성전자, NAVER": "티커 또는 회사명: NVDA, AAPL, 삼성전자, NAVER",
     "Search and Value Stock": "검색 및 가치평가",
     "Price unavailable": "가격 미확보",
+    "Position input": "포지션 입력",
+    "Current value amount": "현재 보유 금액",
+    "Share count": "주식 수량",
+    "Position size": "보유 규모",
+    "Average purchase price (optional)": "평균 매입가 (선택)",
+    "Enter position size before adding.": "추가하기 전에 보유 규모를 입력하세요.",
+    "Add Position to Portfolio": "포지션을 포트폴리오에 추가",
+    "Position added to portfolio.": "포지션이 포트폴리오에 추가되었습니다.",
+    "Already in Portfolio": "이미 포트폴리오에 있음",
+    "Open Full Stock Detail": "전체 종목 상세 열기",
+    "Live Yahoo price history": "Yahoo 가격 이력",
+    "Yahoo profile price": "Yahoo 프로필 가격",
+    "Profile-only fallback; live Yahoo price unavailable": "프로필 기반 표시; 실시간 가격 미확보",
+    "Fair Value": "적정가치",
+    "Portfolio base currency": "포트폴리오 기준 통화",
+    "Use live USD/KRW": "실시간 USD/KRW 사용",
+    "Manual USD/KRW rate": "수동 USD/KRW 환율",
+    "Portfolio weighting mode": "포트폴리오 가중 방식",
+    "Share-based": "보유 수량 기준",
+    "Equal-weighted": "동일 비중 기준",
+    "Total Market Value": "총 시장가치",
+    "Weighted Beta": "가중 베타",
+    "Portfolio Valuation Score": "포트폴리오 가치평가 점수",
+    "Quick Portfolio Entry": "빠른 포트폴리오 입력",
+    "Paste one holding per line: ticker, current value or shares, optional average purchase price. Current value amount should be in the stock's native currency.": "한 줄에 한 종목씩 입력하세요: 티커, 현재 보유 금액 또는 수량, 선택 사항으로 평균 매입가. 현재 보유 금액은 해당 종목의 통화 기준입니다.",
+    "Quick input type": "빠른 입력 방식",
+    "Holdings input": "보유 종목 입력",
+    "Apply Holdings": "보유 종목 적용",
+    "For a KRW 200M stock portfolio, enter each position value in KRW for Korean stocks or USD for U.S. stocks. The app estimates shares from current price.": "2억원 규모의 주식 포트폴리오는 한국 종목은 원화, 미국 종목은 달러로 각 포지션 금액을 입력하세요. 앱이 현재가 기준 수량을 추정합니다.",
+    "No stocks in your portfolio yet. Add them from the search results.": "아직 포트폴리오에 종목이 없습니다. 검색 결과에서 추가하세요.",
+    "Ask AI Coach About Portfolio Setup": "포트폴리오 구성에 대해 AI 코치에게 묻기",
     "Portfolio valuation lens": "포트폴리오 가치평가 렌즈",
     "Portfolio valuation basis": "포트폴리오 가치평가 근거",
     "Upside": "상승여력",
@@ -139,6 +170,7 @@ KO_TRANSLATIONS = {
     "Valuation Models": "가치평가 모델",
     "Income, asset, and market approaches are checked when source inputs are available.": "입력값이 있으면 수익, 자산, 시장 접근법을 함께 확인합니다.",
     "Growth / Quality": "성장 / 퀄리티",
+    "Growth": "성장률",
     "are compressed into one visual signal.": "를 하나의 시각 신호로 압축합니다.",
     "Price": "가격",
     "Fair": "적정가치",
@@ -6913,6 +6945,32 @@ def add_portfolio(symbol: str) -> None:
     sync_selection_state_to_query()
 
 
+def add_portfolio_position_from_search(symbol: str) -> None:
+    stock = st.session_state.stocks.get(symbol)
+    if not stock:
+        return
+
+    price = positive_float(stock.get("price"))
+    value_key = f"portfolio_search_position_size_{symbol}"
+    mode_key = f"portfolio_search_position_mode_{symbol}"
+    purchase_key = f"portfolio_search_purchase_price_{symbol}"
+    position_value = positive_float(st.session_state.get(value_key))
+    if not price or not position_value:
+        st.session_state.portfolio_search_notice = ui("Enter position size before adding.")
+        return
+
+    mode = st.session_state.get(mode_key, "Current value amount")
+    shares = position_value if mode == "Share count" else position_value / price
+    purchase_price = positive_float(st.session_state.get(purchase_key)) or 0.0
+    st.session_state.portfolio[symbol] = {
+        "shares": max(float(shares), 0.0),
+        "purchase_price": purchase_price,
+    }
+    st.session_state.pop(f"sidebar_portfolio_{symbol}", None)
+    st.session_state.portfolio_search_notice = ui("Position added to portfolio.")
+    sync_selection_state_to_query()
+
+
 def remove_portfolio(symbol: str) -> None:
     if symbol in st.session_state.portfolio:
         del st.session_state.portfolio[symbol]
@@ -6988,29 +7046,31 @@ def apply_quick_portfolio_entries(raw_text: str, input_mode: str) -> tuple[int, 
 
 
 def render_quick_portfolio_entry() -> None:
-    with st.expander("Quick Portfolio Entry", expanded=not bool(st.session_state.portfolio)):
+    with st.expander(ui("Quick Portfolio Entry"), expanded=not bool(st.session_state.portfolio)):
         st.caption(
-            "Paste one holding per line: ticker, current value or shares, optional average purchase price. "
-            "Current value amount should be in the stock's native currency."
+            ui(
+                "Paste one holding per line: ticker, current value or shares, optional average purchase price. Current value amount should be in the stock's native currency."
+            )
         )
         mode_cols = st.columns([1, 2])
         with mode_cols[0]:
             input_mode = st.radio(
-                "Quick input type",
+                ui("Quick input type"),
                 ["Current value amount", "Share count"],
                 horizontal=False,
                 key="portfolio_quick_input_mode",
+                format_func=ui,
             )
         with mode_cols[1]:
             st.text_area(
-                "Holdings input",
+                ui("Holdings input"),
                 key="portfolio_quick_entry",
                 height=120,
                 placeholder="AAPL, 5000, 180\n005930.KS, 10000000, 72000\nMSFT, 12, 310",
             )
         button_cols = st.columns([1, 2])
         with button_cols[0]:
-            if st.button("Apply Holdings", width="stretch"):
+            if st.button(ui("Apply Holdings"), width="stretch"):
                 count, errors = apply_quick_portfolio_entries(
                     st.session_state.get("portfolio_quick_entry", ""),
                     st.session_state.get("portfolio_quick_input_mode", "Current value amount"),
@@ -7024,8 +7084,9 @@ def render_quick_portfolio_entry() -> None:
                         st.warning(error)
         with button_cols[1]:
             st.caption(
-                "For a KRW 200M stock portfolio, enter each position value in KRW for Korean stocks "
-                "or USD for U.S. stocks. The app estimates shares from current price."
+                ui(
+                    "For a KRW 200M stock portfolio, enter each position value in KRW for Korean stocks or USD for U.S. stocks. The app estimates shares from current price."
+                )
             )
 
 
@@ -7255,6 +7316,11 @@ def render_portfolio_valuation_board(stock: dict[str, Any]) -> None:
     fair_value = stock_money(stock, stock.get("fair_price")) if stock.get("fair_price") else "N/A"
     price_display = stock_money(stock, stock.get("price")) if positive_float(stock.get("price")) else "N/A"
     data_quality = str(stock.get("data_quality") or "Market data")
+    quality_detail = (
+        f"{ui('Growth')} {growth:.1f}% 및 PER {fmt_number(pe)}{ui('are compressed into one visual signal.')}"
+        if current_language() == "ko"
+        else f"{ui('Growth')} {growth:.1f}% and PER {fmt_number(pe)} {ui('are compressed into one visual signal.')}"
+    )
     cards = "".join(
         [
             portfolio_score_card_html(
@@ -7273,13 +7339,13 @@ def render_portfolio_valuation_board(stock: dict[str, Any]) -> None:
                 "Valuation Models",
                 f"{valid_models}/3",
                 model_score,
-                "Income, asset, and market approaches are checked when source inputs are available.",
+                ui("Income, asset, and market approaches are checked when source inputs are available."),
             ),
             portfolio_score_card_html(
                 "Growth / Quality",
                 f"{quality_score:.0f}",
                 quality_score,
-                f"Growth {growth:.1f}% and PER {fmt_number(pe)} {ui('are compressed into one visual signal.')}",
+                quality_detail,
             ),
         ]
     )
@@ -7295,11 +7361,11 @@ def render_portfolio_valuation_board(stock: dict[str, Any]) -> None:
                         <span class="portfolio-valuation-chip">{ui_html('Price')} {escape(price_display)}</span>
                         <span class="portfolio-valuation-chip">{ui_html('Fair')} {escape(fair_value)}</span>
                         <span class="portfolio-valuation-chip">PER {escape(fmt_number(pe))}</span>
-                        <span class="portfolio-valuation-chip">{escape(data_quality)}</span>
+                        <span class="portfolio-valuation-chip">{ui_html(data_quality)}</span>
                     </div>
                 </div>
                 <span class="portfolio-valuation-status" style="background:{status_color(str(stock.get("valuation_status", "Fair Value")))};">
-                    {escape(str(stock.get("valuation_status", "N/A")))}
+                    {ui_html(str(stock.get("valuation_status", "N/A")))}
                 </span>
             </div>
             <div class="portfolio-score-grid">{cards}</div>
@@ -7622,23 +7688,55 @@ def render_portfolio_stock_search() -> None:
             with detail_cols[3]:
                 metric_card("Models Used", str(tri.get("valid_models", 0)))
 
-        action_cols = st.columns(2)
         already_in_portfolio = symbol in st.session_state.portfolio
         price_available = positive_float(stock.get("price")) is not None
+        mode_key = f"portfolio_search_position_mode_{symbol}"
+        value_key = f"portfolio_search_position_size_{symbol}"
+        purchase_key = f"portfolio_search_purchase_price_{symbol}"
+        position_cols = st.columns([1.15, 1.25, 1.25])
+        with position_cols[0]:
+            st.radio(
+                ui("Position input"),
+                ["Current value amount", "Share count"],
+                horizontal=False,
+                key=mode_key,
+                format_func=ui,
+            )
+        with position_cols[1]:
+            st.number_input(
+                ui("Position size"),
+                min_value=0.0,
+                step=100000.0 if stock.get("currency") == "KRW" else 100.0,
+                key=value_key,
+                help=ui("Enter position size before adding."),
+            )
+        with position_cols[2]:
+            st.number_input(
+                ui("Average purchase price (optional)"),
+                min_value=0.0,
+                step=1000.0 if stock.get("currency") == "KRW" else 1.0,
+                key=purchase_key,
+            )
+        notice = st.session_state.pop("portfolio_search_notice", "")
+        if notice:
+            st.success(notice)
+
+        action_cols = st.columns(2)
         action_cols[0].button(
-            "Already in Portfolio"
+            ui("Already in Portfolio")
             if already_in_portfolio
             else ui("Price unavailable")
             if not price_available
-            else "Add Result to Portfolio",
+            else ui("Add Position to Portfolio"),
             key=f"portfolio_search_add_{symbol}",
-            on_click=add_portfolio,
+            on_click=add_portfolio_position_from_search,
             args=(symbol,),
             width="stretch",
-            disabled=already_in_portfolio or not price_available,
+            disabled=already_in_portfolio
+            or not price_available,
         )
         action_cols[1].button(
-            "Open Full Stock Detail",
+            ui("Open Full Stock Detail"),
             key=f"portfolio_search_detail_{symbol}",
             on_click=select_detail_and_open_search,
             args=(symbol,),
@@ -11041,20 +11139,20 @@ def portfolio_tab() -> None:
     fx_col1, fx_col2, fx_col3 = st.columns(3)
     with fx_col1:
         st.selectbox(
-            "Portfolio base currency",
+            ui("Portfolio base currency"),
             ["USD", "KRW"],
             key="portfolio_base_currency",
             help="Portfolio totals and weights are calculated after converting each holding into this currency.",
         )
     with fx_col2:
         st.checkbox(
-            "Use live USD/KRW",
+            ui("Use live USD/KRW"),
             key="use_live_fx",
             help="Uses Yahoo Finance KRW=X when available. Manual rate is used as fallback.",
         )
     with fx_col3:
         st.number_input(
-            "Manual USD/KRW rate",
+            ui("Manual USD/KRW rate"),
             min_value=1.0,
             step=1.0,
             key="manual_usdkrw",
@@ -11067,10 +11165,11 @@ def portfolio_tab() -> None:
     )
 
     st.radio(
-        "Portfolio weighting mode",
+        ui("Portfolio weighting mode"),
         ["Share-based", "Equal-weighted"],
         horizontal=True,
         key="portfolio_weighting_mode",
+        format_func=ui,
         help=(
             "Share-based uses shares x current price. Equal-weighted assigns the same analysis weight "
             "to each holding, which is useful for classroom portfolio analysis."
@@ -11094,11 +11193,11 @@ def portfolio_tab() -> None:
     if valuation_score is not None:
         score_color = "#10b981" if valuation_score > 5 else "#ef4444" if valuation_score < -5 else "#f59e0b"
     with c1:
-        metric_card("Total Market Value", fmt_money(total_value, st.session_state.portfolio_base_currency))
+        metric_card(ui("Total Market Value"), fmt_money(total_value, st.session_state.portfolio_base_currency))
     with c2:
-        metric_card("Weighted Beta", fmt_number(weighted_beta))
+        metric_card(ui("Weighted Beta"), fmt_number(weighted_beta))
     with c3:
-        metric_card("Portfolio Valuation Score", score_text, score_color)
+        metric_card(ui("Portfolio Valuation Score"), score_text, score_color)
 
     with st.expander(ui("Portfolio valuation basis"), expanded=False):
         st.caption(
@@ -11112,9 +11211,9 @@ def portfolio_tab() -> None:
 
     if not st.session_state.portfolio:
         render_mobile_portfolio_deck([], total_value, weighted_beta, valuation_score, 0, None, None)
-        st.info("No stocks in your portfolio yet. Add them from the search results.")
+        st.info(ui("No stocks in your portfolio yet. Add them from the search results."))
         st.button(
-            "Ask AI Coach About Portfolio Setup",
+            ui("Ask AI Coach About Portfolio Setup"),
             width="stretch",
             on_click=queue_ai_coach_question,
             args=(
