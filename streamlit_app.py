@@ -113,6 +113,7 @@ KO_TRANSLATIONS = {
     "Portfolio": "포트폴리오",
     "Goals": "목표",
     "Goal": "목표",
+    "Detail": "상세",
     "Planning": "계획",
     "Diary": "다이어리",
     "Reflection": "회고",
@@ -162,6 +163,17 @@ KO_TRANSLATIONS = {
     "Advisor": "어드바이저",
     "Portfolio / SR": "포트폴리오 / SR",
     "Goal-first mobile map": "목표 중심 모바일 맵",
+    "Rationality Gate": "합리성 게이트",
+    "Disciplined": "절제됨",
+    "Developing": "형성 중",
+    "Fragile": "취약",
+    "Rationality means goal-fit, evidence, model discipline, risk awareness, and memory before action.": "합리성은 행동 전에 목표 적합성, 근거, 모델 절제, 위험 인식, 기억이 연결되는지를 뜻합니다.",
+    "Purpose → Evidence → Risk → Memory": "목적 → 근거 → 위험 → 기억",
+    "Purpose Fit": "목적 적합성",
+    "Evidence Quality": "근거 품질",
+    "Model Discipline": "모델 절제",
+    "Risk Awareness": "위험 인식",
+    "Memory Feedback": "기억 피드백",
     "Evidence": "근거",
     "Status": "상태",
     "Age": "나이",
@@ -5544,6 +5556,133 @@ st.markdown(
         font-weight: 800;
         text-decoration: none !important;
     }
+    html body .stApp .rationality-gate {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto auto auto;
+        gap: 12px;
+        align-items: center;
+        margin: 8px 0 12px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(148, 163, 184, 0.20);
+        background: #ffffff;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+    }
+    html body .stApp .rationality-gate-main b {
+        display: block;
+        color: #0f172a;
+        font-size: 0.90rem;
+        line-height: 1.1;
+        font-weight: 900;
+    }
+    html body .stApp .rationality-gate-main span {
+        display: block;
+        margin-top: 3px;
+        color: #64748b;
+        font-size: 0.75rem;
+        line-height: 1.25;
+        font-weight: 650;
+    }
+    html body .stApp .rationality-score {
+        min-width: 86px;
+        display: grid;
+        grid-template-columns: auto auto;
+        align-items: end;
+        justify-content: center;
+        column-gap: 2px;
+        color: var(--rational-color);
+    }
+    html body .stApp .rationality-score strong {
+        font-size: 1.28rem;
+        line-height: 1;
+        font-weight: 950;
+    }
+    html body .stApp .rationality-score small {
+        color: #64748b;
+        font-size: 0.70rem;
+        line-height: 1.1;
+        font-weight: 800;
+    }
+    html body .stApp .rationality-score em {
+        grid-column: 1 / -1;
+        color: #475569;
+        font-size: 0.68rem;
+        line-height: 1.1;
+        font-style: normal;
+        font-weight: 850;
+        text-align: center;
+    }
+    html body .stApp .rationality-nodes {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+    html body .stApp .rationality-node {
+        --node-color: #d97706;
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        position: relative;
+        background: conic-gradient(var(--node-color) var(--value), #e2e8f0 0);
+        cursor: help;
+    }
+    html body .stApp .rationality-node.good { --node-color: #0f766e; }
+    html body .stApp .rationality-node.mid { --node-color: #2563eb; }
+    html body .stApp .rationality-node.watch { --node-color: #d97706; }
+    html body .stApp .rationality-node::after {
+        content: "";
+        position: absolute;
+        inset: 4px;
+        border-radius: 7px;
+        background: #ffffff;
+    }
+    html body .stApp .rationality-node b {
+        position: relative;
+        z-index: 1;
+        color: #0f172a;
+        font-size: 0.58rem;
+        line-height: 1;
+        font-weight: 950;
+    }
+    html body .stApp .rationality-detail summary {
+        min-height: 32px;
+        padding: 0 11px;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 8px;
+        color: #334155;
+        background: #f8fafc;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        font-size: 0.76rem;
+        font-weight: 780;
+        cursor: pointer;
+        list-style: none;
+    }
+    html body .stApp .rationality-detail summary::-webkit-details-marker {
+        display: none;
+    }
+    html body .stApp .rationality-detail ul {
+        min-width: min(520px, 82vw);
+        margin: 9px 0 0;
+        padding: 0;
+        list-style: none;
+    }
+    html body .stApp .rationality-detail li {
+        display: grid;
+        grid-template-columns: 128px minmax(0, 1fr);
+        gap: 10px;
+        padding: 7px 0;
+        border-top: 1px solid rgba(148, 163, 184, 0.16);
+        color: #334155;
+        font-size: 0.78rem;
+        line-height: 1.35;
+    }
+    html body .stApp .rationality-detail li b {
+        color: #0f172a;
+        font-size: 0.76rem;
+    }
     html body .stApp .nora-ontology {
         margin: 8px 0 12px !important;
         padding: 0 !important;
@@ -5805,6 +5944,16 @@ st.markdown(
         }
         html body .stApp .goal-strategy-detail {
             grid-column: 2;
+        }
+        html body .stApp .rationality-gate {
+            grid-template-columns: minmax(0, 1fr);
+        }
+        html body .stApp .rationality-score {
+            justify-content: flex-start;
+        }
+        html body .stApp .rationality-detail li {
+            grid-template-columns: 1fr;
+            gap: 3px;
         }
         html body .stApp .life-goal-board {
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -8686,6 +8835,60 @@ def ai_coach_readiness(context: dict[str, Any]) -> dict[str, Any]:
         label = "Fragile"
 
     return {"score": score, "label": label, "reasons": reasons}
+
+
+def rationality_tone(score: float) -> str:
+    score = max(0.0, min(100.0, float(score)))
+    if score >= 74:
+        return "good"
+    if score >= 55:
+        return "mid"
+    return "watch"
+
+
+def rationality_gate_snapshot() -> dict[str, Any]:
+    language = current_language()
+    goal = active_goal_key()
+    personal = st.session_state.get("last_personal_finance_result") or {}
+    holdings = portfolio_holdings_snapshot()
+    stocks = st.session_state.get("stocks", {})
+    scenario = st.session_state.get("last_scenario_packet")
+    diary = st.session_state.get("financial_diary", [])
+
+    evidence_count = sum(bool(item) for item in (personal, holdings, stocks, scenario))
+    evidence_score = 35 + min(evidence_count, 4) * 13
+    model_score = 74 if personal or stocks or scenario else 40
+    risk_score = 86 if scenario else 68 if personal or holdings else 38
+    memory_score = 88 if diary else 42
+
+    if language == "ko":
+        purpose_detail = "목표가 선택되어 판단 기준이 선명합니다." if goal else "아직 목표가 없어 판단 기준이 흔들릴 수 있습니다."
+        evidence_detail = f"현재 근거 입력 {evidence_count}/4: 재무, 포트폴리오, 종목, 시나리오."
+        model_detail = "모델 결과가 존재해 해석 전 계산 기준을 확인할 수 있습니다." if model_score >= 70 else "아직 모델 결과가 부족해 해석보다 입력이 먼저입니다."
+        risk_detail = "시나리오까지 포함되어 위험을 먼저 점검합니다." if scenario else "위험 점검은 시작됐지만 시나리오 스트레스가 아직 약합니다."
+        memory_detail = "다이어리/기록이 있어 판단을 나중에 되돌아볼 수 있습니다." if diary else "아직 기록이 없어 같은 판단을 반복 검증하기 어렵습니다."
+    else:
+        purpose_detail = "A selected goal makes the judgment standard clearer." if goal else "No selected goal yet, so the judgment standard can drift."
+        evidence_detail = f"Current evidence inputs {evidence_count}/4: finance, portfolio, stock, scenario."
+        model_detail = "Model output exists, so calculations can be checked before interpretation." if model_score >= 70 else "Model output is still thin; inputs should come before interpretation."
+        risk_detail = "Scenario stress is included, so risk is checked before action." if scenario else "Risk review has started, but scenario stress is still weak."
+        memory_detail = "Diary or report memory exists for later review." if diary else "No memory yet, so repeated judgment is harder to audit."
+
+    pillars = [
+        {"glyph": "WHY", "label": "Purpose Fit", "score": 92 if goal else 42, "detail": purpose_detail},
+        {"glyph": "EVD", "label": "Evidence Quality", "score": evidence_score, "detail": evidence_detail},
+        {"glyph": "MOD", "label": "Model Discipline", "score": model_score, "detail": model_detail},
+        {"glyph": "RSK", "label": "Risk Awareness", "score": risk_score, "detail": risk_detail},
+        {"glyph": "MEM", "label": "Memory Feedback", "score": memory_score, "detail": memory_detail},
+    ]
+    score = sum(float(item["score"]) for item in pillars) / len(pillars)
+    if score >= 74:
+        label = "Disciplined"
+    elif score >= 55:
+        label = "Developing"
+    else:
+        label = "Fragile"
+    return {"score": score, "label": label, "pillars": pillars}
 
 
 NORA_GOAL_STRATEGIES = {
@@ -11967,6 +12170,51 @@ def render_goal_strategy_strip(active_key: str) -> None:
     )
 
 
+def render_rationality_gate() -> None:
+    snapshot = rationality_gate_snapshot()
+    score = max(0.0, min(100.0, float(snapshot["score"])))
+    tone = rationality_tone(score)
+    tone_color = {"good": "#0f766e", "mid": "#2563eb", "watch": "#d97706"}[tone]
+    pillar_nodes = []
+    detail_items = [
+        f'<li><b>{ui_html("Rationality Gate")}</b><span>{ui_html("Rationality means goal-fit, evidence, model discipline, risk awareness, and memory before action.")}</span></li>'
+    ]
+    for item in snapshot["pillars"]:
+        pillar_score = max(0.0, min(100.0, float(item["score"])))
+        pillar_tone = rationality_tone(pillar_score)
+        detail = str(item["detail"])
+        pillar_nodes.append(
+            f'<span class="rationality-node {pillar_tone}" tabindex="0" '
+            f'title="{escape(ui(item["label"]) + ": " + detail, quote=True)}" '
+            f'style="--value: {pillar_score:.0f}%;">'
+            f'<b>{escape(str(item["glyph"]))}</b></span>'
+        )
+        detail_items.append(
+            f'<li><b>{ui_html(item["label"])}</b><span>{escape(detail)}</span></li>'
+        )
+
+    st.markdown(
+        f"""
+        <section class="rationality-gate {tone}" style="--rational-color: {tone_color};" aria-label="{ui_html('Rationality Gate')}">
+            <div class="rationality-gate-main">
+                <b>{ui_html('Rationality Gate')}</b>
+                <span>{ui_html('Purpose → Evidence → Risk → Memory')}</span>
+            </div>
+            <div class="rationality-score">
+                <strong>{score:.0f}</strong><small>/100</small>
+                <em>{ui_html(str(snapshot["label"]))}</em>
+            </div>
+            <div class="rationality-nodes">{"".join(pillar_nodes)}</div>
+            <details class="rationality-detail">
+                <summary>{ui_html('Detail')}</summary>
+                <ul>{"".join(detail_items)}</ul>
+            </details>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_life_compact_panel() -> None:
     language = current_language()
     compact_title = "Goal Board" if language == "en" else "Goal 보드"
@@ -12027,6 +12275,7 @@ def render_main_app() -> None:
 
     active_view = active_nav_key()
     render_goal_strategy_strip(active_view)
+    render_rationality_gate()
     render_nora_ontology(active_view)
     render_mobile_navigation(active_view)
     render_circle_navigation(active_view)
