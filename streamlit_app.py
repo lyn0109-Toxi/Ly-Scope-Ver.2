@@ -16,7 +16,7 @@ import streamlit as st
 import yfinance as yf
 
 
-st.set_page_config(page_title="ToxiGuard-NORA", layout="wide")
+st.set_page_config(page_title="LY-Scope-Ver.2", layout="wide")
 
 LANGUAGE_OPTIONS = {
     "en": "English",
@@ -56,7 +56,7 @@ KO_TRANSLATIONS = {
     "Personal Decision Intelligence Application": "개인 의사결정 인텔리전스 앱",
     "Design Your": "설계하세요",
     "Financial Life": "금융 생활",
-    "ToxiGuard-NORA is a Personal Decision Intelligence Application for financial foundation, goals, market assets, real estate, scenarios, risk, evidence, decisions, and memory.": "ToxiGuard-NORA는 재무 기반, 목표, 시장 자산, 부동산, 시나리오, 위험, 근거, 결정, 메모리를 연결하는 개인 의사결정 인텔리전스 앱입니다.",
+    "LY-Scope-Ver.2 is a Personal Decision Intelligence Application for financial foundation, goals, market assets, real estate, scenarios, risk, evidence, decisions, and memory.": "LY-Scope-Ver.2는 재무 기반, 목표, 시장 자산, 부동산, 시나리오, 위험, 근거, 결정, 메모리를 연결하는 개인 의사결정 인텔리전스 앱입니다.",
     "See Your": "나의",
     "Financial Path": "금융 경로",
     "What Does the Customer Want?": "고객은 무엇을 원하는가?",
@@ -101,7 +101,7 @@ KO_TRANSLATIONS = {
     "Educational prototype only; not financial, investment, legal, or tax advice.": "교육용 프로토타입입니다. 금융, 투자, 법률, 세무 조언이 아닙니다.",
     "Start Your Life Map": "라이프 맵 시작",
     "Explore Dashboard": "대시보드 살펴보기",
-    "Enter ToxiGuard-NORA Dashboard": "ToxiGuard-NORA 대시보드로 들어가기",
+    "Enter LY-Scope-Ver.2 Dashboard": "LY-Scope-Ver.2 대시보드로 들어가기",
     "Build, review, and improve your financial life with real examples.": "실제 예시로 금융 생활을 만들고, 점검하고, 개선하세요.",
     "Life Design Dashboard": "라이프 설계 대시보드",
     "Income": "수입",
@@ -225,7 +225,7 @@ KO_TRANSLATIONS = {
     "Save snapshots, notes, next actions, and reflection.": "스냅샷, 메모, 다음 행동, 회고 저장.",
     "AI Scenario Readiness": "AI 시나리오 준비도",
     "Prepare structured context for future reasoning assistants.": "향후 추론형 AI를 위한 구조화된 맥락 준비.",
-    "Click the image buttons on desktop or Enter ToxiGuard-NORA Dashboard on mobile. Educational and informational use only; not financial, investment, legal, or tax advice.": "데스크톱에서는 이미지 버튼을, 모바일에서는 ToxiGuard-NORA 대시보드 진입 버튼을 누르세요. 교육 및 정보 제공용이며 금융, 투자, 법률, 세무 조언이 아닙니다.",
+    "Click the image buttons on desktop or Enter LY-Scope-Ver.2 Dashboard on mobile. Educational and informational use only; not financial, investment, legal, or tax advice.": "데스크톱에서는 이미지 버튼을, 모바일에서는 LY-Scope-Ver.2 대시보드 진입 버튼을 누르세요. 교육 및 정보 제공용이며 금융, 투자, 법률, 세무 조언이 아닙니다.",
     "Life": "라이프",
     "Finance": "재무",
     "Diary": "다이어리",
@@ -279,7 +279,7 @@ KO_TRANSLATIONS = {
     "Check API and macro assumptions.": "API와 거시 가정을 확인하세요.",
     "Use this for professor/demo walkthroughs.": "교수님/데모 설명용으로 사용하세요.",
     "Review virtual clients and export advisor PDF reports.": "가상 고객을 검토하고 어드바이저 PDF 리포트를 내보내세요.",
-    "Review virtual clients through the ToxiGuard-NORA decision architecture and export PDF reports.": "ToxiGuard-NORA 의사결정 아키텍처로 가상 고객을 검토하고 PDF 리포트를 내보내세요.",
+    "Review virtual clients through the LY-Scope-Ver.2 decision architecture and export PDF reports.": "LY-Scope-Ver.2 의사결정 아키텍처로 가상 고객을 검토하고 PDF 리포트를 내보내세요.",
     "These fictional reports use the existing Personal Finance engine plus a rule-based advisor layer. They are educational examples, not professional advice.": "이 가상 리포트는 기존 개인 재무 엔진과 규칙 기반 어드바이저 레이어를 사용합니다. 교육용 예시이며 전문 조언이 아닙니다.",
     "Select virtual client": "가상 고객 선택",
     "Advisor Interpretation": "어드바이저 해석",
@@ -325,7 +325,7 @@ KO_TRANSLATIONS = {
     "Next mobile step": "다음 모바일 단계",
     "Review the current screen, then ask AI Coach for a linked summary.": "현재 화면을 검토한 뒤 AI 코치에게 연결 요약을 요청하세요.",
     "Life Design Control Center": "라이프 설계 컨트롤 센터",
-    "ToxiGuard-NORA connects user context, financial data, models, evidence, AI interpretation, decisions, and memory. Use the circular menu above to move between valuation, portfolio risk, real estate exposure, personal finance, scenario stress testing, AI readiness, calculation transparency, and diary reflection.": "ToxiGuard-NORA는 사용자 맥락, 금융 데이터, 모델, 근거, AI 해석, 결정, 메모리를 연결합니다. 위 원형 메뉴로 가치평가, 포트폴리오 위험, 부동산 노출, 개인 재무, 시나리오 스트레스 테스트, AI 준비도, 계산 투명성, 다이어리 회고를 이동하세요.",
+    "LY-Scope-Ver.2 connects user context, financial data, models, evidence, AI interpretation, decisions, and memory. Use the circular menu above to move between valuation, portfolio risk, real estate exposure, personal finance, scenario stress testing, AI readiness, calculation transparency, and diary reflection.": "LY-Scope-Ver.2는 사용자 맥락, 금융 데이터, 모델, 근거, AI 해석, 결정, 메모리를 연결합니다. 위 원형 메뉴로 가치평가, 포트폴리오 위험, 부동산 노출, 개인 재무, 시나리오 스트레스 테스트, AI 준비도, 계산 투명성, 다이어리 회고를 이동하세요.",
     "Understand monthly cash flow before taking investment risk.": "투자 위험을 감수하기 전 월 현금흐름을 이해하세요.",
     "Check liquidity and emergency capacity.": "유동성과 비상 대응력을 확인하세요.",
     "Investments": "투자",
@@ -355,7 +355,7 @@ KO_TRANSLATIONS = {
     "Risk / Resilience": "위험 / 회복력",
     "NORA keeps every screen tied to the same decision path: current situation, evidence, interpretation, action, and memory.": "NORA는 모든 화면을 현재 상황, 근거, 해석, 행동, 기억이라는 동일한 의사결정 경로에 연결합니다.",
     "Hover or click each visual node to read its role.": "각 시각 노드에 마우스를 올리거나 클릭하면 역할을 볼 수 있습니다.",
-    "ToxiGuard-NORA is provided for educational and informational use only and does not constitute or provide financial, investment, legal, tax, accounting, or professional advice. Do not enter sensitive personal financial information into this prototype. Market data and charts may be provided by third-party services such as Finnhub, TradingView, and Yahoo Finance/yfinance, subject to their own terms. All trademarks, company names, and ticker symbols remain the property of their respective owners. This interface uses original CSS/HTML design elements and does not claim ownership of third-party data, logos, or trademarks. Data may be delayed, incomplete, or unavailable and should be verified independently.": "ToxiGuard-NORA는 교육 및 정보 제공용이며 금융, 투자, 법률, 세무, 회계 또는 전문 조언을 제공하지 않습니다. 이 프로토타입에 민감한 개인 금융 정보를 입력하지 마세요. 시장 데이터와 차트는 Finnhub, TradingView, Yahoo Finance/yfinance 등 제3자 서비스에서 제공될 수 있으며 각 서비스 약관을 따릅니다. 모든 상표, 회사명, 티커 심볼은 각 소유자의 자산입니다. 이 인터페이스는 자체 CSS/HTML 디자인 요소를 사용하며 제3자 데이터, 로고, 상표의 소유권을 주장하지 않습니다. 데이터는 지연되거나 불완전하거나 제공되지 않을 수 있으므로 독립적으로 검증해야 합니다.",
+    "LY-Scope-Ver.2 is provided for educational and informational use only and does not constitute or provide financial, investment, legal, tax, accounting, or professional advice. Do not enter sensitive personal financial information into this prototype. Market data and charts may be provided by third-party services such as Finnhub, TradingView, and Yahoo Finance/yfinance, subject to their own terms. All trademarks, company names, and ticker symbols remain the property of their respective owners. This interface uses original CSS/HTML design elements and does not claim ownership of third-party data, logos, or trademarks. Data may be delayed, incomplete, or unavailable and should be verified independently.": "LY-Scope-Ver.2는 교육 및 정보 제공용이며 금융, 투자, 법률, 세무, 회계 또는 전문 조언을 제공하지 않습니다. 이 프로토타입에 민감한 개인 금융 정보를 입력하지 마세요. 시장 데이터와 차트는 Finnhub, TradingView, Yahoo Finance/yfinance 등 제3자 서비스에서 제공될 수 있으며 각 서비스 약관을 따릅니다. 모든 상표, 회사명, 티커 심볼은 각 소유자의 자산입니다. 이 인터페이스는 자체 CSS/HTML 디자인 요소를 사용하며 제3자 데이터, 로고, 상표의 소유권을 주장하지 않습니다. 데이터는 지연되거나 불완전하거나 제공되지 않을 수 있으므로 독립적으로 검증해야 합니다.",
 }
 
 
@@ -6140,7 +6140,7 @@ RISK_FREE_RATE = DEFAULT_RISK_FREE_RATE
 EQUITY_RISK_PREMIUM = DEFAULT_EQUITY_RISK_PREMIUM
 
 
-GUIDE_PDF_PATH = Path(__file__).with_name("ToxiGuard-NORA_User_Guide.pdf")
+GUIDE_PDF_PATH = Path(__file__).with_name("LY-Scope-Ver.2_User_Guide.pdf")
 GUIDE_SCREENSHOT_DIR = Path(__file__).with_name("guide_assets") / "screenshots"
 HOMEPAGE_BG_PATH = Path(__file__).parent / "assets" / "homepage_life_design.png"
 USE_HOMEPAGE_REFERENCE_IMAGE = False
@@ -8887,7 +8887,7 @@ def what_if_scenario_tab() -> None:
         st.download_button(
             "Download Scenario JSON",
             data=json.dumps(scenario_packet, indent=2, ensure_ascii=False),
-            file_name="toxiguard_nora_scenario_packet.json",
+            file_name="ly_scope_ver2_scenario_packet.json",
             mime="application/json",
             width="stretch",
         )
@@ -9607,7 +9607,7 @@ def build_verified_ai_context(
 
     return {
         "purpose": (
-            "Educational financial reasoning context for ToxiGuard-NORA AI Coach. "
+            "Educational financial reasoning context for LY-Scope-Ver.2 AI Coach. "
             "Do not treat this as financial, legal, tax, or immigration advice."
         ),
         "readiness": {
@@ -9711,7 +9711,7 @@ VERIFIED_AI_SCHEMA = {
 
 
 VERIFIED_AI_SYSTEM_PROMPT = """
-You are the ToxiGuard-NORA Verified AI Model Layer.
+You are the LY-Scope-Ver.2 Verified AI Model Layer.
 Your job is educational financial reasoning, not financial advice.
 
 Rules:
@@ -9719,7 +9719,7 @@ Rules:
 - Do not guarantee returns or predict certainty.
 - Do not provide legal, tax, accounting, immigration, or professional advice.
 - If the user asks about F-1, work authorization, monetization, or company formation, give only general caution and tell them to consult the DSO and qualified counsel.
-- Ground every answer in the provided ToxiGuard-NORA context.
+- Ground every answer in the provided LY-Scope-Ver.2 context.
 - Use linked_app_guidance to point the user toward the Portfolio, Personal Finance, Scenario, Diary, or Calculation Details view when relevant.
 - If data is missing, say so clearly.
 - Keep the answer useful on mobile: concise, structured, and direct.
@@ -9833,7 +9833,7 @@ def call_verified_openai_model(
                 "content": json.dumps(
                     {
                         "user_question": question,
-                        "toxiguard_nora_context": model_context,
+                        "ly_scope_ver2_context": model_context,
                         "required_output_style": "mobile-friendly structured JSON",
                     },
                     ensure_ascii=False,
@@ -9844,7 +9844,7 @@ def call_verified_openai_model(
         "text": {
             "format": {
                 "type": "json_schema",
-                "name": "toxiguard_nora_verified_ai_response",
+                "name": "ly_scope_ver2_verified_ai_response",
                 "strict": True,
                 "schema": VERIFIED_AI_SCHEMA,
             }
@@ -10314,7 +10314,7 @@ def ai_reasoning_readiness_tab() -> None:
             """
             AI interfaces are moving toward voice, agents, and continuous assistance. A future user may ask:
             "Can I absorb this risk?", "What changes if rates rise?", or "What did I decide last time?"
-            ToxiGuard-NORA prepares the structured context needed to answer those questions responsibly.
+            LY-Scope-Ver.2 prepares the structured context needed to answer those questions responsibly.
             """
         )
 
@@ -10356,7 +10356,7 @@ def calculation_details_tab() -> None:
         """
         <div class="hero-panel">
             <h1 style="margin:0 0 8px;">Calculation Details</h1>
-            <div class="hero-muted">Review the formulas, data inputs, assumptions, and interpretation logic behind ToxiGuard-NORA.</div>
+            <div class="hero-muted">Review the formulas, data inputs, assumptions, and interpretation logic behind LY-Scope-Ver.2.</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -10534,7 +10534,7 @@ def calculation_details_tab() -> None:
     with st.expander("6. AI Reasoning and Scenario Layer"):
         st.markdown(
             """
-            ToxiGuard-NORA is being prepared for future AI-assisted financial reasoning. The app should not ask AI
+            LY-Scope-Ver.2 is being prepared for future AI-assisted financial reasoning. The app should not ask AI
             to make unsupported investment recommendations. Instead, each future AI response should be grounded
             in structured app data.
 
@@ -10993,7 +10993,7 @@ def render_advisor_reports_tab() -> None:
         </div>
         """.format(
             ui_html("Advisor Reports"),
-            ui_html("Review virtual clients through the ToxiGuard-NORA decision architecture and export PDF reports."),
+            ui_html("Review virtual clients through the LY-Scope-Ver.2 decision architecture and export PDF reports."),
         ),
         unsafe_allow_html=True,
     )
@@ -11222,7 +11222,7 @@ def render_advisor_reports_tab() -> None:
         st.download_button(
             ui("Download Selected Client PDF"),
             data=selected_pdf or b"",
-            file_name=f"toxiguard_nora_advisor_report_{client.client_id.lower()}.pdf",
+            file_name=f"ly_scope_ver2_advisor_report_{client.client_id.lower()}.pdf",
             mime="application/pdf",
             width="stretch",
             disabled=selected_pdf is None,
@@ -11231,7 +11231,7 @@ def render_advisor_reports_tab() -> None:
         st.download_button(
             ui("Download All Client Reports PDF"),
             data=all_pdf or b"",
-            file_name=f"toxiguard_nora_advisor_reports_{datetime.now().strftime('%Y%m%d')}.pdf",
+            file_name=f"ly_scope_ver2_advisor_reports_{datetime.now().strftime('%Y%m%d')}.pdf",
             mime="application/pdf",
             width="stretch",
             disabled=all_pdf is None,
@@ -11273,7 +11273,7 @@ def build_current_situation_report_text() -> str:
     readiness = ai_coach_readiness(context)
 
     lines = [
-        f"ToxiGuard-NORA Current Situation Report - {now_text}",
+        f"LY-Scope-Ver.2 Current Situation Report - {now_text}",
         "",
         "1. Investment Readiness",
         f"- Readiness label: {readiness['label']} ({readiness['score']:.0f}/100)",
@@ -11499,7 +11499,7 @@ def financial_diary_tab() -> None:
         from advisor_report_engine import text_report_pdf_bytes
 
         current_report_pdf = text_report_pdf_bytes(
-            "ToxiGuard-NORA Current Situation Report",
+            "LY-Scope-Ver.2 Current Situation Report",
             st.session_state.get("diary_current_report", report_text),
             "Portfolio, personal finance, risk, and memory checkpoint",
             language=current_language(),
@@ -11532,7 +11532,7 @@ def financial_diary_tab() -> None:
         st.download_button(
             "Download Report PDF",
             data=current_report_pdf or b"",
-            file_name=f"toxiguard_nora_current_situation_{datetime.now().strftime('%Y%m%d')}.pdf",
+            file_name=f"ly_scope_ver2_current_situation_{datetime.now().strftime('%Y%m%d')}.pdf",
             mime="application/pdf",
             width="stretch",
             disabled=current_report_pdf is None,
@@ -11569,7 +11569,7 @@ def financial_diary_tab() -> None:
         st.download_button(
             "Download Diary JSON",
             data=diary_json,
-            file_name=f"toxiguard_nora_financial_diary_{datetime.now().strftime('%Y%m%d')}.json",
+            file_name=f"ly_scope_ver2_financial_diary_{datetime.now().strftime('%Y%m%d')}.json",
             mime="application/json",
             width="stretch",
             disabled=not bool(st.session_state.financial_diary),
@@ -11994,10 +11994,10 @@ def portfolio_tab() -> None:
     st.info(
         "A simple educational backtest can start with an equal-weighted portfolio, as used in class. "
         "A full professional backtest also needs rebalancing frequency, transaction costs, taxes, benchmark selection, "
-        "and survivorship-bias controls. ToxiGuard-NORA currently focuses on educational portfolio analytics rather than full performance backtesting."
+        "and survivorship-bias controls. LY-Scope-Ver.2 currently focuses on educational portfolio analytics rather than full performance backtesting."
     )
     st.caption(
-        "Reference suggested for advanced analysis: Portfolio Visualizer. ToxiGuard-NORA can use it as a methodological benchmark while keeping this app focused on learning and interpretation."
+        "Reference suggested for advanced analysis: Portfolio Visualizer. LY-Scope-Ver.2 can use it as a methodological benchmark while keeping this app focused on learning and interpretation."
     )
 
     render_portfolio_charts()
@@ -12102,7 +12102,7 @@ def guide_tab() -> None:
     st.markdown(
         """
         <div class="hero-panel">
-            <h1 style="margin:0 0 8px;">ToxiGuard-NORA User Guide</h1>
+            <h1 style="margin:0 0 8px;">LY-Scope-Ver.2 User Guide</h1>
             <div class="hero-muted">A practical in-app guide based on the English PDF user guide.</div>
         </div>
         """,
@@ -12113,12 +12113,12 @@ def guide_tab() -> None:
         st.download_button(
             "Download PDF User Guide",
             data=GUIDE_PDF_PATH.read_bytes(),
-            file_name="ToxiGuard-NORA_User_Guide.pdf",
+            file_name="LY-Scope-Ver.2_User_Guide.pdf",
             mime="application/pdf",
             width="stretch",
         )
     else:
-        st.info("Upload ToxiGuard-NORA_User_Guide.pdf to the repository to enable PDF download.")
+        st.info("Upload LY-Scope-Ver.2_User_Guide.pdf to the repository to enable PDF download.")
 
     st.subheader("1. Search and Explore Stocks")
     guide_image("01-search-dashboard.png", "Search dashboard")
@@ -12190,14 +12190,14 @@ def guide_tab() -> None:
         - Diversification Benefit compares weighted individual volatility with actual portfolio volatility.
         - Lower correlation between holdings generally improves risk reduction.
         - Equal-weighted analysis is useful for learning, but keeping equal weights in real portfolios requires rebalancing.
-        - Rebalancing can create transaction costs and taxes, so ToxiGuard-NORA presents this as educational analysis rather than a full professional backtest.
+        - Rebalancing can create transaction costs and taxes, so LY-Scope-Ver.2 presents this as educational analysis rather than a full professional backtest.
         """
     )
 
     st.subheader("6. Educational Scope")
     st.write(
         """
-        ToxiGuard-NORA is designed to connect finance theory with real market examples. It is not an
+        LY-Scope-Ver.2 is designed to connect finance theory with real market examples. It is not an
         investment recommendation service. The current focus is stock analysis, valuation
         triangulation, CAPM, portfolio variance, covariance, diversification, and correlation.
         Sector-specialized tools such as REIT analysis can be explored as a separate future project.
@@ -12223,7 +12223,7 @@ def guide_tab() -> None:
     st.subheader("8. AI Coach and Reasoning Readiness")
     st.write(
         """
-        The AI Coach menu turns ToxiGuard-NORA from a dashboard into a conversation-first financial reasoning
+        The AI Coach menu turns LY-Scope-Ver.2 from a dashboard into a conversation-first financial reasoning
         prototype. It can run locally as a rule-based coach or, when `OPENAI_API_KEY` is configured and the
         user enables the verified model toggle, call a reasoning model through OpenAI's Responses API.
         The AI Coach also shows linked guidance cards for Portfolio P/L, Personal Finance, Scenario,
@@ -12286,7 +12286,7 @@ def guide_tab() -> None:
     )
     st.markdown(
         """
-        - ToxiGuard-NORA is an educational prototype, not financial, investment, tax, legal, accounting, or professional advice.
+        - LY-Scope-Ver.2 is an educational prototype, not financial, investment, tax, legal, accounting, or professional advice.
         - Market data and charts may be provided by Finnhub, TradingView, Yahoo Finance, and yfinance, subject to their own terms.
         - TradingView attribution should remain visible when chart widgets are used.
         - Third-party company names, ticker symbols, trademarks, and data remain the property of their respective owners.
@@ -12408,7 +12408,7 @@ def render_sidebar_path_menu() -> None:
 
 def render_sidebar() -> None:
     with st.sidebar:
-        st.markdown("## ToxiGuard-NORA")
+        st.markdown("## LY-Scope-Ver.2")
         st.caption(ui("Open or close this sidebar with the arrow in the upper-left corner."))
 
         if st.button(ui("View Life Design Intro"), width="stretch"):
@@ -12483,7 +12483,7 @@ def render_sidebar() -> None:
 
 def render_footer() -> None:
     footer_text = ui(
-        "ToxiGuard-NORA is provided for educational and informational use only and does not constitute or provide financial, investment, legal, tax, accounting, or professional advice. Do not enter sensitive personal financial information into this prototype. Market data and charts may be provided by third-party services such as Finnhub, TradingView, and Yahoo Finance/yfinance, subject to their own terms. All trademarks, company names, and ticker symbols remain the property of their respective owners. This interface uses original CSS/HTML design elements and does not claim ownership of third-party data, logos, or trademarks. Data may be delayed, incomplete, or unavailable and should be verified independently."
+        "LY-Scope-Ver.2 is provided for educational and informational use only and does not constitute or provide financial, investment, legal, tax, accounting, or professional advice. Do not enter sensitive personal financial information into this prototype. Market data and charts may be provided by third-party services such as Finnhub, TradingView, and Yahoo Finance/yfinance, subject to their own terms. All trademarks, company names, and ticker symbols remain the property of their respective owners. This interface uses original CSS/HTML design elements and does not claim ownership of third-party data, logos, or trademarks. Data may be delayed, incomplete, or unavailable and should be verified independently."
     )
     st.markdown(
         f"""
@@ -12508,11 +12508,11 @@ def render_life_entry_screen(standalone: bool = True) -> None:
         else ""
     )
     # The legacy bitmap has embedded LY-STScope copy, so the live HTML version
-    # is safer until a ToxiGuard-NORA-specific image is generated.
+    # is safer until a LY-Scope-Ver.2-specific image is generated.
     homepage_bg = image_data_uri(str(HOMEPAGE_BG_PATH)) if USE_HOMEPAGE_REFERENCE_IMAGE else ""
     homepage_class = " has-home-image" if homepage_bg else ""
     homepage_image = (
-        f'<img class="homepage-bg-img" src="{homepage_bg}" alt="ToxiGuard-NORA life design homepage preview">'
+        f'<img class="homepage-bg-img" src="{homepage_bg}" alt="LY-Scope-Ver.2 life design homepage preview">'
         if homepage_bg
         else ""
     )
@@ -12555,7 +12555,7 @@ def render_life_entry_screen(standalone: bool = True) -> None:
                 <div class="home-nav">
                     <div class="home-brand">
                         <div class="home-brand-mark">N</div>
-                        <div>ToxiGuard-NORA <small>Ver.2</small></div>
+                        <div>LY-Scope-Ver.2 <small>Decision Intelligence</small></div>
                     </div>
                 </div>
                 <div class="home-goal-layout">
@@ -12765,7 +12765,7 @@ def set_active_nav_key(view: str) -> None:
 def render_circle_navigation(active_key: str) -> None:
     st.markdown(
         f"""
-        <div class="nav-flow-strip" aria-label="ToxiGuard-NORA workflow map">
+        <div class="nav-flow-strip" aria-label="LY-Scope-Ver.2 workflow map">
             <div class="nav-flow-step"><strong>01</strong><span>{ui_html('Life')}<small>{ui_html('Context')}</small></span></div>
             <div class="nav-flow-step"><strong>02</strong><span>{ui_html('Market')}<small>{ui_html('Analysis')}</small></span></div>
             <div class="nav-flow-step scenario"><strong>03</strong><span>{ui_html('Scenario')}<small>{ui_html('Stress Test')}</small></span></div>
@@ -12797,7 +12797,7 @@ def render_circle_navigation(active_key: str) -> None:
     diary_href = escape(app_view_href("diary"), quote=True)
     st.markdown(
         (
-            '<div class="desktop-orbit-nav" aria-label="ToxiGuard-NORA compact orbit navigation">'
+            '<div class="desktop-orbit-nav" aria-label="LY-Scope-Ver.2 compact orbit navigation">'
             '<div class="desktop-orbit-shell">'
             f'{"".join(orbit_links)}'
             f'<a class="desktop-orbit-center{center_active}" href="{diary_href}" target="_self" aria-label="{ui_html("Financial Diary")}" '
@@ -12830,7 +12830,7 @@ def render_mobile_navigation(active_key: str) -> None:
     diary_href = escape(app_view_href("diary"), quote=True)
     st.markdown(
         (
-            '<div class="mobile-orbit-nav mobile-only-deck" aria-label="Mobile ToxiGuard-NORA orbit navigation">'
+            '<div class="mobile-orbit-nav mobile-only-deck" aria-label="Mobile LY-Scope-Ver.2 orbit navigation">'
             f'<div class="mobile-orbit-stamp">{ui_html("Goal-first mobile map")}</div>'
             '<div class="mobile-orbit-shell">'
             f'{"".join(orbit_links)}'
@@ -12904,7 +12904,7 @@ def render_mobile_view_summary(active_key: str) -> None:
         f"""
         <div class="mobile-only-deck mobile-view-summary">
             <div class="mobile-card-grid">
-                <div class="mobile-card"><div class="eyebrow">{ui_html('Now')}</div><div class="value">{ui_html(title_map.get(active_key, 'ToxiGuard-NORA'))}</div><span class="label">{ui_html('Current screen')}</span></div>
+                <div class="mobile-card"><div class="eyebrow">{ui_html('Now')}</div><div class="value">{ui_html(title_map.get(active_key, 'LY-Scope-Ver.2'))}</div><span class="label">{ui_html('Current screen')}</span></div>
                 <div class="mobile-card"><div class="eyebrow">{ui_html('Data')}</div><div class="value">{escape(data_text)}</div><span class="label">{ui_html('Context status')}</span></div>
             </div>
             <div class="mobile-focus-card">
@@ -13054,7 +13054,7 @@ def render_main_app() -> None:
             <div class="brand-mark">
                 <div class="brand-icon" aria-hidden="true"></div>
                 <div>
-                    <div class="brand-name">ToxiGuard<span class="scope-accent">-NORA</span></div>
+                    <div class="brand-name">LY-Scope<span class="scope-accent">-Ver.2</span></div>
                     <div class="brand-subtitle">{brand_subtitle}</div>
                 </div>
             </div>
