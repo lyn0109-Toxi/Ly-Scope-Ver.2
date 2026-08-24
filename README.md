@@ -1,112 +1,119 @@
-# LY-Scope Ver.2
+# ToxiGuard-NORA
 
-LY-Scope Ver.2 is a new codebase for a personal decision intelligence app. It does not modify LY-Scope Ver.1. Ver.1 stays as a reference source, while useful logic is migrated into the Ver.2 structure.
+ToxiGuard-NORA is the current LY-Scope Ver.2 application and deployment name.
+The production app is:
 
-The product goal is to help users understand their current financial situation, the direction required to reach goals, and the risks that could block a decision.
+```text
+https://toxiguard-nora.streamlit.app/
+```
 
-## Core Architecture
+The app combines Ver.1 market-asset logic with a new personal decision intelligence structure: stock and portfolio valuation, REIT/real-estate exposure, personal finance, goals, scenario stress tests, advisor-style reports, calculation transparency, AI interpretation readiness, and decision memory.
+
+## Core Ontology
+
+ToxiGuard-NORA must keep this decision path visible and intact:
 
 ```text
 User -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
 ```
 
-The app also includes extension modules for:
+This ontology means every output should answer five customer-facing questions:
 
-- Financial Foundation
-- Goals
-- Market Assets
-- Real Estate
-- Portfolio
-- Projection
-- Scenario
-- Risk/Resilience
-- Life Board
+- What is my current situation?
+- What data and model produced this view?
+- What evidence or warning supports it?
+- What direction should I consider next?
+- What should be remembered for later review?
 
-## Ver.1 Reference
+## Section Map
 
-The local development workspace can keep a private Ver.1 reference copy at:
+- **Financial Foundation:** income, expenses, cash, debt, runway, savings rate, risk capacity.
+- **Goals:** target amount, monthly commitment, progress, feasibility.
+- **Market Assets:** stock ticker/company search, valuation, risk, beta, portfolio scoring.
+- **Real Estate:** REIT and property-linked exposure, income sensitivity, rate sensitivity.
+- **Projection:** goal and capital path over time.
+- **Scenario:** income shock, market shock, FX/rate shock, cash shock.
+- **Risk / Resilience:** liquidity, concentration, volatility, downside capacity.
+- **Evidence:** formulas, assumptions, data source limits, calculation details.
+- **AI Interpretation:** plain-language status, direction, crisis signal, trade-off explanation.
+- **Decision:** next action, watch item, avoid item, report output.
+- **Memory:** financial diary, report PDFs, snapshots, review history.
 
-```text
-legacy/ver1-reference/
-```
+## Purpose
 
-That folder is intentionally ignored for the public GitHub repository because it
-can contain copied source, reports, and user-like sample data. The original
-Ver.1 repository remains untouched.
+This app is designed as an educational personal financial intelligence platform, not an investment recommendation service. The goal is to help users understand, protect, and manage their financial life by connecting income, spending, savings, investments, real estate exposure, portfolio risk, and life goals with real market examples.
 
-Ver.2 also includes active JavaScript ports of the most important Ver.1 logic:
+## AI Reasoning Era Direction
 
-- Stock scoring and warnings
-- REIT scoring, warnings, and forecast bands
-- Real estate market scoring, warnings, forecast bands, mortgage math, and property calculator
-- Portfolio snapshot calculations
-- Life Board context weighting
+ToxiGuard-NORA is being prepared as an early prototype for the coming AI reasoning and agentic intelligence era. The product direction is not to become a stock picker. It is to become a structured financial reasoning environment where a future AI assistant can help users ask better questions, understand trade-offs, and review the assumptions behind financial decisions.
 
-## Run Locally
+Future-facing design principles:
 
-```bash
-npm run dev
-```
+- **Reasoning before recommendation:** the app should explain risk, trade-offs, assumptions, and scenarios before suggesting any action.
+- **Life context before asset selection:** portfolio analysis should be interpreted alongside income, spending, savings, debt, emergency funds, real estate exposure, and life goals.
+- **Scenario support:** users should be able to ask what happens if interest rates change, income falls, portfolio value declines, REIT dividends change, or a major life expense appears.
+- **Memory with privacy:** the Financial Diary is a seed for user-controlled financial memory. It should support reflection without requiring sensitive account connections in the prototype stage.
+- **Explainability:** Calculation Details should act as a reasoning audit trail, showing formulas, inputs, assumptions, limitations, and data sources.
+- **Voice and agent readiness:** future interfaces may use AirPods, mobile assistants, or AI agents. ToxiGuard-NORA should support short summaries, deeper explanations, and detailed evidence views.
 
-Then open the local URL printed in the terminal.
+## Current Preparation Stage
 
-## Run with Streamlit
+The current project should be treated as an educational prototype and venture-preparation asset. It can support user interviews, professor feedback, portfolio demonstration, pitch preparation, and product validation. It should not be operated as a paid financial advisory service without legal, data licensing, privacy, and immigration review.
 
-Streamlit Cloud can use this compatibility entrypoint:
+Because the founder is considering venture creation while in F-1 student status, monetization, employment through a founder-owned company, and commercial operation should be reviewed with the university DSO and a qualified immigration attorney before launch. In the current stage, the safer positioning is free educational beta, academic validation, and responsible prototype development.
+
+## App Structure
+
+- `streamlit_app.py`: Main ToxiGuard-NORA stock valuation and portfolio analytics app.
+- `reit_analysis_module.py`: REIT-focused Ver.2 module used inside the main app.
+- `pages/01_REIT_Focused_Analysis.py`: Optional standalone REIT-focused page.
+- `personal_finance_engine.py`: Experimental Personal Finance calculation engine.
+- `personal_finance_module.py`: Personal Finance Streamlit UI module.
+- `advisor_report_engine.py`: Virtual client advisor report engine with PDF export support.
+- `data/virtual_clients.json`: Bilingual fictional client dataset with life situation, finance profile, portfolio sample, valuation upside, and real estate stress inputs.
+- `docs/`: REIT analysis blueprint and data dictionary.
+- `ontology/`: NORA core ontology and REIT sub-ontology.
+- `DATA_SOURCES.md`: Data source, API, limitation, and usage notice.
+- `PROFESSOR_REVIEW_AUDIT.md`: Pre-share audit for data provenance, warnings,
+  known limitations, and professor demo checklist.
+
+## Planned Analysis Areas
+
+- Stock valuation and portfolio analytics migrated from the Ver.1 reference logic.
+- Korean stock search expansion with approximately 100 major KOSPI/KOSDAQ companies searchable by company name or ticker.
+- Multi-currency portfolio view for US and Korean stocks, with USD/KRW conversion using a live FX rate when available and a manual fallback rate when live data is unavailable.
+- REIT sector classification: Retail, Industrial, Residential, Office, Healthcare, Data Center, Storage, Hotel, Diversified, Mortgage REITs.
+- REIT-specific valuation: dividend yield, price to FFO, AFFO payout ratio, NAV premium or discount.
+- Interest-rate sensitivity: relationship between REIT returns, Treasury yields, and financing conditions.
+- Portfolio analysis: REIT allocation, sector concentration, beta, covariance, correlation, diversification, cost basis, unrealized profit/loss, and personal return tracking.
+- Educational comparison: stock-style valuation versus REIT-style valuation.
+- Personal Finance test engine: net worth, cash flow, emergency fund, savings rate, debt-to-income, risk capacity, and financial health score.
+- Advisor Reports: 10 fictional bilingual client profiles, rule-based advisor interpretation, visual scorecards, portfolio/valuation samples, real estate stress signals, evidence mapping, decision actions, and downloadable selected/all-client PDF reports.
+- What-if Scenario Lab: stress-test income, expenses, cash shocks, portfolio moves, USD/KRW changes, interest-rate moves, and rate-sensitive allocation.
+- Calculation Details: transparent formulas, data inputs, assumptions, valuation contribution, covariance, correlation, and personal finance score breakdown.
+- Financial Diary: session-based portfolio and personal finance snapshots, current situation reports, user notes, next actions, PDF report export, and JSON download/restore.
+- Life Design entry screen: one-click first screen that frames ToxiGuard-NORA as a personal life and financial intelligence dashboard before entering the main app.
+- AI Coach: rule-based by default, with linked guidance cards for Portfolio, Personal Finance, Scenario, Diary, and Calculation Details plus an optional verified OpenAI Responses API layer for structured reasoning answers.
+- Structured Scenario Packet: downloadable JSON context that can later become an input format for an AI financial reasoning coach.
+
+## Streamlit Cloud
+
+Main file:
 
 ```text
 streamlit_app.py
 ```
 
-For Streamlit Cloud, set:
+Recommended secrets:
 
-- Branch: `main`
-- Main file path: `streamlit_app.py`
-
-## Test
-
-```bash
-npm test
+```toml
+FINNHUB_API_KEY = "your_finnhub_api_key_here"
+OPENAI_API_KEY = "your_openai_api_key_here"
+OPENAI_MODEL = "gpt-5-mini"
+OPENAI_REASONING_EFFORT = "medium"
+OPENAI_AI_DEFAULT_ON = "false"
 ```
 
-## GitHub
+The app can run with sample REIT data even when an API key is not configured.
 
-Recommended repository name:
-
-```text
-ly-scope-ver2
-```
-
-The project includes a GitHub Actions workflow at `.github/workflows/ci.yml`.
-It runs syntax checks and tests on pushes and pull requests to `main`.
-
-See `docs/GITHUB_SETUP.md` for the first push checklist.
-
-## Code Map
-
-- `src/app`: application orchestration and the decision pipeline
-- `src/core`: architecture metadata
-- `src/domain/user`: user profile and preferences
-- `src/domain/data`: normalized app data layer
-- `src/domain/financial-foundation`: net worth, cash flow, runway, debt, health score
-- `src/domain/goals`: goal normalization and progress checks
-- `src/domain/market-assets`: Ver.1 stock and REIT scoring ports
-- `src/domain/real-estate`: Ver.1 real estate scoring and property calculator ports
-- `src/domain/portfolio`: Ver.1-style portfolio snapshot
-- `src/domain/life-board`: Ver.1 Life Board context model
-- `src/domain/projection`: time-based cash and net worth projection
-- `src/domain/scenario`: scenario changes and comparison
-- `src/domain/risk-resilience`: risk flags and resilience score
-- `src/domain/evidence`: evidence signals
-- `src/domain/model`: deterministic recommendation model
-- `src/domain/ai-interpretation`: interpretation layer prepared for future AI integration
-- `src/domain/decision`: decision records
-- `src/domain/memory`: decision memory and learning summary
-- `src/storage`: browser-local persistence
-- `src/ui`: DOM rendering
-- `src/adapters/ver1`: Ver.1 inventory, copied-data loader, and migration bridge
-- `legacy/README.md`: local Ver.1 reference policy
-
-## Current Scope
-
-This first Ver.2 base keeps the app intentionally stable: local state, deterministic calculations, visible architecture boundaries, and tests for the decision pipeline. It is ready for Ver.1 logic migration without changing Ver.1.
+`OPENAI_API_KEY` is optional. Without it, AI Coach remains a local rule-based prototype. With it, users can enable a verified model mode that sends structured ToxiGuard-NORA context to OpenAI's Responses API and then passes the answer through local safety validation before display.
