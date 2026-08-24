@@ -4,7 +4,7 @@ LY-Scope-Ver.2 is the user-facing product name for the new personal decision int
 Current Streamlit deployment URL:
 
 ```text
-https://toxiguard-nora.streamlit.app/
+https://ly-scope-ver2.streamlit.app/
 ```
 
 Product class:
