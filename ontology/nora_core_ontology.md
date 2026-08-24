@@ -1,4 +1,4 @@
-# ToxiGuard-NORA Core Ontology
+# LY-Scope-Ver.2 Core Ontology
 
 Product class:
 
@@ -6,13 +6,13 @@ Product class:
 Personal Decision Intelligence Application
 ```
 
-Production app:
+Current Streamlit deployment URL:
 
 ```text
 https://toxiguard-nora.streamlit.app/
 ```
 
-ToxiGuard-NORA uses one core decision path:
+LY-Scope-Ver.2 uses one core decision path:
 
 ```text
 Customer Purpose -> Plan -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
@@ -50,4 +50,4 @@ Customer Purpose -> Plan -> Situation -> Data -> Model -> Evidence -> AI Interpr
 
 ## Product Rule
 
-ToxiGuard-NORA should not jump from data to a recommendation. The app must first ask what the customer wants, then test the plan and current situation before moving through data, model, evidence, interpretation, decision framing, and memory.
+LY-Scope-Ver.2 should not jump from data to a recommendation. The app must first ask what the customer wants, then test the plan and current situation before moving through data, model, evidence, interpretation, decision framing, and memory.
