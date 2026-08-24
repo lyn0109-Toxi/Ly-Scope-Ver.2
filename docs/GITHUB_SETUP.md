@@ -3,13 +3,13 @@
 Project name:
 
 ```text
-LY-Scope Ver.2
+LY-Scope-Ver.2
 ```
 
 Current public repository:
 
 ```text
-lyn0109-Toxi/ToxiGuard-NORA
+lyn0109-Toxi/LY-Scope-Ver.2
 ```
 
 ## Repository Role
@@ -32,8 +32,8 @@ After creating the empty GitHub repository, connect this local project:
 git init
 git branch -M main
 git add -- <confirmed project paths>
-git commit -m "Initialize LY-Scope Ver.2 app base"
-git remote add origin https://github.com/lyn0109-Toxi/ToxiGuard-NORA.git
+git commit -m "Initialize LY-Scope-Ver.2 app base"
+git remote add origin https://github.com/lyn0109-Toxi/LY-Scope-Ver.2.git
 git push -u origin main
 ```
 
@@ -52,7 +52,7 @@ The repository includes `.github/workflows/ci.yml`. GitHub will run syntax check
 
 ## Naming Convention
 
-- Product name: `LY-Scope Ver.2`
-- Repository slug: `ToxiGuard-NORA`
+- Product name: `LY-Scope-Ver.2`
+- Repository slug: `LY-Scope-Ver.2`
 - Package name: `ly-scope-ver2`
 - Main branch: `main`
