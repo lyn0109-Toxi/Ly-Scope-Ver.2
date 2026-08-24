@@ -1,6 +1,6 @@
 # Module Boundaries
 
-LY-Scope Ver.2는 의사결정 흐름을 코드 경계로 분리합니다.
+LY-Scope-Ver.2는 의사결정 흐름을 코드 경계로 분리합니다.
 
 ```text
 User -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
