@@ -59,6 +59,35 @@ KO_TRANSLATIONS = {
     "ToxiGuard-NORA is a Personal Decision Intelligence Application for financial foundation, goals, market assets, real estate, scenarios, risk, evidence, decisions, and memory.": "ToxiGuard-NORA는 재무 기반, 목표, 시장 자산, 부동산, 시나리오, 위험, 근거, 결정, 메모리를 연결하는 개인 의사결정 인텔리전스 앱입니다.",
     "See Your": "나의",
     "Financial Path": "금융 경로",
+    "What Does the Customer Want?": "고객은 무엇을 원하는가?",
+    "NORA begins with purpose, then reads the plan and current situation.": "NORA는 목적에서 시작해 플랜과 현재 상황을 읽습니다.",
+    "Customer Purpose": "고객 목적",
+    "Purpose": "목적",
+    "Plan": "플랜",
+    "Situation": "상황",
+    "What does the customer want?": "고객은 무엇을 원하는가?",
+    "Purpose path": "목적 경로",
+    "Current reality": "현재 현실",
+    "NORA Purpose Map": "NORA 목적 맵",
+    "Why": "이유",
+    "Path": "경로",
+    "Inputs": "입력",
+    "Proof": "증명",
+    "Review": "검토",
+    "NORA Purpose Control Center": "NORA 목적 컨트롤 센터",
+    "NORA starts with what the customer wants, then connects the plan, current situation, evidence, decision, and memory.": "NORA는 고객이 원하는 것에서 시작한 뒤 플랜, 현재 상황, 근거, 결정, 메모리를 연결합니다.",
+    "Clarify the desired outcome before looking at numbers.": "숫자를 보기 전에 원하는 결과를 먼저 분명히 합니다.",
+    "Turn purpose into a path, sequence, and review rhythm.": "목적을 경로, 순서, 점검 리듬으로 바꿉니다.",
+    "Read capital, income state, portfolio, real estate, liquidity, and risks.": "자본, 소득 상태, 포트폴리오, 부동산, 유동성, 위험을 읽습니다.",
+    "Keep formulas, assumptions, and warnings inspectable.": "공식, 가정, 경고를 확인 가능하게 유지합니다.",
+    "Frame next action without pretending to be professional advice.": "전문 조언처럼 단정하지 않고 다음 행동을 정리합니다.",
+    "Save reports, diary notes, and review history for later reasoning.": "리포트, 다이어리 노트, 검토 이력을 이후 추론을 위해 저장합니다.",
+    "Desired outcome, time horizon, values, constraints, and decision question.": "원하는 결과, 기간, 가치관, 제약조건, 의사결정 질문.",
+    "Goal path, required resources, sequence, and review rhythm.": "목표 경로, 필요한 자원, 실행 순서, 점검 리듬.",
+    "Current capital, income state, spending, portfolio, real estate, liquidity, and risks.": "현재 자본, 소득 상태, 지출, 포트폴리오, 부동산, 유동성, 위험.",
+    "Customer purpose comes before data.": "데이터보다 고객 목적이 먼저입니다.",
+    "NORA asks purpose first, then turns the plan and situation into evidence.": "NORA는 목적을 먼저 묻고, 플랜과 상황을 근거로 바꿉니다.",
+    "NORA starts with the customer purpose, then checks the plan and current situation before any model.": "NORA는 고객의 목적에서 시작하고, 어떤 모델보다 먼저 플랜과 현재 상황을 확인합니다.",
     "A calm visual map for current situation, direction, crisis signals, and memory.": "현재 상황, 목표 방향, 위험 신호, 메모리를 차분하게 보여주는 시각 맵입니다.",
     "Current Situation": "현재 상황",
     "Capital, cash flow, portfolio, and goal context in one view.": "자본, 현금흐름, 포트폴리오, 목표 맥락을 한눈에 봅니다.",
@@ -515,7 +544,7 @@ st.markdown(
     }
     .nora-path {
         display: grid;
-        grid-template-columns: repeat(7, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
         gap: 8px;
         align-items: stretch;
     }
@@ -543,6 +572,7 @@ st.markdown(
         width: 8px;
         height: 2px;
         background: linear-gradient(90deg, rgba(103,232,249,0.75), rgba(45,212,191,0.16));
+        display: none;
     }
     .nora-node:last-child::after {
         display: none;
@@ -606,7 +636,7 @@ st.markdown(
     }
     .nora-modules {
         display: grid;
-        grid-template-columns: repeat(9, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
         gap: 7px;
         margin-top: 14px;
     }
@@ -8099,7 +8129,7 @@ def render_nora_ontology(active_key: str) -> None:
         f'<div class="nora-ontology-title">{ui_html("NORA Ontology")}</div>'
         '</div>'
         '<div class="nora-ontology-caption">'
-        f'{ui_html("NORA keeps every screen tied to the same decision path: current situation, evidence, interpretation, action, and memory.")}'
+        f'{ui_html("NORA starts with the customer purpose, then checks the plan and current situation before any model.")}'
         f'<br>{ui_html("Hover or click each visual node to read its role.")}'
         '</div>'
         '</div>'
@@ -10773,12 +10803,12 @@ def render_life_entry_screen(standalone: bool = True) -> None:
     dashboard_href = escape(app_view_href("life"), quote=True)
     language = current_language()
     life_title = (
-        f'{ui_html("See Your")} <span>{ui_html("Financial Path")}</span>'
+        '고객은 <span>무엇을 원하는가?</span>'
         if language == "ko"
-        else 'See Your <span>Financial Path</span>'
+        else 'What Does the <span>Customer Want?</span>'
     )
     life_copy = ui(
-        "A calm visual map for current situation, direction, crisis signals, and memory."
+        "NORA begins with purpose, then reads the plan and current situation."
     )
     homepage_html = dedent(
         shell_style
@@ -10804,7 +10834,7 @@ def render_life_entry_screen(standalone: bool = True) -> None:
                 </div>
                 <div class="life-entry-grid">
                     <div>
-                        <div class="life-kicker">{ui_html('Your Life. Your Money. Your Future.')}</div>
+                        <div class="life-kicker">{ui_html('Customer purpose comes before data.')}</div>
                         <h1 class="life-title">{life_title}</h1>
                         <div class="life-copy">
                             {escape(life_copy)}
@@ -10815,20 +10845,20 @@ def render_life_entry_screen(standalone: bool = True) -> None:
                         </div>
                         <div class="home-signal-row" aria-label="ToxiGuard-NORA visual decision signals">
                             <div class="home-signal-card current" tabindex="0">
-                                <b>{ui_html('Current Situation')}</b>
-                                <span>{ui_html('Capital, cash flow, portfolio, and goal context in one view.')}</span>
+                                <b>{ui_html('Customer Purpose')}</b>
+                                <span>{ui_html('Desired outcome, time horizon, values, constraints, and decision question.')}</span>
                             </div>
                             <div class="home-signal-card direction" tabindex="0">
-                                <b>{ui_html('Direction')}</b>
-                                <span>{ui_html('What path needs attention next.')}</span>
+                                <b>{ui_html('Plan')}</b>
+                                <span>{ui_html('Goal path, required resources, sequence, and review rhythm.')}</span>
                             </div>
                             <div class="home-signal-card crisis" tabindex="0">
-                                <b>{ui_html('Crisis Signals')}</b>
-                                <span>{ui_html('Where liquidity, concentration, rates, or market shocks could interrupt the plan.')}</span>
+                                <b>{ui_html('Situation')}</b>
+                                <span>{ui_html('Current capital, income state, spending, portfolio, real estate, liquidity, and risks.')}</span>
                             </div>
                         </div>
                         <div class="home-proof">
-                            <span>{ui_html('Use the visual signals first. Details appear when you hover or click.')}</span>
+                            <span>{ui_html('NORA asks purpose first, then turns the plan and situation into evidence.')}</span>
                         </div>
                     </div>
                     <div class="life-map" aria-label="Life design map">
@@ -10846,46 +10876,46 @@ def render_life_entry_screen(standalone: bool = True) -> None:
                         <div class="life-spark three"></div>
                         <div class="life-orbit"></div>
                         <div class="life-orbit two"></div>
-                        <div class="life-core">{'<br>'.join(ui('Life Design Dashboard').split())}</div>
+                        <div class="life-core">{'<br>'.join(ui('NORA Purpose Map').split())}</div>
                         <div class="life-human"><div class="life-arms"></div></div>
-                        <div class="life-node income">{ui_html('Income')}<br>{ui_html('Cash Flow')}</div>
-                        <div class="life-node saving">{ui_html('Savings')}<br>{ui_html('Liquidity')}</div>
-                        <div class="life-node risk">{ui_html('Risk')}<br>{ui_html('Protection')}</div>
-                        <div class="life-node assets">{ui_html('Assets')}<br>{ui_html('Portfolio')}</div>
-                        <div class="life-node goals">{ui_html('Goals')}<br>{ui_html('Planning')}</div>
-                        <div class="life-node diary">{ui_html('Diary')}<br>{ui_html('Reflection')}</div>
+                        <div class="life-node income">{ui_html('Purpose')}<br>{ui_html('Why')}</div>
+                        <div class="life-node saving">{ui_html('Plan')}<br>{ui_html('Path')}</div>
+                        <div class="life-node risk">{ui_html('Situation')}<br>{ui_html('Now')}</div>
+                        <div class="life-node assets">{ui_html('Data')}<br>{ui_html('Inputs')}</div>
+                        <div class="life-node goals">{ui_html('Evidence')}<br>{ui_html('Proof')}</div>
+                        <div class="life-node diary">{ui_html('Memory')}<br>{ui_html('Review')}</div>
                     </div>
                 </div>
                 <div class="home-module-grid">
                     <div class="home-module-card" tabindex="0">
-                        <div class="home-module-icon">SV</div>
-                        <b>{ui_html('Stock Valuation')}</b>
-                        <span>{ui_html('Fair value, valuation status, and real market context.')}</span>
+                        <div class="home-module-icon">PR</div>
+                        <b>{ui_html('Purpose')}</b>
+                        <span>{ui_html('Desired outcome, time horizon, values, constraints, and decision question.')}</span>
                     </div>
                     <div class="home-module-card" tabindex="0">
-                        <div class="home-module-icon">RE</div>
-                        <b>{ui_html('REIT Analytics')}</b>
-                        <span>{ui_html('Income, real estate exposure, and rate sensitivity lens.')}</span>
+                        <div class="home-module-icon">PL</div>
+                        <b>{ui_html('Plan')}</b>
+                        <span>{ui_html('Goal path, required resources, sequence, and review rhythm.')}</span>
                     </div>
                     <div class="home-module-card" tabindex="0">
-                        <div class="home-module-icon">PD</div>
-                        <b>{ui_html('Portfolio Diversification')}</b>
-                        <span>{ui_html('Risk, covariance, correlation, and complementarity.')}</span>
+                        <div class="home-module-icon">ST</div>
+                        <b>{ui_html('Situation')}</b>
+                        <span>{ui_html('Current capital, income state, spending, portfolio, real estate, liquidity, and risks.')}</span>
                     </div>
                     <div class="home-module-card" tabindex="0">
-                        <div class="home-module-icon">82</div>
-                        <b>{ui_html('Financial Health')}</b>
-                        <span>{ui_html('Cash flow, savings, debt, liquidity, and capacity.')}</span>
+                        <div class="home-module-icon">EV</div>
+                        <b>{ui_html('Evidence')}</b>
+                        <span>{ui_html('Proof and assumptions')}</span>
                     </div>
                     <div class="home-module-card" tabindex="0">
-                        <div class="home-module-icon">FD</div>
-                        <b>{ui_html('Financial Diary')}</b>
-                        <span>{ui_html('Save snapshots, notes, next actions, and reflection.')}</span>
+                        <div class="home-module-icon">DC</div>
+                        <b>{ui_html('Decision')}</b>
+                        <span>{ui_html('Action direction')}</span>
                     </div>
                     <div class="home-module-card" tabindex="0">
-                        <div class="home-module-icon">AI</div>
-                        <b>{ui_html('AI Scenario Readiness')}</b>
-                        <span>{ui_html('Prepare structured context for future reasoning assistants.')}</span>
+                        <div class="home-module-icon">MM</div>
+                        <b>{ui_html('Memory')}</b>
+                        <span>{ui_html('Decision log')}</span>
                     </div>
                 </div>
             </div>
@@ -10938,12 +10968,28 @@ DESKTOP_ORBIT_ITEMS = [
 
 NORA_ONTOLOGY_STEPS = [
     {
-        "glyph": "USR",
-        "label": "User",
-        "tag": "Identity and goals",
-        "color": "#67e8f9",
-        "detail_en": "Life stage, income state, capital, family context, horizon, and decision question.",
-        "detail_ko": "생애 단계, 소득 상태, 자본, 가족 맥락, 기간, 의사결정 질문.",
+        "glyph": "WHY",
+        "label": "Customer Purpose",
+        "tag": "What does the customer want?",
+        "color": "#2dd4bf",
+        "detail_en": "The user's desired outcome, life priority, time horizon, constraints, and decision question.",
+        "detail_ko": "사용자가 원하는 결과, 삶의 우선순위, 기간, 제약조건, 의사결정 질문.",
+    },
+    {
+        "glyph": "PLN",
+        "label": "Plan",
+        "tag": "Purpose path",
+        "color": "#60a5fa",
+        "detail_en": "The path that connects the purpose to required capital, sequence, resources, and review rhythm.",
+        "detail_ko": "목적을 필요한 자본, 실행 순서, 자원, 점검 리듬과 연결하는 경로.",
+    },
+    {
+        "glyph": "NOW",
+        "label": "Situation",
+        "tag": "Current reality",
+        "color": "#fbbf24",
+        "detail_en": "The current reality: capital, income state, expenses, holdings, real estate exposure, liquidity, and risk pressure.",
+        "detail_ko": "현재 현실: 자본, 소득 상태, 지출, 보유자산, 부동산 노출, 유동성, 위험 압력.",
     },
     {
         "glyph": "DAT",
@@ -10996,11 +11042,12 @@ NORA_ONTOLOGY_STEPS = [
 ]
 
 NORA_MODULE_MAP = [
+    ("Customer Purpose", "life"),
+    ("Plan", "finance"),
+    ("Situation", "finance"),
     ("Financial Foundation", "finance"),
-    ("Goals", "finance"),
     ("Market Assets", "portfolio"),
     ("Real Estate", "reit"),
-    ("Projection", "scenario"),
     ("Scenario", "scenario"),
     ("Risk / Resilience", "scenario"),
     ("Evidence", "details"),
@@ -11227,23 +11274,22 @@ def render_mobile_view_summary(active_key: str) -> None:
 
 def render_life_compact_panel() -> None:
     compact_copy = ui(
-        "ToxiGuard-NORA connects user context, financial data, models, evidence, AI interpretation, decisions, and memory. Use the circular menu above to move between valuation, portfolio risk, real estate exposure, personal finance, scenario stress testing, AI readiness, calculation transparency, and diary reflection."
+        "NORA starts with what the customer wants, then connects the plan, current situation, evidence, decision, and memory."
     )
     st.markdown(
         f"""
         <div class="life-compact-panel">
-            <h1>{ui_html('Life Design Control Center')}</h1>
+            <h1>{ui_html('NORA Purpose Control Center')}</h1>
             <p>
                 {escape(compact_copy)}
             </p>
             <div class="life-compact-grid">
-                <div class="life-compact-card"><b>{ui_html('Income')}</b><span>{ui_html('Understand monthly cash flow before taking investment risk.')}</span></div>
-                <div class="life-compact-card"><b>{ui_html('Savings')}</b><span>{ui_html('Check liquidity and emergency capacity.')}</span></div>
-                <div class="life-compact-card"><b>{ui_html('Investments')}</b><span>{ui_html('Review stock value, beta, risk, and diversification.')}</span></div>
-                <div class="life-compact-card"><b>{ui_html('Real Estate')}</b><span>{ui_html('Study REIT and property-linked exposure.')}</span></div>
-                <div class="life-compact-card"><b>{ui_html('Scenario')}</b><span>{ui_html('Stress-test income, FX, rates, and portfolio shocks.')}</span></div>
-                <div class="life-compact-card"><b>{ui_html('AI Coach')}</b><span>{ui_html('Ask rule-based questions about readiness, risk, scenario, and memory.')}</span></div>
-                <div class="life-compact-card"><b>{ui_html('Diary')}</b><span>{ui_html('Save snapshots and reflect on next actions.')}</span></div>
+                <div class="life-compact-card"><b>{ui_html('Customer Purpose')}</b><span>{ui_html('Clarify the desired outcome before looking at numbers.')}</span></div>
+                <div class="life-compact-card"><b>{ui_html('Plan')}</b><span>{ui_html('Turn purpose into a path, sequence, and review rhythm.')}</span></div>
+                <div class="life-compact-card"><b>{ui_html('Situation')}</b><span>{ui_html('Read capital, income state, portfolio, real estate, liquidity, and risks.')}</span></div>
+                <div class="life-compact-card"><b>{ui_html('Evidence')}</b><span>{ui_html('Keep formulas, assumptions, and warnings inspectable.')}</span></div>
+                <div class="life-compact-card"><b>{ui_html('Decision')}</b><span>{ui_html('Frame next action without pretending to be professional advice.')}</span></div>
+                <div class="life-compact-card"><b>{ui_html('Memory')}</b><span>{ui_html('Save reports, diary notes, and review history for later reasoning.')}</span></div>
             </div>
         </div>
         """,
