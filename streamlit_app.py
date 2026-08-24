@@ -7374,7 +7374,7 @@ def app_view_href(view: str) -> str:
     params = {"view": view, "mode": "dashboard"}
     params.update(language_params())
     params.update(selection_state_params())
-    return f"?{urlencode(params)}"
+    return f"/?{urlencode(params)}"
 
 
 def app_detail_href(symbol: str) -> str:
@@ -7413,8 +7413,8 @@ def render_top_language_toggle() -> None:
         f"""
         <nav class="top-language-toggle" aria-label="Language switcher">
             <span class="language-toggle-mark" aria-hidden="true">Aa</span>
-            <a class="{en_active.strip()}" href="{en_href}" target="_self" title="Switch to English" aria-label="Switch to English">EN</a>
-            <a class="{ko_active.strip()}" href="{ko_href}" target="_self" title="한국어로 전환" aria-label="한국어로 전환">한</a>
+            <a class="{en_active.strip()}" href="{en_href}" target="_parent" title="Switch to English" aria-label="Switch to English">EN</a>
+            <a class="{ko_active.strip()}" href="{ko_href}" target="_parent" title="한국어로 전환" aria-label="한국어로 전환">한</a>
         </nav>
         """,
         unsafe_allow_html=True,
