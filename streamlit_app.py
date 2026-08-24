@@ -9193,6 +9193,9 @@ def language_toggle_href(language: str) -> str:
         focus = query_param_value("focus")
         if focus:
             params["focus"] = focus
+        client = query_param_value("client")
+        if current_view == "advisor" and client:
+            params["client"] = client
     return f"?{urlencode(params)}"
 
 
@@ -10655,12 +10658,297 @@ def render_advisor_report_style() -> None:
         .advisor-action-list li {
             margin: 8px 0;
         }
+        .advisor-scenario-board {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 16px 0 18px;
+        }
+        .advisor-scenario-card {
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            border-radius: 8px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.94);
+            color: #0f172a !important;
+            text-decoration: none !important;
+            box-shadow: 0 12px 26px rgba(15, 23, 42, 0.08);
+        }
+        .advisor-scenario-card:hover,
+        .advisor-scenario-card:focus,
+        .advisor-scenario-card.active {
+            border-color: rgba(14, 165, 233, 0.54);
+            background: linear-gradient(135deg, #f0fdfa, #eff6ff);
+        }
+        .advisor-scenario-card.risk {
+            border-color: rgba(239, 68, 68, 0.36);
+        }
+        .advisor-scenario-card.watch {
+            border-color: rgba(245, 158, 11, 0.40);
+        }
+        .advisor-scenario-card b {
+            display: block;
+            font-size: 0.88rem;
+            color: #0f172a;
+            line-height: 1.15;
+        }
+        .advisor-scenario-card span {
+            display: block;
+            margin-top: 4px;
+            color: #64748b;
+            font-size: 0.72rem;
+            line-height: 1.2;
+        }
+        .advisor-scenario-score {
+            margin-top: 10px;
+            height: 7px;
+            border-radius: 999px;
+            background: #e2e8f0;
+            overflow: hidden;
+        }
+        .advisor-scenario-score i {
+            display: block;
+            height: 100%;
+            width: var(--score);
+            background: linear-gradient(90deg, #22c55e, #0ea5e9);
+        }
+        .advisor-scenario-pill {
+            display: inline-flex !important;
+            width: auto;
+            margin-top: 9px !important;
+            padding: 5px 8px;
+            border-radius: 999px;
+            color: #0f172a !important;
+            background: #e0f2fe;
+            font-weight: 900;
+        }
+        .advisor-scenario-card.risk .advisor-scenario-pill {
+            background: #fee2e2;
+            color: #991b1b !important;
+        }
+        .advisor-scenario-card.watch .advisor-scenario-pill {
+            background: #fef3c7;
+            color: #92400e !important;
+        }
+        .advisor-stress-review {
+            display: grid;
+            grid-template-columns: 1.1fr 1.8fr;
+            gap: 12px;
+            margin: 10px 0 18px;
+        }
+        .advisor-stress-verdict,
+        .advisor-stress-points {
+            border-radius: 8px;
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            background: rgba(255, 255, 255, 0.94);
+            padding: 14px;
+        }
+        .advisor-stress-verdict b {
+            display: block;
+            color: #0f172a;
+            font-size: 1rem;
+        }
+        .advisor-stress-verdict strong {
+            display: inline-flex;
+            margin: 8px 0;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #e0f2fe;
+            color: #075985;
+        }
+        .advisor-stress-verdict.risk strong {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .advisor-stress-verdict.watch strong {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .advisor-stress-verdict p {
+            margin: 0;
+            color: #475569;
+            line-height: 1.42;
+            font-size: 0.9rem;
+        }
+        .advisor-stress-points {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 8px;
+        }
+        .advisor-stress-point {
+            border-radius: 8px;
+            background: #f8fafc;
+            padding: 10px;
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+        .advisor-stress-point span {
+            color: #64748b;
+            font-size: 0.72rem;
+            font-weight: 850;
+        }
+        .advisor-stress-point b {
+            display: block;
+            margin-top: 4px;
+            color: #0f172a;
+            font-size: 0.92rem;
+        }
         @media (max-width: 900px) {
             .advisor-report-grid {
                 grid-template-columns: 1fr;
             }
+            .advisor-scenario-board,
+            .advisor-stress-review,
+            .advisor-stress-points {
+                grid-template-columns: 1fr;
+            }
         }
         </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def advisor_money_compact(value: float, currency: str, language: str) -> str:
+    amount = float(value)
+    if currency == "KRW":
+        if abs(amount) >= 100_000_000:
+            return f"{amount / 100_000_000:.1f}억"
+        if abs(amount) >= 10_000:
+            return f"{amount / 10_000:.0f}만"
+        return f"{amount:,.0f}원"
+    if abs(amount) >= 1_000_000:
+        return f"${amount / 1_000_000:.1f}M"
+    return f"${amount / 1_000:.0f}k" if abs(amount) >= 1_000 else f"${amount:,.0f}"
+
+
+def advisor_client_href(client_id: str) -> str:
+    params = {"view": "advisor", "mode": "dashboard", "client": client_id}
+    params.update(language_params())
+    params.update(active_goal_params())
+    params.update(selection_state_params())
+    return f"?{urlencode(params)}"
+
+
+def advisor_scenario_review(report: dict[str, Any], language: str) -> dict[str, Any]:
+    result = report["result"]
+    client = report["client"]
+    stress_rows = report["stress"]
+    base_capital = float(stress_rows[0]["Capital"])
+    stress_20 = float(stress_rows[1]["Capital"])
+    stress_30 = float(stress_rows[2]["Capital"])
+    stress_40 = float(stress_rows[3]["Capital"])
+    stress_loss = base_capital - stress_40
+    stress_loss_pct = 0.0 if base_capital == 0 else stress_loss / abs(base_capital)
+    runway = float(result["emergency_months"])
+    required = float(result["required_runway_months"])
+    weakest_score = float(report["weakest_signal"]["score"])
+    no_income = bool(result.get("no_income_mode"))
+    monthly_surplus_negative = float(result["monthly_surplus"]) < 0
+    runway_gap = runway < required
+
+    if stress_40 <= 0 or report.get("status_key") == "at_risk" or (monthly_surplus_negative and (not no_income or runway_gap)):
+        tone = "risk"
+        verdict = "At Risk" if language == "en" else "위험"
+        summary = (
+            "The stress case threatens the financial base. Protection, debt, or liquidity repair should come before growth."
+            if language == "en"
+            else "스트레스 상황에서 재정 기반이 크게 흔들립니다. 성장보다 보호, 부채, 유동성 점검이 먼저입니다."
+        )
+    elif runway < required or weakest_score < 55 or stress_loss_pct >= 0.32:
+        tone = "watch"
+        verdict = "Watch" if language == "en" else "주의"
+        summary = (
+            "The client can survive the stress case, but the weakest signal should drive the next review."
+            if language == "en"
+            else "스트레스는 견딜 수 있지만 약한 신호가 분명합니다. 다음 검토는 가장 낮은 준비 신호에 집중해야 합니다."
+        )
+    else:
+        tone = "stable"
+        verdict = "Stable" if language == "en" else "안정"
+        summary = (
+            "The stress case remains usable. Continue scenario review and keep concentration limits visible."
+            if language == "en"
+            else "스트레스 이후에도 구조는 사용 가능합니다. 다만 시나리오 점검과 집중도 한도는 계속 보여야 합니다."
+        )
+
+    return {
+        "tone": tone,
+        "verdict": verdict,
+        "summary": summary,
+        "base": base_capital,
+        "stress_20": stress_20,
+        "stress_30": stress_30,
+        "stress_40": stress_40,
+        "stress_loss_pct": stress_loss_pct,
+        "runway": runway,
+        "required": required,
+        "weakest": report["weakest_signal"]["label"],
+        "weakest_score": weakest_score,
+        "currency": client.currency,
+    }
+
+
+def render_advisor_scenario_board(reports: list[dict[str, Any]], selected_id: str, language: str) -> None:
+    title = "Client Scenario Board" if language == "en" else "고객 시나리오 보드"
+    caption = (
+        "Pick a client, then read the stress verdict before opening the full report."
+        if language == "en"
+        else "고객을 선택한 뒤, 전체 리포트보다 먼저 스트레스 판정을 확인하세요."
+    )
+    cards: list[str] = []
+    for report in reports:
+        client = report["client"]
+        result = report["result"]
+        review = advisor_scenario_review(report, language)
+        score = max(0.0, min(100.0, float(result["planning_health_score"])))
+        active_class = " active" if client.client_id == selected_id else ""
+        cards.append(
+            f'<a class="advisor-scenario-card {escape(review["tone"])}{active_class}" '
+            f'href="{escape(advisor_client_href(client.client_id), quote=True)}" target="_self">'
+            f'<b>{escape(client.client_id)} · {escape(client.name.split()[0])}</b>'
+            f'<span>{escape(client.text("segment", language))}</span>'
+            f'<span class="advisor-scenario-pill">{escape(review["verdict"])}</span>'
+            f'<div class="advisor-scenario-score"><i style="--score: {score:.0f}%;"></i></div>'
+            f'<span>{escape(advisor_money_compact(review["stress_40"], client.currency, language))} @ -40%</span>'
+            '</a>'
+        )
+
+    st.markdown(f"### {escape(title)}")
+    st.caption(caption)
+    st.markdown(
+        f'<div class="advisor-scenario-board">{"".join(cards)}</div>',
+        unsafe_allow_html=True,
+    )
+
+
+def render_selected_client_stress_review(report: dict[str, Any], language: str) -> None:
+    review = advisor_scenario_review(report, language)
+    labels = (
+        ["Base", "-20%", "-30%", "-40%"]
+        if language == "en"
+        else ["기준", "-20%", "-30%", "-40%"]
+    )
+    values = [review["base"], review["stress_20"], review["stress_30"], review["stress_40"]]
+    point_cards = "".join(
+        f'<div class="advisor-stress-point"><span>{escape(label_text)}</span>'
+        f'<b>{escape(advisor_money_compact(value, review["currency"], language))}</b></div>'
+        for label_text, value in zip(labels, values)
+    )
+    title = "Scenario Verdict" if language == "en" else "시나리오 판정"
+    loss_label = "Stress loss" if language == "en" else "스트레스 손실"
+    weakest_label = "Weakest signal" if language == "en" else "가장 약한 신호"
+    runway_label = "Runway" if language == "en" else "생존기간"
+    month_unit = "mo" if language == "en" else "개월"
+    st.markdown(
+        f"""
+        <section class="advisor-stress-review">
+            <div class="advisor-stress-verdict {escape(review['tone'])}">
+                <b>{escape(title)}</b>
+                <strong>{escape(review['verdict'])}</strong>
+                <p>{escape(review['summary'])}</p>
+                <p>{escape(loss_label)}: {float(review['stress_loss_pct']) * 100:.1f}% · {escape(weakest_label)}: {escape(str(review['weakest']))} · {escape(runway_label)}: {float(review['runway']):.1f}/{float(review['required']):.1f}{escape(month_unit)}</p>
+            </div>
+            <div class="advisor-stress-points">{point_cards}</div>
+        </section>
         """,
         unsafe_allow_html=True,
     )
@@ -10679,6 +10967,13 @@ def render_advisor_reports_tab() -> None:
     advisor_language = current_language()
     reports = build_all_client_reports(language=advisor_language)
     report_map = {report["client"].client_id: report for report in reports}
+    client_ids = list(report_map.keys())
+    requested_client_id = query_param_value("client")
+    if requested_client_id in report_map:
+        st.session_state.advisor_selected_client = requested_client_id
+    default_client_id = st.session_state.get("advisor_selected_client", client_ids[0])
+    if default_client_id not in report_map:
+        default_client_id = client_ids[0]
     score_columns = {
         "client": advisor_label("client", advisor_language),
         "name": advisor_label("name", advisor_language),
@@ -10706,6 +11001,7 @@ def render_advisor_reports_tab() -> None:
     st.caption(
         ui("These fictional reports use the existing Personal Finance engine plus a rule-based advisor layer. They are educational examples, not professional advice.")
     )
+    render_advisor_scenario_board(reports, default_client_id, advisor_language)
 
     score_rows = []
     for item in reports:
@@ -10771,7 +11067,8 @@ def render_advisor_reports_tab() -> None:
 
     selected_id = st.selectbox(
         ui("Select virtual client"),
-        options=list(report_map.keys()),
+        options=client_ids,
+        index=client_ids.index(default_client_id),
         format_func=lambda value: f"{value} - {report_map[value]['client'].name} | {report_map[value]['client'].text('segment', advisor_language)}",
         key="advisor_selected_client",
     )
@@ -10818,6 +11115,7 @@ def render_advisor_reports_tab() -> None:
         """,
         unsafe_allow_html=True,
     )
+    render_selected_client_stress_review(report, advisor_language)
     st.markdown(f'<div class="portfolio-score-grid">{score_cards}</div>', unsafe_allow_html=True)
 
     visual_cols = st.columns(2)
