@@ -1,5 +1,11 @@
 # ToxiGuard-NORA Core Ontology
 
+Product class:
+
+```text
+Personal Decision Intelligence Application
+```
+
 Production app:
 
 ```text
