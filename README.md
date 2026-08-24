@@ -1,7 +1,7 @@
-# ToxiGuard-NORA
+# LY-Scope-Ver.2
 
-ToxiGuard-NORA is the user-facing product and deployment name for the new LY-Scope Ver.2 architecture.
-The production app is:
+LY-Scope-Ver.2 is the user-facing product name for the new personal decision intelligence architecture.
+Current Streamlit deployment URL:
 
 ```text
 https://toxiguard-nora.streamlit.app/
@@ -19,7 +19,7 @@ Ver.1 remains a reference prototype only. Ver.2 should not modify Ver.1 directly
 
 ## Core Ontology
 
-ToxiGuard-NORA must keep this decision path visible and intact:
+LY-Scope-Ver.2 must keep this decision path visible and intact:
 
 ```text
 Customer Purpose -> Plan -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
@@ -56,7 +56,7 @@ This app is designed as an educational personal financial intelligence platform,
 
 ## AI Reasoning Era Direction
 
-ToxiGuard-NORA is being prepared as an early prototype for the coming AI reasoning and agentic intelligence era. The product direction is not to become a stock picker. It is to become a structured financial reasoning environment where a future AI assistant can help users ask better questions, understand trade-offs, and review the assumptions behind financial decisions.
+LY-Scope-Ver.2 is being prepared as an early prototype for the coming AI reasoning and agentic intelligence era. The product direction is not to become a stock picker. It is to become a structured financial reasoning environment where a future AI assistant can help users ask better questions, understand trade-offs, and review the assumptions behind financial decisions.
 
 Future-facing design principles:
 
@@ -65,7 +65,7 @@ Future-facing design principles:
 - **Scenario support:** users should be able to ask what happens if interest rates change, income falls, portfolio value declines, REIT dividends change, or a major life expense appears.
 - **Memory with privacy:** the Financial Diary is a seed for user-controlled financial memory. It should support reflection without requiring sensitive account connections in the prototype stage.
 - **Explainability:** Calculation Details should act as a reasoning audit trail, showing formulas, inputs, assumptions, limitations, and data sources.
-- **Voice and agent readiness:** future interfaces may use AirPods, mobile assistants, or AI agents. ToxiGuard-NORA should support short summaries, deeper explanations, and detailed evidence views.
+- **Voice and agent readiness:** future interfaces may use AirPods, mobile assistants, or AI agents. LY-Scope-Ver.2 should support short summaries, deeper explanations, and detailed evidence views.
 
 ## Current Preparation Stage
 
@@ -75,7 +75,7 @@ Because the founder is considering venture creation while in F-1 student status,
 
 ## App Structure
 
-- `streamlit_app.py`: Main ToxiGuard-NORA stock valuation and portfolio analytics app.
+- `streamlit_app.py`: Main LY-Scope-Ver.2 stock valuation and portfolio analytics app.
 - `reit_analysis_module.py`: REIT-focused Ver.2 module used inside the main app.
 - `pages/01_REIT_Focused_Analysis.py`: Optional standalone REIT-focused page.
 - `personal_finance_engine.py`: Experimental Personal Finance calculation engine.
@@ -104,7 +104,7 @@ Because the founder is considering venture creation while in F-1 student status,
 - What-if Scenario Lab: stress-test income, expenses, cash shocks, portfolio moves, USD/KRW changes, interest-rate moves, and rate-sensitive allocation.
 - Calculation Details: transparent formulas, data inputs, assumptions, valuation contribution, covariance, correlation, and personal finance score breakdown.
 - Financial Diary: session-based portfolio and personal finance snapshots, current situation reports, user notes, next actions, PDF report export, and JSON download/restore.
-- Life Design entry screen: one-click first screen that frames ToxiGuard-NORA as a personal life and financial intelligence dashboard before entering the main app.
+- Life Design entry screen: one-click first screen that frames LY-Scope-Ver.2 as a personal life and financial intelligence dashboard before entering the main app.
 - AI Coach: rule-based by default, with linked guidance cards for Portfolio, Personal Finance, Scenario, Diary, and Calculation Details plus an optional verified OpenAI Responses API layer for structured reasoning answers.
 - Structured Scenario Packet: downloadable JSON context that can later become an input format for an AI financial reasoning coach.
 
@@ -128,4 +128,4 @@ OPENAI_AI_DEFAULT_ON = "false"
 
 The app can run with sample REIT data even when an API key is not configured.
 
-`OPENAI_API_KEY` is optional. Without it, AI Coach remains a local rule-based prototype. With it, users can enable a verified model mode that sends structured ToxiGuard-NORA context to OpenAI's Responses API and then passes the answer through local safety validation before display.
+`OPENAI_API_KEY` is optional. Without it, AI Coach remains a local rule-based prototype. With it, users can enable a verified model mode that sends structured LY-Scope-Ver.2 context to OpenAI's Responses API and then passes the answer through local safety validation before display.
