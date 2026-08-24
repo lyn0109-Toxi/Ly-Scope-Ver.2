@@ -1,4 +1,4 @@
-# LY-Scope Ver.2 Structural Design
+# LY-Scope-Ver.2 Structural Design
 
 This document captures the current Ver.2 information architecture and screen structure.
 
