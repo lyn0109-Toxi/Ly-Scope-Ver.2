@@ -1,8 +1,8 @@
-# ToxiGuard-NORA Product Blueprint
+# LY-Scope-Ver.2 Product Blueprint
 
 ## Canonical Definition
 
-ToxiGuard-NORA is the user-facing product and deployment name for the new LY-Scope Ver.2 architecture.
+LY-Scope-Ver.2 is the user-facing product name for the new personal decision intelligence architecture.
 
 Product class:
 
@@ -10,7 +10,7 @@ Product class:
 Personal Decision Intelligence Application
 ```
 
-Production app:
+Current Streamlit deployment URL:
 
 ```text
 https://toxiguard-nora.streamlit.app/
@@ -28,7 +28,7 @@ LY-Scope Ver.1 remains a reference prototype only. Ver.2 should not modify Ver.1
 
 Most customers do not need more raw numbers first. They need to understand their current situation, the direction needed to reach a goal, the risks that could interrupt that path, and the evidence behind the interpretation.
 
-ToxiGuard-NORA should turn financial fragments into a structured decision memory:
+LY-Scope-Ver.2 should turn financial fragments into a structured decision memory:
 
 - What is the user's life and financial context?
 - What data is known, missing, delayed, or assumed?
@@ -72,7 +72,7 @@ Primary need: clear audit trail, fictional client reports, formula transparency,
 
 ## Customer Promise
 
-ToxiGuard-NORA should help the user see three things before acting:
+LY-Scope-Ver.2 should help the user see three things before acting:
 
 - Current situation: where the user stands now.
 - Direction: what path is needed to move toward the goal.
