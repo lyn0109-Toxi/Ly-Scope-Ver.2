@@ -5,6 +5,7 @@ import base64
 from html import escape
 from datetime import datetime, timedelta
 from pathlib import Path
+from textwrap import dedent
 from typing import Any
 from urllib.parse import urlencode
 
@@ -52,9 +53,10 @@ KO_TRANSLATIONS = {
     "Please enter a comment first.": "먼저 의견을 입력해 주세요.",
     "Saved comments": "저장된 의견",
     "Your Life. Your Money. Your Future.": "당신의 삶. 당신의 돈. 당신의 미래.",
+    "Personal Decision Intelligence Application": "개인 의사결정 인텔리전스 앱",
     "Design Your": "설계하세요",
     "Financial Life": "금융 생활",
-    "ToxiGuard-NORA Ver.2 brings stock valuation, portfolio diversification, REIT analytics, personal finance, financial diary reflection, and AI-ready scenario reasoning into one clear life dashboard.": "ToxiGuard-NORA Ver.2는 주식 가치평가, 포트폴리오 분산, REIT 분석, 개인 재무, 금융 다이어리, AI-ready 시나리오 사고를 하나의 명확한 라이프 대시보드로 연결합니다.",
+    "ToxiGuard-NORA is a Personal Decision Intelligence Application for financial foundation, goals, market assets, real estate, scenarios, risk, evidence, decisions, and memory.": "ToxiGuard-NORA는 재무 기반, 목표, 시장 자산, 부동산, 시나리오, 위험, 근거, 결정, 메모리를 연결하는 개인 의사결정 인텔리전스 앱입니다.",
     "Start Your Life Map": "라이프 맵 시작",
     "Explore Dashboard": "대시보드 살펴보기",
     "Enter ToxiGuard-NORA Dashboard": "ToxiGuard-NORA 대시보드로 들어가기",
@@ -205,7 +207,7 @@ KO_TRANSLATIONS = {
     "Next mobile step": "다음 모바일 단계",
     "Review the current screen, then ask AI Coach for a linked summary.": "현재 화면을 검토한 뒤 AI 코치에게 연결 요약을 요청하세요.",
     "Life Design Control Center": "라이프 설계 컨트롤 센터",
-    "ToxiGuard-NORA connects market analysis with personal financial decisions. Use the circular menu above to move between valuation, portfolio risk, real estate exposure, personal finance, scenario stress testing, AI readiness, calculation transparency, and diary reflection.": "ToxiGuard-NORA는 시장 분석과 개인 금융 의사결정을 연결합니다. 위 원형 메뉴로 가치평가, 포트폴리오 위험, 부동산 노출, 개인 재무, 시나리오 스트레스 테스트, AI 준비도, 계산 투명성, 다이어리 회고를 이동하세요.",
+    "ToxiGuard-NORA connects user context, financial data, models, evidence, AI interpretation, decisions, and memory. Use the circular menu above to move between valuation, portfolio risk, real estate exposure, personal finance, scenario stress testing, AI readiness, calculation transparency, and diary reflection.": "ToxiGuard-NORA는 사용자 맥락, 금융 데이터, 모델, 근거, AI 해석, 결정, 메모리를 연결합니다. 위 원형 메뉴로 가치평가, 포트폴리오 위험, 부동산 노출, 개인 재무, 시나리오 스트레스 테스트, AI 준비도, 계산 투명성, 다이어리 회고를 이동하세요.",
     "Understand monthly cash flow before taking investment risk.": "투자 위험을 감수하기 전 월 현금흐름을 이해하세요.",
     "Check liquidity and emergency capacity.": "유동성과 비상 대응력을 확인하세요.",
     "Investments": "투자",
@@ -681,8 +683,10 @@ st.markdown(
         font-size: 1.05rem;
         font-weight: 850;
         margin-top: 20px;
-        letter-spacing: 0.46em;
+        letter-spacing: 0;
         text-align: center;
+        max-width: 720px;
+        overflow-wrap: anywhere;
     }
     .brand-badge {
         color: #fff7ed;
@@ -1197,7 +1201,7 @@ st.markdown(
             text-align: center;
         }
         .brand-subtitle {
-            letter-spacing: 0.18em;
+            letter-spacing: 0;
             line-height: 1.5;
         }
         .valuation-radar-card {
@@ -2917,6 +2921,10 @@ st.markdown(
             radial-gradient(circle at 30% 8%, rgba(34, 211, 238, 0.16), transparent 26%),
             linear-gradient(180deg, #0b1220 0%, #111827 100%);
         border-right: 1px solid rgba(148, 163, 184, 0.22);
+    }
+    section[data-testid="stSidebar"] div[data-testid="stSidebarNav"],
+    section[data-testid="stSidebar"] nav[data-testid="stSidebarNav"] {
+        display: none !important;
     }
     section[data-testid="stSidebar"] h1,
     section[data-testid="stSidebar"] h2,
@@ -4804,6 +4812,7 @@ EQUITY_RISK_PREMIUM = DEFAULT_EQUITY_RISK_PREMIUM
 GUIDE_PDF_PATH = Path(__file__).with_name("ToxiGuard-NORA_User_Guide.pdf")
 GUIDE_SCREENSHOT_DIR = Path(__file__).with_name("guide_assets") / "screenshots"
 HOMEPAGE_BG_PATH = Path(__file__).parent / "assets" / "homepage_life_design.png"
+USE_HOMEPAGE_REFERENCE_IMAGE = False
 DEVELOPER_NAME = "Young Lee"
 DEVELOPER_EMAIL = "lyn0109@gmail.com"
 LIFE_ENTRY_VERSION = "life-homepage-2026-05-15-v4"
@@ -10328,7 +10337,9 @@ def render_life_entry_screen(standalone: bool = True) -> None:
         if standalone
         else ""
     )
-    homepage_bg = image_data_uri(str(HOMEPAGE_BG_PATH))
+    # The legacy bitmap has embedded LY-STScope copy, so the live HTML version
+    # is safer until a ToxiGuard-NORA-specific image is generated.
+    homepage_bg = image_data_uri(str(HOMEPAGE_BG_PATH)) if USE_HOMEPAGE_REFERENCE_IMAGE else ""
     homepage_class = " has-home-image" if homepage_bg else ""
     homepage_image = (
         f'<img class="homepage-bg-img" src="{homepage_bg}" alt="ToxiGuard-NORA life design homepage preview">'
@@ -10343,9 +10354,9 @@ def render_life_entry_screen(standalone: bool = True) -> None:
         else 'Design Your <span>Financial Life</span>'
     )
     life_copy = ui(
-        "ToxiGuard-NORA Ver.2 brings stock valuation, portfolio diversification, REIT analytics, personal finance, financial diary reflection, and AI-ready scenario reasoning into one clear life dashboard."
+        "ToxiGuard-NORA is a Personal Decision Intelligence Application for financial foundation, goals, market assets, real estate, scenarios, risk, evidence, decisions, and memory."
     )
-    st.markdown(
+    homepage_html = dedent(
         shell_style
         + f"""
         <div class="life-entry-wrap">
@@ -10451,8 +10462,9 @@ def render_life_entry_screen(standalone: bool = True) -> None:
             </div>
         </div>
         """,
-        unsafe_allow_html=True,
     )
+    homepage_html = "\n".join(line.strip() for line in homepage_html.splitlines() if line.strip())
+    st.markdown(homepage_html, unsafe_allow_html=True)
 
     st.caption(
         ui(
@@ -10783,7 +10795,7 @@ def render_mobile_view_summary(active_key: str) -> None:
 
 def render_life_compact_panel() -> None:
     compact_copy = ui(
-        "ToxiGuard-NORA connects market analysis with personal financial decisions. Use the circular menu above to move between valuation, portfolio risk, real estate exposure, personal finance, scenario stress testing, AI readiness, calculation transparency, and diary reflection."
+        "ToxiGuard-NORA connects user context, financial data, models, evidence, AI interpretation, decisions, and memory. Use the circular menu above to move between valuation, portfolio risk, real estate exposure, personal finance, scenario stress testing, AI readiness, calculation transparency, and diary reflection."
     )
     st.markdown(
         f"""
@@ -10814,6 +10826,11 @@ def render_main_app() -> None:
     render_sidebar()
 
     search_href = escape(app_view_href("search"), quote=True)
+    brand_subtitle = (
+        "개인 의사결정 인텔리전스"
+        if current_language() == "ko"
+        else "PERSONAL DECISION INTELLIGENCE"
+    )
     st.markdown(
         f"""
         <div class="brand-header">
@@ -10821,7 +10838,7 @@ def render_main_app() -> None:
                 <div class="brand-icon" aria-hidden="true"></div>
                 <div>
                     <div class="brand-name">ToxiGuard<span class="scope-accent">-NORA</span></div>
-                    <div class="brand-subtitle">O N T O L O G Y&nbsp;&nbsp; R I S K&nbsp;&nbsp; A D V I S O R</div>
+                    <div class="brand-subtitle">{brand_subtitle}</div>
                 </div>
             </div>
             <a class="brand-badge brand-search-badge" href="{search_href}" target="_self" aria-label="{ui_html('Open Search')}">
