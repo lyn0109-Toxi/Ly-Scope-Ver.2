@@ -10969,9 +10969,8 @@ def render_advisor_reports_tab() -> None:
     report_map = {report["client"].client_id: report for report in reports}
     client_ids = list(report_map.keys())
     requested_client_id = query_param_value("client")
-    if requested_client_id in report_map:
-        st.session_state.advisor_selected_client = requested_client_id
-    default_client_id = st.session_state.get("advisor_selected_client", client_ids[0])
+    session_client_id = st.session_state.get("advisor_selected_client_id", client_ids[0])
+    default_client_id = requested_client_id if requested_client_id in report_map else session_client_id
     if default_client_id not in report_map:
         default_client_id = client_ids[0]
     score_columns = {
@@ -11070,8 +11069,9 @@ def render_advisor_reports_tab() -> None:
         options=client_ids,
         index=client_ids.index(default_client_id),
         format_func=lambda value: f"{value} - {report_map[value]['client'].name} | {report_map[value]['client'].text('segment', advisor_language)}",
-        key="advisor_selected_client",
+        key=f"advisor_selected_client_select_{default_client_id}",
     )
+    st.session_state.advisor_selected_client_id = selected_id
     report = report_map[selected_id]
     client = report["client"]
     result = report["result"]
