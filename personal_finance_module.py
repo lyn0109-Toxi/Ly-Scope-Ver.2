@@ -31,6 +31,10 @@ KO_TRANSLATIONS = {
     "Understand liquidity, debt pressure, savings behavior, goals, and investment risk capacity before making portfolio decisions.": "포트폴리오 결정을 내리기 전에 유동성, 부채 압박, 저축 습관, 목표, 투자 위험 감당력을 이해하세요.",
     "Educational prototype only. Do not enter sensitive personal financial information. This module does not provide financial, tax, legal, or investment advice.": "교육용 프로토타입입니다. 민감한 개인 금융 정보를 입력하지 마세요. 이 모듈은 금융, 세무, 법률, 투자 조언을 제공하지 않습니다.",
     "Financial Inputs": "재무 입력",
+    "Apply Situation Calculation": "상황 계산 다시 적용",
+    "Calculation Applied": "계산 반영 완료",
+    "Latest inputs are reflected in the visual result, scores, and AI Coach context.": "최신 입력값이 시각 결과, 점수, AI Coach 기준에 반영되어 있습니다.",
+    "Inputs changed. Click Apply Situation Calculation to refresh the visual result, scores, and AI Coach context.": "입력값이 바뀌었습니다. 시각 결과, 점수, AI Coach 기준을 새로 반영하려면 상황 계산 다시 적용을 누르세요.",
     "Life Stage Setup": "라이프 단계 설정",
     "Display Currency": "표시 통화",
     "Runway Target Months": "목표 생존기간",
@@ -139,6 +143,7 @@ def apply_no_income_study_example() -> None:
             "pf_current_goal_savings": 300_000_000.0,
             "pf_runway_target_months": 24.0,
             "pf_study_months_remaining": 24.0,
+            "_personal_finance_force_apply": True,
         }
     )
 
@@ -171,6 +176,31 @@ def pf_metric(label: str, value: str, color: str = "#0f172a") -> None:
         """,
         unsafe_allow_html=True,
     )
+
+
+def finance_profile_signature(profile: PersonalFinanceProfile) -> tuple[tuple[str, float], ...]:
+    return tuple(
+        (key, round(float(value), 6))
+        for key, value in sorted(profile.__dict__.items())
+    )
+
+
+def store_personal_finance_calculation(profile: PersonalFinanceProfile) -> dict[str, object]:
+    result = calculate_personal_finance(profile)
+    st.session_state["last_personal_finance_profile"] = profile.__dict__.copy()
+    st.session_state["last_personal_finance_result"] = result
+    st.session_state["last_personal_finance_signature"] = finance_profile_signature(profile)
+    return result
+
+
+def applied_personal_finance_profile(fallback: PersonalFinanceProfile) -> PersonalFinanceProfile:
+    stored_profile = st.session_state.get("last_personal_finance_profile")
+    if isinstance(stored_profile, dict):
+        try:
+            return PersonalFinanceProfile(**stored_profile)
+        except TypeError:
+            return fallback
+    return fallback
 
 
 def mobile_finance_deck(result: dict[str, float | list[str]]) -> None:
@@ -377,9 +407,46 @@ def render_personal_finance() -> None:
         runway_target_months=runway_target_months,
         study_months_remaining=study_months_remaining,
     )
-    result = calculate_personal_finance(profile)
-    st.session_state["last_personal_finance_profile"] = profile.__dict__
-    st.session_state["last_personal_finance_result"] = result
+    current_signature = finance_profile_signature(profile)
+    calculation_missing = (
+        "last_personal_finance_result" not in st.session_state
+        or "last_personal_finance_signature" not in st.session_state
+    )
+    force_apply = bool(st.session_state.pop("_personal_finance_force_apply", False))
+    if calculation_missing or force_apply:
+        store_personal_finance_calculation(profile)
+
+    control_cols = st.columns([2.3, 1])
+    with control_cols[1]:
+        apply_clicked = st.button(
+            tr("Apply Situation Calculation"),
+            key="apply_situation_calculation",
+            type="primary",
+            width="stretch",
+        )
+    if apply_clicked:
+        store_personal_finance_calculation(profile)
+
+    applied_signature = st.session_state.get("last_personal_finance_signature")
+    has_pending_inputs = current_signature != applied_signature
+    with control_cols[0]:
+        if has_pending_inputs:
+            st.warning(
+                tr(
+                    "Inputs changed. Click Apply Situation Calculation to refresh the visual result, scores, and AI Coach context."
+                )
+            )
+        elif apply_clicked:
+            st.success(tr("Calculation Applied"))
+        else:
+            st.caption(
+                tr(
+                    "Latest inputs are reflected in the visual result, scores, and AI Coach context."
+                )
+            )
+
+    result = st.session_state.get("last_personal_finance_result") or store_personal_finance_calculation(profile)
+    applied_profile = applied_personal_finance_profile(profile)
 
     with mobile_summary_slot:
         mobile_finance_deck(result)
@@ -422,7 +489,7 @@ def render_personal_finance() -> None:
         with gap_cols[2]:
             pf_metric(tr("Risk Capacity"), f"{float(result['risk_capacity_score']):.1f}/100")
 
-    render_visual_situation_map(profile, result)
+    render_visual_situation_map(applied_profile, result)
 
     st.subheader(tr("Health Score Breakdown"))
     scores = pd.DataFrame(
