@@ -127,6 +127,7 @@ KO_TRANSLATIONS = {
     "Ticker or company name": "티커 또는 회사명",
     "Ticker or company name: NVDA, AAPL, 삼성전자, NAVER": "티커 또는 회사명: NVDA, AAPL, 삼성전자, NAVER",
     "Search and Value Stock": "검색 및 가치평가",
+    "Price unavailable": "가격 미확보",
     "Portfolio valuation lens": "포트폴리오 가치평가 렌즈",
     "Portfolio valuation basis": "포트폴리오 가치평가 근거",
     "Upside": "상승여력",
@@ -6473,38 +6474,60 @@ def recalculate_loaded_stocks() -> int:
     return count
 
 
+def positive_float(value: Any) -> float | None:
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError):
+        return None
+    return parsed if parsed > 0 else None
+
+
 def load_korean_stock(query: str) -> dict[str, Any]:
     symbol = resolve_korean_ticker(query)
     if not symbol:
         raise ValueError(f"{query} is not recognized as a Korean stock.")
 
     ticker = yf.Ticker(symbol)
-    history = load_price_history_from_yahoo(symbol, days=30)
-    if history.empty:
-        raise ValueError(f"No Yahoo Finance price history was returned for {symbol}.")
-
-    history = normalize_price_history(history)
-    closes = history["Close"].astype(float).tolist()
-    price = closes[-1] if closes else 0.0
-    if price <= 0:
-        raise ValueError(f"No current price was returned for {symbol}.")
-
-    previous = closes[-2] if len(closes) >= 2 else price
-    change_pct = ((price - previous) / previous * 100) if previous else 0.0
-
     try:
         info = ticker.get_info()
     except Exception:
         info = {}
 
+    history = normalize_price_history(load_price_history_from_yahoo(symbol, days=30))
+    if history.empty:
+        try:
+            history = normalize_price_history(
+                ticker.history(period="30d", interval="1d", auto_adjust=True).reset_index()
+            )
+        except Exception:
+            history = pd.DataFrame()
+
+    closes = history["Close"].astype(float).tolist() if not history.empty and "Close" in history.columns else []
+    price = closes[-1] if closes else None
+    if price is None:
+        for key in ("currentPrice", "regularMarketPrice", "previousClose", "open"):
+            price = positive_float(info.get(key))
+            if price is not None:
+                break
+
+    previous = closes[-2] if len(closes) >= 2 else positive_float(info.get("previousClose")) or price
+    change_pct = ((price - previous) / previous * 100) if price and previous else 0.0
+    data_quality = (
+        "Live Yahoo price history"
+        if closes
+        else "Yahoo profile price"
+        if price
+        else "Profile-only fallback; live Yahoo price unavailable"
+    )
+
     market_cap = info.get("marketCap")
     market_cap_millions = float(market_cap) / 1_000_000 if market_cap else None
-    trailing_eps = info.get("trailingEps") or 0
-    book_value = info.get("bookValue") or 0
-    dividend_rate = info.get("dividendRate") or 0
+    trailing_eps = positive_float(info.get("trailingEps")) or 0
+    book_value = positive_float(info.get("bookValue")) or 0
+    dividend_rate = positive_float(info.get("dividendRate")) or 0
     dividend_yield = (float(info.get("dividendYield") or 0) * 100)
-    pe = info.get("trailingPE") or info.get("forwardPE")
-    beta = info.get("beta") or 1.0
+    pe = positive_float(info.get("trailingPE")) or positive_float(info.get("forwardPE"))
+    beta = positive_float(info.get("beta")) or 1.0
     growth_rate = info.get("earningsGrowth")
     if growth_rate is None:
         growth_rate = info.get("revenueGrowth")
@@ -6537,6 +6560,7 @@ def load_korean_stock(query: str) -> dict[str, Any]:
         "peers": [],
         "market": "Korea",
         "currency": "KRW",
+        "data_quality": data_quality,
     }
     return calculate_valuation(stock)
 
@@ -7080,13 +7104,15 @@ def render_portfolio_valuation_board(stock: dict[str, Any]) -> None:
     quality_score = visual_score_pct(54 + growth * 1.2 - max(pe - 25, 0) * 0.8)
     upside_text = "N/A" if upside is None else f"{upside:+.1f}%"
     fair_value = stock_money(stock, stock.get("fair_price")) if stock.get("fair_price") else "N/A"
+    price_display = stock_money(stock, stock.get("price")) if positive_float(stock.get("price")) else "N/A"
+    data_quality = str(stock.get("data_quality") or "Market data")
     cards = "".join(
         [
             portfolio_score_card_html(
                 "Upside",
                 upside_text,
                 upside_score,
-                f"{ui('Current price')} {stock_money(stock, stock.get('price'))}; {ui('blended fair value')} {fair_value}.",
+                f"{ui('Current price')} {price_display}; {ui('blended fair value')} {fair_value}.",
             ),
             portfolio_score_card_html(
                 "Risk",
@@ -7117,9 +7143,10 @@ def render_portfolio_valuation_board(stock: dict[str, Any]) -> None:
                     <div class="portfolio-valuation-title">{escape(str(stock.get("name", stock.get("symbol", "Stock"))))} ({escape(str(stock.get("symbol", "")))})</div>
                     <div class="portfolio-valuation-meta">
                         <span class="portfolio-valuation-chip">{escape(str(stock.get("industry", "N/A")))}</span>
-                        <span class="portfolio-valuation-chip">{ui_html('Price')} {escape(stock_money(stock, stock.get("price")))}</span>
+                        <span class="portfolio-valuation-chip">{ui_html('Price')} {escape(price_display)}</span>
                         <span class="portfolio-valuation-chip">{ui_html('Fair')} {escape(fair_value)}</span>
                         <span class="portfolio-valuation-chip">PER {escape(fmt_number(pe))}</span>
+                        <span class="portfolio-valuation-chip">{escape(data_quality)}</span>
                     </div>
                 </div>
                 <span class="portfolio-valuation-status" style="background:{status_color(str(stock.get("valuation_status", "Fair Value")))};">
@@ -7448,13 +7475,18 @@ def render_portfolio_stock_search() -> None:
 
         action_cols = st.columns(2)
         already_in_portfolio = symbol in st.session_state.portfolio
+        price_available = positive_float(stock.get("price")) is not None
         action_cols[0].button(
-            "Already in Portfolio" if already_in_portfolio else "Add Result to Portfolio",
+            "Already in Portfolio"
+            if already_in_portfolio
+            else ui("Price unavailable")
+            if not price_available
+            else "Add Result to Portfolio",
             key=f"portfolio_search_add_{symbol}",
             on_click=add_portfolio,
             args=(symbol,),
             width="stretch",
-            disabled=already_in_portfolio,
+            disabled=already_in_portfolio or not price_available,
         )
         action_cols[1].button(
             "Open Full Stock Detail",
