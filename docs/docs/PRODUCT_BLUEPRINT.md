@@ -13,7 +13,7 @@ Personal Decision Intelligence Application
 Current Streamlit deployment URL:
 
 ```text
-https://toxiguard-nora.streamlit.app/
+https://ly-scope-ver2.streamlit.app/
 ```
 
 Core ontology:
