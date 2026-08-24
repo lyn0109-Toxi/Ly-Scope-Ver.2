@@ -1,0 +1,391 @@
+[
+  {
+    "client_id": "C01",
+    "name": "Young Lee",
+    "age": 42,
+    "currency": "KRW",
+    "segment": {
+      "en": "No-income study transition",
+      "ko": "무소득 학업 전환형"
+    },
+    "situation": {
+      "en": "Worked for 16 years, now studying with no earned income.",
+      "ko": "16년간 일한 뒤 현재 학업 중이며 근로소득이 없는 상태입니다."
+    },
+    "goal": {
+      "en": "Protect capital through the study period and decide how much equity risk is affordable.",
+      "ko": "학업 기간 동안 자본을 지키고 감당 가능한 주식 위험 수준을 정합니다."
+    },
+    "portfolio_note": {
+      "en": "About KRW 200M in taxable stocks out of KRW 300M total capital.",
+      "ko": "총자본 약 3억 원 중 약 2억 원이 과세 주식자산입니다."
+    },
+    "real_estate_note": {
+      "en": "No current real estate exposure in this sample case.",
+      "ko": "이 샘플 케이스에는 현재 부동산 노출이 없습니다."
+    },
+    "advisor_focus": {
+      "en": "Runway first, then portfolio drawdown control.",
+      "ko": "생존기간을 먼저 확인하고, 다음으로 포트폴리오 하락 위험을 제어합니다."
+    },
+    "profile": {
+      "monthly_income": 0,
+      "fixed_expenses": 3000000,
+      "variable_expenses": 0,
+      "cash_savings": 100000000,
+      "taxable_investments": 200000000,
+      "retirement_accounts": 0,
+      "real_estate_value": 0,
+      "credit_card_debt": 0,
+      "student_loan": 0,
+      "auto_loan": 0,
+      "mortgage": 0,
+      "monthly_debt_payment": 0,
+      "monthly_savings_goal": 0,
+      "target_goal_amount": 300000000,
+      "current_goal_savings": 300000000,
+      "investment_risk_score": 67,
+      "runway_target_months": 24,
+      "study_months_remaining": 24
+    },
+    "portfolio_sample": [
+      {"symbol": "AAPL", "name": "Apple", "sector": "Technology", "weight": 0.30, "beta": 1.20, "valuation_upside": 0.02},
+      {"symbol": "NVDA", "name": "NVIDIA", "sector": "Semiconductors", "weight": 0.35, "beta": 1.75, "valuation_upside": -0.08},
+      {"symbol": "VOO", "name": "S&P 500 ETF", "sector": "Broad Market", "weight": 0.35, "beta": 1.00, "valuation_upside": 0.00}
+    ],
+    "real_estate_sample": {"property_count": 0, "loan_to_value": 0, "cash_flow": 0}
+  },
+  {
+    "client_id": "C02",
+    "name": "Sarah Park",
+    "age": 34,
+    "currency": "USD",
+    "segment": {"en": "High-income renter", "ko": "고소득 무주택 임차인"},
+    "situation": {
+      "en": "Strong salary, no home yet, trying to balance house purchase and investment growth.",
+      "ko": "소득은 높지만 아직 주택이 없고, 주택 구매와 투자 성장을 함께 고민합니다."
+    },
+    "goal": {
+      "en": "Build a down payment without over-reducing retirement and ETF compounding.",
+      "ko": "은퇴자산과 ETF 장기복리를 과도하게 줄이지 않으면서 다운페이를 준비합니다."
+    },
+    "portfolio_note": {"en": "Broad ETF and retirement exposure, moderate taxable account.", "ko": "ETF와 은퇴계좌 중심이며 과세 투자계좌는 중간 수준입니다."},
+    "real_estate_note": {"en": "No owned property yet; near-term home purchase goal.", "ko": "보유 부동산은 없고 단기 주택 구매 목표가 있습니다."},
+    "advisor_focus": {"en": "Separate down-payment capital from long-term market risk.", "ko": "주택자금과 장기 투자위험을 분리합니다."},
+    "profile": {
+      "monthly_income": 10500,
+      "fixed_expenses": 3200,
+      "variable_expenses": 1800,
+      "cash_savings": 50000,
+      "taxable_investments": 80000,
+      "retirement_accounts": 140000,
+      "real_estate_value": 0,
+      "credit_card_debt": 0,
+      "student_loan": 18000,
+      "auto_loan": 12000,
+      "mortgage": 0,
+      "monthly_debt_payment": 700,
+      "monthly_savings_goal": 2000,
+      "target_goal_amount": 120000,
+      "current_goal_savings": 50000,
+      "investment_risk_score": 42
+    },
+    "portfolio_sample": [
+      {"symbol": "VTI", "name": "Total US Market ETF", "sector": "Broad Market", "weight": 0.45, "beta": 1.00, "valuation_upside": 0.01},
+      {"symbol": "VXUS", "name": "Total International ETF", "sector": "International", "weight": 0.20, "beta": 0.95, "valuation_upside": 0.03},
+      {"symbol": "BND", "name": "Total Bond ETF", "sector": "Fixed Income", "weight": 0.35, "beta": 0.15, "valuation_upside": 0.00}
+    ],
+    "real_estate_sample": {"property_count": 0, "loan_to_value": 0, "cash_flow": 0}
+  },
+  {
+    "client_id": "C03",
+    "name": "David Kim",
+    "age": 41,
+    "currency": "USD",
+    "segment": {"en": "Family mortgage planner", "ko": "가족 모기지 계획형"},
+    "situation": {"en": "Dual-income household with two children, mortgage, and education costs ahead.", "ko": "맞벌이 가정이며 자녀 2명, 모기지, 향후 교육비 부담이 있습니다."},
+    "goal": {"en": "Keep retirement on track while building education reserves.", "ko": "은퇴 준비를 유지하면서 교육비 준비금을 쌓습니다."},
+    "portfolio_note": {"en": "Retirement-heavy portfolio with limited liquid cash.", "ko": "은퇴계좌 비중이 높고 즉시 사용할 현금은 제한적입니다."},
+    "real_estate_note": {"en": "Primary home is the largest asset and largest liability.", "ko": "거주 주택이 가장 큰 자산이면서 가장 큰 부채입니다."},
+    "advisor_focus": {"en": "Protect liquidity before adding education and retirement complexity.", "ko": "교육비와 은퇴 계획을 늘리기 전에 유동성을 보호합니다."},
+    "profile": {
+      "monthly_income": 13000,
+      "fixed_expenses": 4900,
+      "variable_expenses": 2700,
+      "cash_savings": 35000,
+      "taxable_investments": 60000,
+      "retirement_accounts": 300000,
+      "real_estate_value": 720000,
+      "credit_card_debt": 3000,
+      "student_loan": 25000,
+      "auto_loan": 18000,
+      "mortgage": 520000,
+      "monthly_debt_payment": 3000,
+      "monthly_savings_goal": 2200,
+      "target_goal_amount": 160000,
+      "current_goal_savings": 28000,
+      "investment_risk_score": 55
+    },
+    "portfolio_sample": [
+      {"symbol": "SPY", "name": "S&P 500 ETF", "sector": "Broad Market", "weight": 0.55, "beta": 1.00, "valuation_upside": 0.00},
+      {"symbol": "QQQ", "name": "Nasdaq 100 ETF", "sector": "Growth", "weight": 0.25, "beta": 1.25, "valuation_upside": -0.03},
+      {"symbol": "BND", "name": "Total Bond ETF", "sector": "Fixed Income", "weight": 0.20, "beta": 0.15, "valuation_upside": 0.00}
+    ],
+    "real_estate_sample": {"property_count": 1, "loan_to_value": 0.72, "cash_flow": -3000}
+  },
+  {
+    "client_id": "C04",
+    "name": "Mina Choi",
+    "age": 37,
+    "currency": "USD",
+    "segment": {"en": "Concentrated stock investor", "ko": "주식 집중 투자형"},
+    "situation": {"en": "Owns many individual tech stocks with limited cash reserves.", "ko": "개별 기술주를 많이 보유하고 있지만 현금 준비금은 부족합니다."},
+    "goal": {"en": "Know whether portfolio risk is dominating financial life.", "ko": "포트폴리오 위험이 전체 재정상태를 지배하는지 확인합니다."},
+    "portfolio_note": {"en": "High single-theme equity exposure and high volatility tolerance score.", "ko": "단일 테마 주식 노출과 변동성 허용 점수가 높습니다."},
+    "real_estate_note": {"en": "No property exposure; portfolio is the primary wealth engine.", "ko": "부동산 노출은 없고 포트폴리오가 핵심 자산 엔진입니다."},
+    "advisor_focus": {"en": "Reduce concentration risk and build a cash buffer.", "ko": "집중 위험을 낮추고 현금 완충력을 만듭니다."},
+    "profile": {
+      "monthly_income": 7200,
+      "fixed_expenses": 2600,
+      "variable_expenses": 1700,
+      "cash_savings": 8000,
+      "taxable_investments": 220000,
+      "retirement_accounts": 60000,
+      "real_estate_value": 0,
+      "credit_card_debt": 2500,
+      "student_loan": 0,
+      "auto_loan": 10000,
+      "mortgage": 0,
+      "monthly_debt_payment": 600,
+      "monthly_savings_goal": 1000,
+      "target_goal_amount": 80000,
+      "current_goal_savings": 8000,
+      "investment_risk_score": 86
+    },
+    "portfolio_sample": [
+      {"symbol": "NVDA", "name": "NVIDIA", "sector": "Semiconductors", "weight": 0.32, "beta": 1.75, "valuation_upside": -0.08},
+      {"symbol": "TSLA", "name": "Tesla", "sector": "Consumer Discretionary", "weight": 0.24, "beta": 2.10, "valuation_upside": -0.12},
+      {"symbol": "MSFT", "name": "Microsoft", "sector": "Technology", "weight": 0.18, "beta": 0.95, "valuation_upside": 0.04},
+      {"symbol": "META", "name": "Meta Platforms", "sector": "Communication", "weight": 0.16, "beta": 1.30, "valuation_upside": -0.02},
+      {"symbol": "CASH", "name": "Cash Reserve", "sector": "Cash", "weight": 0.10, "beta": 0.00, "valuation_upside": 0.00}
+    ],
+    "real_estate_sample": {"property_count": 0, "loan_to_value": 0, "cash_flow": 0}
+  },
+  {
+    "client_id": "C05",
+    "name": "James Lee",
+    "age": 45,
+    "currency": "USD",
+    "segment": {"en": "Leveraged real estate investor", "ko": "레버리지 부동산 투자형"},
+    "situation": {"en": "Owns rental property and depends on rent coverage under changing rates.", "ko": "렌탈 부동산을 보유하고 있으며 금리 변화 속 임대료 커버리지가 중요합니다."},
+    "goal": {"en": "Check whether debt, property cash flow, and reserves can withstand stress.", "ko": "부채, 부동산 현금흐름, 준비금이 스트레스를 견딜 수 있는지 확인합니다."},
+    "portfolio_note": {"en": "Some market assets, but real estate and debt dominate the profile.", "ko": "시장자산도 있으나 전체 구조는 부동산과 부채가 지배합니다."},
+    "real_estate_note": {"en": "Two rental properties with meaningful mortgage exposure.", "ko": "렌탈 부동산 2채와 의미 있는 모기지 노출이 있습니다."},
+    "advisor_focus": {"en": "Debt-service resilience and vacancy/rate stress.", "ko": "부채상환 회복력과 공실/금리 스트레스를 확인합니다."},
+    "profile": {
+      "monthly_income": 15000,
+      "fixed_expenses": 6500,
+      "variable_expenses": 2500,
+      "cash_savings": 40000,
+      "taxable_investments": 70000,
+      "retirement_accounts": 160000,
+      "real_estate_value": 1200000,
+      "credit_card_debt": 6000,
+      "student_loan": 0,
+      "auto_loan": 22000,
+      "mortgage": 900000,
+      "monthly_debt_payment": 6200,
+      "monthly_savings_goal": 1500,
+      "target_goal_amount": 180000,
+      "current_goal_savings": 40000,
+      "investment_risk_score": 60
+    },
+    "portfolio_sample": [
+      {"symbol": "VNQ", "name": "Real Estate ETF", "sector": "REIT", "weight": 0.40, "beta": 1.05, "valuation_upside": 0.02},
+      {"symbol": "SPY", "name": "S&P 500 ETF", "sector": "Broad Market", "weight": 0.35, "beta": 1.00, "valuation_upside": 0.00},
+      {"symbol": "BND", "name": "Total Bond ETF", "sector": "Fixed Income", "weight": 0.25, "beta": 0.15, "valuation_upside": 0.00}
+    ],
+    "real_estate_sample": {"property_count": 2, "loan_to_value": 0.75, "cash_flow": -1200}
+  },
+  {
+    "client_id": "C06",
+    "name": "Emily Han",
+    "age": 31,
+    "currency": "USD",
+    "segment": {"en": "Freelancer with variable income", "ko": "소득 변동 프리랜서형"},
+    "situation": {"en": "Income changes month to month and protection coverage is thin.", "ko": "월별 소득 변동이 크고 보호장치가 얇습니다."},
+    "goal": {"en": "Make the worst income months survivable before taking bigger investment risk.", "ko": "더 큰 투자위험을 감수하기 전에 최악의 소득월도 버틸 수 있게 만듭니다."},
+    "portfolio_note": {"en": "Small taxable portfolio and early retirement account.", "ko": "과세 투자자산은 작고 은퇴계좌는 초기 단계입니다."},
+    "real_estate_note": {"en": "Renter with no property debt.", "ko": "임차인이며 부동산 부채는 없습니다."},
+    "advisor_focus": {"en": "Cash runway and income volatility buffer.", "ko": "현금 생존기간과 소득 변동 완충력을 우선합니다."},
+    "profile": {
+      "monthly_income": 5000,
+      "fixed_expenses": 2000,
+      "variable_expenses": 1600,
+      "cash_savings": 14000,
+      "taxable_investments": 10000,
+      "retirement_accounts": 25000,
+      "real_estate_value": 0,
+      "credit_card_debt": 3000,
+      "student_loan": 12000,
+      "auto_loan": 0,
+      "mortgage": 0,
+      "monthly_debt_payment": 500,
+      "monthly_savings_goal": 700,
+      "target_goal_amount": 35000,
+      "current_goal_savings": 14000,
+      "investment_risk_score": 50
+    },
+    "portfolio_sample": [
+      {"symbol": "VTI", "name": "Total US Market ETF", "sector": "Broad Market", "weight": 0.55, "beta": 1.00, "valuation_upside": 0.01},
+      {"symbol": "BND", "name": "Total Bond ETF", "sector": "Fixed Income", "weight": 0.25, "beta": 0.15, "valuation_upside": 0.00},
+      {"symbol": "CASH", "name": "Cash Reserve", "sector": "Cash", "weight": 0.20, "beta": 0.00, "valuation_upside": 0.00}
+    ],
+    "real_estate_sample": {"property_count": 0, "loan_to_value": 0, "cash_flow": 0}
+  },
+  {
+    "client_id": "C07",
+    "name": "Robert Shin",
+    "age": 58,
+    "currency": "USD",
+    "segment": {"en": "Pre-retirement planner", "ko": "은퇴 준비형"},
+    "situation": {"en": "Wants to retire in roughly seven years with multiple asset buckets.", "ko": "여러 자산 바구니를 가지고 약 7년 뒤 은퇴를 원합니다."},
+    "goal": {"en": "Confirm whether age-65 retirement remains plausible under lower-return scenarios.", "ko": "낮은 수익률 시나리오에서도 65세 은퇴가 가능한지 확인합니다."},
+    "portfolio_note": {"en": "Large retirement assets with moderate taxable account.", "ko": "은퇴자산이 크고 과세 투자계좌는 중간 수준입니다."},
+    "real_estate_note": {"en": "Primary residence with remaining mortgage.", "ko": "거주 주택과 잔여 모기지가 있습니다."},
+    "advisor_focus": {"en": "Sequence risk, retirement runway, and debt reduction.", "ko": "은퇴 초기 손실 위험, 은퇴 생존기간, 부채 축소를 점검합니다."},
+    "profile": {
+      "monthly_income": 11000,
+      "fixed_expenses": 5500,
+      "variable_expenses": 2500,
+      "cash_savings": 120000,
+      "taxable_investments": 300000,
+      "retirement_accounts": 1100000,
+      "real_estate_value": 650000,
+      "credit_card_debt": 0,
+      "student_loan": 0,
+      "auto_loan": 16000,
+      "mortgage": 180000,
+      "monthly_debt_payment": 1800,
+      "monthly_savings_goal": 3000,
+      "target_goal_amount": 1800000,
+      "current_goal_savings": 1520000,
+      "investment_risk_score": 38
+    },
+    "portfolio_sample": [
+      {"symbol": "VTI", "name": "Total US Market ETF", "sector": "Broad Market", "weight": 0.45, "beta": 1.00, "valuation_upside": 0.01},
+      {"symbol": "SCHD", "name": "Dividend Equity ETF", "sector": "Dividend Equity", "weight": 0.25, "beta": 0.85, "valuation_upside": 0.02},
+      {"symbol": "BND", "name": "Total Bond ETF", "sector": "Fixed Income", "weight": 0.30, "beta": 0.15, "valuation_upside": 0.00}
+    ],
+    "real_estate_sample": {"property_count": 1, "loan_to_value": 0.28, "cash_flow": 0}
+  },
+  {
+    "client_id": "C08",
+    "name": "Hana Jung",
+    "age": 39,
+    "currency": "USD",
+    "segment": {"en": "Cross-border asset holder", "ko": "글로벌 자산 혼재형"},
+    "situation": {"en": "Has both Korean and U.S. assets and worries about FX and country exposure.", "ko": "한국과 미국 자산을 함께 보유하며 환율과 국가 노출을 걱정합니다."},
+    "goal": {"en": "Understand whether global diversification is helping or hiding risk.", "ko": "글로벌 분산이 실제로 도움이 되는지, 아니면 위험을 숨기는지 확인합니다."},
+    "portfolio_note": {"en": "U.S. stocks plus Korean cash and market assets.", "ko": "미국 주식과 한국 현금/시장자산이 섞여 있습니다."},
+    "real_estate_note": {"en": "Korean property exposure converted into the base currency.", "ko": "한국 부동산 노출을 기준통화로 환산해 봅니다."},
+    "advisor_focus": {"en": "FX risk, liquidity location, and country concentration.", "ko": "환율 위험, 유동성 위치, 국가 집중도를 확인합니다."},
+    "profile": {
+      "monthly_income": 8500,
+      "fixed_expenses": 3100,
+      "variable_expenses": 1900,
+      "cash_savings": 70000,
+      "taxable_investments": 180000,
+      "retirement_accounts": 95000,
+      "real_estate_value": 500000,
+      "credit_card_debt": 0,
+      "student_loan": 8000,
+      "auto_loan": 0,
+      "mortgage": 160000,
+      "monthly_debt_payment": 1500,
+      "monthly_savings_goal": 1800,
+      "target_goal_amount": 250000,
+      "current_goal_savings": 120000,
+      "investment_risk_score": 58
+    },
+    "portfolio_sample": [
+      {"symbol": "AAPL", "name": "Apple", "sector": "Technology", "weight": 0.25, "beta": 1.20, "valuation_upside": 0.02},
+      {"symbol": "005930.KS", "name": "Samsung Electronics", "sector": "Korea Equity", "weight": 0.30, "beta": 1.15, "valuation_upside": 0.05},
+      {"symbol": "VOO", "name": "S&P 500 ETF", "sector": "Broad Market", "weight": 0.25, "beta": 1.00, "valuation_upside": 0.00},
+      {"symbol": "CASH-KRW", "name": "KRW Cash", "sector": "Cash", "weight": 0.20, "beta": 0.00, "valuation_upside": 0.00}
+    ],
+    "real_estate_sample": {"property_count": 1, "loan_to_value": 0.32, "cash_flow": 0}
+  },
+  {
+    "client_id": "C09",
+    "name": "Michael Oh",
+    "age": 33,
+    "currency": "USD",
+    "segment": {"en": "Startup equity employee", "ko": "스타트업 스톡옵션 보유형"},
+    "situation": {"en": "High career upside but cash reserves are modest and option value is uncertain.", "ko": "커리어 상승 여지는 크지만 현금 준비금은 크지 않고 옵션 가치는 불확실합니다."},
+    "goal": {"en": "Avoid treating unvested or illiquid equity as dependable financial foundation.", "ko": "미확정/비유동 지분을 안정적 재정 기반처럼 보지 않도록 합니다."},
+    "portfolio_note": {"en": "Public portfolio is small; private company equity is not counted as liquid capital.", "ko": "공개시장 포트폴리오는 작고 비상장 지분은 유동자본으로 계산하지 않습니다."},
+    "real_estate_note": {"en": "No owned property; rent and career risk dominate.", "ko": "보유 부동산은 없으며 렌트와 커리어 위험이 중요합니다."},
+    "advisor_focus": {"en": "Do not let optimistic option value replace cash planning.", "ko": "낙관적 옵션 가치가 현금계획을 대체하지 않게 합니다."},
+    "profile": {
+      "monthly_income": 9000,
+      "fixed_expenses": 3700,
+      "variable_expenses": 1800,
+      "cash_savings": 18000,
+      "taxable_investments": 25000,
+      "retirement_accounts": 50000,
+      "real_estate_value": 0,
+      "credit_card_debt": 1500,
+      "student_loan": 20000,
+      "auto_loan": 0,
+      "mortgage": 0,
+      "monthly_debt_payment": 650,
+      "monthly_savings_goal": 1500,
+      "target_goal_amount": 150000,
+      "current_goal_savings": 20000,
+      "investment_risk_score": 72
+    },
+    "portfolio_sample": [
+      {"symbol": "COMPANY-OPTIONS", "name": "Startup Options", "sector": "Private Equity", "weight": 0.50, "beta": 2.30, "valuation_upside": null},
+      {"symbol": "VTI", "name": "Total US Market ETF", "sector": "Broad Market", "weight": 0.30, "beta": 1.00, "valuation_upside": 0.01},
+      {"symbol": "CASH", "name": "Cash Reserve", "sector": "Cash", "weight": 0.20, "beta": 0.00, "valuation_upside": 0.00}
+    ],
+    "real_estate_sample": {"property_count": 0, "loan_to_value": 0, "cash_flow": 0}
+  },
+  {
+    "client_id": "C10",
+    "name": "Grace Lim",
+    "age": 44,
+    "currency": "USD",
+    "segment": {"en": "Post-divorce reset", "ko": "이혼 후 재정 재정리형"},
+    "situation": {"en": "Rebuilding an independent financial plan with child-related expenses.", "ko": "자녀 관련 비용을 포함해 독립적인 재정 계획을 다시 세우는 중입니다."},
+    "goal": {"en": "Create a stable reserve and restart long-term goal tracking.", "ko": "안정적인 준비금을 만들고 장기 목표 추적을 다시 시작합니다."},
+    "portfolio_note": {"en": "Moderate retirement base and small taxable account.", "ko": "은퇴자산 기반은 중간 수준이고 과세 투자계좌는 작습니다."},
+    "real_estate_note": {"en": "No real estate in this sample; future housing decision remains open.", "ko": "샘플상 보유 부동산은 없고 향후 주거 결정이 남아 있습니다."},
+    "advisor_focus": {"en": "Stability, reserve rebuilding, and simple next actions.", "ko": "안정성, 준비금 재구축, 단순한 다음 행동에 집중합니다."},
+    "profile": {
+      "monthly_income": 6500,
+      "fixed_expenses": 3200,
+      "variable_expenses": 1800,
+      "cash_savings": 45000,
+      "taxable_investments": 35000,
+      "retirement_accounts": 180000,
+      "real_estate_value": 0,
+      "credit_card_debt": 5000,
+      "student_loan": 0,
+      "auto_loan": 9000,
+      "mortgage": 0,
+      "monthly_debt_payment": 700,
+      "monthly_savings_goal": 900,
+      "target_goal_amount": 75000,
+      "current_goal_savings": 20000,
+      "investment_risk_score": 46
+    },
+    "portfolio_sample": [
+      {"symbol": "VTI", "name": "Total US Market ETF", "sector": "Broad Market", "weight": 0.45, "beta": 1.00, "valuation_upside": 0.01},
+      {"symbol": "BND", "name": "Total Bond ETF", "sector": "Fixed Income", "weight": 0.35, "beta": 0.15, "valuation_upside": 0.00},
+      {"symbol": "CASH", "name": "Cash Reserve", "sector": "Cash", "weight": 0.20, "beta": 0.00, "valuation_upside": 0.00}
+    ],
+    "real_estate_sample": {"property_count": 0, "loan_to_value": 0, "cash_flow": 0}
+  }
+]
