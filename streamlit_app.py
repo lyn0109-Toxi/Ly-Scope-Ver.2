@@ -7374,7 +7374,7 @@ def app_view_href(view: str) -> str:
     params = {"view": view, "mode": "dashboard"}
     params.update(language_params())
     params.update(selection_state_params())
-    return f"/?{urlencode(params)}"
+    return f"?{urlencode(params)}"
 
 
 def app_detail_href(symbol: str) -> str:
@@ -7400,7 +7400,7 @@ def language_toggle_href(language: str) -> str:
         detail = query_param_value("detail")
         if current_view == "details" and detail:
             params["detail"] = detail
-    return f"?{urlencode(params)}"
+    return f"/?{urlencode(params)}"
 
 
 def render_top_language_toggle() -> None:
