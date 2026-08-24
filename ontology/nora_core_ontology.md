@@ -15,14 +15,16 @@ https://toxiguard-nora.streamlit.app/
 ToxiGuard-NORA uses one core decision path:
 
 ```text
-User -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
+Customer Purpose -> Plan -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
 ```
 
 ## Layer Definitions
 
 | Layer | Purpose | Current App Surface |
 | --- | --- | --- |
-| User | Understand life stage, income state, capital, goals, horizon, and decision question. | Life, Finance, Advisor Reports |
+| Customer Purpose | Understand what the customer wants: desired outcome, values, time horizon, constraints, and decision question. | Life, Finance, Advisor Reports |
+| Plan | Turn purpose into a practical path: required capital, sequence, resources, and review rhythm. | Finance, Scenario, Advisor Reports |
+| Situation | Read the customer's current reality: capital, income state, expenses, holdings, real estate exposure, liquidity, and risk pressure. | Life, Finance, Portfolio, REIT |
 | Data | Collect structured inputs for finance, holdings, stocks, REITs, real estate exposure, scenarios, and diary snapshots. | Finance, Portfolio, Search, REIT, Diary |
 | Model | Calculate valuation, runway, goal progress, portfolio quality, concentration, stress impact, and resilience. | Finance engine, Portfolio metrics, REIT module, Scenario |
 | Evidence | Show formulas, source limits, assumptions, warnings, and score drivers before interpretation. | Details, Advisor Reports, AI Coach context |
@@ -34,8 +36,8 @@ User -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
 
 | Module | Ontology Role |
 | --- | --- |
-| Financial Foundation | User + Data + Model baseline for cash flow, debt, savings, runway, and risk capacity. |
-| Goals | User intent and measurable target path. |
+| Financial Foundation | Situation + Data + Model baseline for cash flow, debt, savings, runway, and risk capacity. |
+| Goals | Customer Purpose + Plan as a measurable target path. |
 | Market Assets | Stock/portfolio data, valuation, beta, risk, and concentration. |
 | Real Estate | REIT/property-linked exposure, income durability, and rate sensitivity. |
 | Projection | Forward view of capital, goal progress, and runway. |
@@ -48,4 +50,4 @@ User -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
 
 ## Product Rule
 
-ToxiGuard-NORA should not jump from data to a recommendation. The app must pass through model, evidence, interpretation, decision framing, and memory so users can understand the situation before acting.
+ToxiGuard-NORA should not jump from data to a recommendation. The app must first ask what the customer wants, then test the plan and current situation before moving through data, model, evidence, interpretation, decision framing, and memory.
