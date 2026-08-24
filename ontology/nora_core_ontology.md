@@ -9,7 +9,7 @@ Personal Decision Intelligence Application
 Current Streamlit deployment URL:
 
 ```text
-https://toxiguard-nora.streamlit.app/
+https://ly-scope-ver2.streamlit.app/
 ```
 
 LY-Scope-Ver.2 uses one core decision path:
