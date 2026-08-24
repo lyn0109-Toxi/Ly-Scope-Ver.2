@@ -22,15 +22,16 @@ Ver.1 remains a reference prototype only. Ver.2 should not modify Ver.1 directly
 ToxiGuard-NORA must keep this decision path visible and intact:
 
 ```text
-User -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
+Customer Purpose -> Plan -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
 ```
 
-This ontology means every output should answer five customer-facing questions:
+This ontology means every output should answer six customer-facing questions:
 
-- What is my current situation?
+- What does the customer want?
+- What plan connects that purpose to action?
+- What is the current situation?
 - What data and model produced this view?
 - What evidence or warning supports it?
-- What direction should I consider next?
 - What should be remembered for later review?
 
 See the full product foundation in [`docs/PRODUCT_BLUEPRINT.md`](docs/PRODUCT_BLUEPRINT.md).
