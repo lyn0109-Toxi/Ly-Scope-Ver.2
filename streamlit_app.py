@@ -57,6 +57,18 @@ KO_TRANSLATIONS = {
     "Design Your": "설계하세요",
     "Financial Life": "금융 생활",
     "ToxiGuard-NORA is a Personal Decision Intelligence Application for financial foundation, goals, market assets, real estate, scenarios, risk, evidence, decisions, and memory.": "ToxiGuard-NORA는 재무 기반, 목표, 시장 자산, 부동산, 시나리오, 위험, 근거, 결정, 메모리를 연결하는 개인 의사결정 인텔리전스 앱입니다.",
+    "See Your": "나의",
+    "Financial Path": "금융 경로",
+    "A calm visual map for current situation, direction, crisis signals, and memory.": "현재 상황, 목표 방향, 위험 신호, 메모리를 차분하게 보여주는 시각 맵입니다.",
+    "Current Situation": "현재 상황",
+    "Capital, cash flow, portfolio, and goal context in one view.": "자본, 현금흐름, 포트폴리오, 목표 맥락을 한눈에 봅니다.",
+    "Direction": "목표 방향",
+    "What path needs attention next.": "다음에 집중해야 할 경로를 확인합니다.",
+    "Crisis Signals": "위험 신호",
+    "Where liquidity, concentration, rates, or market shocks could interrupt the plan.": "유동성, 집중도, 금리, 시장 충격이 계획을 끊을 수 있는 지점을 봅니다.",
+    "Use the visual signals first. Details appear when you hover or click.": "먼저 시각 신호를 보고, 세부 내용은 마우스를 올리거나 클릭할 때 확인하세요.",
+    "Open Dashboard": "대시보드 열기",
+    "Educational prototype only; not financial, investment, legal, or tax advice.": "교육용 프로토타입입니다. 금융, 투자, 법률, 세무 조언이 아닙니다.",
     "Start Your Life Map": "라이프 맵 시작",
     "Explore Dashboard": "대시보드 살펴보기",
     "Enter ToxiGuard-NORA Dashboard": "ToxiGuard-NORA 대시보드로 들어가기",
@@ -2903,6 +2915,418 @@ st.markdown(
         }
         .home-module-grid {
             grid-template-columns: 1fr;
+        }
+    }
+    /* First-screen readability pass: calmer background, smaller type, visual-first cards. */
+    .life-entry-wrap {
+        min-height: calc(100vh - 42px);
+        align-items: start;
+        padding: 16px 0 30px;
+    }
+    .homepage-visual {
+        min-height: 560px;
+        aspect-ratio: auto;
+        border-radius: 24px;
+        border: 1px solid rgba(37, 99, 235, 0.14);
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(240, 249, 255, 0.86)),
+            linear-gradient(135deg, #f8fbff 0%, #e7f5fb 50%, #f8f3e8 100%);
+        box-shadow: 0 22px 58px rgba(15, 23, 42, 0.12);
+    }
+    .homepage-visual::before {
+        opacity: 0.14;
+        animation: none;
+        background:
+            linear-gradient(90deg, rgba(14, 116, 144, 0.12) 1px, transparent 1px),
+            linear-gradient(0deg, rgba(100, 116, 139, 0.10) 1px, transparent 1px);
+        background-size: 54px 54px;
+    }
+    .homepage-visual::after,
+    .homepage-entry-hotspot,
+    .homepage-mobile-cta,
+    .homepage-visual .life-sun,
+    .homepage-visual .life-spark,
+    .homepage-visual .life-path {
+        display: none !important;
+    }
+    .home-nav {
+        min-height: 64px;
+        padding: 12px 24px;
+        background: rgba(255, 255, 255, 0.82);
+        box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+    }
+    .home-brand {
+        gap: 10px;
+        font-size: 1rem;
+        letter-spacing: 0;
+    }
+    .home-brand-mark {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        font-size: 1rem;
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.16);
+    }
+    .home-brand small {
+        font-size: 0.74rem;
+    }
+    .home-nav-links {
+        gap: 22px;
+        color: #475569;
+        font-size: 0.78rem;
+        font-weight: 720;
+    }
+    .homepage-visual .life-entry-grid {
+        grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1fr);
+        gap: 30px;
+        padding: 34px 38px 0;
+        align-items: center;
+    }
+    .homepage-visual .life-kicker {
+        padding: 7px 11px;
+        color: #0f766e;
+        font-size: 0.74rem;
+        font-weight: 820;
+        box-shadow: none;
+    }
+    .homepage-visual .life-title {
+        max-width: 520px;
+        margin-top: 14px;
+        color: #0f172a;
+        font-size: 2.75rem;
+        line-height: 1.05;
+        font-weight: 900;
+        text-shadow: none;
+    }
+    .homepage-visual .life-title span {
+        color: #0e7490;
+        background: none;
+        -webkit-background-clip: initial;
+        background-clip: initial;
+    }
+    .homepage-visual .life-copy {
+        max-width: 470px;
+        margin: 16px 0 0;
+        color: #334155;
+        font-size: 0.98rem;
+        line-height: 1.48;
+        font-weight: 620;
+    }
+    .home-cta-row {
+        gap: 10px;
+        margin: 20px 0 16px;
+    }
+    .home-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 16px;
+        border-radius: 12px;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        text-decoration: none !important;
+        font-size: 0.9rem;
+        font-weight: 820;
+        background: linear-gradient(135deg, #0f766e, #2563eb);
+        box-shadow: 0 12px 24px rgba(37, 99, 235, 0.16);
+    }
+    .home-cta.secondary {
+        color: #1e293b !important;
+        -webkit-text-fill-color: #1e293b !important;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid rgba(37, 99, 235, 0.18);
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+    }
+    .home-signal-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        max-width: 610px;
+        margin-top: 18px;
+    }
+    .home-signal-card {
+        min-height: 72px;
+        border-radius: 14px;
+        padding: 13px;
+        color: #0f172a;
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.07);
+        outline: 0;
+        transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+    }
+    .home-signal-card::before {
+        content: "";
+        display: block;
+        width: 28px;
+        height: 6px;
+        border-radius: 999px;
+        margin-bottom: 10px;
+        background: #0f766e;
+    }
+    .home-signal-card.direction::before {
+        background: #2563eb;
+    }
+    .home-signal-card.crisis::before {
+        background: #d97706;
+    }
+    .home-signal-card b {
+        display: block;
+        font-size: 0.86rem;
+        line-height: 1.2;
+        font-weight: 860;
+    }
+    .home-signal-card span {
+        display: block;
+        margin-top: 8px;
+        color: #475569;
+        font-size: 0.74rem;
+        line-height: 1.34;
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: opacity 140ms ease, max-height 140ms ease;
+    }
+    .home-signal-card:hover,
+    .home-signal-card:focus {
+        transform: translateY(-1px);
+        border-color: rgba(14, 116, 144, 0.34);
+        box-shadow: 0 16px 30px rgba(15, 23, 42, 0.10);
+    }
+    .home-signal-card:hover span,
+    .home-signal-card:focus span {
+        opacity: 1;
+        max-height: 86px;
+    }
+    .home-proof {
+        margin-top: 12px;
+        color: #64748b;
+        font-size: 0.78rem;
+        font-weight: 620;
+    }
+    .homepage-visual .life-map {
+        min-height: 430px;
+        border-radius: 22px;
+        background:
+            linear-gradient(180deg, rgba(255,255,255,0.62), rgba(236,253,245,0.28)),
+            linear-gradient(135deg, rgba(219,234,254,0.38), rgba(255,247,237,0.30));
+        border-color: rgba(14, 116, 144, 0.14);
+        box-shadow: inset 0 0 34px rgba(255,255,255,0.30), 0 18px 38px rgba(15, 23, 42, 0.08);
+    }
+    .homepage-visual .life-map::before,
+    .homepage-visual .life-map::after {
+        opacity: 0.26;
+        animation: none;
+    }
+    .homepage-visual .life-horizon {
+        opacity: 0.12;
+        filter: blur(6px);
+        animation: none;
+    }
+    .homepage-visual .life-stream {
+        height: 34%;
+        opacity: 0.20;
+        animation: none;
+        filter: none;
+    }
+    .homepage-visual .life-orbit {
+        inset: 58px;
+        opacity: 0.20;
+        animation: none;
+        border-color: rgba(14, 116, 144, 0.20);
+    }
+    .homepage-visual .life-orbit.two {
+        inset: 112px;
+        opacity: 0.18;
+    }
+    .homepage-visual .life-core {
+        width: 132px;
+        height: 132px;
+        color: #0f172a;
+        font-size: 0.85rem;
+        line-height: 1.34;
+        font-weight: 850;
+        animation: none;
+        box-shadow: 0 18px 40px rgba(14, 116, 144, 0.12);
+    }
+    .homepage-visual .life-node {
+        width: 112px;
+        min-height: 58px;
+        border-radius: 14px;
+        padding: 9px 10px;
+        font-size: 0.74rem;
+        line-height: 1.18;
+        font-weight: 820;
+        animation: none;
+        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.07);
+    }
+    .homepage-visual .life-node.income { left: 34px; top: 88px; }
+    .homepage-visual .life-node.saving { right: 34px; top: 88px; }
+    .homepage-visual .life-node.risk { left: 34px; bottom: 88px; }
+    .homepage-visual .life-node.assets { right: 34px; bottom: 88px; }
+    .homepage-visual .life-node.goals { top: 30px; }
+    .homepage-visual .life-node.diary { bottom: 30px; }
+    .home-module-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 10px;
+        margin: 18px 38px 30px;
+    }
+    .home-module-card {
+        min-height: 92px;
+        border-radius: 14px;
+        padding: 13px;
+        background: rgba(255,255,255,0.70);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+        outline: 0;
+    }
+    .home-module-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 9px;
+        margin-bottom: 9px;
+        font-size: 0.70rem;
+        font-weight: 840;
+        background: linear-gradient(135deg, #0f766e, #2563eb);
+    }
+    .home-module-card b {
+        font-size: 0.82rem;
+        line-height: 1.18;
+        font-weight: 820;
+    }
+    .home-module-card span {
+        display: block;
+        margin-top: 7px;
+        color: #475569;
+        font-size: 0.72rem;
+        line-height: 1.32;
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: opacity 140ms ease, max-height 140ms ease;
+    }
+    .home-module-card:hover span,
+    .home-module-card:focus span {
+        opacity: 1;
+        max-height: 72px;
+    }
+    .homepage-direct-entry {
+        display: none !important;
+    }
+    .top-language-toggle {
+        top: 72px;
+        right: 28px;
+        background: rgba(255, 255, 255, 0.92);
+        border-color: rgba(14, 116, 144, 0.18);
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+    }
+    .top-language-toggle .language-toggle-mark {
+        color: #0f766e;
+        background: rgba(20, 184, 166, 0.10);
+        border-color: rgba(20, 184, 166, 0.20);
+    }
+    .top-language-toggle a {
+        color: #334155 !important;
+    }
+    .top-language-toggle a:hover,
+    .top-language-toggle a:focus {
+        color: #0f172a !important;
+        border-color: rgba(14, 116, 144, 0.22);
+        background: rgba(14, 116, 144, 0.08);
+    }
+    .top-language-toggle a.active {
+        color: #ffffff !important;
+        background: #0f766e;
+        border-color: rgba(15, 118, 110, 0.10);
+        box-shadow: 0 8px 18px rgba(15, 118, 110, 0.20);
+    }
+    @media (max-width: 1100px) {
+        .homepage-visual .life-entry-grid {
+            grid-template-columns: 1fr;
+            padding: 28px 28px 0;
+        }
+        .home-signal-row {
+            max-width: none;
+        }
+        .home-module-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin-left: 28px;
+            margin-right: 28px;
+        }
+    }
+    @media (max-width: 680px) {
+        .life-entry-wrap {
+            min-height: auto;
+            padding: 8px 0 22px;
+        }
+        .homepage-visual {
+            border-radius: 18px;
+            min-height: auto;
+        }
+        .home-nav {
+            min-height: 56px;
+            padding: 10px 14px;
+        }
+        .home-brand {
+            font-size: 0.90rem;
+        }
+        .home-brand-mark {
+            width: 30px;
+            height: 30px;
+            border-radius: 9px;
+        }
+        .homepage-visual .life-entry-grid {
+            padding: 22px 18px 0;
+            gap: 22px;
+        }
+        .homepage-visual .life-title {
+            font-size: 1.95rem;
+            line-height: 1.08;
+        }
+        .homepage-visual .life-copy {
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+        .home-signal-row {
+            grid-template-columns: 1fr;
+        }
+        .homepage-visual .life-map {
+            min-height: 330px;
+        }
+        .homepage-visual .life-core {
+            width: 106px;
+            height: 106px;
+            font-size: 0.72rem;
+        }
+        .homepage-visual .life-node {
+            width: 88px;
+            min-height: 50px;
+            font-size: 0.64rem;
+            padding: 7px;
+        }
+        .homepage-visual .life-node.income { left: 14px; top: 72px; }
+        .homepage-visual .life-node.saving { right: 14px; top: 72px; }
+        .homepage-visual .life-node.risk { left: 14px; bottom: 72px; }
+        .homepage-visual .life-node.assets { right: 14px; bottom: 72px; }
+        .homepage-visual .life-node.goals { top: 18px; }
+        .homepage-visual .life-node.diary { bottom: 18px; }
+        .home-module-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            margin: 16px 18px 22px;
+        }
+        .home-module-card {
+            min-height: 84px;
+        }
+        .home-module-card span {
+            display: none;
+        }
+        .homepage-direct-entry {
+            display: none !important;
+        }
+        .top-language-toggle {
+            top: 70px;
+            right: 12px;
         }
     }
     .app-footer {
@@ -10349,12 +10773,12 @@ def render_life_entry_screen(standalone: bool = True) -> None:
     dashboard_href = escape(app_view_href("life"), quote=True)
     language = current_language()
     life_title = (
-        f'{ui_html("Design Your")} <span>{ui_html("Financial Life")}</span>'
+        f'{ui_html("See Your")} <span>{ui_html("Financial Path")}</span>'
         if language == "ko"
-        else 'Design Your <span>Financial Life</span>'
+        else 'See Your <span>Financial Path</span>'
     )
     life_copy = ui(
-        "ToxiGuard-NORA is a Personal Decision Intelligence Application for financial foundation, goals, market assets, real estate, scenarios, risk, evidence, decisions, and memory."
+        "A calm visual map for current situation, direction, crisis signals, and memory."
     )
     homepage_html = dedent(
         shell_style
@@ -10386,17 +10810,25 @@ def render_life_entry_screen(standalone: bool = True) -> None:
                             {escape(life_copy)}
                         </div>
                         <div class="home-cta-row">
-                            <div class="home-cta">{ui_html('Start Your Life Map')}</div>
-                            <div class="home-cta secondary">{ui_html('Explore Dashboard')}</div>
+                            <a class="home-cta" href="{dashboard_href}" target="_self" aria-label="{ui_html('Open Dashboard')}">{ui_html('Open Dashboard')}</a>
+                            <a class="home-cta secondary" href="{dashboard_href}" target="_self" aria-label="{ui_html('Explore Dashboard')}">{ui_html('Explore Dashboard')}</a>
+                        </div>
+                        <div class="home-signal-row" aria-label="ToxiGuard-NORA visual decision signals">
+                            <div class="home-signal-card current" tabindex="0">
+                                <b>{ui_html('Current Situation')}</b>
+                                <span>{ui_html('Capital, cash flow, portfolio, and goal context in one view.')}</span>
+                            </div>
+                            <div class="home-signal-card direction" tabindex="0">
+                                <b>{ui_html('Direction')}</b>
+                                <span>{ui_html('What path needs attention next.')}</span>
+                            </div>
+                            <div class="home-signal-card crisis" tabindex="0">
+                                <b>{ui_html('Crisis Signals')}</b>
+                                <span>{ui_html('Where liquidity, concentration, rates, or market shocks could interrupt the plan.')}</span>
+                            </div>
                         </div>
                         <div class="home-proof">
-                            <div class="home-proof-dots">
-                                <div class="home-proof-dot"></div>
-                                <div class="home-proof-dot"></div>
-                                <div class="home-proof-dot"></div>
-                                <div class="home-proof-dot"></div>
-                            </div>
-                            <span>{ui_html('Build, review, and improve your financial life with real examples.')}</span>
+                            <span>{ui_html('Use the visual signals first. Details appear when you hover or click.')}</span>
                         </div>
                     </div>
                     <div class="life-map" aria-label="Life design map">
@@ -10425,32 +10857,32 @@ def render_life_entry_screen(standalone: bool = True) -> None:
                     </div>
                 </div>
                 <div class="home-module-grid">
-                    <div class="home-module-card">
+                    <div class="home-module-card" tabindex="0">
                         <div class="home-module-icon">SV</div>
                         <b>{ui_html('Stock Valuation')}</b>
                         <span>{ui_html('Fair value, valuation status, and real market context.')}</span>
                     </div>
-                    <div class="home-module-card">
+                    <div class="home-module-card" tabindex="0">
                         <div class="home-module-icon">RE</div>
                         <b>{ui_html('REIT Analytics')}</b>
                         <span>{ui_html('Income, real estate exposure, and rate sensitivity lens.')}</span>
                     </div>
-                    <div class="home-module-card">
+                    <div class="home-module-card" tabindex="0">
                         <div class="home-module-icon">PD</div>
                         <b>{ui_html('Portfolio Diversification')}</b>
                         <span>{ui_html('Risk, covariance, correlation, and complementarity.')}</span>
                     </div>
-                    <div class="home-module-card">
+                    <div class="home-module-card" tabindex="0">
                         <div class="home-module-icon">82</div>
                         <b>{ui_html('Financial Health')}</b>
                         <span>{ui_html('Cash flow, savings, debt, liquidity, and capacity.')}</span>
                     </div>
-                    <div class="home-module-card">
+                    <div class="home-module-card" tabindex="0">
                         <div class="home-module-icon">FD</div>
                         <b>{ui_html('Financial Diary')}</b>
                         <span>{ui_html('Save snapshots, notes, next actions, and reflection.')}</span>
                     </div>
-                    <div class="home-module-card">
+                    <div class="home-module-card" tabindex="0">
                         <div class="home-module-icon">AI</div>
                         <b>{ui_html('AI Scenario Readiness')}</b>
                         <span>{ui_html('Prepare structured context for future reasoning assistants.')}</span>
@@ -10468,7 +10900,7 @@ def render_life_entry_screen(standalone: bool = True) -> None:
 
     st.caption(
         ui(
-            "Click the image buttons on desktop or Enter ToxiGuard-NORA Dashboard on mobile. Educational and informational use only; not financial, investment, legal, or tax advice."
+            "Educational prototype only; not financial, investment, legal, or tax advice."
         )
     )
 
