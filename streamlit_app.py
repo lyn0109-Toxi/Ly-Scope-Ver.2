@@ -112,17 +112,23 @@ KO_TRANSLATIONS = {
     "Assets": "자산",
     "Portfolio": "포트폴리오",
     "Goals": "목표",
+    "Goal": "목표",
     "Planning": "계획",
     "Diary": "다이어리",
     "Reflection": "회고",
     "Stock Valuation": "주식 가치평가",
     "Fair value, valuation status, and real market context.": "적정가치, 가치평가 상태, 실제 시장 맥락.",
+    "Investment Portfolio": "투자 포트폴리오",
+    "Risk, return, and valuation across holdings": "보유 종목의 위험, 수익, 가치평가",
     "Find Stock for Portfolio": "포트폴리오 종목 찾기",
+    "SR · Portfolio Search": "SR · 포트폴리오 검색",
+    "Search ticker/company, review valuation, then add it to this portfolio.": "티커/회사명을 검색하고 가치평가를 확인한 뒤 포트폴리오에 추가합니다.",
     "Ticker or company search with valuation, risk, and portfolio action.": "티커 또는 회사명으로 가치평가, 위험, 포트폴리오 행동을 확인합니다.",
     "Ticker or company name": "티커 또는 회사명",
     "Ticker or company name: NVDA, AAPL, 삼성전자, NAVER": "티커 또는 회사명: NVDA, AAPL, 삼성전자, NAVER",
     "Search and Value Stock": "검색 및 가치평가",
     "Portfolio valuation lens": "포트폴리오 가치평가 렌즈",
+    "Portfolio valuation basis": "포트폴리오 가치평가 근거",
     "Upside": "상승여력",
     "Current price": "현재가",
     "blended fair value": "종합 적정가치",
@@ -153,6 +159,8 @@ KO_TRANSLATIONS = {
     "Financial Diary": "금융 다이어리",
     "Advisor Reports": "어드바이저 리포트",
     "Advisor": "어드바이저",
+    "Portfolio / SR": "포트폴리오 / SR",
+    "Goal-first mobile map": "목표 중심 모바일 맵",
     "Evidence": "근거",
     "Status": "상태",
     "Age": "나이",
@@ -189,7 +197,7 @@ KO_TRANSLATIONS = {
     "Scenario Lab": "시나리오 실험실",
     "Market Search": "시장 검색",
     "Calculation Details": "계산 근거",
-    "Start with Finance or Search.": "재무 또는 검색에서 시작하세요.",
+    "Start with a goal, then Finance or Portfolio.": "목표를 먼저 고른 뒤 재무 또는 포트폴리오로 이동하세요.",
     "Check surplus, reserve, debt, and savings.": "잉여 현금, 비상자금, 부채, 저축을 확인하세요.",
     "Enter shares and average purchase price.": "보유 수량과 평균 매입가를 입력하세요.",
     "Ask one focused question from your current data.": "현재 데이터 기준으로 한 가지 질문을 던져 보세요.",
@@ -5450,7 +5458,7 @@ st.markdown(
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
-        justify-content: space-between !important;
+        justify-content: center !important;
         gap: 12px !important;
         border-radius: 10px !important;
         background: #ffffff !important;
@@ -5679,6 +5687,63 @@ st.markdown(
         color: #ffffff !important;
         background: #0f766e !important;
         border-color: #0f766e !important;
+    }
+    html body .stApp .portfolio-title-strip {
+        width: min(1120px, 100%);
+        margin: 4px auto 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        min-height: 36px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        color: #0f172a;
+        background: #f8fafc;
+        border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+    html body .stApp .portfolio-title-strip b {
+        color: #0f172a;
+        font-size: 0.96rem;
+        line-height: 1;
+        font-weight: 900;
+    }
+    html body .stApp .portfolio-title-strip span {
+        color: #64748b;
+        font-size: 0.78rem;
+        line-height: 1.15;
+        font-weight: 760;
+        text-align: right;
+    }
+    html body .stApp .portfolio-sr-header {
+        width: min(1120px, 100%);
+        margin: 4px auto 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 10px;
+        border-radius: 8px;
+        color: #0f172a;
+        background: #ffffff;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+    }
+    html body .stApp .portfolio-sr-header span {
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        border-radius: 8px;
+        color: #ffffff;
+        background: #0f766e;
+        font-size: 0.72rem;
+        font-weight: 950;
+    }
+    html body .stApp .portfolio-sr-header b {
+        color: #0f172a;
+        font-size: 0.92rem;
+        line-height: 1;
+        font-weight: 900;
     }
     html body .stApp .life-compact-panel {
         padding: 16px !important;
@@ -6992,14 +7057,14 @@ def visual_score_tone(score: float) -> str:
 
 def portfolio_score_card_html(label: str, value: str, score: float, detail: str) -> str:
     safe_score = visual_score_pct(score)
-    return f"""
-        <div class="portfolio-score-card {visual_score_tone(safe_score)}" tabindex="0">
-            <div class="portfolio-score-label">{ui_html(str(label))}</div>
-            <div class="portfolio-score-value">{escape(str(value))}</div>
-            <div class="portfolio-score-bar"><span style="--value:{safe_score:.0f}%"></span></div>
-            <div class="portfolio-score-detail">{escape(str(detail))}</div>
-        </div>
-    """
+    return (
+        f'<div class="portfolio-score-card {visual_score_tone(safe_score)}" tabindex="0">'
+        f'<div class="portfolio-score-label">{ui_html(str(label))}</div>'
+        f'<div class="portfolio-score-value">{escape(str(value))}</div>'
+        f'<div class="portfolio-score-bar"><span style="--value:{safe_score:.0f}%"></span></div>'
+        f'<div class="portfolio-score-detail">{escape(str(detail))}</div>'
+        '</div>'
+    )
 
 
 def render_portfolio_valuation_board(stock: dict[str, Any]) -> None:
@@ -7315,11 +7380,17 @@ def process_portfolio_stock_search(query: str) -> bool:
 
 
 def render_portfolio_stock_search() -> None:
-    st.subheader(ui("Find Stock for Portfolio"))
+    st.markdown(
+        f"""
+        <div class="portfolio-sr-header" aria-label="{ui_html('SR · Portfolio Search')}">
+            <span>SR</span>
+            <b>{ui_html('SR · Portfolio Search')}</b>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     with st.container(border=True):
-        st.caption(
-            ui("Ticker or company search with valuation, risk, and portfolio action.")
-        )
+        st.caption(ui("Search ticker/company, review valuation, then add it to this portfolio."))
         with st.form("portfolio_stock_search_form"):
             search_cols = st.columns([3, 1])
             with search_cols[0]:
@@ -10721,10 +10792,10 @@ def render_portfolio_charts() -> None:
 
 def portfolio_tab() -> None:
     st.markdown(
-        """
-        <div class="hero-panel">
-            <h1 style="margin:0 0 8px;">Investment Portfolio</h1>
-            <div class="hero-muted">Track weighted risk, return, and valuation across your holdings</div>
+        f"""
+        <div class="portfolio-title-strip">
+            <b>{ui_html('Investment Portfolio')}</b>
+            <span>{ui_html('Risk, return, and valuation across holdings')}</span>
         </div>
         """,
         unsafe_allow_html=True,
@@ -10794,12 +10865,13 @@ def portfolio_tab() -> None:
     with c3:
         metric_card("Portfolio Valuation Score", score_text, score_color)
 
-    st.info(
-        "Valuation Score estimates the portfolio's weighted upside or downside versus each stock's blended fair value. "
-        "Formula: sum(weight x ((Fair Value - Current Price) / Current Price)) / valued-stock weight. "
-        "Positive means undervalued; negative means overvalued. Holdings without valid fair value are excluded. "
-        f"Current analysis mode: {st.session_state.portfolio_weighting_mode}."
-    )
+    with st.expander(ui("Portfolio valuation basis"), expanded=False):
+        st.caption(
+            "Valuation Score estimates the portfolio's weighted upside or downside versus each stock's blended fair value. "
+            "Formula: sum(weight x ((Fair Value - Current Price) / Current Price)) / valued-stock weight. "
+            "Positive means undervalued; negative means overvalued. Holdings without valid fair value are excluded. "
+            f"Current analysis mode: {st.session_state.portfolio_weighting_mode}."
+        )
 
     render_quick_portfolio_entry()
 
@@ -11501,7 +11573,7 @@ NAV_ITEMS = [
     {"key": "finance", "label": "Finance", "icon": "FI"},
     {"key": "portfolio", "label": "Portfolio", "icon": "PF"},
     {"key": "diary", "label": "Diary", "icon": "DY"},
-    {"key": "advisor", "label": "Advisor Reports", "icon": "AR"},
+    {"key": "advisor", "label": "Advisor", "icon": "AR"},
     {"key": "search", "label": "Search", "icon": "SR"},
     {"key": "compare", "label": "Compare", "icon": "CP"},
     {"key": "reit", "label": "REIT", "icon": "RE"},
@@ -11511,6 +11583,8 @@ NAV_ITEMS = [
     {"key": "guide", "label": "Guide", "icon": "GD"},
     {"key": "settings", "label": "Settings", "icon": "SE"},
 ]
+
+PRIMARY_NAV_KEYS = ("life", "finance", "portfolio", "reit", "scenario", "advisor")
 
 DESKTOP_ORBIT_ITEMS = [
     {"key": "life", "x": "50%", "y": "11%", "accent": "#14b8a6", "accent_rgb": "20, 184, 166"},
@@ -11603,17 +11677,12 @@ NORA_ONTOLOGY_STEPS = [
 ]
 
 NORA_MODULE_MAP = [
-    ("Customer Purpose", "life"),
-    ("Plan", "finance"),
-    ("Situation", "finance"),
-    ("Financial Foundation", "finance"),
-    ("Market Assets", "portfolio"),
+    ("Goal", "life"),
+    ("Finance", "finance"),
+    ("Portfolio / SR", "portfolio"),
     ("Real Estate", "reit"),
     ("Scenario", "scenario"),
-    ("Risk / Resilience", "scenario"),
-    ("Evidence", "details"),
-    ("AI Interpretation", "ai"),
-    ("Decision", "advisor"),
+    ("Advisor", "advisor"),
     ("Memory", "diary"),
 ]
 
@@ -11684,6 +11753,8 @@ def render_circle_navigation(active_key: str) -> None:
     nav_item_map = {item["key"]: item for item in NAV_ITEMS}
     orbit_links = []
     for orbit_item in DESKTOP_ORBIT_ITEMS:
+        if orbit_item["key"] not in PRIMARY_NAV_KEYS:
+            continue
         nav_item = nav_item_map[orbit_item["key"]]
         active_class = " active" if nav_item["key"] == active_key else ""
         href = escape(app_view_href(nav_item["key"]), quote=True)
@@ -11716,13 +11787,11 @@ def render_circle_navigation(active_key: str) -> None:
 def render_mobile_navigation(active_key: str) -> None:
     orbit_items = [
         {"key": "life", "label": "Life", "icon": "LF", "slot": "mobile-orbit-top"},
-        {"key": "ai", "label": "AI", "icon": "AI", "slot": "mobile-orbit-top-right"},
+        {"key": "finance", "label": "Finance", "icon": "FI", "slot": "mobile-orbit-top-right"},
         {"key": "portfolio", "label": "Port", "icon": "PF", "slot": "mobile-orbit-right"},
-        {"key": "scenario", "label": "Scenario", "icon": "SC", "slot": "mobile-orbit-bottom-right"},
-        {"key": "search", "label": "Search", "icon": "SR", "slot": "mobile-orbit-bottom"},
-        {"key": "details", "label": "Details", "icon": "DT", "slot": "mobile-orbit-bottom-left"},
-        {"key": "finance", "label": "Finance", "icon": "FI", "slot": "mobile-orbit-left"},
-        {"key": "reit", "label": "REIT", "icon": "RE", "slot": "mobile-orbit-top-left"},
+        {"key": "reit", "label": "REIT", "icon": "RE", "slot": "mobile-orbit-bottom-right"},
+        {"key": "scenario", "label": "Scenario", "icon": "SC", "slot": "mobile-orbit-bottom-left"},
+        {"key": "advisor", "label": "Advisor", "icon": "AR", "slot": "mobile-orbit-left"},
     ]
     orbit_links = []
     for item in orbit_items:
@@ -11733,26 +11802,16 @@ def render_mobile_navigation(active_key: str) -> None:
             f'<b>{escape(item["icon"])}</b><span>{ui_html(item["label"])}</span></a>'
         )
     center_active = " active" if active_key == "diary" else ""
-    settings_active = " active" if active_key == "settings" else ""
-    guide_active = " active" if active_key == "guide" else ""
-    advisor_active = " active" if active_key == "advisor" else ""
     diary_href = escape(app_view_href("diary"), quote=True)
-    settings_href = escape(app_view_href("settings"), quote=True)
-    guide_href = escape(app_view_href("guide"), quote=True)
-    advisor_href = escape(app_view_href("advisor"), quote=True)
     st.markdown(
         (
             '<div class="mobile-orbit-nav mobile-only-deck" aria-label="Mobile ToxiGuard-NORA orbit navigation">'
-            f'<div class="mobile-orbit-stamp">{ui_html("Mobile App Mode · Orbit V2")}</div>'
+            f'<div class="mobile-orbit-stamp">{ui_html("Goal-first mobile map")}</div>'
             '<div class="mobile-orbit-shell">'
             f'{"".join(orbit_links)}'
             f'<a class="mobile-orbit-center{center_active}" href="{diary_href}" target="_self" aria-label="{ui_html("Financial Diary")}">'
             f'<b>{ui_html("Diary")}</b><span>{ui_html("Personal Memory")}</span></a></div>'
-            '<div class="mobile-orbit-mini-row">'
-            f'<a class="mobile-orbit-mini{advisor_active}" href="{advisor_href}" target="_self">{ui_html("Advisor")}</a>'
-            f'<a class="mobile-orbit-mini{settings_active}" href="{settings_href}" target="_self">{ui_html("Settings")}</a>'
-            f'<a class="mobile-orbit-mini{guide_active}" href="{guide_href}" target="_self">{ui_html("Guide")}</a>'
-            '</div></div>'
+            '</div>'
         ),
         unsafe_allow_html=True,
     )
@@ -11775,7 +11834,7 @@ def render_mobile_view_summary(active_key: str) -> None:
         "guide": "Guide",
     }
     next_map = {
-        "life": "Start with Finance or Search.",
+        "life": "Start with a goal, then Finance or Portfolio.",
         "finance": "Check surplus, reserve, debt, and savings.",
         "portfolio": "Enter shares and average purchase price.",
         "advisor": "Review virtual clients and export advisor PDF reports.",
@@ -11914,7 +11973,6 @@ def render_main_app() -> None:
 
     render_sidebar()
 
-    search_href = escape(app_view_href("search"), quote=True)
     brand_subtitle = (
         "개인 의사결정 인텔리전스"
         if current_language() == "ko"
@@ -11930,17 +11988,6 @@ def render_main_app() -> None:
                     <div class="brand-subtitle">{brand_subtitle}</div>
                 </div>
             </div>
-            <a class="brand-badge brand-search-badge" href="{search_href}" target="_self" aria-label="{ui_html('Open Search')}">
-                <span class="brand-search-icon" aria-hidden="true">
-                    <svg class="brand-search-sigil" viewBox="0 0 44 44" focusable="false">
-                        <path d="M10 27 C15 12 29 10 34 21 C38 30 25 36 15 31"></path>
-                        <circle cx="33" cy="16" r="3.5"></circle>
-                        <path d="M28 28 L36 36"></path>
-                    </svg>
-                    <span class="brand-search-initials">SR</span>
-                </span>
-                <span class="brand-search-label">{ui_html('Search')}</span>
-            </a>
         </div>
         """,
         unsafe_allow_html=True,
