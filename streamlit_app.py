@@ -5234,6 +5234,544 @@ st.markdown(
             grid-template-columns: 1fr 1fr;
         }
     }
+
+    /* Goal-first simplification: closer to the quieter Ver.1 console. */
+    html body .stApp .homepage-visual {
+        max-width: 1080px !important;
+        min-height: 520px !important;
+        border-radius: 16px !important;
+        background: #ffffff !important;
+        box-shadow: 0 14px 38px rgba(15, 23, 42, 0.10) !important;
+    }
+    html body .stApp .homepage-visual::before,
+    html body .stApp .homepage-visual::after,
+    html body .stApp .home-nav-links,
+    html body .stApp .home-signal-row,
+    html body .stApp .home-module-grid,
+    html body .stApp .life-map,
+    html body .stApp .home-cta-row,
+    html body .stApp .home-proof {
+        display: none !important;
+    }
+    html body .stApp .home-nav {
+        min-height: 58px !important;
+        padding: 12px 18px !important;
+        background: rgba(255, 255, 255, 0.96) !important;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.14) !important;
+        box-shadow: none !important;
+    }
+    html body .stApp .home-goal-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.82fr) minmax(360px, 1fr);
+        gap: 28px;
+        padding: 36px;
+        align-items: center;
+    }
+    html body .stApp .home-goal-intro {
+        min-width: 0;
+    }
+    html body .stApp .homepage-visual .life-kicker {
+        color: #0f766e !important;
+        background: #ecfdf5 !important;
+        border: 1px solid rgba(15, 118, 110, 0.12) !important;
+        box-shadow: none !important;
+    }
+    html body .stApp .homepage-visual .life-title {
+        max-width: 390px !important;
+        margin-top: 14px !important;
+        font-size: 2.28rem !important;
+        line-height: 1.08 !important;
+        color: #0f172a !important;
+    }
+    html body .stApp .homepage-visual .life-copy {
+        max-width: 360px !important;
+        color: #475569 !important;
+        font-size: 0.95rem !important;
+        line-height: 1.45 !important;
+    }
+    html body .stApp .goal-compass {
+        position: relative;
+        width: 174px;
+        height: 174px;
+        margin: 28px 0 10px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #f8fafc 0 30%, #eff6ff 31% 54%, #ffffff 55%);
+        border: 1px solid rgba(148, 163, 184, 0.20);
+    }
+    html body .stApp .goal-compass-ring {
+        position: absolute;
+        inset: 22px;
+        border-radius: 50%;
+        border: 1px solid rgba(14, 116, 144, 0.18);
+    }
+    html body .stApp .goal-compass-ring.two {
+        inset: 54px;
+        border-color: rgba(37, 99, 235, 0.18);
+    }
+    html body .stApp .goal-compass-core {
+        position: absolute;
+        inset: 59px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        color: #ffffff;
+        background: #0f766e;
+        font-size: 0.82rem;
+        font-weight: 900;
+    }
+    html body .stApp .goal-compass-dot {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #0f766e;
+        box-shadow: 0 8px 18px rgba(15, 118, 110, 0.22);
+    }
+    html body .stApp .goal-compass-dot.d1 { left: calc(50% - 8px); top: 14px; }
+    html body .stApp .goal-compass-dot.d2 { right: 14px; top: calc(50% - 8px); background: #2563eb; }
+    html body .stApp .goal-compass-dot.d3 { left: calc(50% - 8px); bottom: 14px; background: #d97706; }
+    html body .stApp .goal-compass-dot.d4 { left: 14px; top: calc(50% - 8px); background: #7c3aed; }
+    html body .stApp .goal-compass-caption {
+        color: #64748b;
+        font-size: 0.82rem;
+        font-weight: 720;
+    }
+    html body .stApp .home-skip-link {
+        display: inline-flex;
+        margin-top: 16px;
+        color: #64748b !important;
+        font-size: 0.82rem;
+        text-decoration: none !important;
+    }
+    html body .stApp .home-goal-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+    html body .stApp .home-goal-card {
+        min-height: 104px;
+        border-radius: 10px;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        background: #ffffff;
+        box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+        overflow: hidden;
+    }
+    html body .stApp .home-goal-card[open] {
+        border-color: color-mix(in srgb, var(--goal-color) 42%, transparent);
+        box-shadow: 0 14px 28px rgba(15, 23, 42, 0.10);
+    }
+    html body .stApp .home-goal-card summary {
+        min-height: 104px;
+        display: grid;
+        grid-template-columns: 38px minmax(0, 1fr);
+        grid-template-areas: "num text" "num hint";
+        column-gap: 12px;
+        align-items: center;
+        padding: 16px;
+        cursor: pointer;
+        list-style: none;
+    }
+    html body .stApp .home-goal-card summary::-webkit-details-marker {
+        display: none;
+    }
+    html body .stApp .goal-number {
+        grid-area: num;
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border-radius: 9px;
+        color: #ffffff;
+        background: var(--goal-color);
+        font-size: 0.78rem;
+        font-weight: 900;
+    }
+    html body .stApp .goal-summary {
+        grid-area: text;
+        min-width: 0;
+    }
+    html body .stApp .goal-summary b {
+        display: block;
+        color: #0f172a;
+        font-size: 1rem;
+        line-height: 1.18;
+        font-weight: 850;
+    }
+    html body .stApp .goal-summary i {
+        display: block;
+        margin-top: 4px;
+        color: #64748b;
+        font-size: 0.78rem;
+        font-style: normal;
+        font-weight: 650;
+    }
+    html body .stApp .home-goal-card summary em {
+        grid-area: hint;
+        color: #94a3b8;
+        font-size: 0.70rem;
+        font-style: normal;
+        font-weight: 650;
+    }
+    html body .stApp .goal-card-detail {
+        margin: 0 16px 12px;
+        color: #334155;
+        font-size: 0.82rem;
+        line-height: 1.42;
+    }
+    html body .stApp .goal-start {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        margin: 0 16px 16px;
+        padding: 0 12px;
+        border-radius: 8px;
+        color: #ffffff !important;
+        background: var(--goal-color);
+        font-size: 0.80rem;
+        font-weight: 800;
+        text-decoration: none !important;
+    }
+    html body .stApp .goal-strategy-strip {
+        display: grid;
+        grid-template-columns: 12px minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: center;
+        margin: 8px 0 12px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(148, 163, 184, 0.20);
+        background: #ffffff;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+    }
+    html body .stApp .brand-header {
+        min-height: 58px !important;
+        padding: 10px 14px !important;
+        margin: 0 0 10px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 12px !important;
+        border-radius: 10px !important;
+        background: #ffffff !important;
+        border: 1px solid rgba(148, 163, 184, 0.18) !important;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05) !important;
+    }
+    html body .stApp .brand-mark {
+        gap: 10px !important;
+    }
+    html body .stApp .brand-icon {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 9px !important;
+    }
+    html body .stApp .brand-name {
+        font-size: 1.34rem !important;
+        line-height: 1 !important;
+        letter-spacing: 0 !important;
+    }
+    html body .stApp .brand-subtitle {
+        display: none !important;
+    }
+    html body .stApp .brand-badge {
+        min-height: 36px !important;
+        padding: 0 10px !important;
+        border-radius: 9px !important;
+        box-shadow: none !important;
+    }
+    html body .stApp .brand-search-icon {
+        width: 24px !important;
+        height: 24px !important;
+    }
+    html body .stApp .brand-search-label {
+        font-size: 0.78rem !important;
+    }
+    html body .stApp .goal-strategy-mark {
+        width: 12px;
+        height: 44px;
+        border-radius: 999px;
+        background: var(--goal-color);
+    }
+    html body .stApp .goal-strategy-main b {
+        display: block;
+        color: #0f172a;
+        font-size: 0.96rem;
+        line-height: 1.15;
+    }
+    html body .stApp .goal-strategy-main span {
+        display: block;
+        margin-top: 3px;
+        color: #64748b;
+        font-size: 0.78rem;
+        font-weight: 650;
+    }
+    html body .stApp .goal-strategy-detail summary {
+        min-height: 34px;
+        padding: 0 12px;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 8px;
+        color: #334155;
+        background: #f8fafc;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        font-size: 0.78rem;
+        font-weight: 780;
+        cursor: pointer;
+        list-style: none;
+    }
+    html body .stApp .goal-strategy-detail summary::-webkit-details-marker {
+        display: none;
+    }
+    html body .stApp .goal-strategy-detail p {
+        max-width: 520px;
+        margin: 9px 0 8px;
+        color: #334155;
+        font-size: 0.82rem;
+        line-height: 1.42;
+    }
+    html body .stApp .goal-strategy-detail a {
+        color: var(--goal-color) !important;
+        font-size: 0.80rem;
+        font-weight: 800;
+        text-decoration: none !important;
+    }
+    html body .stApp .nora-ontology {
+        margin: 8px 0 12px !important;
+        padding: 0 !important;
+        border-radius: 10px !important;
+        border: 1px solid rgba(148, 163, 184, 0.18) !important;
+        background: #ffffff !important;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05) !important;
+    }
+    html body .stApp .nora-ontology summary {
+        min-height: 42px;
+        padding: 0 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        color: #0f172a;
+        cursor: pointer;
+        list-style: none;
+    }
+    html body .stApp .nora-ontology summary::-webkit-details-marker {
+        display: none;
+    }
+    html body .stApp .nora-ontology summary b {
+        font-size: 0.86rem;
+        font-weight: 860;
+    }
+    html body .stApp .nora-ontology summary span {
+        color: #64748b;
+        font-size: 0.78rem;
+        font-weight: 700;
+    }
+    html body .stApp .nora-ontology-body {
+        padding: 0 14px 14px;
+    }
+    html body .stApp .nora-ontology-caption {
+        max-width: none !important;
+        margin: 2px 0 10px !important;
+        text-align: left !important;
+        color: #64748b !important;
+        font-size: 0.78rem !important;
+    }
+    html body .stApp .nora-path,
+    html body .stApp .nora-modules {
+        grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)) !important;
+    }
+    html body .stApp .nora-node {
+        min-height: 76px !important;
+        padding: 10px !important;
+        background: #f8fafc !important;
+        color: #0f172a !important;
+        border-color: rgba(148, 163, 184, 0.18) !important;
+    }
+    html body .stApp .nora-node strong {
+        color: #0f172a !important;
+        font-size: 0.78rem !important;
+    }
+    html body .stApp .nora-node span {
+        color: #64748b !important;
+        font-size: 0.68rem !important;
+    }
+    html body .stApp .nora-detail {
+        background: #ffffff !important;
+        color: #334155 !important;
+        border-color: rgba(148, 163, 184, 0.22) !important;
+    }
+    html body .stApp .nora-module {
+        min-height: 34px !important;
+        color: #334155 !important;
+        background: #f8fafc !important;
+    }
+    html body .stApp .nav-flow-strip {
+        display: none !important;
+    }
+    html body .stApp .desktop-orbit-nav {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 8px 0 14px !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+    html body .stApp .desktop-orbit-shell {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        aspect-ratio: auto !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)) !important;
+        gap: 8px !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+    html body .stApp .desktop-orbit-shell::before,
+    html body .stApp .desktop-orbit-shell::after {
+        display: none !important;
+    }
+    html body .stApp .desktop-orbit-center,
+    html body .stApp .desktop-orbit-item {
+        position: static !important;
+        width: auto !important;
+        height: 36px !important;
+        min-width: 0 !important;
+        padding: 0 11px !important;
+        display: inline-flex !important;
+        justify-content: center !important;
+        flex-direction: row !important;
+        gap: 6px !important;
+        border-radius: 8px !important;
+        transform: none !important;
+        color: #334155 !important;
+        background: #ffffff !important;
+        border: 1px solid rgba(148, 163, 184, 0.20) !important;
+        box-shadow: none !important;
+    }
+    html body .stApp .desktop-orbit-center b,
+    html body .stApp .desktop-orbit-item b {
+        width: auto !important;
+        height: auto !important;
+        padding: 0 !important;
+        color: inherit !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        font-size: 0.70rem !important;
+    }
+    html body .stApp .desktop-orbit-center span,
+    html body .stApp .desktop-orbit-item span {
+        color: inherit !important;
+        font-size: 0.78rem !important;
+        font-weight: 760 !important;
+        line-height: 1 !important;
+    }
+    html body .stApp .desktop-orbit-item.active,
+    html body .stApp .desktop-orbit-center.active {
+        color: #ffffff !important;
+        background: #0f766e !important;
+        border-color: #0f766e !important;
+    }
+    html body .stApp .life-compact-panel {
+        padding: 16px !important;
+        border-radius: 10px !important;
+        background: #ffffff !important;
+        border: 1px solid rgba(148, 163, 184, 0.18) !important;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05) !important;
+    }
+    html body .stApp .life-compact-panel h1 {
+        font-size: 1.35rem !important;
+    }
+    html body .stApp .life-compact-panel p {
+        max-width: none !important;
+        font-size: 0.86rem !important;
+    }
+    html body .stApp .life-goal-board {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+    }
+    html body .stApp .life-goal-link {
+        min-height: 70px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px;
+        border-radius: 9px;
+        color: #0f172a !important;
+        background: #f8fafc;
+        border: 1px solid rgba(148, 163, 184, 0.20);
+        text-decoration: none !important;
+    }
+    html body .stApp .life-goal-link span {
+        width: 32px;
+        height: 32px;
+        display: grid;
+        place-items: center;
+        border-radius: 8px;
+        color: #ffffff;
+        background: var(--goal-color);
+        font-size: 0.72rem;
+        font-weight: 900;
+    }
+    html body .stApp .life-goal-link b {
+        font-size: 0.86rem;
+        line-height: 1.12;
+    }
+    @media (max-width: 900px) {
+        html body .stApp .home-goal-layout {
+            grid-template-columns: 1fr;
+            padding: 24px;
+        }
+        html body .stApp .home-goal-grid {
+            grid-template-columns: 1fr;
+        }
+        html body .stApp .goal-strategy-strip {
+            grid-template-columns: 10px minmax(0, 1fr);
+        }
+        html body .stApp .goal-strategy-detail {
+            grid-column: 2;
+        }
+        html body .stApp .life-goal-board {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+    @media (max-width: 680px) {
+        html body .stApp .homepage-visual .life-title {
+            font-size: 1.78rem !important;
+        }
+        html body .stApp .goal-compass {
+            width: 138px;
+            height: 138px;
+            margin-top: 20px;
+        }
+        html body .stApp .goal-compass-core {
+            inset: 47px;
+            font-size: 0.72rem;
+        }
+        html body .stApp .home-goal-layout {
+            padding: 20px 16px;
+        }
+        html body .stApp .home-goal-card,
+        html body .stApp .home-goal-card summary {
+            min-height: 88px;
+        }
+        html body .stApp .top-language-toggle {
+            top: 66px !important;
+            right: 12px !important;
+        }
+        html body .stApp .life-goal-board {
+            grid-template-columns: 1fr;
+        }
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -8047,9 +8585,87 @@ def ai_coach_readiness(context: dict[str, Any]) -> dict[str, Any]:
     return {"score": score, "label": label, "reasons": reasons}
 
 
+NORA_GOAL_STRATEGIES = {
+    "protect_runway": {
+        "icon": "01",
+        "color": "#0f766e",
+        "view": "finance",
+        "label_en": "Protect Runway",
+        "label_ko": "생존기간 보호",
+        "short_en": "Cash first",
+        "short_ko": "현금 우선",
+        "strategy_en": "Check burn rate, emergency cash, debt pressure, and forced-selling risk before reviewing assets.",
+        "strategy_ko": "자산보다 먼저 지출 속도, 비상현금, 부채 압력, 강제매도 위험을 확인합니다.",
+    },
+    "grow_capital": {
+        "icon": "02",
+        "color": "#2563eb",
+        "view": "portfolio",
+        "label_en": "Grow Capital",
+        "label_ko": "자본 성장",
+        "short_en": "Portfolio fit",
+        "short_ko": "포트폴리오 적합성",
+        "strategy_en": "Start from portfolio quality, concentration, valuation, beta, and downside capacity.",
+        "strategy_ko": "포트폴리오 품질, 집중도, 가치평가, 베타, 하락 감당력을 먼저 봅니다.",
+    },
+    "build_income": {
+        "icon": "03",
+        "color": "#d97706",
+        "view": "scenario",
+        "label_en": "Build Income",
+        "label_ko": "소득 만들기",
+        "short_en": "Cash flow path",
+        "short_ko": "현금흐름 경로",
+        "strategy_en": "Compare study, career, dividend, and savings paths against monthly cash needs.",
+        "strategy_ko": "학업, 커리어, 배당, 저축 경로를 월 현금 필요액과 비교합니다.",
+    },
+    "real_estate_plan": {
+        "icon": "04",
+        "color": "#7c3aed",
+        "view": "reit",
+        "label_en": "Real Estate Plan",
+        "label_ko": "부동산 계획",
+        "short_en": "Rate and property risk",
+        "short_ko": "금리/자산 위험",
+        "strategy_en": "Review REIT/property exposure, income durability, liquidity, and rate sensitivity.",
+        "strategy_ko": "REIT/부동산 노출, 소득 지속성, 유동성, 금리 민감도를 확인합니다.",
+    },
+}
+
+
+def normalized_goal_key(goal: str | None) -> str | None:
+    if not goal:
+        return None
+    goal = str(goal).strip()
+    return goal if goal in NORA_GOAL_STRATEGIES else None
+
+
+def active_goal_key() -> str | None:
+    goal = normalized_goal_key(query_param_value("goal"))
+    if goal:
+        st.session_state.nora_goal = goal
+        return goal
+    return normalized_goal_key(st.session_state.get("nora_goal"))
+
+
+def active_goal_params() -> dict[str, str]:
+    goal = active_goal_key()
+    return {"goal": goal} if goal else {}
+
+
+def goal_href(goal: str) -> str:
+    goal = normalized_goal_key(goal) or "protect_runway"
+    config = NORA_GOAL_STRATEGIES[goal]
+    params = {"view": config["view"], "mode": "dashboard", "goal": goal}
+    params.update(language_params())
+    params.update(selection_state_params())
+    return f"?{urlencode(params)}"
+
+
 def app_view_href(view: str) -> str:
     params = {"view": view, "mode": "dashboard"}
     params.update(language_params())
+    params.update(active_goal_params())
     params.update(selection_state_params())
     return f"?{urlencode(params)}"
 
@@ -8073,6 +8689,7 @@ def language_toggle_href(language: str) -> str:
 
     if current_view in valid_keys and (dashboard_mode_requested() or current_view != "life"):
         params.update({"view": current_view, "mode": "dashboard"})
+        params.update(active_goal_params())
         params.update(selection_state_params())
         detail = query_param_value("detail")
         if current_view == "details" and detail:
@@ -8121,21 +8738,23 @@ def render_nora_ontology(active_key: str) -> None:
             f'<a class="nora-module{active_class}" href="{href}" target="_self" title="{ui_html(label)}">{ui_html(label)}</a>'
         )
 
+    summary_label = "NORA Flow" if language == "en" else "NORA 흐름"
+    summary_path = "Goal → Plan → Situation" if language == "en" else "목표 → 플랜 → 상황"
     ontology_html = (
-        f'<section class="nora-ontology" aria-label="{ui_html("NORA Ontology")}">'
-        '<div class="nora-ontology-top">'
-        '<div>'
-        f'<div class="nora-ontology-kicker">{ui_html("Ontology Locked")}</div>'
-        f'<div class="nora-ontology-title">{ui_html("NORA Ontology")}</div>'
-        '</div>'
+        f'<details class="nora-ontology nora-ontology-minimal" aria-label="{ui_html("NORA Ontology")}">'
+        '<summary>'
+        f'<b>{escape(summary_label)}</b>'
+        f'<span>{escape(summary_path)}</span>'
+        '</summary>'
+        '<div class="nora-ontology-body">'
         '<div class="nora-ontology-caption">'
         f'{ui_html("NORA starts with the customer purpose, then checks the plan and current situation before any model.")}'
         f'<br>{ui_html("Hover or click each visual node to read its role.")}'
         '</div>'
-        '</div>'
         f'<div class="nora-path">{"".join(step_nodes)}</div>'
         f'<div class="nora-modules">{"".join(module_links)}</div>'
-        '</section>'
+        '</div>'
+        '</details>'
     )
     st.markdown(ontology_html, unsafe_allow_html=True)
 
@@ -10800,127 +11419,69 @@ def render_life_entry_screen(standalone: bool = True) -> None:
         if homepage_bg
         else ""
     )
-    dashboard_href = escape(app_view_href("life"), quote=True)
     language = current_language()
-    life_title = (
-        '고객은 <span>무엇을 원하는가?</span>'
+    dashboard_href = escape(app_view_href("life"), quote=True)
+    life_title = "Goal을 <span>선택하세요</span>" if language == "ko" else 'Choose a <span>Goal</span>'
+    life_copy = (
+        "목표가 먼저입니다. 전략은 그 다음에 바뀝니다."
         if language == "ko"
-        else 'What Does the <span>Customer Want?</span>'
+        else "Goal first. Strategy changes from there."
     )
-    life_copy = ui(
-        "NORA begins with purpose, then reads the plan and current situation."
-    )
+    start_text = "시작" if language == "ko" else "Start"
+    detail_text = "클릭해서 보기" if language == "ko" else "Click for detail"
+    goal_cards = []
+    for goal_key, config in NORA_GOAL_STRATEGIES.items():
+        goal_cards.append(
+            f"""
+            <details class="home-goal-card" style="--goal-color: {escape(config['color'])};">
+                <summary>
+                    <span class="goal-number">{escape(config['icon'])}</span>
+                    <span class="goal-summary">
+                        <b>{escape(config[f'label_{language}'])}</b>
+                        <i>{escape(config[f'short_{language}'])}</i>
+                    </span>
+                    <em>{escape(detail_text)}</em>
+                </summary>
+                <div class="goal-card-detail">{escape(config[f'strategy_{language}'])}</div>
+                <a class="goal-start" href="{escape(goal_href(goal_key), quote=True)}" target="_self">{escape(start_text)}</a>
+            </details>
+            """
+        )
+    goal_cards_html = "".join(goal_cards)
+    compass_caption = "Goal → Strategy → Situation" if language == "en" else "목표 → 전략 → 상황"
     homepage_html = dedent(
         shell_style
         + f"""
         <div class="life-entry-wrap">
             <div class="life-entry homepage-visual{homepage_class}">
                 {homepage_image}
-                <a class="homepage-entry-hotspot primary" href="{dashboard_href}" target="_self" aria-label="{ui_html('Enter ToxiGuard-NORA Dashboard')}">{ui_html('Start Your Life Map')}</a>
-                <a class="homepage-entry-hotspot secondary" href="{dashboard_href}" target="_self" aria-label="{ui_html('Explore Dashboard')}">{ui_html('Explore Dashboard')}</a>
-                <a class="homepage-mobile-cta" href="{dashboard_href}" target="_self" aria-label="{ui_html('Enter ToxiGuard-NORA Dashboard')}">{ui_html('Enter ToxiGuard-NORA Dashboard')}</a>
                 <div class="home-nav">
                     <div class="home-brand">
                         <div class="home-brand-mark">N</div>
                         <div>ToxiGuard-NORA <small>Ver.2</small></div>
                     </div>
-                    <div class="home-nav-links">
-                        <span>{'기능' if language == 'ko' else 'Features'}</span>
-                        <span>{'라이프 맵' if language == 'ko' else 'Life Map'}</span>
-                        <span>{'분석' if language == 'ko' else 'Analytics'}</span>
-                        <span>{'자료' if language == 'ko' else 'Resources'}</span>
-                        <span>{'소개' if language == 'ko' else 'About'}</span>
-                    </div>
                 </div>
-                <div class="life-entry-grid">
-                    <div>
-                        <div class="life-kicker">{ui_html('Customer purpose comes before data.')}</div>
+                <div class="home-goal-layout">
+                    <section class="home-goal-intro" aria-label="NORA goal start">
+                        <div class="life-kicker">{'Goal comes before strategy.' if language == 'en' else '전략보다 목표가 먼저입니다.'}</div>
                         <h1 class="life-title">{life_title}</h1>
-                        <div class="life-copy">
-                            {escape(life_copy)}
+                        <div class="life-copy">{escape(life_copy)}</div>
+                        <div class="goal-compass" aria-hidden="true">
+                            <span class="goal-compass-ring one"></span>
+                            <span class="goal-compass-ring two"></span>
+                            <span class="goal-compass-dot d1"></span>
+                            <span class="goal-compass-dot d2"></span>
+                            <span class="goal-compass-dot d3"></span>
+                            <span class="goal-compass-dot d4"></span>
+                            <div class="goal-compass-core">NORA</div>
                         </div>
-                        <div class="home-cta-row">
-                            <a class="home-cta" href="{dashboard_href}" target="_self" aria-label="{ui_html('Open Dashboard')}">{ui_html('Open Dashboard')}</a>
-                            <a class="home-cta secondary" href="{dashboard_href}" target="_self" aria-label="{ui_html('Explore Dashboard')}">{ui_html('Explore Dashboard')}</a>
-                        </div>
-                        <div class="home-signal-row" aria-label="ToxiGuard-NORA visual decision signals">
-                            <div class="home-signal-card current" tabindex="0">
-                                <b>{ui_html('Customer Purpose')}</b>
-                                <span>{ui_html('Desired outcome, time horizon, values, constraints, and decision question.')}</span>
-                            </div>
-                            <div class="home-signal-card direction" tabindex="0">
-                                <b>{ui_html('Plan')}</b>
-                                <span>{ui_html('Goal path, required resources, sequence, and review rhythm.')}</span>
-                            </div>
-                            <div class="home-signal-card crisis" tabindex="0">
-                                <b>{ui_html('Situation')}</b>
-                                <span>{ui_html('Current capital, income state, spending, portfolio, real estate, liquidity, and risks.')}</span>
-                            </div>
-                        </div>
-                        <div class="home-proof">
-                            <span>{ui_html('NORA asks purpose first, then turns the plan and situation into evidence.')}</span>
-                        </div>
-                    </div>
-                    <div class="life-map" aria-label="Life design map">
-                        <div class="life-sun"></div>
-                        <div class="life-path"></div>
-                        <div class="life-horizon"></div>
-                        <div class="life-stream s1"></div>
-                        <div class="life-stream s2"></div>
-                        <div class="life-stream s3"></div>
-                        <div class="life-stream s4"></div>
-                        <div class="life-stream s5"></div>
-                        <div class="life-stream s6"></div>
-                        <div class="life-spark"></div>
-                        <div class="life-spark two"></div>
-                        <div class="life-spark three"></div>
-                        <div class="life-orbit"></div>
-                        <div class="life-orbit two"></div>
-                        <div class="life-core">{'<br>'.join(ui('NORA Purpose Map').split())}</div>
-                        <div class="life-human"><div class="life-arms"></div></div>
-                        <div class="life-node income">{ui_html('Purpose')}<br>{ui_html('Why')}</div>
-                        <div class="life-node saving">{ui_html('Plan')}<br>{ui_html('Path')}</div>
-                        <div class="life-node risk">{ui_html('Situation')}<br>{ui_html('Now')}</div>
-                        <div class="life-node assets">{ui_html('Data')}<br>{ui_html('Inputs')}</div>
-                        <div class="life-node goals">{ui_html('Evidence')}<br>{ui_html('Proof')}</div>
-                        <div class="life-node diary">{ui_html('Memory')}<br>{ui_html('Review')}</div>
-                    </div>
+                        <div class="goal-compass-caption">{escape(compass_caption)}</div>
+                        <a class="home-skip-link" href="{dashboard_href}" target="_self">{'Open without goal' if language == 'en' else '목표 없이 열기'}</a>
+                    </section>
+                    <section class="home-goal-grid" aria-label="Goal choices">
+                        {goal_cards_html}
+                    </section>
                 </div>
-                <div class="home-module-grid">
-                    <div class="home-module-card" tabindex="0">
-                        <div class="home-module-icon">PR</div>
-                        <b>{ui_html('Purpose')}</b>
-                        <span>{ui_html('Desired outcome, time horizon, values, constraints, and decision question.')}</span>
-                    </div>
-                    <div class="home-module-card" tabindex="0">
-                        <div class="home-module-icon">PL</div>
-                        <b>{ui_html('Plan')}</b>
-                        <span>{ui_html('Goal path, required resources, sequence, and review rhythm.')}</span>
-                    </div>
-                    <div class="home-module-card" tabindex="0">
-                        <div class="home-module-icon">ST</div>
-                        <b>{ui_html('Situation')}</b>
-                        <span>{ui_html('Current capital, income state, spending, portfolio, real estate, liquidity, and risks.')}</span>
-                    </div>
-                    <div class="home-module-card" tabindex="0">
-                        <div class="home-module-icon">EV</div>
-                        <b>{ui_html('Evidence')}</b>
-                        <span>{ui_html('Proof and assumptions')}</span>
-                    </div>
-                    <div class="home-module-card" tabindex="0">
-                        <div class="home-module-icon">DC</div>
-                        <b>{ui_html('Decision')}</b>
-                        <span>{ui_html('Action direction')}</span>
-                    </div>
-                    <div class="home-module-card" tabindex="0">
-                        <div class="home-module-icon">MM</div>
-                        <b>{ui_html('Memory')}</b>
-                        <span>{ui_html('Decision log')}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="homepage-direct-entry">
-                <a href="{dashboard_href}" target="_self" aria-label="{ui_html('Enter ToxiGuard-NORA Dashboard')}">{ui_html('Enter ToxiGuard-NORA Dashboard')}</a>
             </div>
         </div>
         """,
@@ -11272,24 +11833,74 @@ def render_mobile_view_summary(active_key: str) -> None:
     )
 
 
-def render_life_compact_panel() -> None:
-    compact_copy = ui(
-        "NORA starts with what the customer wants, then connects the plan, current situation, evidence, decision, and memory."
+def render_goal_strategy_strip(active_key: str) -> None:
+    language = current_language()
+    goal = active_goal_key()
+    if goal:
+        config = NORA_GOAL_STRATEGIES[goal]
+        label = config[f"label_{language}"]
+        short = config[f"short_{language}"]
+        strategy = config[f"strategy_{language}"]
+        color = config["color"]
+        target_href = escape(goal_href(goal), quote=True)
+        target_text = "Open strategy screen" if language == "en" else "전략 화면 열기"
+    else:
+        label = "Choose a Goal" if language == "en" else "Goal 선택"
+        short = "Strategy starts after the goal." if language == "en" else "목표가 정해지면 전략이 바뀝니다."
+        strategy = (
+            "Select a goal on the first screen to focus finance, portfolio, income, or real-estate analysis."
+            if language == "en"
+            else "첫 화면에서 목표를 선택하면 재무, 포트폴리오, 소득, 부동산 분석의 우선순위가 달라집니다."
+        )
+        color = "#64748b"
+        target_href = escape(app_view_href("life"), quote=True)
+        target_text = "Choose goal" if language == "en" else "목표 선택"
+
+    detail_label = "Detail" if language == "en" else "상세"
+    st.markdown(
+        f"""
+        <section class="goal-strategy-strip" style="--goal-color: {escape(color)};" aria-label="Selected goal strategy">
+            <div class="goal-strategy-mark"></div>
+            <div class="goal-strategy-main">
+                <b>{escape(label)}</b>
+                <span>{escape(short)}</span>
+            </div>
+            <details class="goal-strategy-detail">
+                <summary>{escape(detail_label)}</summary>
+                <p>{escape(strategy)}</p>
+                <a href="{target_href}" target="_self">{escape(target_text)}</a>
+            </details>
+        </section>
+        """,
+        unsafe_allow_html=True,
     )
+
+
+def render_life_compact_panel() -> None:
+    language = current_language()
+    compact_title = "Goal Board" if language == "en" else "Goal 보드"
+    compact_copy = (
+        "Pick the goal that should drive today's strategy."
+        if language == "en"
+        else "오늘의 전략을 바꿀 목표를 선택하세요."
+    )
+    cards = []
+    for goal_key, config in NORA_GOAL_STRATEGIES.items():
+        cards.append(
+            f'<a class="life-goal-link" style="--goal-color: {escape(config["color"])};" '
+            f'href="{escape(goal_href(goal_key), quote=True)}" target="_self">'
+            f'<span>{escape(config["icon"])}</span><b>{escape(config[f"label_{language}"])}</b>'
+            '</a>'
+        )
     st.markdown(
         f"""
         <div class="life-compact-panel">
-            <h1>{ui_html('NORA Purpose Control Center')}</h1>
+            <h1>{escape(compact_title)}</h1>
             <p>
                 {escape(compact_copy)}
             </p>
-            <div class="life-compact-grid">
-                <div class="life-compact-card"><b>{ui_html('Customer Purpose')}</b><span>{ui_html('Clarify the desired outcome before looking at numbers.')}</span></div>
-                <div class="life-compact-card"><b>{ui_html('Plan')}</b><span>{ui_html('Turn purpose into a path, sequence, and review rhythm.')}</span></div>
-                <div class="life-compact-card"><b>{ui_html('Situation')}</b><span>{ui_html('Read capital, income state, portfolio, real estate, liquidity, and risks.')}</span></div>
-                <div class="life-compact-card"><b>{ui_html('Evidence')}</b><span>{ui_html('Keep formulas, assumptions, and warnings inspectable.')}</span></div>
-                <div class="life-compact-card"><b>{ui_html('Decision')}</b><span>{ui_html('Frame next action without pretending to be professional advice.')}</span></div>
-                <div class="life-compact-card"><b>{ui_html('Memory')}</b><span>{ui_html('Save reports, diary notes, and review history for later reasoning.')}</span></div>
+            <div class="life-goal-board">
+                {"".join(cards)}
             </div>
         </div>
         """,
@@ -11336,6 +11947,7 @@ def render_main_app() -> None:
     )
 
     active_view = active_nav_key()
+    render_goal_strategy_strip(active_view)
     render_nora_ontology(active_view)
     render_mobile_navigation(active_view)
     render_circle_navigation(active_view)
