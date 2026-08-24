@@ -7641,14 +7641,13 @@ def render_nora_ontology(active_key: str) -> None:
     for step in NORA_ONTOLOGY_STEPS:
         detail = step["detail_ko"] if language == "ko" else step["detail_en"]
         step_nodes.append(
-            f"""
-            <div class="nora-node" role="button" tabindex="0" title="{escape(detail, quote=True)}" style="--nora-color: {escape(step['color'])};">
-                <div class="nora-glyph">{escape(step['glyph'])}</div>
-                <strong>{ui_html(step['label'])}</strong>
-                <span>{ui_html(step['tag'])}</span>
-                <div class="nora-detail">{escape(detail)}</div>
-            </div>
-            """
+            f'<div class="nora-node" role="button" tabindex="0" title="{escape(detail, quote=True)}" '
+            f'style="--nora-color: {escape(step["color"])};">'
+            f'<div class="nora-glyph">{escape(step["glyph"])}</div>'
+            f'<strong>{ui_html(step["label"])}</strong>'
+            f'<span>{ui_html(step["tag"])}</span>'
+            f'<div class="nora-detail">{escape(detail)}</div>'
+            '</div>'
         )
 
     module_links = []
@@ -7659,29 +7658,23 @@ def render_nora_ontology(active_key: str) -> None:
             f'<a class="nora-module{active_class}" href="{href}" target="_self" title="{ui_html(label)}">{ui_html(label)}</a>'
         )
 
-    st.markdown(
-        f"""
-        <section class="nora-ontology" aria-label="{ui_html('NORA Ontology')}">
-            <div class="nora-ontology-top">
-                <div>
-                    <div class="nora-ontology-kicker">{ui_html('Ontology Locked')}</div>
-                    <div class="nora-ontology-title">{ui_html('NORA Ontology')}</div>
-                </div>
-                <div class="nora-ontology-caption">
-                    {ui_html('NORA keeps every screen tied to the same decision path: current situation, evidence, interpretation, action, and memory.')}
-                    <br>{ui_html('Hover or click each visual node to read its role.')}
-                </div>
-            </div>
-            <div class="nora-path">
-                {''.join(step_nodes)}
-            </div>
-            <div class="nora-modules">
-                {''.join(module_links)}
-            </div>
-        </section>
-        """,
-        unsafe_allow_html=True,
+    ontology_html = (
+        f'<section class="nora-ontology" aria-label="{ui_html("NORA Ontology")}">'
+        '<div class="nora-ontology-top">'
+        '<div>'
+        f'<div class="nora-ontology-kicker">{ui_html("Ontology Locked")}</div>'
+        f'<div class="nora-ontology-title">{ui_html("NORA Ontology")}</div>'
+        '</div>'
+        '<div class="nora-ontology-caption">'
+        f'{ui_html("NORA keeps every screen tied to the same decision path: current situation, evidence, interpretation, action, and memory.")}'
+        f'<br>{ui_html("Hover or click each visual node to read its role.")}'
+        '</div>'
+        '</div>'
+        f'<div class="nora-path">{"".join(step_nodes)}</div>'
+        f'<div class="nora-modules">{"".join(module_links)}</div>'
+        '</section>'
     )
+    st.markdown(ontology_html, unsafe_allow_html=True)
 
 
 def app_view_link(view: str, label: str) -> str:
