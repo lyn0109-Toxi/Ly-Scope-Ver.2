@@ -113,6 +113,7 @@ KO_TRANSLATIONS = {
     "Portfolio": "포트폴리오",
     "Goals": "목표",
     "Goal": "목표",
+    "Strategy": "전략",
     "Detail": "상세",
     "Planning": "계획",
     "Diary": "다이어리",
@@ -234,6 +235,18 @@ KO_TRANSLATIONS = {
     "Details": "계산",
     "Scenario": "시나리오",
     "AI Coach": "AI 코치",
+    "NORA Path": "NORA 경로",
+    "Goal → Strategy → Situation → AI Coach": "목표 → 전략 → 상황 → AI 코치",
+    "Choose the customer purpose first.": "고객 목적을 먼저 선택합니다.",
+    "Follow the plan selected by the goal.": "목표가 선택한 전략을 따라갑니다.",
+    "Read cash flow, capital, risk, and runway.": "현금흐름, 자본, 위험, 생존기간을 읽습니다.",
+    "Ask for a linked interpretation.": "연결된 해석을 요청합니다.",
+    "Selected goal": "선택된 목표",
+    "No goal selected": "선택된 목표 없음",
+    "Choose a goal to set strategy.": "목표를 선택하면 전략이 정해집니다.",
+    "Support Lists": "보조 목록",
+    "Selected stocks": "선택 종목",
+    "Portfolio holdings": "포트폴리오 보유",
     "Guide": "가이드",
     "Settings": "설정",
     "Context": "맥락",
@@ -3460,6 +3473,74 @@ st.markdown(
     section[data-testid="stSidebar"] textarea::placeholder {
         color: #64748b !important;
         opacity: 1 !important;
+    }
+    .nora-sidebar-path {
+        display: grid;
+        gap: 8px;
+        margin: 12px 0 14px;
+    }
+    .nora-sidebar-link {
+        display: grid;
+        grid-template-columns: 36px minmax(0, 1fr);
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        background: rgba(255, 255, 255, 0.62);
+        text-decoration: none !important;
+        color: #102033 !important;
+        box-shadow: 0 10px 24px rgba(14, 116, 144, 0.08);
+    }
+    .nora-sidebar-link:hover,
+    .nora-sidebar-link:focus {
+        border-color: rgba(14, 165, 233, 0.44);
+        background: rgba(240, 249, 255, 0.92);
+    }
+    .nora-sidebar-link.active {
+        border-color: rgba(15, 118, 110, 0.52);
+        background: linear-gradient(135deg, rgba(240, 253, 250, 0.96), rgba(224, 242, 254, 0.92));
+    }
+    .nora-sidebar-step {
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 950;
+        font-size: 0.72rem;
+        color: #063b44;
+        background: rgba(103, 232, 249, 0.46);
+        border: 1px solid rgba(14, 165, 233, 0.22);
+    }
+    .nora-sidebar-link b {
+        display: block;
+        color: #0f172a;
+        font-size: 0.92rem;
+        line-height: 1.1;
+    }
+    .nora-sidebar-link span:last-child {
+        display: block;
+        margin-top: 3px;
+        color: #475569;
+        font-size: 0.74rem;
+        line-height: 1.2;
+    }
+    .nora-sidebar-goal {
+        margin: 4px 0 12px;
+        padding: 10px;
+        border-radius: 12px;
+        border: 1px solid rgba(14, 165, 233, 0.22);
+        background: rgba(255, 255, 255, 0.56);
+        color: #334155;
+        font-size: 0.82rem;
+        line-height: 1.35;
+    }
+    .nora-sidebar-goal b {
+        display: block;
+        color: #0f172a;
+        margin-bottom: 3px;
     }
     </style>
     """,
@@ -9108,6 +9189,9 @@ def language_toggle_href(language: str) -> str:
         detail = query_param_value("detail")
         if current_view == "details" and detail:
             params["detail"] = detail
+        focus = query_param_value("focus")
+        if focus:
+            params["focus"] = focus
     return f"?{urlencode(params)}"
 
 
@@ -11725,6 +11809,106 @@ def remove_sidebar_item(collection: str, symbol: str, key: str) -> None:
     st.rerun()
 
 
+def sidebar_focus_href(view: str, focus: str, goal: str | None = None) -> str:
+    params = {"view": view, "mode": "dashboard", "focus": focus}
+    params.update(language_params())
+    if goal:
+        params["goal"] = goal
+    else:
+        params.update(active_goal_params())
+    params.update(selection_state_params())
+    return f"?{urlencode(params)}"
+
+
+def render_sidebar_path_menu() -> None:
+    language = current_language()
+    active_view = active_nav_key()
+    active_focus = query_param_value("focus")
+    goal = active_goal_key()
+
+    if goal:
+        goal_config = NORA_GOAL_STRATEGIES[goal]
+        goal_label = goal_config[f"label_{language}"]
+        goal_short = goal_config[f"short_{language}"]
+        strategy_view = goal_config["view"]
+        strategy_caption = goal_short
+        strategy_goal = goal
+        goal_note = f"{ui('Selected goal')}: {goal_label} · {goal_short}"
+    else:
+        strategy_view = "life"
+        strategy_caption = ui("Choose a goal to set strategy.")
+        strategy_goal = None
+        goal_note = f"{ui('No goal selected')}. {ui('Choose a goal to set strategy.')}"
+
+    strategy_active = (
+        active_focus == "strategy"
+        or (
+            active_focus is None
+            and goal is not None
+            and active_view == strategy_view
+            and strategy_view != "finance"
+        )
+    )
+    situation_active = active_focus == "situation" or (
+        active_focus is None and active_view == "finance"
+    )
+
+    path_items = [
+        {
+            "step": "01",
+            "label": ui("Goal"),
+            "caption": ui("Choose the customer purpose first."),
+            "href": sidebar_focus_href("life", "goal"),
+            "active": active_focus == "goal" or (active_focus is None and active_view == "life"),
+        },
+        {
+            "step": "02",
+            "label": ui("Strategy"),
+            "caption": strategy_caption,
+            "href": sidebar_focus_href(strategy_view, "strategy", strategy_goal),
+            "active": strategy_active,
+        },
+        {
+            "step": "03",
+            "label": ui("Situation"),
+            "caption": ui("Read cash flow, capital, risk, and runway."),
+            "href": sidebar_focus_href("finance", "situation", goal),
+            "active": situation_active,
+        },
+        {
+            "step": "04",
+            "label": ui("AI Coach"),
+            "caption": ui("Ask for a linked interpretation."),
+            "href": sidebar_focus_href("ai", "ai", goal),
+            "active": active_focus == "ai" or active_view == "ai",
+        },
+    ]
+    links = []
+    for item in path_items:
+        active_class = " active" if item["active"] else ""
+        links.append(
+            f'<a class="nora-sidebar-link{active_class}" href="{escape(item["href"], quote=True)}" target="_self">'
+            f'<span class="nora-sidebar-step">{escape(item["step"])}</span>'
+            f'<span><b>{escape(item["label"])}</b><span>{escape(item["caption"])}</span></span>'
+            '</a>'
+        )
+
+    st.markdown(f"### {ui('NORA Path')}")
+    st.caption(ui("Goal → Strategy → Situation → AI Coach"))
+    st.markdown(
+        f"""
+        <div class="nora-sidebar-path">
+            {''.join(links)}
+        </div>
+        <div class="nora-sidebar-goal">
+            <b>{ui_html('Selected goal') if goal else ui_html('No goal selected')}</b>
+            {escape(goal_note)}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_sidebar() -> None:
     with st.sidebar:
         st.markdown("## ToxiGuard-NORA")
@@ -11735,39 +11919,39 @@ def render_sidebar() -> None:
             st.session_state.life_entry_version_seen = ""
             st.rerun()
 
-        st.markdown(f"### {ui('Ver.2 Module')}")
-        st.caption(ui("Use the REIT Analysis tab in the main screen."))
+        render_sidebar_path_menu()
 
-        st.markdown(f"### {ui('Compare List')}")
-        if st.session_state.compare:
-            for symbol in list(st.session_state.compare):
-                stock = st.session_state.stocks.get(symbol, {"name": symbol})
-                key = f"sidebar_compare_{symbol}"
-                checked = st.checkbox(
-                    f"{symbol} - {stock.get('name', symbol)}",
-                    value=True,
-                    key=key,
-                )
-                if not checked:
-                    remove_sidebar_item("compare", symbol, key)
-        else:
-            st.caption(ui("No stocks selected for comparison."))
+        with st.expander(ui("Support Lists"), expanded=False):
+            st.markdown(f"#### {ui('Selected stocks')}")
+            if st.session_state.compare:
+                for symbol in list(st.session_state.compare):
+                    stock = st.session_state.stocks.get(symbol, {"name": symbol})
+                    key = f"sidebar_compare_{symbol}"
+                    checked = st.checkbox(
+                        f"{symbol} - {stock.get('name', symbol)}",
+                        value=True,
+                        key=key,
+                    )
+                    if not checked:
+                        remove_sidebar_item("compare", symbol, key)
+            else:
+                st.caption(ui("No stocks selected for comparison."))
 
-        st.markdown(f"### {ui('Portfolio List')}")
-        if st.session_state.portfolio:
-            for symbol in list(st.session_state.portfolio.keys()):
-                stock = st.session_state.stocks.get(symbol, {"name": symbol})
-                shares = st.session_state.portfolio.get(symbol, {}).get("shares", 0)
-                key = f"sidebar_portfolio_{symbol}"
-                checked = st.checkbox(
-                    f"{symbol} - {stock.get('name', symbol)} ({shares:g} shares)",
-                    value=True,
-                    key=key,
-                )
-                if not checked:
-                    remove_sidebar_item("portfolio", symbol, key)
-        else:
-            st.caption(ui("No stocks in portfolio."))
+            st.markdown(f"#### {ui('Portfolio holdings')}")
+            if st.session_state.portfolio:
+                for symbol in list(st.session_state.portfolio.keys()):
+                    stock = st.session_state.stocks.get(symbol, {"name": symbol})
+                    shares = st.session_state.portfolio.get(symbol, {}).get("shares", 0)
+                    key = f"sidebar_portfolio_{symbol}"
+                    checked = st.checkbox(
+                        f"{symbol} - {stock.get('name', symbol)} ({shares:g} {ui('shares')})",
+                        value=True,
+                        key=key,
+                    )
+                    if not checked:
+                        remove_sidebar_item("portfolio", symbol, key)
+            else:
+                st.caption(ui("No stocks in portfolio."))
 
         st.divider()
         st.markdown(f"### {ui('Developer')}")
