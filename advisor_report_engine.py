@@ -16,8 +16,8 @@ _PDF_FONT_CACHE: dict[str, tuple[str, str]] = {}
 
 LABELS = {
     "en": {
-        "advisor_report": "LY-Scope Ver.2 Advisor Report",
-        "all_reports": "LY-Scope Ver.2 Advisor Reports",
+        "advisor_report": "ToxiGuard-NORA Advisor Report",
+        "all_reports": "ToxiGuard-NORA Advisor Reports",
         "fictional": "Fictional client sample for education and product validation.",
         "metric": "Metric",
         "reading": "Reading",
@@ -91,8 +91,8 @@ LABELS = {
         "disclaimer": "Educational use only. This report is not financial, investment, legal, tax, accounting, or professional advice.",
     },
     "ko": {
-        "advisor_report": "LY-Scope Ver.2 어드바이저 리포트",
-        "all_reports": "LY-Scope Ver.2 어드바이저 리포트 모음",
+        "advisor_report": "ToxiGuard-NORA 어드바이저 리포트",
+        "all_reports": "ToxiGuard-NORA 어드바이저 리포트 모음",
         "fictional": "교육 및 제품 검증용 가상 고객 샘플입니다.",
         "metric": "지표",
         "reading": "판독",
@@ -1070,3 +1070,4 @@ def text_report_pdf_bytes(title: str, body: str, subtitle: str = "", language: s
     )
     document.build(story)
     return buffer.getvalue()
+ToxiGuard-NORA Advisor Report
