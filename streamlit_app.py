@@ -60,13 +60,14 @@ KO_TRANSLATIONS = {
     "See Your": "나의",
     "Financial Path": "금융 경로",
     "What Does the Customer Want?": "고객은 무엇을 원하는가?",
-    "NORA begins with purpose, then reads the plan and current situation.": "NORA는 목적에서 시작해 플랜과 현재 상황을 읽습니다.",
+    "NORA begins with purpose, then reads the strategy and current situation.": "NORA는 목적에서 시작해 전략과 현재 상황을 읽습니다.",
     "Customer Purpose": "고객 목적",
     "Purpose": "목적",
-    "Plan": "플랜",
+    "Plan": "계획",
     "Situation": "상황",
     "What does the customer want?": "고객은 무엇을 원하는가?",
     "Purpose path": "목적 경로",
+    "Strategy path": "전략 경로",
     "Current reality": "현재 현실",
     "NORA Purpose Map": "NORA 목적 맵",
     "Why": "이유",
@@ -86,8 +87,8 @@ KO_TRANSLATIONS = {
     "Goal path, required resources, sequence, and review rhythm.": "목표 경로, 필요한 자원, 실행 순서, 점검 리듬.",
     "Current capital, income state, spending, portfolio, real estate, liquidity, and risks.": "현재 자본, 소득 상태, 지출, 포트폴리오, 부동산, 유동성, 위험.",
     "Customer purpose comes before data.": "데이터보다 고객 목적이 먼저입니다.",
-    "NORA asks purpose first, then turns the plan and situation into evidence.": "NORA는 목적을 먼저 묻고, 플랜과 상황을 근거로 바꿉니다.",
-    "NORA starts with the customer purpose, then checks the plan and current situation before any model.": "NORA는 고객의 목적에서 시작하고, 어떤 모델보다 먼저 플랜과 현재 상황을 확인합니다.",
+    "NORA asks purpose first, then turns the strategy and situation into evidence.": "NORA는 목적을 먼저 묻고, 전략과 상황을 근거로 바꿉니다.",
+    "NORA starts with the customer purpose, then checks the strategy and current situation before any model.": "NORA는 고객의 목적에서 시작하고, 어떤 모델보다 먼저 전략과 현재 상황을 확인합니다.",
     "A calm visual map for current situation, direction, crisis signals, and memory.": "현재 상황, 목표 방향, 위험 신호, 메모리를 차분하게 보여주는 시각 맵입니다.",
     "Current Situation": "현재 상황",
     "Capital, cash flow, portfolio, and goal context in one view.": "자본, 현금흐름, 포트폴리오, 목표 맥락을 한눈에 봅니다.",
@@ -237,10 +238,10 @@ KO_TRANSLATIONS = {
     "AI Coach": "AI 코치",
     "NORA Path": "NORA 경로",
     "Goal → Strategy → Situation → AI Coach": "목표 → 전략 → 상황 → AI 코치",
-    "Choose the customer purpose first.": "고객 목적을 먼저 선택합니다.",
+    "Choose the customer purpose first.": "고객의 목표를 먼저 선택합니다.",
     "Follow the plan selected by the goal.": "목표가 선택한 전략을 따라갑니다.",
-    "Read cash flow, capital, risk, and runway.": "현금흐름, 자본, 위험, 생존기간을 읽습니다.",
-    "Ask for a linked interpretation.": "연결된 해석을 요청합니다.",
+    "Read cash flow, capital, risk, and runway.": "현재 현금흐름, 자본, 위험, 생존기간을 확인합니다.",
+    "Ask for a linked interpretation.": "근거를 쉬운 해석으로 바꿉니다.",
     "Selected goal": "선택된 목표",
     "No goal selected": "선택된 목표 없음",
     "Choose a goal to set strategy.": "목표를 선택하면 전략이 정해집니다.",
@@ -9087,7 +9088,7 @@ NORA_GOAL_STRATEGIES = {
         "view": "finance",
         "label_en": "Protect Runway",
         "label_ko": "생존기간 보호",
-        "short_en": "Cash first",
+        "short_en": "Cash safety first",
         "short_ko": "현금 우선",
         "strategy_en": "Check burn rate, emergency cash, debt pressure, and forced-selling risk before reviewing assets.",
         "strategy_ko": "자산보다 먼저 지출 속도, 비상현금, 부채 압력, 강제매도 위험을 확인합니다.",
@@ -9098,8 +9099,8 @@ NORA_GOAL_STRATEGIES = {
         "view": "portfolio",
         "label_en": "Grow Capital",
         "label_ko": "자본 성장",
-        "short_en": "Portfolio fit",
-        "short_ko": "포트폴리오 적합성",
+        "short_en": "Portfolio strategy",
+        "short_ko": "포트폴리오 전략",
         "strategy_en": "Start from portfolio quality, concentration, valuation, beta, and downside capacity.",
         "strategy_ko": "포트폴리오 품질, 집중도, 가치평가, 베타, 하락 감당력을 먼저 봅니다.",
     },
@@ -9109,7 +9110,7 @@ NORA_GOAL_STRATEGIES = {
         "view": "scenario",
         "label_en": "Build Income",
         "label_ko": "소득 만들기",
-        "short_en": "Cash flow path",
+        "short_en": "Income path",
         "short_ko": "현금흐름 경로",
         "strategy_en": "Compare study, career, dividend, and savings paths against monthly cash needs.",
         "strategy_ko": "학업, 커리어, 배당, 저축 경로를 월 현금 필요액과 비교합니다.",
@@ -9237,7 +9238,7 @@ def render_nora_ontology(active_key: str) -> None:
         )
 
     summary_label = "NORA Flow" if language == "en" else "NORA 흐름"
-    summary_path = "Goal → Plan → Situation" if language == "en" else "목표 → 플랜 → 상황"
+    summary_path = "Goal → Strategy → Situation" if language == "en" else "목표 → 전략 → 상황"
     ontology_html = (
         f'<details class="nora-ontology nora-ontology-minimal" aria-label="{ui_html("NORA Ontology")}">'
         '<summary>'
@@ -9246,7 +9247,7 @@ def render_nora_ontology(active_key: str) -> None:
         '</summary>'
         '<div class="nora-ontology-body">'
         '<div class="nora-ontology-caption">'
-        f'{ui_html("NORA starts with the customer purpose, then checks the plan and current situation before any model.")}'
+        f'{ui_html("NORA starts with the customer purpose, then checks the strategy and current situation before any model.")}'
         f'<br>{ui_html("Hover or click each visual node to read its role.")}'
         '</div>'
         f'<div class="nora-path">{"".join(step_nodes)}</div>'
@@ -9265,6 +9266,7 @@ def build_ai_coach_linked_guidance(
     context: dict[str, Any],
     readiness: dict[str, Any],
 ) -> list[dict[str, str]]:
+    language = current_language()
     portfolio = context["portfolio"]
     holdings = portfolio.get("holdings", [])
     base_currency = portfolio.get("base_currency", "USD")
@@ -9274,52 +9276,151 @@ def build_ai_coach_linked_guidance(
     gain_loss = portfolio_gain_loss_summary(holdings)
 
     if not holdings:
-        portfolio_status = "Needs holdings"
-        portfolio_advice = "Add stocks first, then enter shares and average purchase price so the coach can compare cost basis with current value."
+        portfolio_status = "Needs holdings" if language == "en" else "보유 종목 필요"
+        portfolio_advice = (
+            "Add stocks first, then enter shares and average purchase price so the coach can compare cost basis with current value."
+            if language == "en"
+            else "먼저 종목을 추가하고 보유 금액 또는 수량을 입력하세요. 그래야 현재 가치와 원가를 비교할 수 있습니다."
+        )
     elif gain_loss["unrealized_gain"] is None:
-        portfolio_status = "Needs purchase prices"
-        portfolio_advice = "Enter average purchase price for each holding to unlock personal unrealized P/L and return analysis."
+        portfolio_status = "Needs purchase prices" if language == "en" else "매입가 필요"
+        portfolio_advice = (
+            "Enter average purchase price for each holding to unlock personal unrealized P/L and return analysis."
+            if language == "en"
+            else "각 종목의 평균 매입가를 입력하면 개인 기준 손익과 수익률을 볼 수 있습니다."
+        )
     else:
         portfolio_status = (
             f"{fmt_signed_money(gain_loss['unrealized_gain'], base_currency)} "
             f"({float(gain_loss['unrealized_return_pct']):+.1f}%)"
         )
         if float(gain_loss["unrealized_gain"]) >= 0:
-            portfolio_advice = "Compare gains with concentration, beta, and cash-flow capacity before treating performance as readiness."
+            portfolio_advice = (
+                "Compare gains with concentration, beta, and cash-flow capacity before treating performance as readiness."
+                if language == "en"
+                else "수익이 있어도 집중도, 베타, 현금흐름 감당력을 함께 확인해야 합니다."
+            )
         else:
-            portfolio_advice = "Separate market drawdown from life liquidity; review whether cash flow can absorb the current unrealized loss."
+            portfolio_advice = (
+                "Separate market drawdown from life liquidity; review whether cash flow can absorb the current unrealized loss."
+                if language == "en"
+                else "시장 하락과 생활 유동성을 분리해서 보고, 현재 손실을 현금흐름이 감당할 수 있는지 확인하세요."
+            )
 
     if personal:
         health = float(personal.get("financial_health_score") or 0)
         emergency = float(personal.get("emergency_months") or 0)
         surplus = float(personal.get("monthly_surplus") or 0)
-        personal_status = f"Health {health:.1f}/100"
+        personal_status = f"Health {health:.1f}/100" if language == "en" else f"건강도 {health:.1f}/100"
         if emergency < 3:
-            personal_advice = "Emergency reserve is the first readiness checkpoint before adding investment risk."
+            personal_advice = (
+                "Emergency reserve is the first readiness checkpoint before adding investment risk."
+                if language == "en"
+                else "투자 위험을 늘리기 전에 비상자금이 먼저 확인되어야 합니다."
+            )
         elif surplus <= 0:
-            personal_advice = "Monthly cash flow should be stabilized before using portfolio gains or losses as the main signal."
+            personal_advice = (
+                "Monthly cash flow should be stabilized before using portfolio gains or losses as the main signal."
+                if language == "en"
+                else "포트폴리오 손익보다 월 현금흐름 안정성이 먼저입니다."
+            )
         else:
-            personal_advice = "Use surplus, emergency reserve, and DTI together with portfolio P/L for investment readiness."
+            personal_advice = (
+                "Use surplus, emergency reserve, and DTI together with portfolio P/L for investment readiness."
+                if language == "en"
+                else "잉여 현금, 비상자금, 부채 부담, 포트폴리오 손익을 함께 봐야 합니다."
+            )
     else:
-        personal_status = "Needs baseline"
-        personal_advice = "Complete Personal Finance once so the coach can connect risk capacity with portfolio behavior."
+        personal_status = "Needs baseline" if language == "en" else "재무 기준 필요"
+        personal_advice = (
+            "Complete Personal Finance once so the coach can connect risk capacity with portfolio behavior."
+            if language == "en"
+            else "재무 정보를 한 번 입력하면 포트폴리오 위험을 감당할 수 있는지 연결해서 볼 수 있습니다."
+        )
 
     if scenario:
         scenario_delta = float(scenario.get("portfolio", {}).get("scenario_delta_pct") or 0)
-        scenario_status = f"Latest scenario {scenario_delta:+.1f}%"
-        scenario_advice = "Ask the coach to compare this stress result with emergency fund, P/L, and current portfolio exposure."
+        scenario_status = (
+            f"Latest scenario {scenario_delta:+.1f}%"
+            if language == "en"
+            else f"최근 시나리오 {scenario_delta:+.1f}%"
+        )
+        scenario_advice = (
+            "Ask the coach to compare this stress result with emergency fund, P/L, and current portfolio exposure."
+            if language == "en"
+            else "이 스트레스 결과를 비상자금, 손익, 현재 포트폴리오 노출과 함께 비교해 보세요."
+        )
     else:
-        scenario_status = "Needs scenario"
-        scenario_advice = "Run one what-if scenario so the coach can reason about downside, FX, rate, income, and expense shocks."
+        scenario_status = "Needs scenario" if language == "en" else "시나리오 필요"
+        scenario_advice = (
+            "Run one what-if scenario so the coach can reason about downside, FX, rate, income, and expense shocks."
+            if language == "en"
+            else "하락장, 환율, 금리, 소득, 지출 충격을 함께 보려면 시나리오를 한 번 실행하세요."
+        )
 
-    diary_status = f"{len(diary)} saved entr{'y' if len(diary) == 1 else 'ies'}"
+    diary_status = (
+        f"{len(diary)} saved entr{'y' if len(diary) == 1 else 'ies'}"
+        if language == "en"
+        else f"{len(diary)}개 기록"
+    )
     if diary:
-        diary_advice = "Use diary memory to compare today's decision context with prior notes and next actions."
+        diary_advice = (
+            "Use diary memory to compare today's decision context with prior notes and next actions."
+            if language == "en"
+            else "오늘의 판단을 이전 메모와 다음 행동 기록과 비교해 보세요."
+        )
     else:
-        diary_advice = "Save the Current Situation Report so the coach has a memory checkpoint for future review."
+        diary_advice = (
+            "Save the Current Situation Report so the coach has a memory checkpoint for future review."
+            if language == "en"
+            else "현재 상황 리포트를 저장하면 이후 판단을 비교할 기준점이 생깁니다."
+        )
 
-    details_status = "Formulas ready"
-    details_advice = "Open Calculation Details when you need the formula, assumption, or limit behind a coach answer."
+    details_status = "Formulas ready" if language == "en" else "공식 확인 가능"
+    details_advice = (
+        "Open Calculation Details when you need the formula, assumption, or limit behind a coach answer."
+        if language == "en"
+        else "AI Coach 답변의 공식, 가정, 한계가 궁금하면 계산 근거를 열어 확인하세요."
+    )
+
+    if language == "ko":
+        return [
+            {
+                "title": "포트폴리오 손익",
+                "view": "portfolio",
+                "status": portfolio_status,
+                "advice": portfolio_advice,
+                "question": "내 포트폴리오 원가, 미실현 손익, 현재 가치, 위험 지표를 연결해서 투자 준비도를 설명해 주세요.",
+            },
+            {
+                "title": "재무 상태",
+                "view": "finance",
+                "status": personal_status,
+                "advice": personal_advice,
+                "question": "내 재무 기준과 포트폴리오 위험을 연결해서 가장 중요한 준비도 이슈를 알려 주세요.",
+            },
+            {
+                "title": "시나리오 스트레스",
+                "view": "scenario",
+                "status": scenario_status,
+                "advice": scenario_advice,
+                "question": "최근 시나리오를 바탕으로 가장 안전한 다음 검토 단계를 설명해 주세요.",
+            },
+            {
+                "title": "다이어리 리포트",
+                "view": "diary",
+                "status": diary_status,
+                "advice": diary_advice,
+                "question": "현재 상황 리포트와 다이어리 기록을 사용해 다음에 검토할 내용을 요약해 주세요.",
+            },
+            {
+                "title": "계산 근거",
+                "view": "details",
+                "status": details_status,
+                "advice": details_advice,
+                "question": "현재 포트폴리오 손익, 준비도, 위험 신호 뒤의 공식과 가정을 설명해 주세요.",
+            },
+        ]
 
     return [
         {
@@ -9918,11 +10019,25 @@ def render_ai_coach_linked_guidance(
     context: dict[str, Any],
     readiness: dict[str, Any],
 ) -> str | None:
-    st.subheader("Linked Coach Guidance")
-    st.caption(
-        "These cards are generated from Portfolio, Personal Finance, Scenario, Diary, and Calculation Details. "
-        "Open the source view or ask AI Coach with that exact context."
-    )
+    language = current_language()
+    if language == "ko":
+        st.subheader("연결된 근거 카드")
+        st.caption(
+            "포트폴리오, 재무 상태, 시나리오, 다이어리, 계산 근거에서 만든 카드입니다. "
+            "원본 화면을 열거나 이 맥락 그대로 AI Coach에게 물어볼 수 있습니다."
+        )
+        eyebrow_text = "연결 근거"
+        open_text = "열기"
+        ask_text = "질문하기"
+    else:
+        st.subheader("Linked Coach Guidance")
+        st.caption(
+            "These cards are generated from Portfolio, Personal Finance, Scenario, Diary, and Calculation Details. "
+            "Open the source view or ask AI Coach with that exact context."
+        )
+        eyebrow_text = "Linked source"
+        open_text = "Open"
+        ask_text = "Ask Coach"
     pending_question = None
     linked_items = build_ai_coach_linked_guidance(context, readiness)
     for start in range(0, len(linked_items), 2):
@@ -9932,7 +10047,7 @@ def render_ai_coach_linked_guidance(
                 st.markdown(
                     f"""
                     <div class="linked-coach-card">
-                        <div class="eyebrow">Linked source</div>
+                        <div class="eyebrow">{escape(eyebrow_text)}</div>
                         <h3>{escape(item['title'])}</h3>
                         <div class="status">{escape(item['status'])}</div>
                         <p>{escape(item['advice'])}</p>
@@ -9943,14 +10058,14 @@ def render_ai_coach_linked_guidance(
                 open_col, ask_col = st.columns(2)
                 with open_col:
                     st.button(
-                        "Open",
+                        open_text,
                         key=f"linked_open_{item['view']}_{idx}",
                         width="stretch",
                         on_click=set_active_nav_key,
                         args=(item["view"],),
                     )
                 with ask_col:
-                    if st.button("Ask Coach", key=f"linked_ask_{item['view']}_{idx}", width="stretch"):
+                    if st.button(ask_text, key=f"linked_ask_{item['view']}_{idx}", width="stretch"):
                         pending_question = item["question"]
     return pending_question
 
@@ -9971,6 +10086,7 @@ def queue_current_report_ai_question() -> None:
 
 
 def render_ai_coach() -> None:
+    language = current_language()
     context = ai_coach_context_snapshot()
     readiness = ai_coach_readiness(context)
     portfolio = context["portfolio"]
@@ -9978,36 +10094,58 @@ def render_ai_coach() -> None:
     diary = context["diary"]
     score = readiness["score"]
     label = readiness["label"]
+    missing_text = "Missing" if language == "en" else "입력 필요"
+    readiness_label = {
+        "Data Needed": "입력 필요",
+        "Prepared": "준비됨",
+        "Developing": "형성 중",
+        "Caution": "주의",
+        "Fragile": "취약",
+    }.get(label, label) if language == "ko" else label
     health_text = (
         f"{float(personal.get('financial_health_score') or 0):.1f}/100"
         if personal
-        else "Missing"
+        else missing_text
     )
     portfolio_text = (
         fmt_money(portfolio["total_value"], portfolio["base_currency"])
         if portfolio["holdings"]
-        else "Missing"
+        else missing_text
+    )
+    hero_copy = (
+        "Ask one focused question. NORA reads the goal, situation, evidence, risk, and memory together."
+        if language == "en"
+        else "한 가지 질문을 입력하세요. NORA가 목표, 상황, 근거, 위험, 메모리를 함께 읽습니다."
+    )
+    readiness_label_text = "Readiness" if language == "en" else "준비도"
+    finance_label_text = "Personal finance" if language == "en" else "재무 상태"
+    portfolio_label_text = "Portfolio context" if language == "en" else "포트폴리오"
+    diary_label_text = "Diary memories" if language == "en" else "기록"
+    disclaimer_text = (
+        "Educational reasoning only. NORA answers from visible app context and does not give professional advice."
+        if language == "en"
+        else "교육용 해석입니다. NORA는 화면의 앱 맥락을 바탕으로 답하며 전문 조언을 제공하지 않습니다."
     )
 
     st.markdown(
         f"""
         <div class="ai-coach-hero">
-            <h1>AI Coach</h1>
-            <p>Ask ToxiGuard-NORA direct questions about readiness, risk, scenarios, and memory. This beta uses transparent rules first, then can later connect to an LLM API.</p>
+            <h1>{ui_html('AI Coach')}</h1>
+            <p>{escape(hero_copy)}</p>
             <div class="ai-coach-strip">
-                <div class="ai-coach-signal"><b>{escape(label)}</b><span>Readiness {score:.0f}/100</span></div>
-                <div class="ai-coach-signal"><b>{escape(health_text)}</b><span>Personal finance</span></div>
-                <div class="ai-coach-signal"><b>{escape(portfolio_text)}</b><span>Portfolio context</span></div>
-                <div class="ai-coach-signal"><b>{len(diary)}</b><span>Diary memories</span></div>
+                <div class="ai-coach-signal"><b>{escape(readiness_label)}</b><span>{escape(readiness_label_text)} {score:.0f}/100</span></div>
+                <div class="ai-coach-signal"><b>{escape(health_text)}</b><span>{escape(finance_label_text)}</span></div>
+                <div class="ai-coach-signal"><b>{escape(portfolio_text)}</b><span>{escape(portfolio_label_text)}</span></div>
+                <div class="ai-coach-signal"><b>{len(diary)}</b><span>{escape(diary_label_text)}</span></div>
             </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
     st.markdown(
-        """
+        f"""
         <div class="coach-disclaimer">
-            Verified AI Coach beta: educational reasoning only. If enabled, a reasoning model answers from structured ToxiGuard-NORA context and a local validator checks boundaries before display.
+            {escape(disclaimer_text)}
         </div>
         """,
         unsafe_allow_html=True,
@@ -10015,29 +10153,49 @@ def render_ai_coach() -> None:
 
     render_mobile_ai_coach_deck(context, readiness)
 
-    with st.expander("Verified AI Model Settings", expanded=False):
+    settings_title = "Verified AI Model Settings" if language == "en" else "AI 모델 설정"
+    with st.expander(settings_title, expanded=False):
         if OPENAI_API_KEY:
-            st.success(f"OPENAI_API_KEY is configured. Model: {OPENAI_MODEL}.")
+            if language == "ko":
+                st.success(f"OPENAI_API_KEY가 설정되어 있습니다. 모델: {OPENAI_MODEL}.")
+            else:
+                st.success(f"OPENAI_API_KEY is configured. Model: {OPENAI_MODEL}.")
         else:
-            st.warning(
-                "OPENAI_API_KEY is not configured, so AI Coach will use the local rule-based answer. "
-                "Add OPENAI_API_KEY in Streamlit Secrets to enable verified model responses."
-            )
+            if language == "ko":
+                st.warning(
+                    "OPENAI_API_KEY가 설정되어 있지 않아 AI Coach는 로컬 규칙 기반 답변을 사용합니다. "
+                    "검증된 모델 답변을 사용하려면 Streamlit Secrets에 키를 추가하세요."
+                )
+            else:
+                st.warning(
+                    "OPENAI_API_KEY is not configured, so AI Coach will use the local rule-based answer. "
+                    "Add OPENAI_API_KEY in Streamlit Secrets to enable verified model responses."
+                )
         st.toggle(
-            "Use verified OpenAI reasoning model",
+            "Use verified OpenAI reasoning model" if language == "en" else "검증된 OpenAI 추론 모델 사용",
             key="use_verified_ai_model",
             disabled=not bool(OPENAI_API_KEY),
-            help="When enabled, structured app context is sent to OpenAI's Responses API and then validated locally before display.",
+            help=(
+                "When enabled, structured app context is sent to OpenAI's Responses API and then validated locally before display."
+                if language == "en"
+                else "켜면 구조화된 앱 맥락을 OpenAI Responses API로 보내고, 표시 전 로컬 검증을 거칩니다."
+            ),
         )
         st.checkbox(
-            "Include diary note text in model context",
+            "Include diary note text in model context" if language == "en" else "다이어리 메모를 모델 맥락에 포함",
             key="include_diary_text_for_ai",
             disabled=not bool(OPENAI_API_KEY) or not st.session_state.get("use_verified_ai_model", False),
-            help="Leave off to send only diary count, mood, and next-action summaries.",
+            help=(
+                "Leave off to send only diary count, mood, and next-action summaries."
+                if language == "en"
+                else "끄면 다이어리 개수, 기분, 다음 행동 요약만 보냅니다."
+            ),
         )
         st.caption(
             "Privacy note: do not enter bank account numbers, tax IDs, passwords, or confidential records. "
             "Use this public prototype with minimal, non-sensitive examples."
+            if language == "en"
+            else "개인정보 주의: 계좌번호, 세금번호, 비밀번호, 민감한 금융 기록은 입력하지 마세요. 공개 프로토타입에서는 최소한의 비민감 예시만 사용하세요."
         )
 
     pending_question = st.session_state.get("pending_ai_question")
@@ -10045,13 +10203,16 @@ def render_ai_coach() -> None:
         st.session_state.pending_ai_question = None
 
     if not st.session_state.ai_coach_messages:
+        initial_message = (
+            "I am ready to review investment readiness, portfolio risk, scenario stress, and diary memory. "
+            "Use the linked cards below, start with a quick question, or type your own."
+            if language == "en"
+            else "투자 준비도, 포트폴리오 위험, 시나리오 스트레스, 다이어리 기록을 함께 검토할 수 있습니다. 아래 카드나 빠른 질문으로 시작하세요."
+        )
         st.session_state.ai_coach_messages.append(
             {
                 "role": "assistant",
-                "content": (
-                    "I am ready to review investment readiness, portfolio risk, scenario stress, and diary memory. "
-                    "Use the linked cards below, start with a quick question, or type your own."
-                ),
+                "content": initial_message,
             }
         )
 
@@ -10059,22 +10220,38 @@ def render_ai_coach() -> None:
     if linked_question:
         pending_question = linked_question
 
-    st.subheader("Quick Questions")
-    quick_questions = [
-        "Am I investment ready?",
-        "Explain my biggest risk.",
-        "What happens in my latest scenario?",
-        "What should I track next?",
-        "Summarize my diary memory.",
-        "What privacy or F-1 caution matters?",
-    ]
+    st.subheader("Quick Questions" if language == "en" else "빠른 질문")
+    quick_questions = (
+        [
+            "Am I investment ready?",
+            "Explain my biggest risk.",
+            "What happens in my latest scenario?",
+            "What should I track next?",
+            "Summarize my diary memory.",
+            "What privacy or F-1 caution matters?",
+        ]
+        if language == "en"
+        else [
+            "지금 투자 준비가 되었나요?",
+            "가장 큰 위험은 무엇인가요?",
+            "최근 시나리오에서는 어떤 일이 생기나요?",
+            "다음에 무엇을 추적해야 하나요?",
+            "다이어리 기록을 요약해 주세요.",
+            "개인정보나 F-1 관련 주의점은 무엇인가요?",
+        ]
+    )
     quick_cols = st.columns(2)
     for idx, question in enumerate(quick_questions):
         with quick_cols[idx % 2]:
             if st.button(question, key=f"ai_quick_{idx}", width="stretch"):
                 pending_question = question
 
-    typed_question = st.chat_input("Ask ToxiGuard-NORA AI Coach about readiness, risk, scenario, or memory")
+    chat_placeholder = (
+        "Ask about readiness, risk, scenario, or memory"
+        if language == "en"
+        else "준비도, 위험, 시나리오, 메모리에 대해 물어보세요"
+    )
+    typed_question = st.chat_input(chat_placeholder)
     if typed_question:
         pending_question = typed_question
 
@@ -10093,11 +10270,11 @@ def render_ai_coach() -> None:
 
     reset_col, save_col = st.columns([1, 1])
     with reset_col:
-        if st.button("Reset AI Coach Chat", width="stretch"):
+        if st.button("Reset AI Coach Chat" if language == "en" else "대화 초기화", width="stretch"):
             st.session_state.ai_coach_messages = []
             st.rerun()
     with save_col:
-        if st.button("Save AI Summary to Diary", width="stretch"):
+        if st.button("Save AI Summary to Diary" if language == "en" else "AI 요약을 다이어리에 저장", width="stretch"):
             last_answer = next(
                 (
                     message["content"]
@@ -10114,9 +10291,13 @@ def render_ai_coach() -> None:
                         last_answer[:600],
                     )
                 )
-                st.success("AI Coach summary saved to Financial Diary memory for this session.")
+                st.success(
+                    "AI Coach summary saved to Financial Diary memory for this session."
+                    if language == "en"
+                    else "AI Coach 요약이 이번 세션의 금융 다이어리에 저장되었습니다."
+                )
 
-    st.subheader("Conversation")
+    st.subheader("Conversation" if language == "en" else "대화")
     for message in st.session_state.ai_coach_messages[-8:]:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
@@ -10125,7 +10306,7 @@ def render_ai_coach() -> None:
 def ai_reasoning_readiness_tab() -> None:
     render_ai_coach()
 
-    with st.expander("AI Reasoning Product Thesis", expanded=False):
+    with st.expander("AI Reasoning Product Thesis" if current_language() == "en" else "AI 추론 제품 논리", expanded=False):
         st.write(
             """
             AI interfaces are moving toward voice, agents, and continuous assistance. A future user may ask:
@@ -11253,10 +11434,18 @@ def portfolio_tab() -> None:
         )
 
     usdkrw, fx_source, fx_date = effective_usdkrw()
-    st.caption(
-        f"FX setting: 1 USD = ₩{usdkrw:,.2f} | Source: {fx_source} | Date: {fx_date}. "
-        "Portfolio weights use converted base-currency values."
-    )
+    if current_language() == "ko":
+        fx_source_text = "수동 입력" if fx_source == "Manual fallback" else fx_source
+        fx_date_text = "사용자 입력" if fx_date == "User input" else fx_date
+        st.caption(
+            f"환율 기준: 1 USD = ₩{usdkrw:,.2f} | 출처: {fx_source_text} | 날짜: {fx_date_text}. "
+            "포트폴리오 비중은 기준 통화로 환산해 계산합니다."
+        )
+    else:
+        st.caption(
+            f"FX setting: 1 USD = ₩{usdkrw:,.2f} | Source: {fx_source} | Date: {fx_date}. "
+            "Portfolio weights use converted base-currency values."
+        )
 
     st.radio(
         ui("Portfolio weighting mode"),
@@ -11270,15 +11459,25 @@ def portfolio_tab() -> None:
         ),
     )
     if st.session_state.portfolio_weighting_mode == "Equal-weighted":
-        st.info(
-            "Equal weighting assigns the same analysis weight to each selected security. "
-            "This is useful for classroom analysis and simple backtesting concepts, but maintaining "
-            "equal weights in practice requires periodic rebalancing. Trading costs and taxes may reduce actual performance."
-        )
+        if current_language() == "ko":
+            st.info(
+                "동일 비중은 각 종목을 같은 무게로 분석합니다. 학습용 비교에는 좋지만, 실제 운용에서는 주기적 리밸런싱이 필요하고 비용과 세금이 성과를 낮출 수 있습니다."
+            )
+        else:
+            st.info(
+                "Equal weighting assigns the same analysis weight to each selected security. "
+                "This is useful for classroom analysis and simple backtesting concepts, but maintaining "
+                "equal weights in practice requires periodic rebalancing. Trading costs and taxes may reduce actual performance."
+            )
     else:
-        st.caption(
-            "Share-based weighting uses each holding's current market value. A high-priced stock can dominate the portfolio if the share count is similar across holdings."
-        )
+        if current_language() == "ko":
+            st.caption(
+                "보유 수량 기준은 각 종목의 현재 시장가치로 비중을 계산합니다. 보유 금액이 큰 종목이 포트폴리오 판단을 더 크게 움직입니다."
+            )
+        else:
+            st.caption(
+                "Share-based weighting uses each holding's current market value. A high-priced stock can dominate the portfolio if the share count is similar across holdings."
+            )
 
     total_value, weighted_beta, valuation_score, sector_values = portfolio_metrics()
     c1, c2, c3 = st.columns(3)
@@ -12021,11 +12220,11 @@ def render_life_entry_screen(standalone: bool = True) -> None:
     )
     language = current_language()
     dashboard_href = escape(app_view_href("life"), quote=True)
-    life_title = "Goal을 <span>선택하세요</span>" if language == "ko" else 'Choose a <span>Goal</span>'
+    life_title = "목표를 <span>선택하세요</span>" if language == "ko" else 'Choose a <span>Goal</span>'
     life_copy = (
-        "목표가 먼저입니다. 전략은 그 다음에 바뀝니다."
+        "목표가 정해지면 전략이 달라집니다."
         if language == "ko"
-        else "Goal first. Strategy changes from there."
+        else "Choose the goal first. Strategy follows."
     )
     start_text = "시작" if language == "ko" else "Start"
     detail_text = "클릭해서 보기" if language == "ko" else "Click for detail"
@@ -12140,11 +12339,11 @@ NORA_ONTOLOGY_STEPS = [
     },
     {
         "glyph": "PLN",
-        "label": "Plan",
-        "tag": "Purpose path",
+        "label": "Strategy",
+        "tag": "Strategy path",
         "color": "#60a5fa",
-        "detail_en": "The path that connects the purpose to required capital, sequence, resources, and review rhythm.",
-        "detail_ko": "목적을 필요한 자본, 실행 순서, 자원, 점검 리듬과 연결하는 경로.",
+        "detail_en": "The path that turns the goal into required capital, sequence, resources, and review rhythm.",
+        "detail_ko": "목표를 필요한 자본, 실행 순서, 자원, 점검 리듬으로 바꾸는 경로.",
     },
     {
         "glyph": "NOW",
@@ -12432,8 +12631,8 @@ def render_goal_strategy_strip(active_key: str) -> None:
         target_href = escape(goal_href(goal), quote=True)
         target_text = "Open strategy screen" if language == "en" else "전략 화면 열기"
     else:
-        label = "Choose a Goal" if language == "en" else "Goal 선택"
-        short = "Strategy starts after the goal." if language == "en" else "목표가 정해지면 전략이 바뀝니다."
+        label = "Choose a Goal" if language == "en" else "목표 선택"
+        short = "Strategy follows the goal." if language == "en" else "목표가 정해지면 전략이 달라집니다."
         strategy = (
             "Select a goal on the first screen to focus finance, portfolio, income, or real-estate analysis."
             if language == "en"
