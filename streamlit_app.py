@@ -152,6 +152,16 @@ KO_TRANSLATIONS = {
     "Total Market Value": "총 시장가치",
     "Weighted Beta": "가중 베타",
     "Portfolio Valuation Score": "포트폴리오 가치평가 점수",
+    "Native currency breakdown": "통화별 보유 금액",
+    "shares": "수량",
+    "average purchase price": "평균 매입가",
+    "Enter each holding's average purchase price to compare your cost basis with current market value.": "평균 매입가를 입력하면 원가 기준과 현재 시장가치를 비교할 수 있습니다.",
+    "Portfolio Resilience Score": "포트폴리오 회복력 점수",
+    "Portfolio Score": "포트폴리오 점수",
+    "Top Holding": "최대 보유 비중",
+    "Top Sector": "최대 섹터 비중",
+    "Ask AI Coach About Portfolio P/L": "포트폴리오 손익에 대해 AI 코치에게 묻기",
+    "Remove": "삭제",
     "Quick Portfolio Entry": "빠른 포트폴리오 입력",
     "Paste one holding per line: ticker, current value or shares, optional average purchase price. Current value amount should be in the stock's native currency.": "한 줄에 한 종목씩 입력하세요: 티커, 현재 보유 금액 또는 수량, 선택 사항으로 평균 매입가. 현재 보유 금액은 해당 종목의 통화 기준입니다.",
     "Quick input type": "빠른 입력 방식",
@@ -8429,18 +8439,18 @@ def render_portfolio_resilience_panel(summary: dict[str, Any] | None) -> None:
     if not summary:
         return
 
-    st.subheader("Portfolio Resilience Score")
+    st.subheader(ui("Portfolio Resilience Score"))
     score = float(summary["score"])
     score_color_value = "#10b981" if score >= 75 else "#f59e0b" if score >= 55 else "#ef4444"
     c1, c2, c3, c4 = st.columns(4)
     with c1:
-        metric_card("Portfolio Score", f"{score:.0f}/100", score_color_value)
+        metric_card(ui("Portfolio Score"), f"{score:.0f}/100", score_color_value)
     with c2:
-        metric_card("Status", str(summary["status"]), score_color_value)
+        metric_card(ui("Status"), str(summary["status"]), score_color_value)
     with c3:
-        metric_card("Top Holding", f"{float(summary['top_holding_weight']) * 100:.1f}%")
+        metric_card(ui("Top Holding"), f"{float(summary['top_holding_weight']) * 100:.1f}%")
     with c4:
-        metric_card("Top Sector", f"{float(summary['top_sector_weight']) * 100:.1f}%")
+        metric_card(ui("Top Sector"), f"{float(summary['top_sector_weight']) * 100:.1f}%")
 
     component_data = pd.DataFrame(summary["components"])
     chart = (
@@ -11230,7 +11240,7 @@ def portfolio_tab() -> None:
         )
     if native_breakdown:
         st.caption(
-            "Native currency breakdown: "
+            f"{ui('Native currency breakdown')}: "
             + " | ".join(fmt_money(value, currency) for currency, value in sorted(native_breakdown.items()))
         )
 
@@ -11243,7 +11253,7 @@ def portfolio_tab() -> None:
         input_cols = st.columns(2)
         with input_cols[0]:
             shares = st.number_input(
-                f"{symbol} shares",
+                f"{symbol} {ui('shares')}",
                 min_value=0.0,
                 value=float(holding.get("shares") or 0),
                 step=1.0,
@@ -11252,7 +11262,7 @@ def portfolio_tab() -> None:
         with input_cols[1]:
             purchase_step = 100.0 if currency == "KRW" else 1.0
             purchase_price = st.number_input(
-                f"{symbol} average purchase price ({currency})",
+                f"{symbol} {ui('average purchase price')} ({currency})",
                 min_value=0.0,
                 value=float(holding.get("purchase_price") or 0),
                 step=purchase_step,
@@ -11323,7 +11333,7 @@ def portfolio_tab() -> None:
         with pnl_cols[2]:
             metric_card("Unrealized Return", f"{total_unrealized_return_pct:+.1f}%", pl_color)
     else:
-        st.info("Enter each holding's average purchase price to compare your cost basis with current market value.")
+        st.info(ui("Enter each holding's average purchase price to compare your cost basis with current market value."))
 
     render_mobile_portfolio_deck(
         current_holdings,
@@ -11344,7 +11354,7 @@ def portfolio_tab() -> None:
     )
 
     st.button(
-        "Ask AI Coach About Portfolio P/L",
+        ui("Ask AI Coach About Portfolio P/L"),
         width="stretch",
         on_click=queue_ai_coach_question,
         args=(
@@ -11389,7 +11399,7 @@ def portfolio_tab() -> None:
     remove_cols = st.columns(min(4, len(st.session_state.portfolio)))
     for idx, symbol in enumerate(list(st.session_state.portfolio.keys())):
         remove_cols[idx % len(remove_cols)].button(
-            f"Remove {symbol}",
+            f"{ui('Remove')} {symbol}",
             key=f"remove_portfolio_{symbol}",
             on_click=remove_portfolio,
             args=(symbol,),
