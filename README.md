@@ -13,7 +13,7 @@ Product class:
 Personal Decision Intelligence Application
 ```
 
-The app combines useful Ver.1 market-asset logic with a new personal decision intelligence structure: stock and portfolio valuation, REIT/real-estate exposure, personal finance, goals, scenario stress tests, advisor-style reports, calculation transparency, AI interpretation readiness, and decision memory.
+The app combines useful Ver.1 market-asset logic with a new personal decision intelligence structure: stock and portfolio valuation, real estate valuation, personal finance, goals, scenario stress tests, advisor-style reports, calculation transparency, AI interpretation readiness, and decision memory.
 
 Ver.1 remains a reference prototype only. Ver.2 should not modify Ver.1 directly.
 
@@ -41,7 +41,7 @@ See the full product foundation in [`docs/PRODUCT_BLUEPRINT.md`](docs/PRODUCT_BL
 - **Financial Foundation:** income, expenses, cash, debt, runway, savings rate, risk capacity.
 - **Goals:** target amount, monthly commitment, progress, feasibility.
 - **Market Assets:** stock ticker/company search, valuation, risk, beta, portfolio scoring.
-- **Real Estate:** REIT and property-linked exposure, income sensitivity, rate sensitivity.
+- **Real Estate:** property valuation, rent support, cash flow, leverage, stress value, and listed REIT reference data.
 - **Projection:** goal and capital path over time.
 - **Scenario:** income shock, market shock, FX/rate shock, cash shock.
 - **Risk / Resilience:** liquidity, concentration, volatility, downside capacity.
@@ -62,7 +62,7 @@ Future-facing design principles:
 
 - **Reasoning before recommendation:** the app should explain risk, trade-offs, assumptions, and scenarios before suggesting any action.
 - **Life context before asset selection:** portfolio analysis should be interpreted alongside income, spending, savings, debt, emergency funds, real estate exposure, and life goals.
-- **Scenario support:** users should be able to ask what happens if interest rates change, income falls, portfolio value declines, REIT dividends change, or a major life expense appears.
+- **Scenario support:** users should be able to ask what happens if interest rates change, income falls, portfolio value declines, real estate cash flow weakens, or a major life expense appears.
 - **Memory with privacy:** the Financial Diary is a seed for user-controlled financial memory. It should support reflection without requiring sensitive account connections in the prototype stage.
 - **Explainability:** Calculation Details should act as a reasoning audit trail, showing formulas, inputs, assumptions, limitations, and data sources.
 - **Voice and agent readiness:** future interfaces may use AirPods, mobile assistants, or AI agents. LY-Scope-Ver.2 should support short summaries, deeper explanations, and detailed evidence views.
@@ -76,15 +76,15 @@ Because the founder is considering venture creation while in F-1 student status,
 ## App Structure
 
 - `streamlit_app.py`: Main LY-Scope-Ver.2 stock valuation and portfolio analytics app.
-- `reit_analysis_module.py`: REIT-focused Ver.2 module used inside the main app.
-- `pages/01_REIT_Focused_Analysis.py`: Optional standalone REIT-focused page.
+- `reit_analysis_module.py`: Real Estate valuation module with listed REIT reference data used inside the main app.
+- `pages/01_REIT_Focused_Analysis.py`: Optional standalone legacy REIT-focused page.
 - `personal_finance_engine.py`: Experimental Personal Finance calculation engine.
 - `personal_finance_module.py`: Personal Finance Streamlit UI module.
 - `advisor_report_engine.py`: Virtual client advisor report engine with PDF export support.
 - `data/virtual_clients.json`: Bilingual fictional client dataset with life situation, finance profile, portfolio sample, valuation upside, and real estate stress inputs.
 - `docs/PRODUCT_BLUEPRINT.md`: Canonical Ver.2 product blueprint, target users, ontology, engine map, data schema direction, MVP scope, and Ver.1 migration rule.
-- `docs/`: REIT analysis blueprint, personal finance structure, and data dictionary.
-- `ontology/`: NORA core ontology and REIT sub-ontology.
+- `docs/`: real estate analysis blueprint, personal finance structure, and data dictionary.
+- `ontology/`: NORA core ontology and real estate sub-ontology.
 - `DATA_SOURCES.md`: Data source, API, limitation, and usage notice.
 - `PROFESSOR_REVIEW_AUDIT.md`: Pre-share audit for data provenance, warnings,
   known limitations, and professor demo checklist.
@@ -94,11 +94,11 @@ Because the founder is considering venture creation while in F-1 student status,
 - Stock valuation and portfolio analytics migrated from the Ver.1 reference logic.
 - Korean stock search expansion with approximately 100 major KOSPI/KOSDAQ companies searchable by company name or ticker.
 - Multi-currency portfolio view for US and Korean stocks, with USD/KRW conversion using a live FX rate when available and a manual fallback rate when live data is unavailable.
-- REIT sector classification: Retail, Industrial, Residential, Office, Healthcare, Data Center, Storage, Hotel, Diversified, Mortgage REITs.
-- REIT-specific valuation: dividend yield, price to FFO, AFFO payout ratio, NAV premium or discount.
-- Interest-rate sensitivity: relationship between REIT returns, Treasury yields, and financing conditions.
-- Portfolio analysis: REIT allocation, sector concentration, beta, covariance, correlation, diversification, cost basis, unrealized profit/loss, and personal return tracking.
-- Educational comparison: stock-style valuation versus REIT-style valuation.
+- Real estate valuation: property value, rent support, NOI, cap rate, debt service coverage, cash flow, and stress value.
+- Listed real estate reference: REIT sector classification, dividend yield, price to FFO, AFFO payout ratio, NAV premium or discount.
+- Interest-rate sensitivity: relationship between property financing, listed real estate returns, Treasury yields, and financing conditions.
+- Portfolio analysis: real estate allocation, sector concentration, beta, covariance, correlation, diversification, cost basis, unrealized profit/loss, and personal return tracking.
+- Educational comparison: stock-style valuation versus property-income valuation.
 - Personal Finance test engine: net worth, cash flow, emergency fund, savings rate, debt-to-income, risk capacity, and financial health score.
 - Advisor Reports: 10 fictional bilingual client profiles, rule-based advisor interpretation, visual scorecards, portfolio/valuation samples, real estate stress signals, evidence mapping, decision actions, and downloadable selected/all-client PDF reports.
 - What-if Scenario Lab: stress-test income, expenses, cash shocks, portfolio moves, USD/KRW changes, interest-rate moves, and rate-sensitive allocation.
@@ -126,6 +126,6 @@ OPENAI_REASONING_EFFORT = "medium"
 OPENAI_AI_DEFAULT_ON = "false"
 ```
 
-The app can run with sample REIT data even when an API key is not configured.
+The app can run with sample real estate and listed REIT reference data even when an API key is not configured.
 
 `OPENAI_API_KEY` is optional. Without it, AI Coach remains a local rule-based prototype. With it, users can enable a verified model mode that sends structured LY-Scope-Ver.2 context to OpenAI's Responses API and then passes the answer through local safety validation before display.
