@@ -1,9 +1,21 @@
 export const ARCHITECTURE_STAGES = [
   {
-    id: 'user',
-    label: 'User',
+    id: 'customerPurpose',
+    label: 'Customer Purpose',
     module: 'domain/user',
-    purpose: 'decision owner, preferences, and priorities',
+    purpose: 'desired outcome, priorities, constraints, and decision question',
+  },
+  {
+    id: 'strategy',
+    label: 'Strategy',
+    module: 'domain/goals',
+    purpose: 'goal path, required resources, sequence, and review rhythm',
+  },
+  {
+    id: 'situation',
+    label: 'Situation',
+    module: 'domain/financial-foundation',
+    purpose: 'current capital, income state, liquidity, exposure, and risk pressure',
   },
   {
     id: 'data',
@@ -65,7 +77,7 @@ export function createPipelineTrace(outputs = {}) {
 
 export function getArchitectureMap() {
   return {
-    name: 'LY-Scope Ver.2 Core Decision Architecture',
+    name: 'LY-Scope-Ver.2 Core Decision Architecture',
     flow: ARCHITECTURE_STAGES.map((stage) => stage.label),
     extensionModules: EXTENSION_MODULES,
   };
