@@ -430,63 +430,48 @@ def render_language_switcher(key_suffix: str = "global") -> None:
 st.markdown(
     """
     <style>
+    header[data-testid="stHeader"],
+    div[data-testid="stToolbar"],
+    div[data-testid="stDecoration"],
+    div[data-testid="stStatusWidget"] {
+        display: none !important;
+    }
+    .block-container {
+        padding-top: 0.65rem !important;
+    }
     .stApp {
         background:
             linear-gradient(90deg, rgba(34,211,238,0.035) 1px, transparent 1px),
             linear-gradient(0deg, rgba(20,184,166,0.030) 1px, transparent 1px),
-            radial-gradient(circle at 18% 14%, rgba(14,165,233,0.18), transparent 30%),
-            radial-gradient(circle at 86% 8%, rgba(20,184,166,0.13), transparent 24%),
-            radial-gradient(circle at 52% 0%, rgba(59,130,246,0.10), transparent 34%),
-            linear-gradient(135deg, #111827 0%, #172335 48%, #080c12 100%);
-        background-size: 42px 42px, 42px 42px, auto, auto, auto;
-        color: #f8fafc;
+            linear-gradient(135deg, #eef7f3 0%, #f8fafc 52%, #f4f0e6 100%);
+        background-size: 42px 42px, 42px 42px, auto;
+        color: #0f172a;
     }
     .stApp::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 0;
-        opacity: 0.45;
-        background:
-            linear-gradient(115deg, transparent 0%, transparent 40%, rgba(37,99,235,0.16) 41%, rgba(37,99,235,0.04) 46%, transparent 52%),
-            linear-gradient(65deg, transparent 0%, transparent 58%, rgba(20,184,166,0.15) 59%, rgba(20,184,166,0.03) 64%, transparent 70%);
-        animation: dataSweep 14s linear infinite;
+        display: none !important;
     }
     .stApp::after {
-        content: "";
-        position: fixed;
-        right: 28px;
-        top: 92px;
-        width: 320px;
-        height: 180px;
-        pointer-events: none;
-        z-index: 0;
-        opacity: 0.22;
-        background:
-            linear-gradient(135deg, transparent 0 10%, rgba(37,99,235,0.32) 10% 11%, transparent 11% 25%, rgba(16,185,129,0.30) 25% 26%, transparent 26% 42%, rgba(245,158,11,0.34) 42% 43%, transparent 43% 100%);
-        clip-path: polygon(0 80%, 10% 67%, 20% 72%, 30% 48%, 40% 57%, 52% 32%, 65% 40%, 78% 18%, 100% 28%, 100% 100%, 0 100%);
-        animation: graphFloat 8s ease-in-out infinite;
+        display: none !important;
     }
     .top-language-toggle {
         position: fixed;
-        top: 16px;
-        right: 76px;
+        top: 12px;
+        right: 24px;
         z-index: 100000;
         display: flex;
         align-items: center;
         gap: 6px;
-        padding: 6px;
+        padding: 5px;
         border: 1px solid rgba(148, 163, 184, 0.28);
         border-radius: 999px;
-        background: rgba(15, 23, 42, 0.76);
-        box-shadow: 0 14px 36px rgba(2, 6, 23, 0.28);
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.14);
         backdrop-filter: blur(14px);
     }
     .top-language-toggle .language-toggle-mark,
     .top-language-toggle a {
-        width: 34px;
-        height: 34px;
+        width: 30px;
+        height: 30px;
         border-radius: 999px;
         display: inline-flex;
         align-items: center;
@@ -499,12 +484,12 @@ st.markdown(
         white-space: nowrap;
     }
     .top-language-toggle .language-toggle-mark {
-        color: #a7f3d0;
+        color: #0f766e;
         background: rgba(20, 184, 166, 0.15);
         border: 1px solid rgba(45, 212, 191, 0.24);
     }
     .top-language-toggle a {
-        color: #cbd5e1 !important;
+        color: #334155 !important;
         border: 1px solid transparent;
         background: transparent;
         transition: background 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms ease;
@@ -517,10 +502,10 @@ st.markdown(
         transform: translateY(-1px);
     }
     .top-language-toggle a.active {
-        color: #02131f !important;
-        background: #67e8f9;
-        border-color: rgba(255, 255, 255, 0.54);
-        box-shadow: 0 8px 20px rgba(34, 211, 238, 0.25);
+        color: #ffffff !important;
+        background: #0f766e;
+        border-color: #0f766e;
+        box-shadow: 0 8px 18px rgba(15, 118, 110, 0.20);
     }
     @keyframes dataSweep {
         0% { transform: translateX(-18%) translateY(0); }
@@ -3553,33 +3538,17 @@ st.markdown(
     <style>
     .stApp {
         background:
-            radial-gradient(circle at 18% 8%, rgba(255, 255, 255, 0.98), transparent 24%),
-            radial-gradient(circle at 82% 10%, rgba(254, 240, 138, 0.42), transparent 22%),
-            radial-gradient(circle at 74% 44%, rgba(125, 211, 252, 0.48), transparent 30%),
-            radial-gradient(circle at 20% 72%, rgba(167, 243, 208, 0.38), transparent 28%),
             linear-gradient(90deg, rgba(14,165,233,0.075) 1px, transparent 1px),
             linear-gradient(0deg, rgba(20,184,166,0.055) 1px, transparent 1px),
             linear-gradient(135deg, #f8fcff 0%, #eaf7ff 42%, #fff8e8 100%) !important;
-        background-size: auto, auto, auto, auto, 58px 58px, 58px 58px, auto !important;
+        background-size: 58px 58px, 58px 58px, auto !important;
         color: #102033;
     }
     .stApp::before {
-        opacity: 0.42;
-        background:
-            linear-gradient(112deg, transparent 0%, transparent 42%, rgba(255,255,255,0.72) 48%, rgba(34,211,238,0.18) 54%, transparent 62%),
-            linear-gradient(72deg, transparent 0%, transparent 60%, rgba(250,204,21,0.20) 64%, rgba(16,185,129,0.13) 69%, transparent 76%);
-        animation: futureLightSweep 16s ease-in-out infinite;
+        display: none !important;
     }
     .stApp::after {
-        right: 2vw;
-        top: 13vh;
-        width: min(520px, 36vw);
-        height: 280px;
-        opacity: 0.26;
-        background:
-            radial-gradient(ellipse at 70% 80%, rgba(255,255,255,0.74), transparent 56%),
-            linear-gradient(135deg, transparent 0 12%, rgba(14,165,233,0.34) 12% 13%, transparent 13% 28%, rgba(20,184,166,0.30) 28% 29%, transparent 29% 46%, rgba(250,204,21,0.30) 46% 47%, transparent 47% 100%);
-        animation: futureGraphFloat 9s ease-in-out infinite;
+        display: none !important;
     }
     @keyframes futureLightSweep {
         0%, 100% { transform: translateX(-10%) translateY(0); }
@@ -3599,11 +3568,7 @@ st.markdown(
     }
     .brand-header {
         border: 1px solid rgba(125, 211, 252, 0.42);
-        background:
-            radial-gradient(circle at 58% 12%, rgba(255, 255, 255, 0.94), transparent 22%),
-            radial-gradient(circle at 50% 28%, rgba(125, 211, 252, 0.46), transparent 30%),
-            radial-gradient(circle at 82% 26%, rgba(254, 240, 138, 0.38), transparent 25%),
-            linear-gradient(135deg, rgba(255,255,255,0.92), rgba(224,242,254,0.84) 54%, rgba(236,253,245,0.82)) !important;
+        background: #ffffff !important;
         box-shadow: 0 28px 78px rgba(14, 116, 144, 0.14);
     }
     .brand-header::after {
@@ -5578,40 +5543,40 @@ st.markdown(
     }
     html body .stApp .goal-strategy-strip {
         display: grid;
-        grid-template-columns: 12px minmax(0, 1fr) auto;
-        gap: 12px;
+        grid-template-columns: 8px minmax(0, 1fr) auto;
+        gap: 9px;
         align-items: center;
-        margin: 8px 0 12px;
-        padding: 12px 14px;
-        border-radius: 10px;
+        margin: 4px 0 7px;
+        padding: 8px 11px;
+        border-radius: 8px;
         border: 1px solid rgba(148, 163, 184, 0.20);
         background: #ffffff;
         box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
     }
     html body .stApp .brand-header {
-        min-height: 58px !important;
-        padding: 10px 14px !important;
-        margin: 0 0 10px !important;
+        min-height: 44px !important;
+        padding: 6px 12px !important;
+        margin: 0 0 7px !important;
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: 12px !important;
-        border-radius: 10px !important;
+        gap: 9px !important;
+        border-radius: 8px !important;
         background: #ffffff !important;
         border: 1px solid rgba(148, 163, 184, 0.18) !important;
         box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05) !important;
     }
     html body .stApp .brand-mark {
-        gap: 10px !important;
+        gap: 8px !important;
     }
     html body .stApp .brand-icon {
-        width: 34px !important;
-        height: 34px !important;
-        border-radius: 9px !important;
+        width: 28px !important;
+        height: 28px !important;
+        border-radius: 8px !important;
     }
     html body .stApp .brand-name {
-        font-size: 1.34rem !important;
+        font-size: 1.14rem !important;
         line-height: 1 !important;
         letter-spacing: 0 !important;
     }
@@ -5619,9 +5584,9 @@ st.markdown(
         display: none !important;
     }
     html body .stApp .brand-badge {
-        min-height: 36px !important;
-        padding: 0 10px !important;
-        border-radius: 9px !important;
+        min-height: 32px !important;
+        padding: 0 9px !important;
+        border-radius: 8px !important;
         box-shadow: none !important;
     }
     html body .stApp .brand-search-icon {
@@ -5632,27 +5597,27 @@ st.markdown(
         font-size: 0.78rem !important;
     }
     html body .stApp .goal-strategy-mark {
-        width: 12px;
-        height: 44px;
-        border-radius: 999px;
+        width: 8px;
+        height: 34px;
+        border-radius: 8px;
         background: var(--goal-color);
     }
     html body .stApp .goal-strategy-main b {
         display: block;
         color: #0f172a;
-        font-size: 0.96rem;
+        font-size: 0.88rem;
         line-height: 1.15;
     }
     html body .stApp .goal-strategy-main span {
         display: block;
-        margin-top: 3px;
+        margin-top: 2px;
         color: #64748b;
-        font-size: 0.78rem;
+        font-size: 0.72rem;
         font-weight: 650;
     }
     html body .stApp .goal-strategy-detail summary {
-        min-height: 34px;
-        padding: 0 12px;
+        min-height: 30px;
+        padding: 0 10px;
         display: inline-flex;
         align-items: center;
         border-radius: 8px;
@@ -5683,11 +5648,11 @@ st.markdown(
     html body .stApp .rationality-gate {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto auto auto;
-        gap: 12px;
+        gap: 9px;
         align-items: center;
-        margin: 8px 0 12px;
-        padding: 10px 12px;
-        border-radius: 10px;
+        margin: 4px 0 7px;
+        padding: 8px 10px;
+        border-radius: 8px;
         border: 1px solid rgba(148, 163, 184, 0.20);
         background: #ffffff;
         box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
@@ -5695,20 +5660,20 @@ st.markdown(
     html body .stApp .rationality-gate-main b {
         display: block;
         color: #0f172a;
-        font-size: 0.90rem;
+        font-size: 0.84rem;
         line-height: 1.1;
         font-weight: 900;
     }
     html body .stApp .rationality-gate-main span {
         display: block;
-        margin-top: 3px;
+        margin-top: 2px;
         color: #64748b;
-        font-size: 0.75rem;
+        font-size: 0.70rem;
         line-height: 1.25;
         font-weight: 650;
     }
     html body .stApp .rationality-score {
-        min-width: 86px;
+        min-width: 74px;
         display: grid;
         grid-template-columns: auto auto;
         align-items: end;
@@ -5717,7 +5682,7 @@ st.markdown(
         color: var(--rational-color);
     }
     html body .stApp .rationality-score strong {
-        font-size: 1.28rem;
+        font-size: 1.08rem;
         line-height: 1;
         font-weight: 950;
     }
@@ -5743,11 +5708,11 @@ st.markdown(
     }
     html body .stApp .rationality-node {
         --node-color: #d97706;
-        width: 34px;
-        height: 34px;
+        width: 30px;
+        height: 30px;
         display: grid;
         place-items: center;
-        border-radius: 10px;
+        border-radius: 8px;
         position: relative;
         background: conic-gradient(var(--node-color) var(--value), #e2e8f0 0);
         cursor: help;
@@ -5766,13 +5731,13 @@ st.markdown(
         position: relative;
         z-index: 1;
         color: #0f172a;
-        font-size: 0.58rem;
+        font-size: 0.54rem;
         line-height: 1;
         font-weight: 950;
     }
     html body .stApp .rationality-detail summary {
-        min-height: 32px;
-        padding: 0 11px;
+        min-height: 29px;
+        padding: 0 10px;
         display: inline-flex;
         align-items: center;
         border-radius: 8px;
@@ -5808,16 +5773,16 @@ st.markdown(
         font-size: 0.76rem;
     }
     html body .stApp .nora-ontology {
-        margin: 8px 0 12px !important;
+        margin: 4px 0 8px !important;
         padding: 0 !important;
-        border-radius: 10px !important;
+        border-radius: 8px !important;
         border: 1px solid rgba(148, 163, 184, 0.18) !important;
         background: #ffffff !important;
         box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05) !important;
     }
     html body .stApp .nora-ontology summary {
-        min-height: 42px;
-        padding: 0 14px;
+        min-height: 34px;
+        padding: 0 11px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -5830,12 +5795,12 @@ st.markdown(
         display: none;
     }
     html body .stApp .nora-ontology summary b {
-        font-size: 0.86rem;
+        font-size: 0.78rem;
         font-weight: 860;
     }
     html body .stApp .nora-ontology summary span {
         color: #64748b;
-        font-size: 0.78rem;
+        font-size: 0.70rem;
         font-weight: 700;
     }
     html body .stApp .nora-ontology-body {
@@ -5885,7 +5850,7 @@ st.markdown(
         max-width: 100% !important;
         height: auto !important;
         min-height: 0 !important;
-        margin: 8px 0 14px !important;
+        margin: 4px 0 9px !important;
         padding: 0 !important;
         background: transparent !important;
         border: 0 !important;
@@ -5900,8 +5865,8 @@ st.markdown(
         margin: 0 !important;
         border-radius: 0 !important;
         display: grid !important;
-        grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)) !important;
-        gap: 8px !important;
+        grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)) !important;
+        gap: 7px !important;
         padding: 0 !important;
         background: transparent !important;
         border: 0 !important;
@@ -5915,9 +5880,9 @@ st.markdown(
     html body .stApp .desktop-orbit-item {
         position: static !important;
         width: auto !important;
-        height: 36px !important;
+        height: 32px !important;
         min-width: 0 !important;
-        padding: 0 11px !important;
+        padding: 0 9px !important;
         display: inline-flex !important;
         justify-content: center !important;
         flex-direction: row !important;
@@ -5938,14 +5903,14 @@ st.markdown(
         color: inherit !important;
         background: transparent !important;
         box-shadow: none !important;
-        font-size: 0.70rem !important;
+        font-size: 0.64rem !important;
         -webkit-text-fill-color: currentColor !important;
     }
     html body .stApp .desktop-orbit-center span,
     html body .stApp .desktop-orbit-item span {
         color: inherit !important;
         -webkit-text-fill-color: currentColor !important;
-        font-size: 0.78rem !important;
+        font-size: 0.72rem !important;
         font-weight: 760 !important;
         line-height: 1 !important;
     }
@@ -13072,7 +13037,8 @@ def render_main_app() -> None:
     active_view = active_nav_key()
     render_goal_strategy_strip(active_view)
     render_rationality_gate()
-    render_nora_ontology(active_view)
+    if active_view in {"life", "details"}:
+        render_nora_ontology(active_view)
     render_mobile_navigation(active_view)
     render_circle_navigation(active_view)
     render_mobile_view_summary(active_view)
