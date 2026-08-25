@@ -15,7 +15,7 @@ Decision Cockpit
 -> Decision Evidence
 -> AI Interpretation
 -> Decision Memory
--> Ver.1 Legacy Foundation
+-> Reference Base
 ```
 
 ## Product Principle
@@ -36,21 +36,21 @@ For customer-facing reading, the first layer should not assume the user understa
 | Decision Cockpit | Current question, recommendation signal, and score; supporting text and metrics reveal on hover/click |
 | Visual Signal Board | Customer-facing picture of now, direction, and crisis, with numbers and text revealed on hover/click |
 | Decision Logic Chain | Shows why the recommendation follows from financial base, goal pressure, scenario effect, risk, evidence, and final decision; explanation text is hidden until hover/click |
-| Architecture Rail | Persistent map of `User -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory` |
+| Architecture Rail | Persistent map of `Customer Purpose -> Strategy -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory` |
 | Workspace Main | Editable modules grouped by the decision flow |
-| Legacy Foundation | Preserved Ver.1 data, formulas, and migration status |
+| Reference Base | Preserved Ver.1 data, formulas, and migration status |
 
 ## Section Boundaries
 
 | Section | Owns |
 | --- | --- |
-| Decision Inputs | User profile, financial foundation, goals |
+| Decision Inputs | Customer purpose, strategy goals, and current financial situation |
 | Portfolio, Stock Research, and Real Estate Detail | Portfolio holdings, selected stock assumptions, real estate assumptions, Ver.1 sample loading, asset scores, warnings, forecast |
 | Scenario Model | Scenario assumptions, risk and resilience |
 | Decision Evidence | Evidence signals generated from the model |
 | AI Interpretation | Plain-language decision reading and next actions |
 | Decision Memory | Saved decision log and memory entries |
-| Ver.1 Base | Copied Ver.1 reference and ported logic inventory |
+| Reference Base | Copied Ver.1 reference and ported logic inventory |
 
 ## Plausibility Layer
 
