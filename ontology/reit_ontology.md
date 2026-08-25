@@ -3,7 +3,7 @@
 This is a LY-Scope-Ver.2 sub-ontology under:
 
 ```text
-User -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
+Customer Purpose -> Strategy -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
 ```
 
 REIT and real-estate exposure should be interpreted as part of the user's financial foundation, portfolio concentration, income resilience, and scenario risk, not as a standalone buy/sell signal.
