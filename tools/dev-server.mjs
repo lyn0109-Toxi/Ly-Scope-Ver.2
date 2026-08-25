@@ -64,7 +64,7 @@ function listen(port) {
   });
 
   server.listen(port, '127.0.0.1', () => {
-    console.log(`LY-Scope Ver.2 running at http://127.0.0.1:${port}`);
+    console.log(`LY-Scope-Ver.2 running at http://127.0.0.1:${port}`);
   });
 }
 
