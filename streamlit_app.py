@@ -6422,6 +6422,42 @@ US_STOCK_MAP = {
     "qqq": "QQQ",
 }
 
+US_STOCK_PROFILE_FALLBACKS = {
+    "AAPL": {"name": "Apple Inc.", "industry": "Consumer Electronics", "beta": 1.09},
+    "MSFT": {"name": "Microsoft Corporation", "industry": "Software - Infrastructure", "beta": 1.10},
+    "NVDA": {"name": "NVIDIA Corporation", "industry": "Semiconductors", "beta": 2.20},
+    "TSLA": {"name": "Tesla, Inc.", "industry": "Auto Manufacturers", "beta": 2.00},
+    "AMZN": {"name": "Amazon.com, Inc.", "industry": "Internet Retail", "beta": 1.30},
+    "GOOGL": {"name": "Alphabet Inc.", "industry": "Internet Content & Information", "beta": 1.05},
+    "GOOG": {"name": "Alphabet Inc.", "industry": "Internet Content & Information", "beta": 1.05},
+    "META": {"name": "Meta Platforms, Inc.", "industry": "Internet Content & Information", "beta": 1.20},
+    "NFLX": {"name": "Netflix, Inc.", "industry": "Entertainment", "beta": 1.30},
+    "AVGO": {"name": "Broadcom Inc.", "industry": "Semiconductors", "beta": 1.15},
+    "BRK-B": {"name": "Berkshire Hathaway Inc.", "industry": "Insurance - Diversified", "beta": 0.90},
+    "JPM": {"name": "JPMorgan Chase & Co.", "industry": "Banks - Diversified", "beta": 1.10},
+    "V": {"name": "Visa Inc.", "industry": "Credit Services", "beta": 0.95},
+    "MA": {"name": "Mastercard Incorporated", "industry": "Credit Services", "beta": 1.00},
+    "WMT": {"name": "Walmart Inc.", "industry": "Discount Stores", "beta": 0.60},
+    "COST": {"name": "Costco Wholesale Corporation", "industry": "Discount Stores", "beta": 0.80},
+    "PG": {"name": "The Procter & Gamble Company", "industry": "Household & Personal Products", "beta": 0.45},
+    "LLY": {"name": "Eli Lilly and Company", "industry": "Drug Manufacturers - General", "beta": 0.55},
+    "UNH": {"name": "UnitedHealth Group Incorporated", "industry": "Healthcare Plans", "beta": 0.75},
+    "JNJ": {"name": "Johnson & Johnson", "industry": "Drug Manufacturers - General", "beta": 0.55},
+    "XOM": {"name": "Exxon Mobil Corporation", "industry": "Oil & Gas Integrated", "beta": 0.95},
+    "CVX": {"name": "Chevron Corporation", "industry": "Oil & Gas Integrated", "beta": 0.90},
+    "HD": {"name": "The Home Depot, Inc.", "industry": "Home Improvement Retail", "beta": 1.00},
+    "ORCL": {"name": "Oracle Corporation", "industry": "Software - Infrastructure", "beta": 1.05},
+    "CRM": {"name": "Salesforce, Inc.", "industry": "Software - Application", "beta": 1.25},
+    "ADBE": {"name": "Adobe Inc.", "industry": "Software - Infrastructure", "beta": 1.15},
+    "AMD": {"name": "Advanced Micro Devices, Inc.", "industry": "Semiconductors", "beta": 1.85},
+    "INTC": {"name": "Intel Corporation", "industry": "Semiconductors", "beta": 1.10},
+    "PLTR": {"name": "Palantir Technologies Inc.", "industry": "Software - Infrastructure", "beta": 1.50},
+    "COIN": {"name": "Coinbase Global, Inc.", "industry": "Financial Data & Stock Exchanges", "beta": 2.40},
+    "HOOD": {"name": "Robinhood Markets, Inc.", "industry": "Capital Markets", "beta": 1.80},
+    "SPY": {"name": "SPDR S&P 500 ETF Trust", "industry": "Large Blend ETF", "beta": 1.00},
+    "QQQ": {"name": "Invesco QQQ Trust", "industry": "Large Growth ETF", "beta": 1.10},
+}
+
 
 def init_state() -> None:
     st.session_state.setdefault("app_language", query_language() or "en")
@@ -6785,6 +6821,32 @@ def load_price_history_from_yahoo(symbol: str, days: int) -> pd.DataFrame:
     return history.reset_index()
 
 
+def apply_price_implied_baseline(stock: dict[str, Any]) -> dict[str, Any]:
+    price = positive_float(stock.get("price"))
+    if not price:
+        return stock
+
+    has_fundamentals = any(
+        positive_float(stock.get(key))
+        for key in ("eps", "book_value", "pe", "dividend")
+    )
+    if has_fundamentals:
+        return stock
+
+    baseline_pe = 25.0
+    stock["pe"] = baseline_pe
+    stock["eps"] = price / baseline_pe
+    stock["book_value"] = price / 5.0
+    stock["peer_average_pe"] = baseline_pe
+    stock["growth_rate"] = stock.get("growth_rate") or 0.05
+    stock["beta"] = stock.get("beta") or 1.0
+    stock["price_implied_fallback"] = True
+    quality = stock.get("data_quality") or "Price data"
+    if "price-implied valuation baseline" not in quality:
+        stock["data_quality"] = f"{quality} + price-implied valuation baseline"
+    return stock
+
+
 def calculate_valuation(stock: dict[str, Any]) -> dict[str, Any]:
     beta = float(stock.get("beta") or 1.0)
     eps = float(stock.get("eps") or 0)
@@ -6796,6 +6858,26 @@ def calculate_valuation(stock: dict[str, Any]) -> dict[str, Any]:
 
     risk_free_rate, equity_risk_premium = macro_assumptions()
     expected_return = risk_free_rate + beta * equity_risk_premium
+    if stock.get("price_implied_fallback") and price > 0:
+        stock.update(
+            {
+                "expected_return": expected_return,
+                "risk_free_rate": risk_free_rate,
+                "equity_risk_premium": equity_risk_premium,
+                "fair_price": price,
+                "valuation_status": "Fair Value",
+                "triangulation": {
+                    "income_model": "N/A",
+                    "income_value": 0.0,
+                    "asset_value": 0.0,
+                    "market_model": "Price-implied baseline",
+                    "market_value": price,
+                    "valid_models": 1,
+                },
+            }
+        )
+        return stock
+
     max_implied_pe = 50
     values = []
 
@@ -6848,6 +6930,7 @@ def calculate_valuation(stock: dict[str, Any]) -> dict[str, Any]:
                 "income_model": income_model,
                 "income_value": income_value,
                 "asset_value": graham_value,
+                "market_model": "Peer P/E",
                 "market_value": relative_value,
                 "valid_models": len(values),
             },
@@ -6960,6 +7043,7 @@ def load_yahoo_stock(query: str) -> dict[str, Any]:
     if not symbol:
         raise ValueError(f"{query} could not be resolved to a ticker.")
 
+    profile_fallback = US_STOCK_PROFILE_FALLBACKS.get(symbol, {})
     ticker = yf.Ticker(symbol)
     try:
         info = ticker.get_info()
@@ -7015,14 +7099,14 @@ def load_yahoo_stock(query: str) -> dict[str, Any]:
 
     stock = {
         "symbol": symbol,
-        "name": info.get("longName") or info.get("shortName") or symbol,
-        "industry": info.get("industry") or info.get("sector") or "US Equity",
+        "name": info.get("longName") or info.get("shortName") or profile_fallback.get("name") or symbol,
+        "industry": info.get("industry") or info.get("sector") or profile_fallback.get("industry") or "US Equity",
         "price": price,
         "change_pct": change_pct,
         "market_cap": market_cap_millions,
         "pe": pe,
         "dividend_yield": dividend_yield,
-        "beta": beta,
+        "beta": beta if beta != 1.0 else profile_fallback.get("beta", beta),
         "eps": trailing_eps,
         "dividend": dividend_rate,
         "growth_rate": growth_rate,
@@ -7033,6 +7117,7 @@ def load_yahoo_stock(query: str) -> dict[str, Any]:
         "currency": currency,
         "data_quality": data_quality,
     }
+    stock = apply_price_implied_baseline(stock)
     return calculate_valuation(stock)
 
 
@@ -7499,7 +7584,7 @@ def render_fair_value(stock: dict[str, Any]) -> None:
     st.table(
         {
             "Approach": ["Income", "Asset", "Market"],
-            "Model": [tri["income_model"], "Graham Number", "Peer P/E"],
+            "Model": [tri["income_model"], "Graham Number", tri.get("market_model", "Peer P/E")],
             "Value": [
                 stock_money(stock, tri["income_value"]) if tri["income_value"] else "N/A",
                 stock_money(stock, tri["asset_value"]) if tri["asset_value"] else "N/A",
@@ -7963,7 +8048,7 @@ def render_portfolio_stock_search() -> None:
                     },
                     {
                         "Approach": "Market",
-                        "Model": "Peer P/E",
+                        "Model": tri.get("market_model", "Peer P/E"),
                         "Value": stock_money(stock, tri.get("market_value")) if tri.get("market_value") else "N/A",
                     },
                 ],
@@ -8142,7 +8227,7 @@ def render_stock_detail(stock: dict[str, Any]) -> None:
             },
             {
                 "Approach": "Market",
-                "Model": "Peer P/E",
+                "Model": tri.get("market_model", "Peer P/E"),
                 "Value": stock_money(stock, tri["market_value"]) if tri["market_value"] else "N/A",
             },
         ],
@@ -10609,7 +10694,7 @@ def calculation_details_tab() -> None:
                 [
                     {"Approach": "Income", "Model": tri.get("income_model", "N/A"), "Value": stock_money(stock, tri.get("income_value")) if tri.get("income_value") else "N/A"},
                     {"Approach": "Asset", "Model": "Graham Number", "Value": stock_money(stock, tri.get("asset_value")) if tri.get("asset_value") else "N/A"},
-                    {"Approach": "Market", "Model": "Peer P/E", "Value": stock_money(stock, tri.get("market_value")) if tri.get("market_value") else "N/A"},
+                    {"Approach": "Market", "Model": tri.get("market_model", "Peer P/E"), "Value": stock_money(stock, tri.get("market_value")) if tri.get("market_value") else "N/A"},
                     {"Approach": "Blended", "Model": f"{tri.get('valid_models', 0)} valid model(s)", "Value": stock_money(stock, stock.get("fair_price")) if stock.get("fair_price") else "N/A"},
                 ],
                 hide_index=True,
