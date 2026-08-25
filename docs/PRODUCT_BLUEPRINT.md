@@ -19,19 +19,19 @@ https://ly-scope-ver2.streamlit.app/
 Core ontology:
 
 ```text
-Customer Purpose -> Plan -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
+Customer Purpose -> Strategy -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
 ```
 
 LY-Scope Ver.1 remains a reference prototype only. Ver.2 should not modify Ver.1 directly. Useful Ver.1 logic may be migrated only when it fits the Ver.2 ontology, data boundary, and educational safety rules.
 
 ## Product Thesis
 
-Most customers do not need more raw numbers first. They need to clarify what they want, understand the plan that could reach it, read the current situation honestly, see the risks that could interrupt that path, and inspect the evidence behind the interpretation.
+Most customers do not need more raw numbers first. They need to clarify what they want, understand the strategy that could reach it, read the current situation honestly, see the risks that could interrupt that path, and inspect the evidence behind the interpretation.
 
 LY-Scope-Ver.2 should turn financial fragments into a structured decision memory:
 
 - What does the customer want?
-- What plan connects that purpose to action?
+- What strategy connects that purpose to action?
 - What is the user's current life and financial situation?
 - What data is known, missing, delayed, or assumed?
 - What model produced the current reading?
@@ -77,7 +77,7 @@ Primary need: clear audit trail, fictional client reports, formula transparency,
 LY-Scope-Ver.2 should help the user see three things before acting:
 
 - Customer purpose: what the user actually wants and why it matters.
-- Plan: what path, resources, sequence, and review rhythm are needed.
+- Strategy: what path, resources, sequence, and review rhythm are needed.
 - Situation and crisis signal: where the user stands now and what could break the path.
 
 The interface should be visual-first. Detailed text and numbers should appear through hover, click, expandable details, report export, and calculation transparency rather than overwhelming the first view.
@@ -87,7 +87,7 @@ The interface should be visual-first. Detailed text and numbers should appear th
 1. Customer Purpose
    The app asks what the customer wants, why it matters, the time horizon, constraints, values, and the decision question.
 
-2. Plan
+2. Strategy
    The app turns purpose into a practical path: required capital, sequence, resources, and review rhythm.
 
 3. Situation
@@ -249,6 +249,6 @@ Ver.1 content may be carried into Ver.2 only when it passes this filter:
 
 Each major feature should be checked against three questions:
 
-- Ontology check: does it move through Customer Purpose -> Plan -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory?
-- Customer check: can a non-expert understand purpose, plan, situation, and crisis signal visually?
+- Ontology check: does it move through Customer Purpose -> Strategy -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory?
+- Customer check: can a non-expert understand purpose, strategy, situation, and crisis signal visually?
 - Evidence check: can the formulas, assumptions, and limits be inspected before trusting the output?
