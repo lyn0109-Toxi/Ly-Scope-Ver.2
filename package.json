@@ -1,7 +1,7 @@
 {
   "name": "ly-scope-ver2",
   "version": "0.1.0",
-  "description": "LY-Scope Ver.2 personal decision intelligence application.",
+  "description": "LY-Scope-Ver.2 personal decision intelligence application.",
   "private": true,
   "type": "module",
   "scripts": {
