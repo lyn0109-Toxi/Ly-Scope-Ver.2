@@ -87,6 +87,12 @@ export function runDecisionPipeline(rawState) {
     foundation,
   });
   const memoryInsights = deriveMemoryInsights(rawState.memory || []);
+  const situation = {
+    foundation,
+    risk,
+    scenarioComparison,
+    assetContext,
+  };
   const decision = {
     recommendation: model.recommendation,
     score: model.score,
@@ -94,6 +100,9 @@ export function runDecisionPipeline(rawState) {
   };
 
   return {
+    customerPurpose: data.profile,
+    strategy: goalsEvaluation,
+    situation,
     user: data.profile,
     data,
     foundation,
@@ -107,7 +116,9 @@ export function runDecisionPipeline(rawState) {
     decision,
     memoryInsights,
     trace: createPipelineTrace({
-      user: data.profile,
+      customerPurpose: data.profile,
+      strategy: goalsEvaluation,
+      situation,
       data,
       model,
       evidence,
