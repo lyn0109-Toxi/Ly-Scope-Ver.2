@@ -2,6 +2,7 @@ import math
 import os
 import json
 import base64
+import importlib
 from html import escape
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -13056,8 +13057,9 @@ def render_main_app() -> None:
     elif active_view == "advisor":
         render_advisor_reports_tab()
     elif active_view == "reit":
-        from reit_analysis_module import main as render_reit_analysis
+        import reit_analysis_module
 
+        render_reit_analysis = importlib.reload(reit_analysis_module).main
         render_reit_analysis(include_sidebar=False)
     elif active_view == "finance":
         from personal_finance_module import render_personal_finance
