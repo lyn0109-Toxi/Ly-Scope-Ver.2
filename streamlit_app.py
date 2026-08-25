@@ -7035,6 +7035,7 @@ def load_korean_stock(query: str) -> dict[str, Any]:
         "currency": "KRW",
         "data_quality": data_quality,
     }
+    stock = apply_price_implied_baseline(stock)
     return calculate_valuation(stock)
 
 
