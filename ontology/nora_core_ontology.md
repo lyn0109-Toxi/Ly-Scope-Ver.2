@@ -15,7 +15,7 @@ https://ly-scope-ver2.streamlit.app/
 LY-Scope-Ver.2 uses one core decision path:
 
 ```text
-Customer Purpose -> Plan -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
+Customer Purpose -> Strategy -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
 ```
 
 ## Layer Definitions
@@ -23,7 +23,7 @@ Customer Purpose -> Plan -> Situation -> Data -> Model -> Evidence -> AI Interpr
 | Layer | Purpose | Current App Surface |
 | --- | --- | --- |
 | Customer Purpose | Understand what the customer wants: desired outcome, values, time horizon, constraints, and decision question. | Life, Finance, Advisor Reports |
-| Plan | Turn purpose into a practical path: required capital, sequence, resources, and review rhythm. | Finance, Scenario, Advisor Reports |
+| Strategy | Turn purpose into a practical path: required capital, sequence, resources, and review rhythm. | Finance, Scenario, Advisor Reports |
 | Situation | Read the customer's current reality: capital, income state, expenses, holdings, real estate exposure, liquidity, and risk pressure. | Life, Finance, Portfolio, REIT |
 | Data | Collect structured inputs for finance, holdings, stocks, REITs, real estate exposure, scenarios, and diary snapshots. | Finance, Portfolio, Search, REIT, Diary |
 | Model | Calculate valuation, runway, goal progress, portfolio quality, concentration, stress impact, and resilience. | Finance engine, Portfolio metrics, REIT module, Scenario |
@@ -37,7 +37,7 @@ Customer Purpose -> Plan -> Situation -> Data -> Model -> Evidence -> AI Interpr
 | Module | Ontology Role |
 | --- | --- |
 | Financial Foundation | Situation + Data + Model baseline for cash flow, debt, savings, runway, and risk capacity. |
-| Goals | Customer Purpose + Plan as a measurable target path. |
+| Goals | Customer Purpose + Strategy as a measurable target path. |
 | Market Assets | Stock/portfolio data, valuation, beta, risk, and concentration. |
 | Real Estate | REIT/property-linked exposure, income durability, and rate sensitivity. |
 | Projection | Forward view of capital, goal progress, and runway. |
@@ -50,4 +50,4 @@ Customer Purpose -> Plan -> Situation -> Data -> Model -> Evidence -> AI Interpr
 
 ## Product Rule
 
-LY-Scope-Ver.2 should not jump from data to a recommendation. The app must first ask what the customer wants, then test the plan and current situation before moving through data, model, evidence, interpretation, decision framing, and memory.
+LY-Scope-Ver.2 should not jump from data to a recommendation. The app must first ask what the customer wants, then test the strategy and current situation before moving through data, model, evidence, interpretation, decision framing, and memory.
