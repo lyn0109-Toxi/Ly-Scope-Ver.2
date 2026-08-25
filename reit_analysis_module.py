@@ -68,7 +68,7 @@ KO_TRANSLATIONS = {
     "Macro Sensitivity": "거시 민감도",
     "Portfolio": "포트폴리오",
     "Guide": "가이드",
-    "ToxiGuard-NORA is an educational prototype. It does not provide investment, legal, tax, financial, accounting, or professional advice. Third-party market data remains subject to the terms of its providers.": "ToxiGuard-NORA는 교육용 프로토타입입니다. 투자, 법률, 세무, 금융, 회계 또는 전문 조언을 제공하지 않습니다. 제3자 시장 데이터는 각 제공자의 약관을 따릅니다.",
+    "LY-Scope-Ver.2 REIT module is an educational prototype. It does not provide investment, legal, tax, financial, accounting, or professional advice. Third-party market data remains subject to the terms of its providers.": "LY-Scope-Ver.2 REIT 모듈은 교육용 프로토타입입니다. 투자, 법률, 세무, 금융, 회계 또는 전문 조언을 제공하지 않습니다. 제3자 시장 데이터는 각 제공자의 약관을 따릅니다.",
 }
 
 
@@ -408,7 +408,7 @@ def score_color(score: float, inverted: bool = False) -> str:
 
 def build_sidebar() -> None:
     with st.sidebar:
-        st.header("ToxiGuard-NORA")
+        st.header("LY-Scope-Ver.2")
         st.write(tr("REIT-focused educational analysis"))
         st.divider()
         st.caption(tr("Developer"))
@@ -425,7 +425,7 @@ def hero() -> None:
         <div class="reit-hero">
             <div class="brand-line">
                 <div class="brand-icon">RE</div>
-                <div class="brand-title">ToxiGuard-NORA <span>REIT</span></div>
+                <div class="brand-title">LY-Scope-Ver.2 <span>REIT</span></div>
             </div>
             <div class="hero-muted">
                 {escape(tr('REIT-focused finance education platform for valuation, income analysis, interest-rate sensitivity, portfolio risk, and sector specialization.'))}
@@ -829,7 +829,7 @@ def main(include_sidebar: bool = True) -> None:
 
     st.divider()
     st.caption(
-        tr("ToxiGuard-NORA is an educational prototype. It does not provide investment, legal, tax, financial, accounting, or professional advice. Third-party market data remains subject to the terms of its providers.")
+        tr("LY-Scope-Ver.2 REIT module is an educational prototype. It does not provide investment, legal, tax, financial, accounting, or professional advice. Third-party market data remains subject to the terms of its providers.")
     )
 
 
