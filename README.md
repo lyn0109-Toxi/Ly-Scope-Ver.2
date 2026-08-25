@@ -22,13 +22,13 @@ Ver.1 remains a reference prototype only. Ver.2 should not modify Ver.1 directly
 LY-Scope-Ver.2 must keep this decision path visible and intact:
 
 ```text
-Customer Purpose -> Plan -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
+Customer Purpose -> Strategy -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
 ```
 
 This ontology means every output should answer six customer-facing questions:
 
 - What does the customer want?
-- What plan connects that purpose to action?
+- What strategy connects that purpose to action?
 - What is the current situation?
 - What data and model produced this view?
 - What evidence or warning supports it?
