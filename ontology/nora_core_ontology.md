@@ -24,9 +24,9 @@ Customer Purpose -> Strategy -> Situation -> Data -> Model -> Evidence -> AI Int
 | --- | --- | --- |
 | Customer Purpose | Understand what the customer wants: desired outcome, values, time horizon, constraints, and decision question. | Life, Finance, Advisor Reports |
 | Strategy | Turn purpose into a practical path: required capital, sequence, resources, and review rhythm. | Finance, Scenario, Advisor Reports |
-| Situation | Read the customer's current reality: capital, income state, expenses, holdings, real estate exposure, liquidity, and risk pressure. | Life, Finance, Portfolio, REIT |
-| Data | Collect structured inputs for finance, holdings, stocks, REITs, real estate exposure, scenarios, and diary snapshots. | Finance, Portfolio, Search, REIT, Diary |
-| Model | Calculate valuation, runway, goal progress, portfolio quality, concentration, stress impact, and resilience. | Finance engine, Portfolio metrics, REIT module, Scenario |
+| Situation | Read the customer's current reality: capital, income state, expenses, holdings, real estate exposure, liquidity, and risk pressure. | Life, Finance, Portfolio, Real Estate |
+| Data | Collect structured inputs for finance, holdings, stocks, real estate exposure, listed REIT references, scenarios, and diary snapshots. | Finance, Portfolio, Search, Real Estate, Diary |
+| Model | Calculate valuation, runway, goal progress, portfolio quality, real estate cash flow, concentration, stress impact, and resilience. | Finance engine, Portfolio metrics, Real Estate module, Scenario |
 | Evidence | Show formulas, source limits, assumptions, warnings, and score drivers before interpretation. | Details, Advisor Reports, AI Coach context |
 | AI Interpretation | Translate the evidence into current situation, direction, risk signal, and trade-off language. | AI Coach, Advisor Reports |
 | Decision | Produce next action, watch item, avoid item, and report summary without presenting professional advice. | Advisor Reports, Current Situation Report |
@@ -39,7 +39,7 @@ Customer Purpose -> Strategy -> Situation -> Data -> Model -> Evidence -> AI Int
 | Financial Foundation | Situation + Data + Model baseline for cash flow, debt, savings, runway, and risk capacity. |
 | Goals | Customer Purpose + Strategy as a measurable target path. |
 | Market Assets | Stock/portfolio data, valuation, beta, risk, and concentration. |
-| Real Estate | REIT/property-linked exposure, income durability, and rate sensitivity. |
+| Real Estate | Property valuation, rent support, cash flow, leverage, stress value, listed REIT reference data, and rate sensitivity. |
 | Projection | Forward view of capital, goal progress, and runway. |
 | Scenario | Stress testing for income, expenses, cash shock, portfolio shock, FX, and rates. |
 | Risk / Resilience | Crisis signal: liquidity, concentration, volatility, debt pressure, and downside capacity. |
