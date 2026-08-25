@@ -8,14 +8,68 @@ import pandas as pd
 import streamlit as st
 
 KO_TRANSLATIONS = {
-    "REIT-focused educational analysis": "REIT 중심 교육 분석",
+    "Real estate educational analysis": "부동산 교육 분석",
     "Developer": "개발자",
     "Comments or research notes": "의견 또는 리서치 메모",
     "Write questions, ideas, or professor feedback here.": "질문, 아이디어, 교수님 피드백을 여기에 적어 주세요.",
     "This prototype is for education and research discussion only.": "이 프로토타입은 교육 및 리서치 논의용입니다.",
-    "REIT-focused finance education platform for valuation, income analysis, interest-rate sensitivity, portfolio risk, and sector specialization.": "가치평가, 소득 분석, 금리 민감도, 포트폴리오 위험, 섹터 특화를 위한 REIT 중심 금융 교육 플랫폼.",
-    "Educational REIT Analytics - Not Investment Advice": "교육용 REIT 분석 - 투자 조언 아님",
-    "REIT Market Lens": "REIT 시장 렌즈",
+    "Real estate valuation for property value, rent support, leverage, cash flow, and rate stress. Listed REITs remain as reference data.": "부동산 가치, 임대수익 지지력, 레버리지, 현금흐름, 금리 스트레스를 보는 부동산 가치평가입니다. 상장 REIT는 참고 데이터로 남깁니다.",
+    "Educational Real Estate Valuation - Not Investment Advice": "교육용 부동산 가치평가 - 투자 조언 아님",
+    "Real Estate Valuation": "부동산 가치평가",
+    "Start with the property itself: price, rent, operating cost, debt, and stress value.": "부동산 자체에서 시작합니다: 가격, 임대료, 운영비, 부채, 스트레스 가치.",
+    "Property Type": "부동산 유형",
+    "Edit Valuation Inputs": "가치평가 입력 수정",
+    "Adjust property assumptions, then watch the value and stress signals update.": "부동산 가정을 수정하면 가치와 스트레스 신호가 다시 계산됩니다.",
+    "Single-family rental": "단독주택 임대",
+    "Condo": "콘도",
+    "Primary residence": "실거주 주택",
+    "Multi-family": "멀티패밀리",
+    "Mixed use": "복합용도",
+    "Estimated Market Value": "현재 추정가",
+    "Monthly Market Rent": "월 시장 임대료",
+    "Other Monthly Operating Cost": "기타 월 운영비",
+    "Annual Property Tax %": "연 재산세 %",
+    "Monthly Insurance": "월 보험료",
+    "Monthly HOA": "월 HOA",
+    "Annual Maintenance %": "연 유지보수 %",
+    "Vacancy / Collection Loss %": "공실/미수 손실 %",
+    "Mortgage Balance": "모기지 잔액",
+    "Mortgage Rate %": "모기지 금리 %",
+    "Remaining Loan Years": "잔여 대출 연수",
+    "Target Cap Rate %": "목표 캡레이트 %",
+    "Rate Stress +%": "금리 스트레스 +%",
+    "Rent Stress -%": "임대료 스트레스 -%",
+    "Income-Supported Value": "수익 기반 가치",
+    "Value Gap": "가치 차이",
+    "Monthly NOI": "월 NOI",
+    "Monthly Cash Flow": "월 현금흐름",
+    "Debt Service Coverage": "부채상환 커버리지",
+    "Cap Rate": "캡레이트",
+    "Stress Cash Flow": "스트레스 현금흐름",
+    "Valuation Signal": "가치평가 신호",
+    "Value supported": "가치 지지",
+    "Balanced": "균형",
+    "Cash-flow pressure": "현금흐름 압박",
+    "Visual Property Value Map": "시각 부동산 가치 지도",
+    "Value Lens": "가치 렌즈",
+    "Monthly Cash Flow Lens": "월 현금흐름 렌즈",
+    "Current Value": "현재 가치",
+    "Income Value": "수익 가치",
+    "Stress Value": "스트레스 가치",
+    "Current Cash Flow": "현재 현금흐름",
+    "Stress Cash Flow": "스트레스 현금흐름",
+    "Evidence Notes": "근거 메모",
+    "Signal": "신호",
+    "Reading": "판독",
+    "Current situation": "현재 상황",
+    "Direction": "방향",
+    "Crisis signal": "위기 신호",
+    "The estimated property value is supported by income under the selected cap-rate assumption.": "선택한 캡레이트 기준에서 임대수익이 현재 부동산 가치를 지지합니다.",
+    "The property is near fair value under the selected rent and cap-rate assumptions.": "선택한 임대료와 캡레이트 기준에서 부동산은 적정가 근처로 보입니다.",
+    "Cash flow or income-supported value is weak; review rent, debt, vacancy, and holding costs.": "현금흐름 또는 수익 기반 가치가 약합니다. 임대료, 부채, 공실, 보유비용을 점검하세요.",
+    "Listed Real Estate Reference": "상장 부동산 참고",
+    "Listed REIT reference data is useful as a public-market comparison, but the customer-facing asset is Real Estate.": "상장 REIT 참고 데이터는 공개시장 비교용으로 유용하지만, 고객이 보는 자산은 부동산입니다.",
+    "REIT Market Lens": "상장 부동산 시장 렌즈",
     "Start with property type, income quality, leverage, and valuation multiples.": "부동산 유형, 소득 품질, 레버리지, 가치평가 배수에서 시작하세요.",
     "Coverage Universe": "분석 대상",
     "Avg Dividend Yield": "평균 배당수익률",
@@ -68,7 +122,7 @@ KO_TRANSLATIONS = {
     "Macro Sensitivity": "거시 민감도",
     "Portfolio": "포트폴리오",
     "Guide": "가이드",
-    "LY-Scope-Ver.2 REIT module is an educational prototype. It does not provide investment, legal, tax, financial, accounting, or professional advice. Third-party market data remains subject to the terms of its providers.": "LY-Scope-Ver.2 REIT 모듈은 교육용 프로토타입입니다. 투자, 법률, 세무, 금융, 회계 또는 전문 조언을 제공하지 않습니다. 제3자 시장 데이터는 각 제공자의 약관을 따릅니다.",
+    "LY-Scope-Ver.2 Real Estate module is an educational prototype. It does not provide investment, legal, tax, financial, accounting, or professional advice. Third-party market data remains subject to the terms of its providers.": "LY-Scope-Ver.2 부동산 모듈은 교육용 프로토타입입니다. 투자, 법률, 세무, 금융, 회계 또는 전문 조언을 제공하지 않습니다. 제3자 시장 데이터는 각 제공자의 약관을 따릅니다.",
 }
 
 
@@ -95,43 +149,47 @@ st.markdown(
     h1, h2, h3, p, li, label {
         letter-spacing: 0;
     }
-    h1, h2, h3 {
-        color: #f8fafc;
+    html body .stApp h1,
+    html body .stApp h2,
+    html body .stApp h3 {
+        color: #0f172a !important;
     }
-    p, li, label {
-        color: #dbe7f3;
+    html body .stApp p,
+    html body .stApp li,
+    html body .stApp label {
+        color: #334155 !important;
     }
     .reit-hero {
         border: 1px solid rgba(148, 163, 184, 0.26);
-        border-radius: 24px;
-        padding: 34px 34px 30px;
-        margin-bottom: 22px;
+        border-radius: 12px;
+        padding: 10px 14px;
+        margin-bottom: 8px;
         background:
             linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(17, 24, 39, 0.88)),
             radial-gradient(circle at 82% 18%, rgba(245, 158, 11, 0.18), transparent 30%);
-        box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
     }
     .brand-line {
         display: flex;
         align-items: center;
-        gap: 16px;
-        margin-bottom: 16px;
+        gap: 9px;
+        margin-bottom: 0;
     }
     .brand-icon {
-        width: 62px;
-        height: 62px;
+        width: 32px;
+        height: 32px;
         display: grid;
         place-items: center;
-        border-radius: 18px;
+        border-radius: 10px;
         border: 1px solid rgba(125, 211, 252, 0.36);
         background: linear-gradient(145deg, #0f2f43, #172033);
         color: #f8fafc;
-        font-size: 1.85rem;
+        font-size: 0.82rem;
         font-weight: 900;
     }
     .brand-title {
-        font-size: clamp(2.4rem, 5vw, 4.8rem);
-        line-height: 0.94;
+        font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+        line-height: 1;
         font-weight: 900;
         color: #f8fafc;
     }
@@ -139,19 +197,73 @@ st.markdown(
         color: #facc15;
     }
     .hero-muted {
-        color: #cbd5e1;
-        font-size: 1.08rem;
-        max-width: 780px;
+        display: none;
     }
     .pill {
-        display: inline-block;
-        padding: 8px 13px;
+        display: none;
+        padding: 6px 10px;
         border-radius: 999px;
         border: 1px solid rgba(250, 204, 21, 0.28);
         background: rgba(250, 204, 21, 0.10);
         color: #fde68a;
         font-weight: 800;
-        margin-top: 18px;
+        margin-top: 10px;
+        font-size: 0.78rem;
+    }
+    html body .stApp div[data-testid="stTabs"] div[role="tablist"] {
+        display: grid !important;
+        grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        padding: 2px 0 8px !important;
+        margin-bottom: 10px !important;
+        border-bottom: 0 !important;
+    }
+    html body .stApp div[data-testid="stTabs"] button[role="tab"] {
+        width: auto !important;
+        height: 38px !important;
+        min-width: 0 !important;
+        min-height: 38px !important;
+        padding: 0 10px !important;
+        border-radius: 8px !important;
+        color: #334155 !important;
+        -webkit-text-fill-color: currentColor !important;
+        background: #ffffff !important;
+        border: 1px solid rgba(148, 163, 184, 0.22) !important;
+        box-shadow: none !important;
+    }
+    html body .stApp div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+        color: #ffffff !important;
+        -webkit-text-fill-color: currentColor !important;
+        background: #0f766e !important;
+        border-color: #0f766e !important;
+    }
+    html body .stApp div[data-testid="stTabs"] button[role="tab"] p {
+        color: inherit !important;
+        -webkit-text-fill-color: currentColor !important;
+        font-size: 0.78rem !important;
+        font-weight: 780 !important;
+        line-height: 1.05 !important;
+        white-space: normal !important;
+    }
+    .real-estate-section-title {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 2px 0 8px;
+        padding: 0 2px;
+    }
+    .real-estate-section-title b {
+        color: #0f172a;
+        font-size: 1.25rem;
+        line-height: 1;
+        font-weight: 920;
+    }
+    .real-estate-section-title span {
+        color: #475569;
+        font-size: 0.82rem;
+        font-weight: 760;
+        text-align: right;
     }
     .metric-card {
         border: 1px solid rgba(148, 163, 184, 0.22);
@@ -406,10 +518,327 @@ def score_color(score: float, inverted: bool = False) -> str:
     return "#dc2626"
 
 
+def money(value: float) -> str:
+    return f"${float(value):,.0f}"
+
+
+def pct(value: float) -> str:
+    return f"{float(value):+.1f}%"
+
+
+def mortgage_payment(principal: float, annual_rate_pct: float, years: float) -> float:
+    loan_principal = max(0.0, float(principal))
+    monthly_rate = max(0.0, float(annual_rate_pct)) / 100 / 12
+    months = max(0.0, float(years)) * 12
+    if loan_principal <= 0:
+        return 0.0
+    if months <= 0:
+        return loan_principal
+    if monthly_rate <= 0:
+        return loan_principal / months
+    return (
+        loan_principal
+        * monthly_rate
+        * (1 + monthly_rate) ** months
+        / ((1 + monthly_rate) ** months - 1)
+    )
+
+
+def property_valuation_model(
+    *,
+    estimated_value: float,
+    monthly_rent: float,
+    other_operating_cost: float,
+    property_tax_pct: float,
+    insurance_monthly: float,
+    hoa_monthly: float,
+    maintenance_pct: float,
+    vacancy_pct: float,
+    mortgage_balance: float,
+    mortgage_rate_pct: float,
+    loan_years: float,
+    target_cap_rate_pct: float,
+    rate_stress_pct: float,
+    rent_stress_pct: float,
+) -> dict[str, float | str]:
+    value = max(0.0, float(estimated_value))
+    rent = max(0.0, float(monthly_rent))
+    vacancy_factor = max(0.0, min(1.0, 1 - float(vacancy_pct) / 100))
+    effective_rent = rent * vacancy_factor
+    monthly_tax = value * max(0.0, float(property_tax_pct)) / 100 / 12
+    monthly_maintenance = value * max(0.0, float(maintenance_pct)) / 100 / 12
+    operating_cost = (
+        max(0.0, float(other_operating_cost))
+        + monthly_tax
+        + max(0.0, float(insurance_monthly))
+        + max(0.0, float(hoa_monthly))
+        + monthly_maintenance
+    )
+    monthly_noi = effective_rent - operating_cost
+    annual_noi = monthly_noi * 12
+    cap_rate_decimal = max(0.001, float(target_cap_rate_pct) / 100)
+    income_value = max(0.0, annual_noi / cap_rate_decimal)
+    current_cap_rate = annual_noi / value if value > 0 else 0.0
+    debt_service = mortgage_payment(mortgage_balance, mortgage_rate_pct, loan_years)
+    monthly_cash_flow = monthly_noi - debt_service
+    stressed_rent = rent * max(0.0, 1 - float(rent_stress_pct) / 100)
+    stressed_noi = stressed_rent * vacancy_factor - operating_cost
+    stressed_debt_service = mortgage_payment(
+        mortgage_balance,
+        float(mortgage_rate_pct) + float(rate_stress_pct),
+        loan_years,
+    )
+    stress_cash_flow = stressed_noi - stressed_debt_service
+    stress_value = max(0.0, stressed_noi * 12 / cap_rate_decimal)
+    value_gap_pct = (income_value - value) / value * 100 if value > 0 else 0.0
+    dscr = monthly_noi / debt_service if debt_service > 0 else 99.0
+    valuation_score = max(
+        0.0,
+        min(
+            100.0,
+            50
+            + value_gap_pct * 0.75
+            + min(25.0, max(-25.0, (dscr - 1.0) * 35))
+            + min(15.0, max(-15.0, current_cap_rate * 100 - target_cap_rate_pct)),
+        ),
+    )
+    if value_gap_pct >= 8 and monthly_cash_flow >= 0 and dscr >= 1.15:
+        signal = "Value supported"
+    elif monthly_cash_flow < 0 or dscr < 1.0 or value_gap_pct <= -12:
+        signal = "Cash-flow pressure"
+    else:
+        signal = "Balanced"
+    return {
+        "effective_rent": effective_rent,
+        "operating_cost": operating_cost,
+        "monthly_noi": monthly_noi,
+        "income_value": income_value,
+        "current_cap_rate": current_cap_rate * 100,
+        "debt_service": debt_service,
+        "monthly_cash_flow": monthly_cash_flow,
+        "stress_cash_flow": stress_cash_flow,
+        "stress_value": stress_value,
+        "value_gap_pct": value_gap_pct,
+        "dscr": dscr,
+        "valuation_score": valuation_score,
+        "signal": signal,
+    }
+
+
+def property_valuation_tab() -> None:
+    st.markdown(
+        f"""
+        <div class="real-estate-section-title">
+            <b>{escape(tr("Real Estate Valuation"))}</b>
+            <span>{escape(tr("Start with the property itself: price, rent, operating cost, debt, and stress value."))}</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    with st.expander(tr("Edit Valuation Inputs"), expanded=False):
+        st.caption(tr("Adjust property assumptions, then watch the value and stress signals update."))
+        left, right = st.columns([1, 1])
+        with left:
+            property_type = st.selectbox(
+                tr("Property Type"),
+                ["Single-family rental", "Condo", "Primary residence", "Multi-family", "Mixed use"],
+                format_func=tr,
+                key="re_property_type",
+            )
+            estimated_value = st.number_input(
+                tr("Estimated Market Value"),
+                min_value=0.0,
+                value=450000.0,
+                step=10000.0,
+                key="re_estimated_value",
+            )
+            monthly_rent = st.number_input(
+                tr("Monthly Market Rent"),
+                min_value=0.0,
+                value=2800.0,
+                step=100.0,
+                key="re_monthly_rent",
+            )
+            other_operating_cost = st.number_input(
+                tr("Other Monthly Operating Cost"),
+                min_value=0.0,
+                value=250.0,
+                step=50.0,
+                key="re_other_operating_cost",
+            )
+            property_tax_pct = st.number_input(
+                tr("Annual Property Tax %"),
+                min_value=0.0,
+                value=1.1,
+                step=0.1,
+                key="re_property_tax_pct",
+            )
+            insurance_monthly = st.number_input(
+                tr("Monthly Insurance"),
+                min_value=0.0,
+                value=180.0,
+                step=25.0,
+                key="re_insurance_monthly",
+            )
+            hoa_monthly = st.number_input(
+                tr("Monthly HOA"),
+                min_value=0.0,
+                value=80.0,
+                step=25.0,
+                key="re_hoa_monthly",
+            )
+        with right:
+            maintenance_pct = st.number_input(
+                tr("Annual Maintenance %"),
+                min_value=0.0,
+                value=1.0,
+                step=0.1,
+                key="re_maintenance_pct",
+            )
+            vacancy_pct = st.number_input(
+                tr("Vacancy / Collection Loss %"),
+                min_value=0.0,
+                value=6.0,
+                step=0.5,
+                key="re_vacancy_pct",
+            )
+            mortgage_balance = st.number_input(
+                tr("Mortgage Balance"),
+                min_value=0.0,
+                value=300000.0,
+                step=10000.0,
+                key="re_mortgage_balance",
+            )
+            mortgage_rate_pct = st.number_input(
+                tr("Mortgage Rate %"),
+                min_value=0.0,
+                value=6.5,
+                step=0.1,
+                key="re_mortgage_rate_pct",
+            )
+            loan_years = st.number_input(
+                tr("Remaining Loan Years"),
+                min_value=1.0,
+                value=30.0,
+                step=1.0,
+                key="re_loan_years",
+            )
+            target_cap_rate_pct = st.number_input(
+                tr("Target Cap Rate %"),
+                min_value=0.1,
+                value=6.0,
+                step=0.1,
+                key="re_target_cap_rate_pct",
+            )
+            stress_cols = st.columns(2)
+            with stress_cols[0]:
+                rate_stress_pct = st.number_input(tr("Rate Stress +%"), min_value=0.0, value=1.5, step=0.25, key="re_rate_stress_pct")
+            with stress_cols[1]:
+                rent_stress_pct = st.number_input(tr("Rent Stress -%"), min_value=0.0, value=10.0, step=1.0, key="re_rent_stress_pct")
+
+    result = property_valuation_model(
+        estimated_value=estimated_value,
+        monthly_rent=monthly_rent,
+        other_operating_cost=other_operating_cost,
+        property_tax_pct=property_tax_pct,
+        insurance_monthly=insurance_monthly,
+        hoa_monthly=hoa_monthly,
+        maintenance_pct=maintenance_pct,
+        vacancy_pct=vacancy_pct,
+        mortgage_balance=mortgage_balance,
+        mortgage_rate_pct=mortgage_rate_pct,
+        loan_years=loan_years,
+        target_cap_rate_pct=target_cap_rate_pct,
+        rate_stress_pct=rate_stress_pct,
+        rent_stress_pct=rent_stress_pct,
+    )
+
+    signal = str(result["signal"])
+    signal_text = tr(signal)
+    signal_detail = {
+        "Value supported": tr("The estimated property value is supported by income under the selected cap-rate assumption."),
+        "Balanced": tr("The property is near fair value under the selected rent and cap-rate assumptions."),
+        "Cash-flow pressure": tr("Cash flow or income-supported value is weak; review rent, debt, vacancy, and holding costs."),
+    }[signal]
+    score_10 = float(result["valuation_score"]) / 10
+
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        metric_card(tr("Income-Supported Value"), money(float(result["income_value"])), score_color(score_10))
+    with c2:
+        metric_card(tr("Value Gap"), pct(float(result["value_gap_pct"])), score_color(score_10))
+    with c3:
+        metric_card(tr("Monthly Cash Flow"), money(float(result["monthly_cash_flow"])), "#16a34a" if float(result["monthly_cash_flow"]) >= 0 else "#dc2626")
+    with c4:
+        metric_card(tr("Valuation Signal"), signal_text, score_color(score_10))
+
+    c5, c6, c7, c8 = st.columns(4)
+    with c5:
+        metric_card(tr("Monthly NOI"), money(float(result["monthly_noi"])), "#2563eb")
+    with c6:
+        metric_card(tr("Cap Rate"), f"{float(result['current_cap_rate']):.2f}%", "#0f766e")
+    with c7:
+        dscr_value = float(result["dscr"])
+        metric_card(tr("Debt Service Coverage"), "No debt" if dscr_value > 50 else f"{dscr_value:.2f}x", "#7c3aed")
+    with c8:
+        metric_card(tr("Stress Cash Flow"), money(float(result["stress_cash_flow"])), "#16a34a" if float(result["stress_cash_flow"]) >= 0 else "#dc2626")
+
+    st.subheader(tr("Visual Property Value Map"))
+    value_rows = pd.DataFrame(
+        [
+            {"Lens": tr("Current Value"), "Value": estimated_value},
+            {"Lens": tr("Income Value"), "Value": float(result["income_value"])},
+            {"Lens": tr("Stress Value"), "Value": float(result["stress_value"])},
+        ]
+    )
+    value_chart = (
+        alt.Chart(value_rows)
+        .mark_bar(cornerRadiusTopLeft=8, cornerRadiusTopRight=8)
+        .encode(
+            x=alt.X("Lens:N", sort=None, title=tr("Value Lens")),
+            y=alt.Y("Value:Q", title=tr("Estimated Market Value")),
+            color=alt.Color("Lens:N", legend=None),
+            tooltip=["Lens", alt.Tooltip("Value:Q", format=",.0f")],
+        )
+        .properties(height=300)
+    )
+    st.altair_chart(value_chart, width="stretch")
+
+    cash_rows = pd.DataFrame(
+        [
+            {"Lens": tr("Current Cash Flow"), "Value": float(result["monthly_cash_flow"])},
+            {"Lens": tr("Stress Cash Flow"), "Value": float(result["stress_cash_flow"])},
+        ]
+    )
+    cash_chart = (
+        alt.Chart(cash_rows)
+        .mark_bar(cornerRadiusTopLeft=8, cornerRadiusTopRight=8)
+        .encode(
+            x=alt.X("Lens:N", sort=None, title=tr("Monthly Cash Flow Lens")),
+            y=alt.Y("Value:Q", title=tr("Monthly Cash Flow")),
+            color=alt.Color("Lens:N", legend=None),
+            tooltip=["Lens", alt.Tooltip("Value:Q", format=",.0f")],
+        )
+        .properties(height=260)
+    )
+    st.altair_chart(cash_chart, width="stretch")
+
+    st.subheader(tr("Evidence Notes"))
+    notes = pd.DataFrame(
+        [
+            {tr("Signal"): tr("Current situation"), tr("Reading"): f"{tr(property_type)}: {money(estimated_value)} / NOI {money(float(result['monthly_noi']))}"},
+            {tr("Signal"): tr("Direction"), tr("Reading"): signal_detail},
+            {tr("Signal"): tr("Crisis signal"), tr("Reading"): f"{tr('Stress Cash Flow')}: {money(float(result['stress_cash_flow']))}"},
+        ]
+    )
+    st.table(notes)
+
+
 def build_sidebar() -> None:
     with st.sidebar:
         st.header("LY-Scope-Ver.2")
-        st.write(tr("REIT-focused educational analysis"))
+        st.write(tr("Real estate educational analysis"))
         st.divider()
         st.caption(tr("Developer"))
         st.write("Youngnam Lee")
@@ -425,12 +854,12 @@ def hero() -> None:
         <div class="reit-hero">
             <div class="brand-line">
                 <div class="brand-icon">RE</div>
-                <div class="brand-title">LY-Scope-Ver.2 <span>REIT</span></div>
+                <div class="brand-title">LY-Scope-Ver.2 <span>Real Estate</span></div>
             </div>
             <div class="hero-muted">
-                {escape(tr('REIT-focused finance education platform for valuation, income analysis, interest-rate sensitivity, portfolio risk, and sector specialization.'))}
+                {escape(tr('Real estate valuation for property value, rent support, leverage, cash flow, and rate stress. Listed REITs remain as reference data.'))}
             </div>
-            <div class="pill">{escape(tr('Educational REIT Analytics - Not Investment Advice'))}</div>
+            <div class="pill">{escape(tr('Educational Real Estate Valuation - Not Investment Advice'))}</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -439,6 +868,7 @@ def hero() -> None:
 
 def overview_tab(df: pd.DataFrame) -> None:
     st.header(tr("REIT Market Lens"))
+    st.caption(tr("Listed REIT reference data is useful as a public-market comparison, but the customer-facing asset is Real Estate."))
     st.caption(tr("Start with property type, income quality, leverage, and valuation multiples."))
 
     c1, c2, c3, c4 = st.columns(4)
@@ -510,7 +940,7 @@ def overview_tab(df: pd.DataFrame) -> None:
 
 
 def valuation_tab(df: pd.DataFrame) -> None:
-    st.header(tr("REIT Valuation Triangulation"))
+    st.header(tr("Listed Real Estate Reference"))
     st.caption(tr("REITs are usually better studied with FFO, AFFO, NAV, dividend quality, and leverage."))
 
     selected_symbol = st.selectbox(
@@ -811,25 +1241,23 @@ def guide_tab() -> None:
 def main(include_sidebar: bool = True) -> None:
     if include_sidebar:
         build_sidebar()
-    hero()
     df = reit_frame()
-    tabs = st.tabs([tr("Overview"), tr("Valuation"), tr("Quality"), tr("Macro Sensitivity"), tr("Portfolio"), tr("Guide")])
-    with tabs[0]:
-        overview_tab(df)
-    with tabs[1]:
+    property_valuation_tab()
+
+    with st.expander(tr("Listed Real Estate Reference"), expanded=False):
         valuation_tab(df)
-    with tabs[2]:
+    with st.expander(tr("Income Safety & Property Quality"), expanded=False):
         quality_tab(df)
-    with tabs[3]:
+    with st.expander(tr("Macro Sensitivity"), expanded=False):
         macro_tab(df)
-    with tabs[4]:
+    with st.expander(tr("Portfolio"), expanded=False):
         portfolio_tab(df)
-    with tabs[5]:
+    with st.expander(tr("Guide"), expanded=False):
         guide_tab()
 
     st.divider()
     st.caption(
-        tr("LY-Scope-Ver.2 REIT module is an educational prototype. It does not provide investment, legal, tax, financial, accounting, or professional advice. Third-party market data remains subject to the terms of its providers.")
+        tr("LY-Scope-Ver.2 Real Estate module is an educational prototype. It does not provide investment, legal, tax, financial, accounting, or professional advice. Third-party market data remains subject to the terms of its providers.")
     )
 
 
