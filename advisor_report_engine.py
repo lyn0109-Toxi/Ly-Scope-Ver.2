@@ -16,8 +16,8 @@ _PDF_FONT_CACHE: dict[str, tuple[str, str]] = {}
 
 LABELS = {
     "en": {
-        "advisor_report": "ToxiGuard-NORA Advisor Report",
-        "all_reports": "ToxiGuard-NORA Advisor Reports",
+        "advisor_report": "LY-Scope-Ver.2 Advisor Report",
+        "all_reports": "LY-Scope-Ver.2 Advisor Reports",
         "fictional": "Fictional client sample for education and product validation.",
         "metric": "Metric",
         "reading": "Reading",
@@ -69,7 +69,9 @@ LABELS = {
         "ai_interpretation": "AI Interpretation",
         "decision": "Decision",
         "memory": "Memory",
-        "user": "User",
+        "customer_purpose": "Customer Purpose",
+        "strategy": "Strategy",
+        "user": "Customer Purpose",
         "decision_path_data": "Income, expenses, assets, debts, goals, portfolio, real estate",
         "decision_path_model": "Personal Finance engine + portfolio quality + real estate stress",
         "decision_path_evidence": "Runway, surplus, DTI, exposure, goal progress, beta, LTV",
@@ -91,8 +93,8 @@ LABELS = {
         "disclaimer": "Educational use only. This report is not financial, investment, legal, tax, accounting, or professional advice.",
     },
     "ko": {
-        "advisor_report": "ToxiGuard-NORA 어드바이저 리포트",
-        "all_reports": "ToxiGuard-NORA 어드바이저 리포트 모음",
+        "advisor_report": "LY-Scope-Ver.2 어드바이저 리포트",
+        "all_reports": "LY-Scope-Ver.2 어드바이저 리포트 모음",
         "fictional": "교육 및 제품 검증용 가상 고객 샘플입니다.",
         "metric": "지표",
         "reading": "판독",
@@ -144,7 +146,9 @@ LABELS = {
         "ai_interpretation": "AI 해석",
         "decision": "의사결정",
         "memory": "메모리",
-        "user": "사용자",
+        "customer_purpose": "고객 목적",
+        "strategy": "전략",
+        "user": "고객 목적",
         "decision_path_data": "소득, 지출, 자산, 부채, 목표, 포트폴리오, 부동산",
         "decision_path_model": "개인 재무 엔진 + 포트폴리오 품질 + 부동산 스트레스",
         "decision_path_evidence": "생존기간, 잉여현금, DTI, 노출도, 목표 진행률, 베타, LTV",
