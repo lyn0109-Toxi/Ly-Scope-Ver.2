@@ -95,7 +95,7 @@ KO_TRANSLATIONS = {
     "Investment risk capacity appears limited until liquidity or debt improves.": "유동성이나 부채 구조가 개선되기 전까지 투자 위험 감당력은 제한적으로 보입니다.",
     "Risk capacity appears stronger based on liquidity, debt, and savings behavior.": "유동성, 부채, 저축 습관을 기준으로 위험 감당력이 비교적 강해 보입니다.",
     "Investment Readiness": "투자 준비도",
-    "Personal Finance answers whether the user can afford investment risk. Stock and REIT analysis answer which assets may fit the user's goals and risk capacity.": "개인 재무는 사용자가 투자 위험을 감당할 수 있는지 답합니다. 주식과 REIT 분석은 어떤 자산이 사용자의 목표와 위험 감당력에 맞을 수 있는지 보여줍니다.",
+    "Personal Finance answers whether the user can afford investment risk. Stock and real estate analysis answer which assets may fit the user's goals and risk capacity.": "개인 재무는 사용자가 투자 위험을 감당할 수 있는지 답합니다. 주식과 부동산 분석은 어떤 자산이 사용자의 목표와 위험 감당력에 맞을 수 있는지 보여줍니다.",
 }
 
 FINANCE_DEFAULTS = {
@@ -550,6 +550,6 @@ def render_personal_finance() -> None:
     st.subheader(tr("Investment Readiness"))
     st.write(
         tr(
-            "Personal Finance answers whether the user can afford investment risk. Stock and REIT analysis answer which assets may fit the user's goals and risk capacity."
+            "Personal Finance answers whether the user can afford investment risk. Stock and real estate analysis answer which assets may fit the user's goals and risk capacity."
         )
     )
