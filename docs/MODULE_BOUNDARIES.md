@@ -3,7 +3,7 @@
 LY-Scope-Ver.2는 의사결정 흐름을 코드 경계로 분리합니다.
 
 ```text
-User -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
+Customer Purpose -> Strategy -> Situation -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
 ```
 
 ## Dependency Rules
@@ -18,10 +18,10 @@ User -> Data -> Model -> Evidence -> AI Interpretation -> Decision -> Memory
 
 | Module | Owns | Does Not Own |
 | --- | --- | --- |
-| `domain/user` | profile, preferences, priorities | saved decisions |
+| `domain/user` | customer purpose, profile, preferences, priorities | saved decisions |
+| `domain/goals` | strategy path, goal pressure, required contribution | scenario math |
 | `domain/data` | normalized input snapshot | scoring |
 | `domain/financial-foundation` | cash flow, net worth, runway, health | UI labels |
-| `domain/goals` | goal progress and pressure | scenario math |
 | `domain/projection` | month-by-month projections | recommendation labels |
 | `domain/scenario` | changed assumptions and comparison | memory |
 | `domain/portfolio` | holdings, market value, concentration, portfolio score | personal cash flow |
