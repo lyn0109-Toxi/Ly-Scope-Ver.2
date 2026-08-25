@@ -494,6 +494,149 @@ st.markdown(
 )
 
 
+def render_runtime_styles() -> None:
+    st.markdown(
+        """
+        <style>
+        .real-estate-section-title {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 2px 0 8px;
+            padding: 0 2px;
+        }
+        .real-estate-section-title b {
+            color: #0f172a;
+            font-size: 1.25rem;
+            line-height: 1;
+            font-weight: 920;
+        }
+        .real-estate-section-title span {
+            color: #475569;
+            font-size: 0.82rem;
+            font-weight: 760;
+            text-align: right;
+        }
+        .signal-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            margin: 10px 0 12px;
+        }
+        .signal-card {
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            border-radius: 8px;
+            padding: 13px 13px 12px;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+            min-height: 100px;
+            cursor: help;
+        }
+        .signal-card:focus {
+            outline: 2px solid rgba(15, 118, 110, 0.24);
+            outline-offset: 2px;
+        }
+        .signal-kicker {
+            color: #64748b;
+            font-size: 0.72rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 9px;
+        }
+        .signal-value {
+            color: #0f172a;
+            font-size: 1.36rem;
+            font-weight: 920;
+            line-height: 1.06;
+            margin-bottom: 10px;
+        }
+        .signal-note {
+            color: #475569;
+            font-size: 0.78rem;
+            font-weight: 760;
+            line-height: 1.22;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 160ms ease, opacity 160ms ease, margin 160ms ease;
+        }
+        .signal-card:hover .signal-note,
+        .signal-card:focus .signal-note {
+            max-height: 78px;
+            opacity: 1;
+            margin-bottom: 8px;
+        }
+        .signal-bar {
+            height: 8px;
+            border-radius: 8px;
+            margin-top: 12px;
+            background: #e2e8f0;
+            overflow: hidden;
+        }
+        .signal-fill {
+            height: 100%;
+            border-radius: 8px;
+        }
+        .signal-good .signal-fill { background: #0f766e; }
+        .signal-warn .signal-fill { background: #d97706; }
+        .signal-bad .signal-fill { background: #dc2626; }
+        .signal-neutral .signal-fill { background: #2563eb; }
+        .signal-good { border-color: rgba(15, 118, 110, 0.34); }
+        .signal-warn { border-color: rgba(217, 119, 6, 0.34); }
+        .signal-bad { border-color: rgba(220, 38, 38, 0.34); }
+        .signal-neutral { border-color: rgba(37, 99, 235, 0.30); }
+        .metric-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(148, 163, 184, 0.24);
+            border-radius: 8px;
+            padding: 13px 14px 12px 16px;
+            min-height: 88px;
+            background: rgba(255, 255, 255, 0.96);
+            color: #0f172a;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+        }
+        .metric-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #0f766e;
+        }
+        .metric-label {
+            color: #64748b;
+            font-weight: 800;
+            margin-bottom: 7px;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+        }
+        .metric-value {
+            color: #0f172a;
+            font-size: 1.42rem;
+            font-weight: 900;
+            line-height: 1.08;
+        }
+        .mini-section-title {
+            color: #0f172a;
+            font-size: 0.86rem;
+            font-weight: 920;
+            margin: 14px 0 6px;
+        }
+        @media (max-width: 680px) {
+            .signal-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
+            }
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 @dataclass(frozen=True)
 class ReitRecord:
     symbol: str
@@ -1481,6 +1624,7 @@ def guide_tab() -> None:
 
 
 def main(include_sidebar: bool = True) -> None:
+    render_runtime_styles()
     if include_sidebar:
         build_sidebar()
     df = reit_frame()
