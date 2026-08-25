@@ -1798,10 +1798,67 @@ st.markdown(
     .portfolio-valuation-status {
         color: #ffffff;
         border-radius: 999px;
-        padding: 7px 12px;
-        font-size: 0.78rem;
+        padding: 9px 14px;
+        font-size: 0.86rem;
         font-weight: 950;
         white-space: nowrap;
+        box-shadow: 0 10px 20px rgba(15, 23, 42, 0.14);
+    }
+    .portfolio-price-stage {
+        display: grid;
+        grid-template-columns: 1.05fr 1.05fr 0.9fr;
+        gap: 10px;
+        margin-top: 14px;
+    }
+    .portfolio-price-card {
+        border: 1px solid #d8e2ef;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 14px 15px;
+        min-height: 122px;
+        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+        position: relative;
+        overflow: hidden;
+    }
+    .portfolio-price-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto;
+        height: 4px;
+        background: var(--accent, #0ea5e9);
+    }
+    .portfolio-price-card.market { --accent: #0ea5e9; }
+    .portfolio-price-card.fair { --accent: #14b8a6; }
+    .portfolio-price-card.signal.up { --accent: #059669; background: #f0fdf4; }
+    .portfolio-price-card.signal.down { --accent: #dc2626; background: #fef2f2; }
+    .portfolio-price-card.signal.flat { --accent: #f59e0b; background: #fffbeb; }
+    .portfolio-price-label {
+        color: #52657f;
+        font-size: 0.76rem;
+        font-weight: 950;
+        text-transform: uppercase;
+    }
+    .portfolio-price-value {
+        color: #0f172a;
+        font-size: clamp(1.6rem, 3vw, 2.35rem);
+        line-height: 1;
+        font-weight: 950;
+        margin-top: 12px;
+        overflow-wrap: anywhere;
+    }
+    .portfolio-price-card.signal .portfolio-price-value {
+        color: var(--accent);
+    }
+    .portfolio-price-note {
+        color: #475569;
+        font-size: 0.78rem;
+        font-weight: 800;
+        line-height: 1.28;
+        margin-top: 10px;
+    }
+    .portfolio-price-note b {
+        color: #0f172a;
+        font-weight: 950;
     }
     .portfolio-score-grid {
         display: grid;
@@ -2950,6 +3007,12 @@ st.markdown(
         .portfolio-valuation-status {
             display: inline-block;
             margin-top: 12px;
+        }
+        .portfolio-price-stage {
+            grid-template-columns: 1fr;
+        }
+        .portfolio-price-card {
+            min-height: 104px;
         }
         .portfolio-score-grid {
             grid-template-columns: 1fr;
@@ -7789,6 +7852,13 @@ def render_portfolio_valuation_board(stock: dict[str, Any]) -> None:
     price_display = stock_money(stock, stock.get("price")) if positive_float(stock.get("price")) else "N/A"
     data_quality = str(stock.get("data_quality") or "Market data")
     risk_free_display = f"{float(stock.get('risk_free_rate') or macro_assumptions()[0]) * 100:.2f}%"
+    valuation_status = str(stock.get("valuation_status", "Fair Value"))
+    signal_class = "flat"
+    if upside is not None:
+        if upside > 5:
+            signal_class = "up"
+        elif upside < -5:
+            signal_class = "down"
     quality_detail = (
         f"{ui('Growth')} {growth:.1f}% 및 PER {fmt_number(pe)}{ui('are compressed into one visual signal.')}"
         if current_language() == "ko"
@@ -7831,16 +7901,31 @@ def render_portfolio_valuation_board(stock: dict[str, Any]) -> None:
                     <div class="portfolio-valuation-title">{escape(str(stock.get("name", stock.get("symbol", "Stock"))))} ({escape(str(stock.get("symbol", "")))})</div>
                     <div class="portfolio-valuation-meta">
                         <span class="portfolio-valuation-chip">{escape(str(stock.get("industry", "N/A")))}</span>
-                        <span class="portfolio-valuation-chip">{ui_html('Price')} {escape(price_display)}</span>
-                        <span class="portfolio-valuation-chip">{ui_html('Fair')} {escape(fair_value)}</span>
                         <span class="portfolio-valuation-chip">PER {escape(fmt_number(pe))}</span>
                         <span class="portfolio-valuation-chip">{ui_html('Risk-Free Rate')} {escape(risk_free_display)}</span>
                         <span class="portfolio-valuation-chip">{ui_html(data_quality)}</span>
                     </div>
                 </div>
-                <span class="portfolio-valuation-status" style="background:{status_color(str(stock.get("valuation_status", "Fair Value")))};">
-                    {ui_html(str(stock.get("valuation_status", "N/A")))}
+                <span class="portfolio-valuation-status" style="background:{status_color(valuation_status)};">
+                    {ui_html(valuation_status)}
                 </span>
+            </div>
+            <div class="portfolio-price-stage" aria-label="Price and valuation summary">
+                <div class="portfolio-price-card market">
+                    <div class="portfolio-price-label">{ui_html('Current price')}</div>
+                    <div class="portfolio-price-value">{escape(price_display)}</div>
+                    <div class="portfolio-price-note">{ui_html(data_quality)}</div>
+                </div>
+                <div class="portfolio-price-card fair">
+                    <div class="portfolio-price-label">{ui_html('Fair Value')}</div>
+                    <div class="portfolio-price-value">{escape(fair_value)}</div>
+                    <div class="portfolio-price-note">{ui_html('blended fair value')}</div>
+                </div>
+                <div class="portfolio-price-card signal {signal_class}">
+                    <div class="portfolio-price-label">{ui_html('Upside')}</div>
+                    <div class="portfolio-price-value">{escape(upside_text)}</div>
+                    <div class="portfolio-price-note"><b>{ui_html(valuation_status)}</b></div>
+                </div>
             </div>
             <div class="portfolio-score-grid">{cards}</div>
         </div>
