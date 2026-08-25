@@ -4,6 +4,7 @@ import json
 import base64
 import importlib
 from html import escape
+from io import StringIO
 from datetime import datetime, timedelta
 from pathlib import Path
 from textwrap import dedent
@@ -177,6 +178,14 @@ KO_TRANSLATIONS = {
     "Ask AI Coach About Portfolio Setup": "포트폴리오 구성에 대해 AI 코치에게 묻기",
     "Portfolio valuation lens": "포트폴리오 가치평가 렌즈",
     "Portfolio valuation basis": "포트폴리오 가치평가 근거",
+    "Risk-Free Rate": "무위험수익률",
+    "Risk-Free Rate Source": "무위험수익률 출처",
+    "Risk-Free Rate Date": "무위험수익률 기준일",
+    "U.S. 10Y Treasury Yield": "미국 10년물 국채금리",
+    "Use U.S. 10Y Treasury yield as Risk-Free Rate": "미국 10년물 국채금리를 무위험수익률로 사용",
+    "Refresh U.S. 10Y Treasury yield": "미국 10년물 국채금리 새로고침",
+    "Manual CAPM input": "수동 CAPM 입력값",
+    "Rate unavailable": "금리 미확보",
     "Upside": "상승여력",
     "Current price": "현재가",
     "blended fair value": "종합 적정가치",
@@ -6108,6 +6117,8 @@ OPENAI_REASONING_EFFORT = get_secret_or_env("OPENAI_REASONING_EFFORT", "medium")
 OPENAI_AI_DEFAULT_ON = get_secret_bool("OPENAI_AI_DEFAULT_ON", False)
 DEFAULT_RISK_FREE_RATE = 0.045
 DEFAULT_EQUITY_RISK_PREMIUM = 0.045
+US10Y_FRED_CSV_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10"
+US10Y_YAHOO_SYMBOL = "^TNX"
 RISK_FREE_RATE = DEFAULT_RISK_FREE_RATE
 EQUITY_RISK_PREMIUM = DEFAULT_EQUITY_RISK_PREMIUM
 
@@ -6472,6 +6483,7 @@ def init_state() -> None:
     st.session_state.setdefault("portfolio_search_result_symbol", None)
     st.session_state.setdefault("manual_usdkrw", 1350.0)
     st.session_state.setdefault("use_live_fx", False)
+    st.session_state.setdefault("use_live_us10y", True)
     st.session_state.setdefault("risk_free_rate_pct", DEFAULT_RISK_FREE_RATE * 100)
     st.session_state.setdefault("equity_risk_premium_pct", DEFAULT_EQUITY_RISK_PREMIUM * 100)
     st.session_state.setdefault("macro_risk_free_rate_pct_text", f"{DEFAULT_RISK_FREE_RATE * 100:.2f}")
@@ -6584,10 +6596,8 @@ def effective_usdkrw() -> tuple[float, str, str]:
 
 
 def macro_assumptions() -> tuple[float, float]:
-    risk_free_rate = float(
-        st.session_state.get("risk_free_rate_pct", DEFAULT_RISK_FREE_RATE * 100)
-        or DEFAULT_RISK_FREE_RATE * 100
-    )
+    macro = macro_assumption_details()
+    risk_free_rate = float(macro["risk_free_rate_pct"])
     equity_risk_premium = float(
         st.session_state.get("equity_risk_premium_pct", DEFAULT_EQUITY_RISK_PREMIUM * 100)
         or DEFAULT_EQUITY_RISK_PREMIUM * 100
@@ -6821,6 +6831,74 @@ def load_price_history_from_yahoo(symbol: str, days: int) -> pd.DataFrame:
     return history.reset_index()
 
 
+@st.cache_data(ttl=3600, show_spinner=False)
+def load_us10y_treasury_rate() -> dict[str, Any]:
+    try:
+        response = requests.get(US10Y_FRED_CSV_URL, timeout=12)
+        response.raise_for_status()
+        data = pd.read_csv(StringIO(response.text))
+        if {"observation_date", "DGS10"}.issubset(data.columns):
+            data["DGS10"] = pd.to_numeric(data["DGS10"], errors="coerce")
+            clean = data.dropna(subset=["DGS10"]).sort_values("observation_date")
+            if not clean.empty:
+                latest = clean.iloc[-1]
+                rate_pct = float(latest["DGS10"])
+                if 0 < rate_pct < 25:
+                    return {
+                        "rate_pct": rate_pct,
+                        "date": str(latest["observation_date"]),
+                        "source": "FRED DGS10 via Federal Reserve Bank of St. Louis",
+                    }
+    except Exception:
+        pass
+
+    history = normalize_price_history(load_price_history_from_yahoo(US10Y_YAHOO_SYMBOL, days=10))
+    if not history.empty:
+        latest = history.iloc[-1]
+        raw_value = positive_float(latest.get("Close"))
+        if raw_value:
+            rate_pct = raw_value / 10 if raw_value > 20 else raw_value
+            if 0 < rate_pct < 25:
+                return {
+                    "rate_pct": rate_pct,
+                    "date": latest["Date"].strftime("%Y-%m-%d"),
+                    "source": "Yahoo Finance ^TNX fallback",
+                }
+
+    return {"rate_pct": None, "date": None, "source": "Unavailable"}
+
+
+def macro_assumption_details() -> dict[str, Any]:
+    manual_risk_free_pct = float(
+        st.session_state.get("risk_free_rate_pct", DEFAULT_RISK_FREE_RATE * 100)
+        or DEFAULT_RISK_FREE_RATE * 100
+    )
+    if st.session_state.get("use_live_us10y", True):
+        treasury = load_us10y_treasury_rate()
+        if treasury.get("rate_pct"):
+            return {
+                "risk_free_rate_pct": float(treasury["rate_pct"]),
+                "risk_free_rate_source": str(treasury.get("source") or "U.S. 10Y Treasury"),
+                "risk_free_rate_date": str(treasury.get("date") or "Latest"),
+                "risk_free_rate_mode": "U.S. 10Y Treasury",
+                "equity_risk_premium_pct": float(
+                    st.session_state.get("equity_risk_premium_pct", DEFAULT_EQUITY_RISK_PREMIUM * 100)
+                    or DEFAULT_EQUITY_RISK_PREMIUM * 100
+                ),
+            }
+
+    return {
+        "risk_free_rate_pct": manual_risk_free_pct,
+        "risk_free_rate_source": "Manual CAPM input",
+        "risk_free_rate_date": "User input",
+        "risk_free_rate_mode": "Manual",
+        "equity_risk_premium_pct": float(
+            st.session_state.get("equity_risk_premium_pct", DEFAULT_EQUITY_RISK_PREMIUM * 100)
+            or DEFAULT_EQUITY_RISK_PREMIUM * 100
+        ),
+    }
+
+
 def apply_price_implied_baseline(stock: dict[str, Any]) -> dict[str, Any]:
     price = positive_float(stock.get("price"))
     if not price:
@@ -6856,7 +6934,9 @@ def calculate_valuation(stock: dict[str, Any]) -> dict[str, Any]:
     peer_pe = float(stock.get("peer_average_pe") or 15)
     price = float(stock.get("price") or 0)
 
-    risk_free_rate, equity_risk_premium = macro_assumptions()
+    macro = macro_assumption_details()
+    risk_free_rate = float(macro["risk_free_rate_pct"]) / 100
+    equity_risk_premium = float(macro["equity_risk_premium_pct"]) / 100
     expected_return = risk_free_rate + beta * equity_risk_premium
     if stock.get("price_implied_fallback") and price > 0:
         stock.update(
@@ -6864,6 +6944,9 @@ def calculate_valuation(stock: dict[str, Any]) -> dict[str, Any]:
                 "expected_return": expected_return,
                 "risk_free_rate": risk_free_rate,
                 "equity_risk_premium": equity_risk_premium,
+                "risk_free_rate_source": macro.get("risk_free_rate_source"),
+                "risk_free_rate_date": macro.get("risk_free_rate_date"),
+                "risk_free_rate_mode": macro.get("risk_free_rate_mode"),
                 "fair_price": price,
                 "valuation_status": "Fair Value",
                 "triangulation": {
@@ -6924,6 +7007,9 @@ def calculate_valuation(stock: dict[str, Any]) -> dict[str, Any]:
             "expected_return": expected_return,
             "risk_free_rate": risk_free_rate,
             "equity_risk_premium": equity_risk_premium,
+            "risk_free_rate_source": macro.get("risk_free_rate_source"),
+            "risk_free_rate_date": macro.get("risk_free_rate_date"),
+            "risk_free_rate_mode": macro.get("risk_free_rate_mode"),
             "fair_price": fair_price,
             "valuation_status": status,
             "triangulation": {
@@ -7702,6 +7788,7 @@ def render_portfolio_valuation_board(stock: dict[str, Any]) -> None:
     fair_value = stock_money(stock, stock.get("fair_price")) if stock.get("fair_price") else "N/A"
     price_display = stock_money(stock, stock.get("price")) if positive_float(stock.get("price")) else "N/A"
     data_quality = str(stock.get("data_quality") or "Market data")
+    risk_free_display = f"{float(stock.get('risk_free_rate') or macro_assumptions()[0]) * 100:.2f}%"
     quality_detail = (
         f"{ui('Growth')} {growth:.1f}% 및 PER {fmt_number(pe)}{ui('are compressed into one visual signal.')}"
         if current_language() == "ko"
@@ -7747,6 +7834,7 @@ def render_portfolio_valuation_board(stock: dict[str, Any]) -> None:
                         <span class="portfolio-valuation-chip">{ui_html('Price')} {escape(price_display)}</span>
                         <span class="portfolio-valuation-chip">{ui_html('Fair')} {escape(fair_value)}</span>
                         <span class="portfolio-valuation-chip">PER {escape(fmt_number(pe))}</span>
+                        <span class="portfolio-valuation-chip">{ui_html('Risk-Free Rate')} {escape(risk_free_display)}</span>
                         <span class="portfolio-valuation-chip">{ui_html(data_quality)}</span>
                     </div>
                 </div>
@@ -10666,9 +10754,22 @@ def calculation_details_tab() -> None:
             - **Income Approach:** Gordon Growth Model when dividends are available; otherwise EPS capitalization.
             - **Asset Approach:** Graham Number = square root of `22.5 x EPS x Book Value per Share`.
             - **Market Approach:** `EPS x Peer Average P/E`.
-            - **CAPM Required Return:** `Risk-Free Rate + Beta x Equity Risk Premium`; users can adjust these assumptions in Settings.
+            - **CAPM Required Return:** `Risk-Free Rate + Beta x Equity Risk Premium`.
+            - **Risk-Free Rate Basis:** the app uses the U.S. 10-Year Treasury yield when available, with manual override in Settings.
             - **Valuation Status:** if current price is more than 5% above fair value, it is marked Overvalued; if more than 5% below, Undervalued.
             """
+        )
+        macro = macro_assumption_details()
+        basis_cols = st.columns(3)
+        with basis_cols[0]:
+            metric_card(ui("Risk-Free Rate"), f"{float(macro['risk_free_rate_pct']):.2f}%")
+        with basis_cols[1]:
+            metric_card(ui("Equity Risk Premium"), f"{float(macro['equity_risk_premium_pct']):.2f}%")
+        with basis_cols[2]:
+            metric_card(ui("U.S. 10Y Treasury Yield"), str(macro.get("risk_free_rate_mode") or "Manual"))
+        st.caption(
+            f"{ui('Risk-Free Rate Source')}: {macro.get('risk_free_rate_source') or 'Unavailable'} | "
+            f"{ui('Risk-Free Rate Date')}: {macro.get('risk_free_rate_date') or 'N/A'}"
         )
         if st.session_state.stocks:
             symbols = list(st.session_state.stocks.keys())
@@ -10683,6 +10784,8 @@ def calculation_details_tab() -> None:
                     {"Input": "Dividend / Share", "Value": stock_money(stock, float(stock.get("dividend") or 0))},
                     {"Input": "Beta", "Value": fmt_number(stock.get("beta"))},
                     {"Input": "Risk-Free Rate", "Value": f"{float(stock.get('risk_free_rate') or macro_assumptions()[0]) * 100:.2f}%"},
+                    {"Input": "Risk-Free Rate Source", "Value": str(stock.get("risk_free_rate_source") or macro_assumption_details().get("risk_free_rate_source"))},
+                    {"Input": "Risk-Free Rate Date", "Value": str(stock.get("risk_free_rate_date") or macro_assumption_details().get("risk_free_rate_date"))},
                     {"Input": "Equity Risk Premium", "Value": f"{float(stock.get('equity_risk_premium') or macro_assumptions()[1]) * 100:.2f}%"},
                     {"Input": "CAPM Required Return", "Value": f"{float(stock.get('expected_return') or 0) * 100:.2f}%"},
                     {"Input": "Growth Rate", "Value": f"{float(stock.get('growth_rate') or 0) * 100:.1f}%"},
@@ -12084,11 +12187,16 @@ def portfolio_tab() -> None:
         metric_card(ui("Portfolio Valuation Score"), score_text, score_color)
 
     with st.expander(ui("Portfolio valuation basis"), expanded=False):
+        macro = macro_assumption_details()
         st.caption(
             "Valuation Score estimates the portfolio's weighted upside or downside versus each stock's blended fair value. "
             "Formula: sum(weight x ((Fair Value - Current Price) / Current Price)) / valued-stock weight. "
             "Positive means undervalued; negative means overvalued. Holdings without valid fair value are excluded. "
             f"Current analysis mode: {st.session_state.portfolio_weighting_mode}."
+        )
+        st.caption(
+            f"Risk-free rate basis: {float(macro['risk_free_rate_pct']):.2f}% "
+            f"({macro['risk_free_rate_source']}, {macro['risk_free_rate_date']})."
         )
 
     render_quick_portfolio_entry()
@@ -12318,11 +12426,45 @@ def settings_tab() -> None:
     )
     st.subheader("Macroeconomic Variables")
     st.caption(
-        "The app starts with 4.50% for both values. Users can revise these assumptions, "
-        "and the updated values will be reflected in CAPM required return and valuation calculations."
+        "The app uses the U.S. 10-Year Treasury yield as the default risk-free rate when available. "
+        "Users can switch to a manual assumption, and updated values are reflected in CAPM required return and valuation calculations."
     )
 
-    if st.button("Reset macro assumptions to 4.50%", width="stretch"):
+    treasury = load_us10y_treasury_rate()
+    treasury_rate = treasury.get("rate_pct")
+    treasury_cols = st.columns([1, 1.4])
+    with treasury_cols[0]:
+        metric_card(
+            ui("U.S. 10Y Treasury Yield"),
+            f"{float(treasury_rate):.2f}%" if treasury_rate else ui("Rate unavailable"),
+        )
+    with treasury_cols[1]:
+        st.caption(
+            f"Source: {treasury.get('source') or 'Unavailable'} | "
+            f"Date: {treasury.get('date') or 'N/A'}"
+        )
+        if st.button(ui("Refresh U.S. 10Y Treasury yield"), width="stretch"):
+            load_us10y_treasury_rate.clear()
+            recalculated = recalculate_loaded_stocks()
+            st.session_state["treasury_refresh_notice"] = (
+                f"U.S. 10Y Treasury yield refreshed. {recalculated} loaded stock(s) were recalculated."
+                if recalculated
+                else "U.S. 10Y Treasury yield refreshed."
+            )
+            st.rerun()
+
+    refresh_notice = st.session_state.pop("treasury_refresh_notice", "")
+    if refresh_notice:
+        st.success(refresh_notice)
+
+    st.checkbox(
+        ui("Use U.S. 10Y Treasury yield as Risk-Free Rate"),
+        key="use_live_us10y",
+        disabled=not bool(treasury_rate),
+        help="Uses FRED DGS10 first, then Yahoo Finance ^TNX fallback if FRED is unavailable.",
+    )
+
+    if st.button("Reset manual macro assumptions to 4.50%", width="stretch"):
         st.session_state.risk_free_rate_pct = DEFAULT_RISK_FREE_RATE * 100
         st.session_state.equity_risk_premium_pct = DEFAULT_EQUITY_RISK_PREMIUM * 100
         st.session_state.macro_risk_free_rate_pct_text = f"{DEFAULT_RISK_FREE_RATE * 100:.2f}"
@@ -12337,13 +12479,16 @@ def settings_tab() -> None:
             + (f" {recalculated} loaded stock(s) were recalculated." if recalculated else "")
         )
 
+    macro = macro_assumption_details()
+    use_live_risk_free = bool(st.session_state.get("use_live_us10y", True) and treasury_rate)
     with st.form("macro_assumptions_form"):
         macro_cols = st.columns(2)
         with macro_cols[0]:
             risk_free_pct_text = st.text_input(
                 "Risk-Free Rate (%)",
-                value=f"{float(st.session_state.get('risk_free_rate_pct', DEFAULT_RISK_FREE_RATE * 100)):.2f}",
-                help="Used as the base rate in CAPM. Enter a percent value such as 4.50.",
+                value=f"{float(macro['risk_free_rate_pct']):.2f}",
+                help="Used as the base rate in CAPM. Disable the U.S. 10Y toggle to enter a manual percent value.",
+                disabled=use_live_risk_free,
             )
         with macro_cols[1]:
             equity_risk_premium_pct_text = st.text_input(
@@ -12359,7 +12504,11 @@ def settings_tab() -> None:
 
     if apply_macro:
         try:
-            risk_free_pct = float(str(risk_free_pct_text).strip().replace("%", ""))
+            risk_free_pct = (
+                float(macro_assumption_details()["risk_free_rate_pct"])
+                if use_live_risk_free
+                else float(str(risk_free_pct_text).strip().replace("%", ""))
+            )
             equity_risk_premium_pct = float(str(equity_risk_premium_pct_text).strip().replace("%", ""))
         except ValueError:
             st.error("Please enter valid numeric percentages, for example 4.50 or 5.25.")
@@ -12385,9 +12534,11 @@ def settings_tab() -> None:
             st.info("Updated assumptions saved. New stock searches will use these values.")
 
     risk_free_rate, equity_risk_premium = macro_assumptions()
+    macro = macro_assumption_details()
     st.info(
         f"Current CAPM assumption: Required Return = {risk_free_rate * 100:.2f}% "
-        f"+ Beta x {equity_risk_premium * 100:.2f}%."
+        f"+ Beta x {equity_risk_premium * 100:.2f}%. "
+        f"Risk-free source: {macro['risk_free_rate_source']} ({macro['risk_free_rate_date']})."
     )
 
 
@@ -12563,7 +12714,7 @@ def guide_tab() -> None:
     )
     st.markdown(
         """
-        - Risk-Free Rate and Equity Risk Premium begin at 4.50% each, but users can update them in Settings.
+        - Risk-Free Rate defaults to the U.S. 10-Year Treasury yield when available; users can switch to a manual CAPM input in Settings.
         - Updated macro assumptions are applied to CAPM required return and valuation calculations.
         - API keys should never be pasted into public code, screenshots, or browser-side scripts.
         - OPENAI_API_KEY enables the verified AI model layer for AI Coach.
