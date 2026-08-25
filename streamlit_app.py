@@ -76,7 +76,7 @@ KO_TRANSLATIONS = {
     "Proof": "증명",
     "Review": "검토",
     "NORA Purpose Control Center": "NORA 목적 컨트롤 센터",
-    "NORA starts with what the customer wants, then connects the plan, current situation, evidence, decision, and memory.": "NORA는 고객이 원하는 것에서 시작한 뒤 플랜, 현재 상황, 근거, 결정, 메모리를 연결합니다.",
+    "NORA starts with what the customer wants, then connects the strategy, current situation, evidence, decision, and memory.": "NORA는 고객이 원하는 것에서 시작한 뒤 전략, 현재 상황, 근거, 결정, 메모리를 연결합니다.",
     "Clarify the desired outcome before looking at numbers.": "숫자를 보기 전에 원하는 결과를 먼저 분명히 합니다.",
     "Turn purpose into a path, sequence, and review rhythm.": "목적을 경로, 순서, 점검 리듬으로 바꿉니다.",
     "Read capital, income state, portfolio, real estate, liquidity, and risks.": "자본, 소득 상태, 포트폴리오, 부동산, 유동성, 위험을 읽습니다.",
@@ -95,7 +95,7 @@ KO_TRANSLATIONS = {
     "Direction": "목표 방향",
     "What path needs attention next.": "다음에 집중해야 할 경로를 확인합니다.",
     "Crisis Signals": "위험 신호",
-    "Where liquidity, concentration, rates, or market shocks could interrupt the plan.": "유동성, 집중도, 금리, 시장 충격이 계획을 끊을 수 있는 지점을 봅니다.",
+    "Where liquidity, concentration, rates, or market shocks could interrupt the strategy.": "유동성, 집중도, 금리, 시장 충격이 전략을 끊을 수 있는 지점을 봅니다.",
     "Use the visual signals first. Details appear when you hover or click.": "먼저 시각 신호를 보고, 세부 내용은 마우스를 올리거나 클릭할 때 확인하세요.",
     "Open Dashboard": "대시보드 열기",
     "Educational prototype only; not financial, investment, legal, or tax advice.": "교육용 프로토타입입니다. 금융, 투자, 법률, 세무 조언이 아닙니다.",
@@ -239,7 +239,7 @@ KO_TRANSLATIONS = {
     "NORA Path": "NORA 경로",
     "Goal → Strategy → Situation → AI Coach": "목표 → 전략 → 상황 → AI 코치",
     "Choose the customer purpose first.": "고객의 목표를 먼저 선택합니다.",
-    "Follow the plan selected by the goal.": "목표가 선택한 전략을 따라갑니다.",
+    "Follow the strategy selected by the goal.": "목표가 선택한 전략을 따라갑니다.",
     "Read cash flow, capital, risk, and runway.": "현재 현금흐름, 자본, 위험, 생존기간을 확인합니다.",
     "Ask for a linked interpretation.": "근거를 쉬운 해석으로 바꿉니다.",
     "Selected goal": "선택된 목표",
@@ -325,7 +325,7 @@ KO_TRANSLATIONS = {
     "Next mobile step": "다음 모바일 단계",
     "Review the current screen, then ask AI Coach for a linked summary.": "현재 화면을 검토한 뒤 AI 코치에게 연결 요약을 요청하세요.",
     "Life Design Control Center": "라이프 설계 컨트롤 센터",
-    "LY-Scope-Ver.2 connects user context, financial data, models, evidence, AI interpretation, decisions, and memory. Use the circular menu above to move between valuation, portfolio risk, real estate exposure, personal finance, scenario stress testing, AI readiness, calculation transparency, and diary reflection.": "LY-Scope-Ver.2는 사용자 맥락, 금융 데이터, 모델, 근거, AI 해석, 결정, 메모리를 연결합니다. 위 원형 메뉴로 가치평가, 포트폴리오 위험, 부동산 노출, 개인 재무, 시나리오 스트레스 테스트, AI 준비도, 계산 투명성, 다이어리 회고를 이동하세요.",
+    "LY-Scope-Ver.2 connects customer purpose, strategy, situation, financial data, models, evidence, AI interpretation, decisions, and memory. Use the circular menu above to move between valuation, portfolio risk, real estate exposure, personal finance, scenario stress testing, AI readiness, calculation transparency, and diary reflection.": "LY-Scope-Ver.2는 고객 목적, 전략, 상황, 금융 데이터, 모델, 근거, AI 해석, 결정, 메모리를 연결합니다. 위 원형 메뉴로 가치평가, 포트폴리오 위험, 부동산 노출, 개인 재무, 시나리오 스트레스 테스트, AI 준비도, 계산 투명성, 다이어리 회고를 이동하세요.",
     "Understand monthly cash flow before taking investment risk.": "투자 위험을 감수하기 전 월 현금흐름을 이해하세요.",
     "Check liquidity and emergency capacity.": "유동성과 비상 대응력을 확인하세요.",
     "Investments": "투자",
@@ -353,7 +353,7 @@ KO_TRANSLATIONS = {
     "Market Assets": "시장 자산",
     "Projection": "전망",
     "Risk / Resilience": "위험 / 회복력",
-    "NORA keeps every screen tied to the same decision path: current situation, evidence, interpretation, action, and memory.": "NORA는 모든 화면을 현재 상황, 근거, 해석, 행동, 기억이라는 동일한 의사결정 경로에 연결합니다.",
+    "NORA keeps every screen tied to the same decision path: customer purpose, strategy, situation, evidence, interpretation, decision, and memory.": "NORA는 모든 화면을 고객 목적, 전략, 상황, 근거, 해석, 결정, 기억이라는 동일한 의사결정 경로에 연결합니다.",
     "Hover or click each visual node to read its role.": "각 시각 노드에 마우스를 올리거나 클릭하면 역할을 볼 수 있습니다.",
     "LY-Scope-Ver.2 is provided for educational and informational use only and does not constitute or provide financial, investment, legal, tax, accounting, or professional advice. Do not enter sensitive personal financial information into this prototype. Market data and charts may be provided by third-party services such as Finnhub, TradingView, and Yahoo Finance/yfinance, subject to their own terms. All trademarks, company names, and ticker symbols remain the property of their respective owners. This interface uses original CSS/HTML design elements and does not claim ownership of third-party data, logos, or trademarks. Data may be delayed, incomplete, or unavailable and should be verified independently.": "LY-Scope-Ver.2는 교육 및 정보 제공용이며 금융, 투자, 법률, 세무, 회계 또는 전문 조언을 제공하지 않습니다. 이 프로토타입에 민감한 개인 금융 정보를 입력하지 마세요. 시장 데이터와 차트는 Finnhub, TradingView, Yahoo Finance/yfinance 등 제3자 서비스에서 제공될 수 있으며 각 서비스 약관을 따릅니다. 모든 상표, 회사명, 티커 심볼은 각 소유자의 자산입니다. 이 인터페이스는 자체 CSS/HTML 디자인 요소를 사용하며 제3자 데이터, 로고, 상표의 소유권을 주장하지 않습니다. 데이터는 지연되거나 불완전하거나 제공되지 않을 수 있으므로 독립적으로 검증해야 합니다.",
 }
@@ -5925,6 +5925,7 @@ st.markdown(
         border-radius: 8px !important;
         transform: none !important;
         color: #334155 !important;
+        -webkit-text-fill-color: currentColor !important;
         background: #ffffff !important;
         border: 1px solid rgba(148, 163, 184, 0.20) !important;
         box-shadow: none !important;
@@ -5938,10 +5939,12 @@ st.markdown(
         background: transparent !important;
         box-shadow: none !important;
         font-size: 0.70rem !important;
+        -webkit-text-fill-color: currentColor !important;
     }
     html body .stApp .desktop-orbit-center span,
     html body .stApp .desktop-orbit-item span {
         color: inherit !important;
+        -webkit-text-fill-color: currentColor !important;
         font-size: 0.78rem !important;
         font-weight: 760 !important;
         line-height: 1 !important;
@@ -5949,6 +5952,7 @@ st.markdown(
     html body .stApp .desktop-orbit-item.active,
     html body .stApp .desktop-orbit-center.active {
         color: #ffffff !important;
+        -webkit-text-fill-color: currentColor !important;
         background: #0f766e !important;
         border-color: #0f766e !important;
     }
@@ -11166,7 +11170,9 @@ def render_advisor_reports_tab() -> None:
         st.subheader(ui("Decision Path"))
         st.dataframe(
             [
-                {advisor_label("layer", advisor_language): advisor_label("user", advisor_language), advisor_label("reading", advisor_language): client.text("segment", advisor_language)},
+                {advisor_label("layer", advisor_language): advisor_label("customer_purpose", advisor_language), advisor_label("reading", advisor_language): client.text("goal", advisor_language)},
+                {advisor_label("layer", advisor_language): advisor_label("strategy", advisor_language), advisor_label("reading", advisor_language): client.text("advisor_focus", advisor_language)},
+                {advisor_label("layer", advisor_language): advisor_label("situation", advisor_language), advisor_label("reading", advisor_language): client.text("situation", advisor_language)},
                 {advisor_label("layer", advisor_language): advisor_label("data", advisor_language), advisor_label("reading", advisor_language): advisor_label("decision_path_data", advisor_language)},
                 {advisor_label("layer", advisor_language): advisor_label("model", advisor_language), advisor_label("reading", advisor_language): advisor_label("decision_path_model", advisor_language)},
                 {advisor_label("layer", advisor_language): advisor_label("evidence", advisor_language), advisor_label("reading", advisor_language): advisor_label("decision_path_evidence", advisor_language)},
@@ -12636,7 +12642,7 @@ NORA_ONTOLOGY_STEPS = [
         "detail_ko": "사용자가 원하는 결과, 삶의 우선순위, 기간, 제약조건, 의사결정 질문.",
     },
     {
-        "glyph": "PLN",
+        "glyph": "STG",
         "label": "Strategy",
         "tag": "Strategy path",
         "color": "#60a5fa",
