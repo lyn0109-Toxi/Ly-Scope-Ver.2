@@ -35,7 +35,9 @@ test('pipeline materializes the target architecture stages', () => {
   const architecture = getArchitectureMap();
 
   assert.deepEqual(architecture.flow, [
-    'User',
+    'Customer Purpose',
+    'Strategy',
+    'Situation',
     'Data',
     'Model',
     'Evidence',
@@ -45,6 +47,9 @@ test('pipeline materializes the target architecture stages', () => {
   ]);
   assert.equal(result.trace.length, architecture.flow.length);
   assert.ok(result.trace.every((stage) => stage.status === 'ready'));
+  assert.equal(result.trace[0].id, 'customerPurpose');
+  assert.equal(result.trace[1].id, 'strategy');
+  assert.equal(result.trace[2].id, 'situation');
   assert.equal(typeof result.model.score, 'number');
 });
 
