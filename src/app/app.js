@@ -85,7 +85,7 @@ function downloadState(state) {
 
 export function createLyScopeApp(root) {
   if (!root) {
-    throw new Error('LY-Scope Ver.2 root element was not found.');
+    throw new Error('LY-Scope-Ver.2 root element was not found.');
   }
 
   let state = loadState(cloneDefaultState());
@@ -287,7 +287,7 @@ export function createLyScopeApp(root) {
     },
 
     resetState() {
-      const confirmed = window.confirm('Reset LY-Scope Ver.2 sample data?');
+      const confirmed = window.confirm('Reset LY-Scope-Ver.2 sample data?');
       if (!confirmed) return;
       clearState();
       replaceState(cloneDefaultState());
