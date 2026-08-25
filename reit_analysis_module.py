@@ -47,6 +47,14 @@ KO_TRANSLATIONS = {
     "Cap Rate": "캡레이트",
     "Stress Cash Flow": "스트레스 현금흐름",
     "Valuation Signal": "가치평가 신호",
+    "Decision Readiness": "결정 준비도",
+    "Current Position": "현재 위치",
+    "Direction": "방향",
+    "Risk": "위기",
+    "Readiness": "준비도",
+    "Value Map": "가치 지도",
+    "Cash Flow Map": "현금흐름 지도",
+    "Detailed Numbers": "세부 숫자",
     "Value supported": "가치 지지",
     "Balanced": "균형",
     "Cash-flow pressure": "현금흐름 압박",
@@ -137,10 +145,8 @@ st.markdown(
     <style>
     .stApp {
         background:
-            radial-gradient(circle at 18% 12%, rgba(20, 184, 166, 0.16), transparent 30%),
-            radial-gradient(circle at 88% 8%, rgba(245, 158, 11, 0.12), transparent 26%),
-            linear-gradient(135deg, #0b1018 0%, #111827 52%, #070a0f 100%);
-        color: #f8fafc;
+            linear-gradient(135deg, #eef7f3 0%, #f8fafc 48%, #f3f0e7 100%);
+        color: #0f172a;
     }
     .block-container {
         padding-top: 1.25rem;
@@ -160,14 +166,13 @@ st.markdown(
         color: #334155 !important;
     }
     .reit-hero {
-        border: 1px solid rgba(148, 163, 184, 0.26);
-        border-radius: 12px;
-        padding: 10px 14px;
-        margin-bottom: 8px;
+        border: 1px solid rgba(15, 118, 110, 0.20);
+        border-radius: 8px;
+        padding: 9px 12px;
+        margin-bottom: 10px;
         background:
-            linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(17, 24, 39, 0.88)),
-            radial-gradient(circle at 82% 18%, rgba(245, 158, 11, 0.18), transparent 30%);
-        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+            linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(236, 253, 245, 0.94));
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
     }
     .brand-line {
         display: flex;
@@ -180,10 +185,10 @@ st.markdown(
         height: 32px;
         display: grid;
         place-items: center;
-        border-radius: 10px;
-        border: 1px solid rgba(125, 211, 252, 0.36);
-        background: linear-gradient(145deg, #0f2f43, #172033);
-        color: #f8fafc;
+        border-radius: 8px;
+        border: 1px solid rgba(15, 118, 110, 0.26);
+        background: #0f766e;
+        color: #ffffff;
         font-size: 0.82rem;
         font-weight: 900;
     }
@@ -191,10 +196,10 @@ st.markdown(
         font-size: clamp(1.05rem, 1.6vw, 1.35rem);
         line-height: 1;
         font-weight: 900;
-        color: #f8fafc;
+        color: #0f172a;
     }
     .brand-title span {
-        color: #facc15;
+        color: #0f766e;
     }
     .hero-muted {
         display: none;
@@ -202,7 +207,7 @@ st.markdown(
     .pill {
         display: none;
         padding: 6px 10px;
-        border-radius: 999px;
+        border-radius: 8px;
         border: 1px solid rgba(250, 204, 21, 0.28);
         background: rgba(250, 204, 21, 0.10);
         color: #fde68a;
@@ -266,41 +271,129 @@ st.markdown(
         text-align: right;
     }
     .metric-card {
-        border: 1px solid rgba(148, 163, 184, 0.22);
-        border-radius: 18px;
-        padding: 22px;
-        min-height: 132px;
-        background: #f8fafc;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(148, 163, 184, 0.24);
+        border-radius: 8px;
+        padding: 13px 14px 12px 16px;
+        min-height: 88px;
+        background: rgba(255, 255, 255, 0.96);
         color: #0f172a;
-        box-shadow: 0 16px 40px rgba(2, 6, 23, 0.22);
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+    }
+    .metric-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: #0f766e;
     }
     .metric-label {
         color: #64748b;
         font-weight: 800;
-        margin-bottom: 14px;
+        margin-bottom: 7px;
+        font-size: 0.72rem;
+        text-transform: uppercase;
     }
     .metric-value {
         color: #0f172a;
-        font-size: 2.1rem;
+        font-size: 1.42rem;
         font-weight: 900;
+        line-height: 1.08;
     }
     .section-panel {
         border: 1px solid rgba(148, 163, 184, 0.24);
-        border-radius: 20px;
+        border-radius: 8px;
         padding: 22px;
-        background: rgba(15, 23, 42, 0.70);
+        background: rgba(255, 255, 255, 0.82);
         margin: 16px 0 22px;
+    }
+    .signal-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin: 10px 0 12px;
+    }
+    .signal-card {
+        border: 1px solid rgba(148, 163, 184, 0.28);
+        border-radius: 8px;
+        padding: 13px 13px 12px;
+        background: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+        min-height: 100px;
+        cursor: help;
+    }
+    .signal-card:focus {
+        outline: 2px solid rgba(15, 118, 110, 0.24);
+        outline-offset: 2px;
+    }
+    .signal-kicker {
+        color: #64748b;
+        font-size: 0.72rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin-bottom: 9px;
+    }
+    .signal-value {
+        color: #0f172a;
+        font-size: 1.36rem;
+        font-weight: 920;
+        line-height: 1.06;
+        margin-bottom: 10px;
+    }
+    .signal-note {
+        color: #475569;
+        font-size: 0.78rem;
+        font-weight: 760;
+        line-height: 1.22;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 160ms ease, opacity 160ms ease, margin 160ms ease;
+    }
+    .signal-card:hover .signal-note,
+    .signal-card:focus .signal-note {
+        max-height: 78px;
+        opacity: 1;
+        margin-bottom: 8px;
+    }
+    .signal-bar {
+        height: 8px;
+        border-radius: 8px;
+        margin-top: 12px;
+        background: #e2e8f0;
+        overflow: hidden;
+    }
+    .signal-fill {
+        height: 100%;
+        border-radius: 8px;
+    }
+    .signal-good .signal-fill { background: #0f766e; }
+    .signal-warn .signal-fill { background: #d97706; }
+    .signal-bad .signal-fill { background: #dc2626; }
+    .signal-neutral .signal-fill { background: #2563eb; }
+    .signal-good { border-color: rgba(15, 118, 110, 0.34); }
+    .signal-warn { border-color: rgba(217, 119, 6, 0.34); }
+    .signal-bad { border-color: rgba(220, 38, 38, 0.34); }
+    .signal-neutral { border-color: rgba(37, 99, 235, 0.30); }
+    .mini-section-title {
+        color: #0f172a;
+        font-size: 0.86rem;
+        font-weight: 920;
+        margin: 14px 0 6px;
     }
     div[data-testid="stTextInput"] input,
     div[data-testid="stNumberInput"] input {
         background: #f8fafc !important;
         color: #0f172a !important;
         border: 2px solid #38bdf8 !important;
-        border-radius: 14px !important;
+        border-radius: 8px !important;
         font-weight: 800 !important;
     }
     div[data-testid="stDataFrame"] {
-        border-radius: 16px;
+        border-radius: 8px;
         overflow: hidden;
     }
     @media (max-width: 680px) {
@@ -310,7 +403,7 @@ st.markdown(
         .reit-hero {
             padding: 16px;
             margin-bottom: 12px;
-            border-radius: 18px;
+            border-radius: 8px;
         }
         .brand-line {
             gap: 10px;
@@ -320,7 +413,7 @@ st.markdown(
         .brand-icon {
             width: 48px;
             height: 48px;
-            border-radius: 14px;
+            border-radius: 8px;
             font-size: 1.1rem;
         }
         .brand-title {
@@ -338,13 +431,13 @@ st.markdown(
         }
         .section-panel {
             padding: 14px;
-            border-radius: 16px;
+            border-radius: 8px;
             margin: 12px 0 16px;
         }
         .metric-card {
             min-height: 92px;
             padding: 14px;
-            border-radius: 15px;
+            border-radius: 8px;
         }
         .metric-label {
             margin-bottom: 8px;
@@ -352,6 +445,17 @@ st.markdown(
         }
         .metric-value {
             font-size: 1.35rem;
+        }
+        .signal-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+        }
+        .signal-card {
+            min-height: 104px;
+            padding: 11px;
+        }
+        .signal-value {
+            font-size: 1.12rem;
         }
         div[data-testid="stTabs"] div[role="tablist"] {
             display: grid !important;
@@ -367,11 +471,9 @@ st.markdown(
             min-width: 0 !important;
             min-height: 42px !important;
             padding: 7px 10px !important;
-            border-radius: 14px !important;
+            border-radius: 8px !important;
             color: #0f172a !important;
-            background:
-                radial-gradient(circle at 18% 16%, rgba(255,255,255,0.96), transparent 30%),
-                linear-gradient(135deg, rgba(255,255,255,0.96), rgba(240,249,255,0.86)) !important;
+            background: #ffffff !important;
             box-shadow: 0 10px 22px rgba(14, 165, 233, 0.10) !important;
         }
         div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
@@ -518,12 +620,61 @@ def score_color(score: float, inverted: bool = False) -> str:
     return "#dc2626"
 
 
+def signal_tone(value: float, good: float, bad: float, *, higher_is_better: bool = True) -> str:
+    if higher_is_better:
+        if value >= good:
+            return "good"
+        if value <= bad:
+            return "bad"
+        return "warn"
+    if value <= good:
+        return "good"
+    if value >= bad:
+        return "bad"
+    return "warn"
+
+
+def signal_fill(value: float, low: float, high: float) -> int:
+    if high <= low:
+        return 50
+    scaled = (float(value) - low) / (high - low) * 100
+    return int(max(8, min(100, scaled)))
+
+
+def render_signal_card(title: str, value: str, note: str, tone: str, fill: int) -> str:
+    return f"""
+        <div class="signal-card signal-{escape(tone)}" tabindex="0" title="{escape(note)}">
+            <div class="signal-kicker">{escape(title)}</div>
+            <div class="signal-value">{escape(value)}</div>
+            <div class="signal-note">{escape(note)}</div>
+            <div class="signal-bar"><div class="signal-fill" style="width:{max(8, min(100, int(fill)))}%;"></div></div>
+        </div>
+    """
+
+
 def money(value: float) -> str:
     return f"${float(value):,.0f}"
 
 
 def pct(value: float) -> str:
     return f"{float(value):+.1f}%"
+
+
+def readable_chart(chart: alt.Chart) -> alt.Chart:
+    return (
+        chart.configure(background="#ffffff")
+        .configure_view(fill="#ffffff", strokeOpacity=0)
+        .configure_axis(
+            labelColor="#334155",
+            titleColor="#0f172a",
+            gridColor="#e2e8f0",
+            domainColor="#cbd5e1",
+            tickColor="#cbd5e1",
+            labelFontSize=11,
+            titleFontSize=12,
+        )
+        .configure_legend(labelColor="#334155", titleColor="#0f172a")
+    )
 
 
 def mortgage_payment(principal: float, annual_rate_pct: float, years: float) -> float:
@@ -623,6 +774,74 @@ def property_valuation_model(
         "valuation_score": valuation_score,
         "signal": signal,
     }
+
+
+def render_property_signal_board(
+    *,
+    property_type: str,
+    estimated_value: float,
+    result: dict[str, float | str],
+    signal_detail: str,
+) -> None:
+    value_gap = float(result["value_gap_pct"])
+    monthly_cash_flow = float(result["monthly_cash_flow"])
+    stress_cash_flow = float(result["stress_cash_flow"])
+    valuation_score = float(result["valuation_score"])
+    dscr = float(result["dscr"])
+
+    current_note = (
+        f"{tr(property_type)} | {tr('Current Value')} {money(estimated_value)} | "
+        f"{tr('Monthly NOI')} {money(float(result['monthly_noi']))}"
+    )
+    direction_note = f"{tr('Value Gap')} {pct(value_gap)} | {signal_detail}"
+    risk_note = (
+        f"{tr('Stress Cash Flow')} {money(stress_cash_flow)} | "
+        f"{tr('Debt Service Coverage')} {'No debt' if dscr > 50 else f'{dscr:.2f}x'}"
+    )
+    readiness_note = (
+        f"{tr('Monthly Cash Flow')} {money(monthly_cash_flow)} | "
+        f"{tr('Cap Rate')} {float(result['current_cap_rate']):.2f}%"
+    )
+
+    cards = [
+        render_signal_card(
+            tr("Current Position"),
+            money(estimated_value),
+            current_note,
+            "neutral",
+            signal_fill(estimated_value, estimated_value * 0.50, max(estimated_value * 1.25, 1)),
+        ),
+        render_signal_card(
+            tr("Direction"),
+            pct(value_gap),
+            direction_note,
+            signal_tone(value_gap, 8, -12),
+            signal_fill(value_gap, -25, 25),
+        ),
+        render_signal_card(
+            tr("Risk"),
+            money(stress_cash_flow),
+            risk_note,
+            signal_tone(stress_cash_flow, 0, -500),
+            signal_fill(stress_cash_flow, -1500, 1500),
+        ),
+        render_signal_card(
+            tr("Readiness"),
+            f"{valuation_score:.0f}/100",
+            readiness_note,
+            signal_tone(valuation_score, 67, 45),
+            signal_fill(valuation_score, 0, 100),
+        ),
+    ]
+
+    st.markdown(
+        f"""
+        <div class="signal-grid">
+            {''.join(cards)}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def property_valuation_tab() -> None:
@@ -763,28 +982,14 @@ def property_valuation_tab() -> None:
     }[signal]
     score_10 = float(result["valuation_score"]) / 10
 
-    c1, c2, c3, c4 = st.columns(4)
-    with c1:
-        metric_card(tr("Income-Supported Value"), money(float(result["income_value"])), score_color(score_10))
-    with c2:
-        metric_card(tr("Value Gap"), pct(float(result["value_gap_pct"])), score_color(score_10))
-    with c3:
-        metric_card(tr("Monthly Cash Flow"), money(float(result["monthly_cash_flow"])), "#16a34a" if float(result["monthly_cash_flow"]) >= 0 else "#dc2626")
-    with c4:
-        metric_card(tr("Valuation Signal"), signal_text, score_color(score_10))
+    render_property_signal_board(
+        property_type=property_type,
+        estimated_value=estimated_value,
+        result=result,
+        signal_detail=signal_detail,
+    )
 
-    c5, c6, c7, c8 = st.columns(4)
-    with c5:
-        metric_card(tr("Monthly NOI"), money(float(result["monthly_noi"])), "#2563eb")
-    with c6:
-        metric_card(tr("Cap Rate"), f"{float(result['current_cap_rate']):.2f}%", "#0f766e")
-    with c7:
-        dscr_value = float(result["dscr"])
-        metric_card(tr("Debt Service Coverage"), "No debt" if dscr_value > 50 else f"{dscr_value:.2f}x", "#7c3aed")
-    with c8:
-        metric_card(tr("Stress Cash Flow"), money(float(result["stress_cash_flow"])), "#16a34a" if float(result["stress_cash_flow"]) >= 0 else "#dc2626")
-
-    st.subheader(tr("Visual Property Value Map"))
+    st.markdown(f'<div class="mini-section-title">{escape(tr("Value Map"))}</div>', unsafe_allow_html=True)
     value_rows = pd.DataFrame(
         [
             {"Lens": tr("Current Value"), "Value": estimated_value},
@@ -792,47 +997,84 @@ def property_valuation_tab() -> None:
             {"Lens": tr("Stress Value"), "Value": float(result["stress_value"])},
         ]
     )
-    value_chart = (
+    value_chart = readable_chart(
         alt.Chart(value_rows)
         .mark_bar(cornerRadiusTopLeft=8, cornerRadiusTopRight=8)
         .encode(
             x=alt.X("Lens:N", sort=None, title=tr("Value Lens")),
             y=alt.Y("Value:Q", title=tr("Estimated Market Value")),
-            color=alt.Color("Lens:N", legend=None),
+            color=alt.Color(
+                "Lens:N",
+                legend=None,
+                scale=alt.Scale(
+                    domain=[tr("Current Value"), tr("Income Value"), tr("Stress Value")],
+                    range=["#0f766e", "#2563eb", "#dc2626"],
+                ),
+            ),
             tooltip=["Lens", alt.Tooltip("Value:Q", format=",.0f")],
         )
-        .properties(height=300)
+        .properties(height=250)
     )
     st.altair_chart(value_chart, width="stretch")
 
+    st.markdown(f'<div class="mini-section-title">{escape(tr("Cash Flow Map"))}</div>', unsafe_allow_html=True)
     cash_rows = pd.DataFrame(
         [
             {"Lens": tr("Current Cash Flow"), "Value": float(result["monthly_cash_flow"])},
             {"Lens": tr("Stress Cash Flow"), "Value": float(result["stress_cash_flow"])},
         ]
     )
-    cash_chart = (
+    cash_chart = readable_chart(
         alt.Chart(cash_rows)
         .mark_bar(cornerRadiusTopLeft=8, cornerRadiusTopRight=8)
         .encode(
             x=alt.X("Lens:N", sort=None, title=tr("Monthly Cash Flow Lens")),
             y=alt.Y("Value:Q", title=tr("Monthly Cash Flow")),
-            color=alt.Color("Lens:N", legend=None),
+            color=alt.Color(
+                "Lens:N",
+                legend=None,
+                scale=alt.Scale(
+                    domain=[tr("Current Cash Flow"), tr("Stress Cash Flow")],
+                    range=["#0f766e", "#dc2626"],
+                ),
+            ),
             tooltip=["Lens", alt.Tooltip("Value:Q", format=",.0f")],
         )
-        .properties(height=260)
+        .properties(height=210)
     )
     st.altair_chart(cash_chart, width="stretch")
 
-    st.subheader(tr("Evidence Notes"))
-    notes = pd.DataFrame(
-        [
-            {tr("Signal"): tr("Current situation"), tr("Reading"): f"{tr(property_type)}: {money(estimated_value)} / NOI {money(float(result['monthly_noi']))}"},
-            {tr("Signal"): tr("Direction"), tr("Reading"): signal_detail},
-            {tr("Signal"): tr("Crisis signal"), tr("Reading"): f"{tr('Stress Cash Flow')}: {money(float(result['stress_cash_flow']))}"},
-        ]
-    )
-    st.table(notes)
+    with st.expander(tr("Detailed Numbers"), expanded=False):
+        c1, c2, c3, c4 = st.columns(4)
+        with c1:
+            metric_card(tr("Income-Supported Value"), money(float(result["income_value"])), score_color(score_10))
+        with c2:
+            metric_card(tr("Value Gap"), pct(float(result["value_gap_pct"])), score_color(score_10))
+        with c3:
+            metric_card(tr("Monthly Cash Flow"), money(float(result["monthly_cash_flow"])), "#16a34a" if float(result["monthly_cash_flow"]) >= 0 else "#dc2626")
+        with c4:
+            metric_card(tr("Valuation Signal"), signal_text, score_color(score_10))
+
+        c5, c6, c7, c8 = st.columns(4)
+        with c5:
+            metric_card(tr("Monthly NOI"), money(float(result["monthly_noi"])), "#2563eb")
+        with c6:
+            metric_card(tr("Cap Rate"), f"{float(result['current_cap_rate']):.2f}%", "#0f766e")
+        with c7:
+            dscr_value = float(result["dscr"])
+            metric_card(tr("Debt Service Coverage"), "No debt" if dscr_value > 50 else f"{dscr_value:.2f}x", "#7c3aed")
+        with c8:
+            metric_card(tr("Stress Cash Flow"), money(float(result["stress_cash_flow"])), "#16a34a" if float(result["stress_cash_flow"]) >= 0 else "#dc2626")
+
+    with st.expander(tr("Evidence Notes"), expanded=False):
+        notes = pd.DataFrame(
+            [
+                {tr("Signal"): tr("Current situation"), tr("Reading"): f"{tr(property_type)}: {money(estimated_value)} / NOI {money(float(result['monthly_noi']))}"},
+                {tr("Signal"): tr("Direction"), tr("Reading"): signal_detail},
+                {tr("Signal"): tr("Crisis signal"), tr("Reading"): f"{tr('Stress Cash Flow')}: {money(float(result['stress_cash_flow']))}"},
+            ]
+        )
+        st.dataframe(notes, hide_index=True, width="stretch")
 
 
 def build_sidebar() -> None:
