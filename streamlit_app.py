@@ -40,7 +40,7 @@ KO_TRANSLATIONS = {
     "Open or close this sidebar with the arrow in the upper-left corner.": "왼쪽 위 화살표로 사이드바를 열거나 닫을 수 있습니다.",
     "View Life Design Intro": "Life Design 인트로 보기",
     "Ver.2 Module": "Ver.2 모듈",
-    "Use the REIT Analysis tab in the main screen.": "메인 화면의 REIT Analysis 메뉴를 사용하세요.",
+    "Use the Real Estate Valuation tab in the main screen.": "메인 화면의 부동산 가치평가 메뉴를 사용하세요.",
     "Compare List": "비교 목록",
     "No stocks selected for comparison.": "비교할 종목이 아직 없습니다.",
     "Portfolio List": "포트폴리오 목록",
@@ -196,8 +196,8 @@ KO_TRANSLATIONS = {
     "Enter a stock ticker": "주식 티커 입력",
     "Search": "검색",
     "Analyze Ticker": "티커 분석",
-    "REIT Analytics": "REIT 분석",
-    "Income, real estate exposure, and rate sensitivity lens.": "소득, 부동산 노출, 금리 민감도 관점.",
+    "Real Estate Valuation": "부동산 가치평가",
+    "Property value, rent yield, cash flow, and rate sensitivity lens.": "부동산 가치, 임대수익률, 현금흐름, 금리 민감도 관점.",
     "Portfolio Diversification": "포트폴리오 분산",
     "Risk, covariance, correlation, and complementarity.": "위험, 공분산, 상관관계, 보완성.",
     "Financial Health": "재무 건강도",
@@ -232,7 +232,7 @@ KO_TRANSLATIONS = {
     "Client": "고객",
     "Search": "검색",
     "Compare": "비교",
-    "REIT": "REIT",
+    "Real Estate": "부동산",
     "Details": "계산",
     "Scenario": "시나리오",
     "AI Coach": "AI 코치",
@@ -274,7 +274,7 @@ KO_TRANSLATIONS = {
     "Run one downside stress test.": "하방 스트레스 테스트를 하나 실행하세요.",
     "Search a ticker, then add it to Portfolio.": "티커를 검색한 뒤 포트폴리오에 추가하세요.",
     "Compare up to three selected stocks.": "선택한 종목을 최대 3개까지 비교하세요.",
-    "Use REIT signals as sector education.": "REIT 신호를 섹터 학습용으로 활용하세요.",
+    "Review property value and rent cash flow first.": "부동산 가치와 임대 현금흐름을 먼저 확인하세요.",
     "Review formulas before trusting outputs.": "결과를 신뢰하기 전에 공식을 확인하세요.",
     "Check API and macro assumptions.": "API와 거시 가정을 확인하세요.",
     "Use this for professor/demo walkthroughs.": "교수님/데모 설명용으로 사용하세요.",
@@ -331,7 +331,7 @@ KO_TRANSLATIONS = {
     "Investments": "투자",
     "Review stock value, beta, risk, and diversification.": "주식 가치, 베타, 위험, 분산을 검토하세요.",
     "Real Estate": "부동산",
-    "Study REIT and property-linked exposure.": "REIT와 부동산 연계 노출을 학습하세요.",
+    "Review property value, rent support, cash flow, and rate sensitivity.": "부동산 가치, 임대수익 지지력, 현금흐름, 금리 민감도를 확인하세요.",
     "Stress-test income, FX, rates, and portfolio shocks.": "소득, 환율, 금리, 포트폴리오 충격을 테스트하세요.",
     "Ask rule-based questions about readiness, risk, scenario, and memory.": "준비도, 위험, 시나리오, 메모리에 대해 규칙 기반 질문을 해보세요.",
     "Save snapshots and reflect on next actions.": "스냅샷을 저장하고 다음 행동을 회고하세요.",
@@ -7973,7 +7973,7 @@ def search_tab() -> None:
     if not FINNHUB_API_KEY:
         st.warning(
             "FINNHUB_API_KEY is not configured, so US live stock search is temporarily unavailable. "
-            "Korean stock search and REIT Analysis can still work with Yahoo Finance and educational sample data."
+            "Korean stock search and Real Estate reference analysis can still work with Yahoo Finance and educational sample data."
         )
         st.info("Add FINNHUB_API_KEY in Streamlit Cloud > App settings > Secrets to enable live stock analysis.")
 
@@ -9127,8 +9127,8 @@ NORA_GOAL_STRATEGIES = {
         "label_ko": "부동산 계획",
         "short_en": "Rate and property risk",
         "short_ko": "금리/자산 위험",
-        "strategy_en": "Review REIT/property exposure, income durability, liquidity, and rate sensitivity.",
-        "strategy_ko": "REIT/부동산 노출, 소득 지속성, 유동성, 금리 민감도를 확인합니다.",
+        "strategy_en": "Review property value, rent support, cash flow, liquidity, and rate sensitivity.",
+        "strategy_ko": "부동산 가치, 임대수익 지지력, 현금흐름, 유동성, 금리 민감도를 확인합니다.",
     },
 }
 
@@ -10546,7 +10546,7 @@ def calculation_details_tab() -> None:
 
             - Portfolio holdings, weights, valuation score, beta, covariance, and correlation.
             - Personal finance readiness: surplus, emergency fund, savings rate, debt-to-income, and health score.
-            - REIT exposure and interest-rate sensitivity.
+            - Real estate value, rent support, cash flow, leverage, and interest-rate sensitivity.
             - Diary snapshots, notes, and next actions when the user chooses to restore them.
             - Macro assumptions such as risk-free rate, equity risk premium, and FX rate.
 
@@ -12607,7 +12607,7 @@ NAV_ITEMS = [
     {"key": "advisor", "label": "Advisor", "icon": "AR"},
     {"key": "search", "label": "Search", "icon": "SR"},
     {"key": "compare", "label": "Compare", "icon": "CP"},
-    {"key": "reit", "label": "REIT", "icon": "RE"},
+    {"key": "reit", "label": "Real Estate", "icon": "RE"},
     {"key": "details", "label": "Details", "icon": "DT"},
     {"key": "scenario", "label": "Scenario", "icon": "SC"},
     {"key": "ai", "label": "AI Coach", "icon": "AI"},
@@ -12820,7 +12820,7 @@ def render_mobile_navigation(active_key: str) -> None:
         {"key": "life", "label": "Life", "icon": "LF", "slot": "mobile-orbit-top"},
         {"key": "finance", "label": "Finance", "icon": "FI", "slot": "mobile-orbit-top-right"},
         {"key": "portfolio", "label": "Port", "icon": "PF", "slot": "mobile-orbit-right"},
-        {"key": "reit", "label": "REIT", "icon": "RE", "slot": "mobile-orbit-bottom-right"},
+        {"key": "reit", "label": "Real Estate", "icon": "RE", "slot": "mobile-orbit-bottom-right"},
         {"key": "scenario", "label": "Scenario", "icon": "SC", "slot": "mobile-orbit-bottom-left"},
         {"key": "advisor", "label": "Advisor", "icon": "AR", "slot": "mobile-orbit-left"},
     ]
@@ -12859,7 +12859,7 @@ def render_mobile_view_summary(active_key: str) -> None:
         "scenario": "Scenario Lab",
         "search": "Market Search",
         "compare": "Compare",
-        "reit": "REIT",
+        "reit": "Real Estate",
         "details": "Calculation Details",
         "settings": "Settings",
         "guide": "Guide",
@@ -12874,7 +12874,7 @@ def render_mobile_view_summary(active_key: str) -> None:
         "scenario": "Run one downside stress test.",
         "search": "Search a ticker, then add it to Portfolio.",
         "compare": "Compare up to three selected stocks.",
-        "reit": "Use REIT signals as sector education.",
+        "reit": "Review property value and rent cash flow first.",
         "details": "Review formulas before trusting outputs.",
         "settings": "Check API and macro assumptions.",
         "guide": "Use this for professor/demo walkthroughs.",
