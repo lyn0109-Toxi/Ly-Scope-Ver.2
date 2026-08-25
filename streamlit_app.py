@@ -18,6 +18,8 @@ import yfinance as yf
 
 st.set_page_config(page_title="LY-Scope-Ver.2", layout="wide")
 
+APP_BUILD_STAMP = "2026-08-24-visual-design-b409cd4"
+
 LANGUAGE_OPTIONS = {
     "en": "English",
     "ko": "한국어",
