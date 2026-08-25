@@ -56,9 +56,9 @@ Primary need: search by ticker or company name, understand valuation, portfolio 
 
 ### 3. Real Estate-Aware Household
 
-Example: a user with REIT exposure, property interest, rent sensitivity, or mortgage/rate concerns.
+Example: a user with property interest, rent sensitivity, mortgage/rate concerns, or listed REIT exposure as reference data.
 
-Primary need: connect real estate exposure with income durability, rates, liquidity, and scenario stress.
+Primary need: connect property value, rent support, cash flow, leverage, rates, liquidity, and scenario stress.
 
 ### 4. Goal-Oriented Planner
 
@@ -120,7 +120,7 @@ The interface should be visual-first. Detailed text and numbers should appear th
 | Goals Engine | Turns user targets into progress, required contribution, and feasibility. | Finance, Scenario |
 | Market Asset Engine | Searches stocks by ticker or company name and applies valuation/risk readings. | Search, Portfolio |
 | Portfolio Engine | Scores holdings, concentration, beta, sector exposure, valuation mix, and diversification. | Portfolio |
-| Real Estate Engine | Models REIT/property-linked exposure, rate sensitivity, income pressure, and allocation fit. | REIT |
+| Real Estate Engine | Models property valuation, rent support, NOI, cap rate, debt coverage, cash flow, stress value, and listed REIT reference signals. | Real Estate |
 | Projection Engine | Projects capital path, goal path, and runway over time. | Scenario |
 | Scenario Engine | Stress-tests income loss, expense increase, cash shock, market decline, FX movement, and rates. | Scenario |
 | Risk / Resilience Engine | Converts shocks into crisis signals and protection gaps. | Finance, Portfolio, Scenario |
@@ -169,7 +169,7 @@ valuation_inputs, risk_inputs, source_notes, timestamp
 ### real_estate_exposure
 
 ```text
-property_type, market_region, reit_ticker, property_value,
+property_type, market_region, listed_reit_reference, property_value,
 debt_amount, rent_income, rate_sensitivity, income_sensitivity
 ```
 
@@ -218,7 +218,7 @@ Ver.2 should focus on a stable, explainable base before adding heavy automation:
 - Ticker or company-name stock search.
 - Portfolio scoring for multiple holdings.
 - Stock valuation lens migrated from useful Ver.1 logic.
-- REIT and real-estate exposure analysis.
+- Real estate valuation and listed REIT reference analysis.
 - Goal and scenario stress-testing.
 - Evidence and calculation transparency.
 - Rule-based AI interpretation layer, with optional verified model mode.
