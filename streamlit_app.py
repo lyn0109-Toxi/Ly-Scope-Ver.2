@@ -6336,6 +6336,92 @@ KOREAN_STOCK_MAP = {
     "kangwon land": "035250.KS",
 }
 
+US_STOCK_MAP = {
+    "apple": "AAPL",
+    "apple inc": "AAPL",
+    "aapl": "AAPL",
+    "microsoft": "MSFT",
+    "microsoft corporation": "MSFT",
+    "msft": "MSFT",
+    "nvidia": "NVDA",
+    "nvidia corporation": "NVDA",
+    "nvda": "NVDA",
+    "tesla": "TSLA",
+    "tesla inc": "TSLA",
+    "tsla": "TSLA",
+    "amazon": "AMZN",
+    "amazon.com": "AMZN",
+    "amzn": "AMZN",
+    "alphabet": "GOOGL",
+    "google": "GOOGL",
+    "googl": "GOOGL",
+    "goog": "GOOG",
+    "meta": "META",
+    "facebook": "META",
+    "meta platforms": "META",
+    "meta platforms inc": "META",
+    "netflix": "NFLX",
+    "nflx": "NFLX",
+    "broadcom": "AVGO",
+    "avgo": "AVGO",
+    "berkshire": "BRK-B",
+    "berkshire hathaway": "BRK-B",
+    "brk.b": "BRK-B",
+    "brk-b": "BRK-B",
+    "jpmorgan": "JPM",
+    "jp morgan": "JPM",
+    "jpmorgan chase": "JPM",
+    "jpm": "JPM",
+    "visa": "V",
+    "v": "V",
+    "mastercard": "MA",
+    "ma": "MA",
+    "walmart": "WMT",
+    "wmt": "WMT",
+    "costco": "COST",
+    "cost": "COST",
+    "procter gamble": "PG",
+    "procter & gamble": "PG",
+    "pg": "PG",
+    "eli lilly": "LLY",
+    "lilly": "LLY",
+    "lly": "LLY",
+    "unitedhealth": "UNH",
+    "united health": "UNH",
+    "unh": "UNH",
+    "johnson johnson": "JNJ",
+    "johnson & johnson": "JNJ",
+    "jnj": "JNJ",
+    "exxon": "XOM",
+    "exxon mobil": "XOM",
+    "xom": "XOM",
+    "chevron": "CVX",
+    "cvx": "CVX",
+    "home depot": "HD",
+    "hd": "HD",
+    "oracle": "ORCL",
+    "orcl": "ORCL",
+    "salesforce": "CRM",
+    "crm": "CRM",
+    "adobe": "ADBE",
+    "adbe": "ADBE",
+    "amd": "AMD",
+    "advanced micro devices": "AMD",
+    "intel": "INTC",
+    "intc": "INTC",
+    "palantir": "PLTR",
+    "pltr": "PLTR",
+    "coinbase": "COIN",
+    "coin": "COIN",
+    "robinhood": "HOOD",
+    "hood": "HOOD",
+    "spdr s&p 500": "SPY",
+    "s&p 500 etf": "SPY",
+    "spy": "SPY",
+    "nasdaq 100": "QQQ",
+    "qqq": "QQQ",
+}
+
 
 def init_state() -> None:
     st.session_state.setdefault("app_language", query_language() or "en")
@@ -6530,6 +6616,65 @@ def resolve_ticker(query: str) -> str:
     exact = next((item for item in results if item.get("symbol") == query), None)
     common = next((item for item in results if item.get("type") == "Common Stock"), None)
     return (exact or common or results[0]).get("symbol", query)
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def yahoo_search_symbol(query: str) -> str | None:
+    clean = query.strip()
+    if not clean:
+        return None
+    try:
+        response = requests.get(
+            "https://query1.finance.yahoo.com/v1/finance/search",
+            params={"q": clean, "quotesCount": 6, "newsCount": 0},
+            timeout=10,
+        )
+        response.raise_for_status()
+        data = response.json()
+    except Exception:
+        return None
+
+    quotes = data.get("quotes") if isinstance(data, dict) else []
+    if not isinstance(quotes, list):
+        return None
+
+    normalized = normalize_company_query(clean)
+    upper = clean.upper()
+    for quote in quotes:
+        symbol = str(quote.get("symbol") or "").upper()
+        quote_type = str(quote.get("quoteType") or "").upper()
+        if symbol == upper and quote_type in {"EQUITY", "ETF"}:
+            return symbol
+    for quote in quotes:
+        symbol = str(quote.get("symbol") or "").upper()
+        quote_type = str(quote.get("quoteType") or "").upper()
+        short_name = normalize_company_query(str(quote.get("shortname") or ""))
+        long_name = normalize_company_query(str(quote.get("longname") or ""))
+        if quote_type in {"EQUITY", "ETF"} and symbol:
+            if normalized in {short_name, long_name} or normalized in short_name or normalized in long_name:
+                return symbol
+    for quote in quotes:
+        symbol = str(quote.get("symbol") or "").upper()
+        quote_type = str(quote.get("quoteType") or "").upper()
+        if quote_type in {"EQUITY", "ETF"} and symbol:
+            return symbol
+    return None
+
+
+def resolve_yahoo_ticker(query: str) -> str:
+    clean = query.strip()
+    normalized = normalize_company_query(clean)
+    if normalized in US_STOCK_MAP:
+        return US_STOCK_MAP[normalized]
+
+    upper = clean.upper().replace(".", "-")
+    if upper in US_STOCK_MAP:
+        return US_STOCK_MAP[upper]
+    if upper and all(char.isalnum() or char in {"-", "."} for char in upper) and len(upper) <= 12:
+        return upper
+
+    yahoo_symbol = yahoo_search_symbol(clean)
+    return yahoo_symbol or upper
 
 
 def safe_metric(symbol: str) -> dict[str, Any]:
@@ -6810,11 +6955,88 @@ def load_korean_stock(query: str) -> dict[str, Any]:
     return calculate_valuation(stock)
 
 
-def load_stock(query: str) -> dict[str, Any]:
-    korean_symbol = resolve_korean_ticker(query)
-    if korean_symbol:
-        return load_korean_stock(korean_symbol)
+def load_yahoo_stock(query: str) -> dict[str, Any]:
+    symbol = resolve_yahoo_ticker(query)
+    if not symbol:
+        raise ValueError(f"{query} could not be resolved to a ticker.")
 
+    ticker = yf.Ticker(symbol)
+    try:
+        info = ticker.get_info()
+    except Exception:
+        info = {}
+
+    history = normalize_price_history(load_price_history_from_yahoo(symbol, days=30))
+    if history.empty:
+        try:
+            history = normalize_price_history(
+                ticker.history(period="30d", interval="1d", auto_adjust=True).reset_index()
+            )
+        except Exception:
+            history = pd.DataFrame()
+
+    closes = history["Close"].astype(float).tolist() if not history.empty and "Close" in history.columns else []
+    price = closes[-1] if closes else None
+    if price is None:
+        for key in ("currentPrice", "regularMarketPrice", "previousClose", "open"):
+            price = positive_float(info.get(key))
+            if price is not None:
+                break
+    if price is None:
+        raise ValueError(
+            f"No current price was returned for {symbol}. If this ticker is valid, try again later or add FINNHUB_API_KEY for the live data provider."
+        )
+
+    previous = closes[-2] if len(closes) >= 2 else positive_float(info.get("previousClose")) or price
+    change_pct = ((price - previous) / previous * 100) if price and previous else 0.0
+    market_cap = info.get("marketCap")
+    market_cap_millions = float(market_cap) / 1_000_000 if market_cap else None
+    trailing_eps = positive_float(info.get("trailingEps")) or 0
+    book_value = positive_float(info.get("bookValue")) or 0
+    dividend_rate = positive_float(info.get("dividendRate")) or 0
+    dividend_yield_raw = info.get("dividendYield")
+    dividend_yield = float(dividend_yield_raw) * 100 if dividend_yield_raw else 0
+    pe = positive_float(info.get("trailingPE")) or positive_float(info.get("forwardPE"))
+    beta = positive_float(info.get("beta")) or 1.0
+    growth_rate = info.get("earningsGrowth")
+    if growth_rate is None:
+        growth_rate = info.get("revenueGrowth")
+    if growth_rate is None:
+        growth_rate = 0.05
+    currency = str(info.get("currency") or "USD").upper()
+    if currency not in {"USD", "KRW"}:
+        currency = "USD"
+    peer_pe = pe if pe and 0 < float(pe) < 100 else 15.0
+    data_quality = (
+        "Yahoo Finance price history"
+        if closes
+        else "Yahoo profile price"
+    )
+
+    stock = {
+        "symbol": symbol,
+        "name": info.get("longName") or info.get("shortName") or symbol,
+        "industry": info.get("industry") or info.get("sector") or "US Equity",
+        "price": price,
+        "change_pct": change_pct,
+        "market_cap": market_cap_millions,
+        "pe": pe,
+        "dividend_yield": dividend_yield,
+        "beta": beta,
+        "eps": trailing_eps,
+        "dividend": dividend_rate,
+        "growth_rate": growth_rate,
+        "book_value": book_value,
+        "peer_average_pe": peer_pe,
+        "peers": [],
+        "market": "US",
+        "currency": currency,
+        "data_quality": data_quality,
+    }
+    return calculate_valuation(stock)
+
+
+def load_finnhub_stock(query: str) -> dict[str, Any]:
     symbol = resolve_ticker(query)
     profile = finnhub_get("stock/profile2", symbol=symbol)
     quote = finnhub_get("quote", symbol=symbol)
@@ -6843,8 +7065,22 @@ def load_stock(query: str) -> dict[str, Any]:
         "peers": peers,
         "market": "US",
         "currency": "USD",
+        "data_quality": "Finnhub live quote and metrics",
     }
     return calculate_valuation(stock)
+
+
+def load_stock(query: str) -> dict[str, Any]:
+    korean_symbol = resolve_korean_ticker(query)
+    if korean_symbol:
+        return load_korean_stock(korean_symbol)
+
+    if FINNHUB_API_KEY:
+        try:
+            return load_finnhub_stock(query)
+        except Exception:
+            return load_yahoo_stock(query)
+    return load_yahoo_stock(query)
 
 
 def status_color(status: str) -> str:
@@ -7648,10 +7884,6 @@ def process_stock_search(query: str) -> bool:
         return False
     with st.spinner("Loading stock data..."):
         try:
-            if not FINNHUB_API_KEY and not resolve_korean_ticker(query):
-                raise ValueError(
-                    "US stock search requires FINNHUB_API_KEY. Try a Korean stock such as 삼성전자 or 005930.KS, or add the API key in Secrets."
-                )
             stock = load_stock(query)
             st.session_state.stocks[stock["symbol"]] = stock
             st.session_state.last_query = query.strip()
@@ -7669,10 +7901,6 @@ def process_portfolio_stock_search(query: str) -> bool:
         return False
     with st.spinner("Loading portfolio candidate..."):
         try:
-            if not FINNHUB_API_KEY and not resolve_korean_ticker(query):
-                raise ValueError(
-                    "US stock search requires FINNHUB_API_KEY. Try a Korean stock such as 삼성전자 or 005930.KS, or add the API key in Secrets."
-                )
             stock = load_stock(query)
             st.session_state.stocks[stock["symbol"]] = stock
             st.session_state.last_query = query.strip()
@@ -7939,11 +8167,16 @@ def search_tab() -> None:
             st.rerun()
 
     if not FINNHUB_API_KEY:
-        st.warning(
-            "FINNHUB_API_KEY is not configured, so US live stock search is temporarily unavailable. "
-            "Korean stock search and Real Estate reference analysis can still work with Yahoo Finance and educational sample data."
-        )
-        st.info("Add FINNHUB_API_KEY in Streamlit Cloud > App settings > Secrets to enable live stock analysis.")
+        if current_language() == "ko":
+            st.info(
+                "FINNHUB_API_KEY가 없어도 티커 검색은 Yahoo Finance/yfinance fallback으로 작동합니다. "
+                "Finnhub 키를 추가하면 미국 주식의 보조 지표와 peer 데이터가 더 풍부해집니다."
+            )
+        else:
+            st.info(
+                "Ticker search can run through the Yahoo Finance/yfinance fallback without FINNHUB_API_KEY. "
+                "Adding Finnhub enables richer US metrics and peer data."
+            )
 
     if selected_symbol and selected_symbol in st.session_state.stocks:
         render_stock_detail(st.session_state.stocks[selected_symbol])
