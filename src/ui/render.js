@@ -83,7 +83,9 @@ function renderArchitectureRail(trace, legacy) {
         ? 'Ver.1 reference only'
         : 'Loading Ver.1';
   const targetByStage = {
-    user: 'stage-user',
+    customerPurpose: 'stage-customer-purpose',
+    strategy: 'stage-strategy',
+    situation: 'stage-situation',
     data: 'stage-asset-details',
     model: 'stage-model',
     evidence: 'stage-evidence',
@@ -96,7 +98,7 @@ function renderArchitectureRail(trace, legacy) {
     <aside class="architecture-rail" aria-label="Decision architecture">
       <div class="rail-header">
         <span>Core Flow</span>
-        <strong>User to Memory</strong>
+        <strong>Purpose to Memory</strong>
       </div>
       <nav class="rail-nav">
         ${trace
@@ -1213,7 +1215,7 @@ export function renderApp(root, { state, pipeline, actions, legacy }) {
     <div class="app-shell">
       <header class="app-header">
         <div class="brand-block">
-          <span>LY-Scope Ver.2</span>
+          <span>LY-Scope-Ver.2</span>
           <h1>Decision Intelligence Workspace</h1>
         </div>
         <div class="header-actions">
@@ -1254,20 +1256,20 @@ export function renderApp(root, { state, pipeline, actions, legacy }) {
           ${renderArchitectureRail(trace, legacy)}
 
           <div class="workspace-main">
-            <section id="stage-user" class="workspace-section">
-              ${renderSectionHeading('01 User + Data', 'Decision Inputs', 'Profile, financial foundation, and goals create the current decision baseline.')}
+            <section id="stage-decision-inputs" class="workspace-section">
+              ${renderSectionHeading('01 Customer Purpose + Strategy + Situation', 'Decision Inputs', 'Profile, financial foundation, and goals create the current decision baseline.')}
               <div class="workspace-grid">
-                <section class="panel span-two">
+                <section id="stage-customer-purpose" class="panel span-two">
                   <div class="panel-heading">
-                    <h2>User</h2>
+                    <h2>Customer Purpose</h2>
                     <span>${escapeHtml(state.profile.decisionStyle)}</span>
                   </div>
                   ${renderProfileForm(state)}
                 </section>
 
-                <section class="panel">
+                <section id="stage-situation" class="panel">
                   <div class="panel-heading">
-                    <h2>Financial Foundation</h2>
+                    <h2>Situation</h2>
                     <span>${formatCurrency(foundation.netWorth)}</span>
                   </div>
                   <dl class="compact-stats">
@@ -1287,9 +1289,9 @@ export function renderApp(root, { state, pipeline, actions, legacy }) {
                   ${renderFoundationForm(state.financialSnapshot)}
                 </section>
 
-                <section class="panel">
+                <section id="stage-strategy" class="panel">
                   <div class="panel-heading">
-                    <h2>Goals</h2>
+                    <h2>Strategy / Goals</h2>
                     <span>${formatPercent(goalsEvaluation.summary.averageProgress)}</span>
                   </div>
                   <ul class="plain-list goal-list">
@@ -1301,7 +1303,7 @@ export function renderApp(root, { state, pipeline, actions, legacy }) {
             </section>
 
             <section id="stage-asset-details" class="workspace-section">
-              ${renderSectionHeading('02 Asset Details', 'Portfolio, Stock Research, and Real Estate', 'Portfolio holdings feed Finance, while selected stock and real estate inputs keep section-level assumptions explainable.')}
+              ${renderSectionHeading('04 Data', 'Portfolio, Stock Research, and Real Estate', 'Portfolio holdings feed Finance, while selected stock and real estate inputs keep section-level assumptions explainable.')}
               <div class="workspace-grid">
                 ${renderPortfolioDetail(state, assetContext, legacy)}
                 ${renderInvestmentDetail(state, assetContext, legacy)}
@@ -1310,7 +1312,7 @@ export function renderApp(root, { state, pipeline, actions, legacy }) {
             </section>
 
             <section id="stage-model" class="workspace-section">
-              ${renderSectionHeading('03 Data + Model', 'Scenario Model', 'Scenario assumptions and resilience checks translate inputs into decision pressure.')}
+              ${renderSectionHeading('05 Model', 'Scenario Model', 'Scenario assumptions and resilience checks translate inputs into decision pressure.')}
               <div class="workspace-grid">
                 <section class="panel">
                   <div class="panel-heading">
@@ -1348,7 +1350,7 @@ export function renderApp(root, { state, pipeline, actions, legacy }) {
             </section>
 
             <section id="stage-evidence" class="workspace-section">
-              ${renderSectionHeading('04 Model + Evidence', 'Decision Evidence', 'Structured signals show why the current recommendation is moving up or down.')}
+              ${renderSectionHeading('06 Evidence', 'Decision Evidence', 'Structured signals show why the current recommendation is moving up or down.')}
               <div class="workspace-grid">
                 <section class="panel span-two">
                   <div class="panel-heading">
@@ -1363,7 +1365,7 @@ export function renderApp(root, { state, pipeline, actions, legacy }) {
             </section>
 
             <section id="stage-aiInterpretation" class="workspace-section">
-              ${renderSectionHeading('05 AI Interpretation', 'Decision Reading', 'The interpretation layer turns evidence into a plain-language recommendation.')}
+              ${renderSectionHeading('07 AI Interpretation', 'Decision Reading', 'The interpretation layer turns evidence into a plain-language recommendation.')}
               <div class="workspace-grid">
                 <section class="panel decision-panel span-two">
                   <div class="panel-heading">
@@ -1404,7 +1406,7 @@ export function renderApp(root, { state, pipeline, actions, legacy }) {
             </section>
 
             <section id="stage-decision" class="workspace-section">
-              ${renderSectionHeading('06 Decision + Memory', 'Decision Memory', 'Saved decisions become reusable context for the next round of analysis.')}
+              ${renderSectionHeading('08 Decision + 09 Memory', 'Decision Memory', 'Saved decisions become reusable context for the next round of analysis.')}
               <div class="workspace-grid">
                 <section class="panel">
                   <div class="panel-heading">
@@ -1427,7 +1429,7 @@ export function renderApp(root, { state, pipeline, actions, legacy }) {
             </section>
 
             <section id="stage-legacy" class="workspace-section">
-              ${renderSectionHeading('07 Ver.1 Base', 'Legacy Foundation', 'Ver.1 source, data, and ported logic stay visible as the reference base for Ver.2.')}
+              ${renderSectionHeading('Reference Base', 'Ver.1 Logic', 'Ver.1 source, data, and ported logic stay visible as the reference base for Ver.2.')}
               <div class="workspace-grid">
                 ${renderVer1Status(legacy)}
               </div>
