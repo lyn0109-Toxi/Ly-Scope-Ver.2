@@ -83,6 +83,17 @@ KO_TRANSLATIONS = {
     "Investment Exposure Balance": "투자 노출 균형",
     "Decision-Support Insights": "의사결정 지원 인사이트",
     "No major warning signals from the current inputs.": "현재 입력값 기준 주요 경고 신호가 없습니다.",
+    "No-income planning mode is active: runway and drawdown resilience matter more than savings rate.": "무소득 계획 모드입니다. 저축률보다 현금 생존기간과 자산 하락 회복력이 더 중요합니다.",
+    "Taxable investment exposure is above 60% of assets; review drawdown risk before relying on assets for living expenses.": "과세 투자자산 비중이 전체 자산의 60%를 넘습니다. 생활비를 투자자산에 의존하기 전에 하락 위험을 점검하세요.",
+    "Emergency fund is below 3 months of living expenses.": "비상자금이 3개월 생활비보다 부족합니다.",
+    "Emergency fund is strong relative to monthly expenses.": "월 지출 대비 비상자금이 충분합니다.",
+    "Debt payments are high relative to monthly income.": "월수입 대비 부채 상환 부담이 높습니다.",
+    "Debt burden appears manageable relative to income.": "소득 대비 부채 부담은 관리 가능한 수준으로 보입니다.",
+    "Savings-rate benchmarks are not meaningful while earned income is zero.": "근로소득이 0인 동안에는 일반적인 저축률 기준이 큰 의미가 없습니다.",
+    "Savings rate is below the common 10% starting benchmark.": "저축률이 일반적인 시작 기준인 10%보다 낮습니다.",
+    "Savings rate is strong and supports long-term planning.": "저축률이 높아 장기 계획을 뒷받침합니다.",
+    "Investment risk capacity appears limited until liquidity or debt improves.": "유동성이나 부채 구조가 개선되기 전까지 투자 위험 감당력은 제한적으로 보입니다.",
+    "Risk capacity appears stronger based on liquidity, debt, and savings behavior.": "유동성, 부채, 저축 습관을 기준으로 위험 감당력이 비교적 강해 보입니다.",
     "Investment Readiness": "투자 준비도",
     "Personal Finance answers whether the user can afford investment risk. Stock and REIT analysis answer which assets may fit the user's goals and risk capacity.": "개인 재무는 사용자가 투자 위험을 감당할 수 있는지 답합니다. 주식과 REIT 분석은 어떤 자산이 사용자의 목표와 위험 감당력에 맞을 수 있는지 보여줍니다.",
 }
@@ -114,6 +125,18 @@ def tr(text: str) -> str:
     if st.session_state.get("app_language") == "ko":
         return KO_TRANSLATIONS.get(text, text)
     return text
+
+
+def tr_insight(text: str) -> str:
+    if st.session_state.get("app_language") != "ko":
+        return text
+    if text.startswith("Cash runway is ") and " months below " in text:
+        months = text.split()[3]
+        return f"현금 생존기간이 선택한 계획 목표보다 {months}개월 부족합니다."
+    if text.startswith("Cash runway is ") and " months above " in text:
+        months = text.split()[3]
+        return f"현금 생존기간이 선택한 계획 목표보다 {months}개월 더 여유 있습니다."
+    return tr(text)
 
 
 def ensure_finance_defaults() -> None:
@@ -520,7 +543,7 @@ def render_personal_finance() -> None:
     insights = result["insights"]
     if isinstance(insights, list) and insights:
         for insight in insights:
-            st.info(insight)
+            st.info(tr_insight(insight))
     else:
         st.info(tr("No major warning signals from the current inputs."))
 
