@@ -442,6 +442,24 @@ def render_language_switcher(key_suffix: str = "global") -> None:
 st.markdown(
     """
     <style>
+    :root {
+        --ly-century-font: Century, "Century Schoolbook", "Century Gothic", Georgia, "Times New Roman", "Apple SD Gothic Neo", "Noto Sans KR", serif;
+    }
+    html,
+    body,
+    .stApp,
+    html body .stApp :where(*):not(svg):not(path):not([class*="material-symbol"]):not([class*="material-icon"]):not([data-testid="stIconMaterial"]) {
+        font-family: var(--ly-century-font) !important;
+        font-variant-numeric: tabular-nums;
+    }
+    html body .stApp .material-symbols-rounded,
+    html body .stApp .material-icons,
+    html body .stApp [class*="material-symbol"],
+    html body .stApp [class*="material-icon"],
+    html body .stApp [data-testid="stIconMaterial"],
+    html body .stApp [data-testid="stIconMaterial"] * {
+        font-family: "Material Symbols Rounded", "Material Icons" !important;
+    }
     header[data-testid="stHeader"],
     div[data-testid="stToolbar"],
     div[data-testid="stDecoration"],
@@ -750,9 +768,10 @@ st.markdown(
         display: grid;
         place-items: center;
         color: #0f766e;
-        font-family: "Brush Script MT", "Apple Chancery", "Segoe Script", "Snell Roundhand", cursive;
-        font-size: 1.36rem;
-        font-weight: 700;
+        font-family: var(--ly-century-font);
+        font-size: 1.12rem;
+        font-style: italic;
+        font-weight: 850;
         line-height: 1;
         background:
             linear-gradient(#ffffff, #ffffff) padding-box,
@@ -760,10 +779,9 @@ st.markdown(
         border: 1.4px solid transparent;
         box-shadow: 0 12px 24px rgba(15, 118, 110, 0.14);
         position: relative;
-        transform: rotate(-6deg);
     }
     .brand-icon span {
-        transform: translateY(1px) rotate(3deg);
+        transform: translateY(1px);
     }
     .brand-icon::after {
         content: none;
@@ -774,6 +792,7 @@ st.markdown(
     .brand-name {
         color: #071631;
         font-size: clamp(1.12rem, 2.3vw, 1.42rem);
+        font-family: var(--ly-century-font);
         font-weight: 950;
         line-height: 1;
         letter-spacing: 0;
@@ -2642,21 +2661,22 @@ st.markdown(
         place-items: center;
         border-radius: 50%;
         color: #0f766e;
-        font-family: "Brush Script MT", "Apple Chancery", "Segoe Script", "Snell Roundhand", cursive;
-        font-size: 1.56rem;
-        font-weight: 700;
+        font-family: var(--ly-century-font);
+        font-size: 1.34rem;
+        font-style: italic;
+        font-weight: 850;
         line-height: 1;
         background:
             linear-gradient(#ffffff, #ffffff) padding-box,
             linear-gradient(135deg, #0f766e, #22d3ee 52%, #2563eb) border-box;
         border: 1.5px solid transparent;
         box-shadow: 0 16px 30px rgba(15, 118, 110, 0.16);
-        transform: rotate(-6deg);
     }
     .home-brand-mark span {
-        transform: translateY(1px) rotate(3deg);
+        transform: translateY(1px);
     }
     .home-brand-name {
+        font-family: var(--ly-century-font);
         letter-spacing: 0;
     }
     .home-brand small {
@@ -5958,13 +5978,13 @@ st.markdown(
     html body .stApp .desktop-orbit-item {
         position: static !important;
         width: auto !important;
-        height: 32px !important;
+        height: 36px !important;
         min-width: 0 !important;
-        padding: 0 9px !important;
+        padding: 0 8px !important;
         display: inline-flex !important;
         justify-content: center !important;
         flex-direction: row !important;
-        gap: 6px !important;
+        gap: 5px !important;
         border-radius: 8px !important;
         transform: none !important;
         color: #334155 !important;
@@ -5981,16 +6001,24 @@ st.markdown(
         color: inherit !important;
         background: transparent !important;
         box-shadow: none !important;
-        font-size: 0.64rem !important;
+        font-size: 0.58rem !important;
         -webkit-text-fill-color: currentColor !important;
     }
     html body .stApp .desktop-orbit-center span,
     html body .stApp .desktop-orbit-item span {
         color: inherit !important;
         -webkit-text-fill-color: currentColor !important;
-        font-size: 0.72rem !important;
+        max-width: 68px !important;
+        font-size: 0.66rem !important;
         font-weight: 760 !important;
-        line-height: 1 !important;
+        line-height: 0.95 !important;
+        white-space: normal !important;
+        text-align: center !important;
+        overflow-wrap: normal !important;
+    }
+    html body .stApp .desktop-orbit-center span {
+        max-width: 58px !important;
+        font-size: 0.58rem !important;
     }
     html body .stApp .desktop-orbit-item.active,
     html body .stApp .desktop-orbit-center.active {
@@ -16167,7 +16195,7 @@ def render_circle_navigation(active_key: str) -> None:
             f'{"".join(orbit_links)}'
             f'<a class="desktop-orbit-center{center_active}" href="{diary_href}" target="_self" aria-label="{ui_html("Financial Diary")}" '
             'style="--accent: #ec4899; --accent-rgb: 236, 72, 153;">'
-            f'<b>{ui_html("Diary")}</b><span>{ui_html("Personal Memory")}</span></a>'
+            f'<b>{ui_html("Diary")}</b><span>{ui_html("Memory")}</span></a>'
             '</div></div>'
         ),
         unsafe_allow_html=True,
@@ -16200,7 +16228,7 @@ def render_mobile_navigation(active_key: str) -> None:
             '<div class="mobile-orbit-shell">'
             f'{"".join(orbit_links)}'
             f'<a class="mobile-orbit-center{center_active}" href="{diary_href}" target="_self" aria-label="{ui_html("Financial Diary")}">'
-            f'<b>{ui_html("Diary")}</b><span>{ui_html("Personal Memory")}</span></a></div>'
+            f'<b>{ui_html("Diary")}</b><span>{ui_html("Memory")}</span></a></div>'
             '</div>'
         ),
         unsafe_allow_html=True,
