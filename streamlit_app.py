@@ -548,20 +548,16 @@ st.markdown(
     }
     .brand-header {
         display: flex;
-        flex-direction: column;
         align-items: center;
-        justify-content: center;
-        gap: 18px;
-        padding: 42px 30px 34px;
-        margin: 0 0 20px;
-        border: 1px solid rgba(148, 163, 184, 0.28);
-        border-radius: 28px;
-        background:
-            radial-gradient(circle at 54% 28%, rgba(20, 184, 166, 0.30), transparent 28%),
-            radial-gradient(circle at 48% 20%, rgba(14, 165, 233, 0.22), transparent 34%),
-            linear-gradient(135deg, #111827 0%, #172335 48%, #080c12 100%);
-        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28);
-        backdrop-filter: blur(8px);
+        justify-content: flex-start;
+        padding: 10px 18px;
+        margin: 0 0 10px;
+        min-height: 58px;
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+        backdrop-filter: blur(12px);
         position: relative;
         overflow: hidden;
     }
@@ -571,9 +567,9 @@ st.markdown(
         left: 7%;
         right: 7%;
         bottom: 0;
-        height: 3px;
-        background: linear-gradient(90deg, transparent, #22d3ee, transparent);
-        opacity: 0.95;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.70), rgba(20, 184, 166, 0.55), transparent);
+        opacity: 0.72;
     }
     .nora-ontology {
         margin: 0 0 22px;
@@ -742,57 +738,49 @@ st.markdown(
     .brand-mark {
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 18px;
+        justify-content: flex-start;
+        gap: 10px;
         position: relative;
         z-index: 1;
     }
     .brand-icon {
-        width: 76px;
-        height: 76px;
-        border-radius: 20px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
         display: grid;
         place-items: center;
+        color: #0f766e;
+        font-family: "Brush Script MT", "Apple Chancery", "Segoe Script", "Snell Roundhand", cursive;
+        font-size: 1.36rem;
+        font-weight: 700;
+        line-height: 1;
         background:
-            linear-gradient(135deg, rgba(255,255,255,0.18), transparent 32%),
-            linear-gradient(135deg, rgba(34, 211, 238, 0.22), rgba(20, 184, 166, 0.18)),
-            rgba(15, 23, 42, 0.82);
-        border: 1px solid rgba(34, 211, 238, 0.42);
-        box-shadow: 0 0 30px rgba(34, 211, 238, 0.28), inset 0 0 24px rgba(34, 211, 238, 0.10);
+            linear-gradient(#ffffff, #ffffff) padding-box,
+            linear-gradient(135deg, #0f766e, #22d3ee 52%, #2563eb) border-box;
+        border: 1.4px solid transparent;
+        box-shadow: 0 12px 24px rgba(15, 118, 110, 0.14);
         position: relative;
+        transform: rotate(-6deg);
+    }
+    .brand-icon span {
+        transform: translateY(1px) rotate(3deg);
     }
     .brand-icon::after {
-        content: "";
-        width: 46px;
-        height: 42px;
-        background:
-            linear-gradient(to top, #22d3ee 0 76%, transparent 76%),
-            linear-gradient(to top, #10b981 0 52%, transparent 52%),
-            linear-gradient(to top, #60a5fa 0 92%, transparent 92%),
-            linear-gradient(to top, #f59e0b 0 63%, transparent 63%);
-        background-size: 8px 100%;
-        background-position: 2px 0, 14px 0, 26px 0, 38px 0;
-        background-repeat: no-repeat;
-        border-bottom: 2px solid rgba(226, 232, 240, 0.8);
+        content: none;
     }
     .brand-icon::before {
-        content: "";
-        position: absolute;
-        inset: 13px;
-        border-radius: 12px;
-        border: 1px solid rgba(226, 232, 240, 0.22);
+        content: none;
     }
     .brand-name {
-        color: #f8fafc;
-        font-size: clamp(3.4rem, 7vw, 6.2rem);
+        color: #071631;
+        font-size: clamp(1.12rem, 2.3vw, 1.42rem);
         font-weight: 950;
-        line-height: 0.92;
+        line-height: 1;
         letter-spacing: 0;
-        text-shadow: 0 16px 42px rgba(34, 211, 238, 0.26);
+        text-shadow: none;
     }
     .brand-name .scope-accent {
-        color: #19dce8;
-        text-shadow: 0 0 34px rgba(34, 211, 238, 0.58);
+        display: none;
     }
     .brand-subtitle {
         color: #a9b7c9;
@@ -3665,10 +3653,10 @@ st.markdown(
     }
     .brand-icon {
         background:
-            radial-gradient(circle at 34% 24%, rgba(255,255,255,0.76), transparent 26%),
-            linear-gradient(135deg, rgba(56,189,248,0.92), rgba(45,212,191,0.78)) !important;
-        border-color: rgba(14, 165, 233, 0.34);
-        box-shadow: 0 18px 38px rgba(14, 165, 233, 0.22), inset 0 0 24px rgba(255,255,255,0.25);
+            linear-gradient(#ffffff, #ffffff) padding-box,
+            linear-gradient(135deg, #0f766e, #22d3ee 52%, #2563eb) border-box !important;
+        border-color: transparent;
+        box-shadow: 0 12px 24px rgba(15, 118, 110, 0.14);
     }
     .brand-name {
         color: #071631;
@@ -4757,12 +4745,13 @@ st.markdown(
     }
     @media (max-width: 560px) {
         html body .stApp .brand-header {
-            padding: 16px 12px 14px;
+            padding: 8px 12px;
             margin-bottom: 8px;
-            border-radius: 18px;
+            border-radius: 8px;
+            justify-content: flex-start !important;
         }
         html body .stApp .brand-name {
-            font-size: 1.78rem !important;
+            font-size: 1.04rem !important;
             line-height: 1 !important;
         }
         html body .stApp .brand-subtitle {
@@ -5187,12 +5176,13 @@ st.markdown(
     }
     @media (max-width: 680px) {
         html body .stApp .brand-header {
-            padding: 16px 12px 14px !important;
+            padding: 8px 12px !important;
             margin-bottom: 8px !important;
-            border-radius: 18px !important;
+            border-radius: 8px !important;
+            justify-content: flex-start !important;
         }
         html body .stApp .brand-name {
-            font-size: 1.78rem !important;
+            font-size: 1.04rem !important;
             line-height: 1 !important;
         }
         html body .stApp .brand-subtitle {
@@ -5647,7 +5637,7 @@ st.markdown(
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
-        justify-content: center !important;
+        justify-content: flex-start !important;
         gap: 9px !important;
         border-radius: 8px !important;
         background: #ffffff !important;
@@ -5658,9 +5648,10 @@ st.markdown(
         gap: 8px !important;
     }
     html body .stApp .brand-icon {
-        width: 28px !important;
-        height: 28px !important;
-        border-radius: 8px !important;
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 50% !important;
+        font-size: 1.02rem !important;
     }
     html body .stApp .brand-name {
         font-size: 1.14rem !important;
@@ -16427,20 +16418,12 @@ def render_main_app() -> None:
 
     render_sidebar()
 
-    brand_subtitle = (
-        "개인 의사결정 인텔리전스"
-        if current_language() == "ko"
-        else "PERSONAL DECISION INTELLIGENCE"
-    )
     st.markdown(
         f"""
-        <div class="brand-header">
+        <div class="brand-header" aria-label="LY-Scope brand">
             <div class="brand-mark">
-                <div class="brand-icon" aria-hidden="true"></div>
-                <div>
-                    <div class="brand-name">LY-Scope<span class="scope-accent">-Ver.2</span></div>
-                    <div class="brand-subtitle">{brand_subtitle}</div>
-                </div>
+                <div class="brand-icon" aria-label="LY logo"><span>LY</span></div>
+                <div class="brand-name">LY-Scope</div>
             </div>
         </div>
         """,
