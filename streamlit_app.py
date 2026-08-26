@@ -2644,19 +2644,32 @@ st.markdown(
         align-items: center;
         gap: 12px;
         color: #0f172a;
-        font-size: 1.2rem;
+        font-size: 1.18rem;
         font-weight: 950;
     }
     .home-brand-mark {
-        width: 42px;
-        height: 42px;
+        width: 46px;
+        height: 46px;
         display: grid;
         place-items: center;
-        border-radius: 14px;
-        color: white;
-        font-size: 1.32rem;
-        background: linear-gradient(135deg, #2563eb, #22d3ee 46%, #14b8a6);
-        box-shadow: 0 14px 28px rgba(37, 99, 235, 0.22);
+        border-radius: 50%;
+        color: #0f766e;
+        font-family: "Brush Script MT", "Apple Chancery", "Segoe Script", "Snell Roundhand", cursive;
+        font-size: 1.56rem;
+        font-weight: 700;
+        line-height: 1;
+        background:
+            linear-gradient(#ffffff, #ffffff) padding-box,
+            linear-gradient(135deg, #0f766e, #22d3ee 52%, #2563eb) border-box;
+        border: 1.5px solid transparent;
+        box-shadow: 0 16px 30px rgba(15, 118, 110, 0.16);
+        transform: rotate(-6deg);
+    }
+    .home-brand-mark span {
+        transform: translateY(1px) rotate(3deg);
+    }
+    .home-brand-name {
+        letter-spacing: 0;
     }
     .home-brand small {
         color: #2563eb;
@@ -3128,11 +3141,10 @@ st.markdown(
         letter-spacing: 0;
     }
     .home-brand-mark {
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
-        font-size: 1rem;
-        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.16);
+        width: 38px;
+        height: 38px;
+        font-size: 1.3rem;
+        box-shadow: 0 10px 20px rgba(15, 118, 110, 0.14);
     }
     .home-brand small {
         font-size: 0.74rem;
@@ -15916,8 +15928,8 @@ def render_life_entry_screen(standalone: bool = True) -> None:
                 {homepage_image}
                 <div class="home-nav">
                     <div class="home-brand">
-                        <div class="home-brand-mark">N</div>
-                        <div>LY-Scope-Ver.2 <small>Decision Intelligence</small></div>
+                        <div class="home-brand-mark" aria-label="LY logo"><span>LY</span></div>
+                        <div class="home-brand-name">LY-Scope</div>
                     </div>
                 </div>
                 <div class="home-goal-layout">
