@@ -137,6 +137,7 @@ KO_TRANSLATIONS = {
     "Investment Portfolio": "투자 포트폴리오",
     "Risk, return, and valuation across holdings": "보유 종목의 위험, 수익, 가치평가",
     "Find Stock for Portfolio": "포트폴리오 종목 찾기",
+    "Portfolio Search": "포트폴리오 검색",
     "SR · Portfolio Search": "SR · 포트폴리오 검색",
     "Search ticker/company, review valuation, then add it to this portfolio.": "티커/회사명을 검색하고 가치평가를 확인한 뒤 포트폴리오에 추가합니다.",
     "Ticker or company search with valuation, risk, and portfolio action.": "티커 또는 회사명으로 가치평가, 위험, 포트폴리오 행동을 확인합니다.",
@@ -6097,16 +6098,15 @@ st.markdown(
         border: 1px solid rgba(148, 163, 184, 0.22);
         box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
     }
-    html body .stApp .portfolio-sr-header span {
+    html body .stApp .portfolio-sr-header .portfolio-sr-icon {
         width: 30px;
         height: 30px;
         display: grid;
         place-items: center;
         border-radius: 8px;
-        color: #ffffff;
-        background: #0f766e;
-        font-size: 0.72rem;
-        font-weight: 950;
+        background: transparent;
+        overflow: hidden;
+        flex: 0 0 30px;
     }
     html body .stApp .portfolio-sr-header b {
         color: #0f172a;
@@ -7240,6 +7240,250 @@ st.markdown(
 )
 
 
+st.markdown(
+    """
+    <style id="ly-century-visual-system">
+    :root {
+        --ly-century: Century, "Century Schoolbook", Georgia, "Times New Roman", serif;
+    }
+    html,
+    body,
+    button,
+    input,
+    textarea,
+    select,
+    svg text,
+    [class^="st-"],
+    [class*=" st-"],
+    [data-testid],
+    [data-testid] *,
+    .stApp,
+    .stApp * {
+        font-family: var(--ly-century) !important;
+        letter-spacing: 0 !important;
+    }
+    html body .stApp .visual-icon,
+    html body .stApp .brand-logo-image,
+    html body .stApp .nav-image-icon,
+    html body .stApp .mobile-nav-image-icon,
+    html body .stApp .finance-snapshot-icon,
+    html body .stApp .rationality-icon,
+    html body .stApp .nora-node-icon,
+    html body .stApp .module-image-icon,
+    html body .stApp .goal-number-icon,
+    html body .stApp .life-goal-icon,
+    html body .stApp .case-study-avatar-icon,
+    html body .stApp .home-brand-icon,
+    html body .stApp .language-image-icon,
+    html body .stApp .decision-capture-icon {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+    html body span[data-testid="stIconMaterial"],
+    html body span[data-testid="stIconMaterial"] *,
+    html body .material-symbols-rounded,
+    html body .material-icons {
+        font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Icons" !important;
+        letter-spacing: normal !important;
+        font-weight: normal !important;
+        font-style: normal !important;
+        line-height: 1 !important;
+        text-transform: none !important;
+        white-space: nowrap !important;
+        word-wrap: normal !important;
+        direction: ltr !important;
+        -webkit-font-feature-settings: "liga" !important;
+        -webkit-font-smoothing: antialiased !important;
+    }
+    html body span[data-testid="stIconMaterial"] {
+        display: inline-block !important;
+        width: 1.12em !important;
+        height: 1.12em !important;
+        min-width: 1.12em !important;
+        overflow: hidden !important;
+        font-size: 0 !important;
+        line-height: 0 !important;
+        color: transparent !important;
+        -webkit-text-fill-color: transparent !important;
+        vertical-align: -0.12em !important;
+    }
+    html body span[data-testid="stIconMaterial"]::before {
+        content: "" !important;
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: #64748b !important;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 5l7 7-7 7' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat !important;
+        mask: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 5l7 7-7 7' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat !important;
+    }
+    html body section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"] span[data-testid="stIconMaterial"]::before {
+        background: #ffffff !important;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13 6l-6 6 6 6M19 6l-6 6 6 6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat !important;
+        mask: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13 6l-6 6 6 6M19 6l-6 6 6 6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat !important;
+    }
+    html body .stApp .brand-icon {
+        padding: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+    html body .stApp .brand-icon::before,
+    html body .stApp .brand-icon::after {
+        content: none !important;
+        display: none !important;
+    }
+    html body .stApp .brand-logo-image {
+        width: 48px !important;
+        height: 48px !important;
+        filter: drop-shadow(0 10px 20px rgba(14, 116, 144, 0.16));
+    }
+    html body .stApp .top-language-toggle .language-toggle-mark {
+        padding: 5px !important;
+        background: #ecfeff !important;
+    }
+    html body .stApp .finance-snapshot-card {
+        grid-template-rows: auto auto auto 7px !important;
+    }
+    html body .stApp .finance-snapshot-glyph,
+    html body .stApp .finance-snapshot-glyph.image-glyph {
+        padding: 0 !important;
+        overflow: hidden !important;
+        background: transparent !important;
+        color: transparent !important;
+        -webkit-text-fill-color: transparent !important;
+    }
+    html body .stApp .finance-snapshot-meter {
+        grid-column: 1 / -1;
+        height: 7px;
+        margin-top: 7px;
+        border-radius: 999px;
+        overflow: hidden;
+        background: #e2e8f0;
+    }
+    html body .stApp .finance-snapshot-meter i {
+        display: block;
+        width: var(--level);
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--snapshot-accent), #38bdf8);
+    }
+    html body .stApp .metric-card-meter {
+        height: 7px;
+        margin-top: 12px;
+        border-radius: 999px;
+        overflow: hidden;
+        background: #e2e8f0;
+    }
+    html body .stApp .metric-card-meter span {
+        display: block;
+        width: var(--level);
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #0f766e, #38bdf8);
+    }
+    html body .stApp .rationality-node {
+        padding: 5px !important;
+    }
+    html body .stApp .rationality-node .rationality-icon {
+        position: relative;
+        z-index: 2;
+        width: 24px !important;
+        height: 24px !important;
+    }
+    html body .stApp .desktop-orbit-item,
+    html body .stApp .desktop-orbit-center {
+        min-height: 40px !important;
+    }
+    html body .stApp .desktop-orbit-item .nav-image-icon,
+    html body .stApp .desktop-orbit-center .nav-image-icon {
+        width: 24px !important;
+        height: 24px !important;
+        flex: 0 0 24px !important;
+    }
+    html body .stApp .mobile-orbit-item .mobile-nav-image-icon {
+        width: 26px !important;
+        height: 26px !important;
+    }
+    html body .stApp .mobile-orbit-center .mobile-nav-image-icon {
+        width: 34px !important;
+        height: 34px !important;
+    }
+    html body .stApp .nora-glyph {
+        padding: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+    }
+    html body .stApp .nora-node-icon {
+        width: 34px !important;
+        height: 34px !important;
+    }
+    html body .stApp .nora-module {
+        gap: 6px !important;
+    }
+    html body .stApp .nora-module .module-image-icon {
+        width: 20px !important;
+        height: 20px !important;
+        flex: 0 0 20px !important;
+    }
+    html body .stApp .nora-module span {
+        display: inline-flex !important;
+        min-width: 0 !important;
+        align-items: center !important;
+    }
+    html body .stApp .goal-number,
+    html body .stApp .life-goal-link span,
+    html body .stApp .decision-capture-title span,
+    html body .stApp .case-study-avatar {
+        padding: 0 !important;
+        overflow: hidden !important;
+        background: transparent !important;
+    }
+    html body .stApp .goal-number-icon,
+    html body .stApp .life-goal-icon,
+    html body .stApp .decision-capture-icon {
+        width: 100% !important;
+        height: 100% !important;
+    }
+    html body .stApp .case-study-profile-top em {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 7px !important;
+    }
+    html body .stApp .case-study-score-ring {
+        width: 24px;
+        height: 24px;
+        flex: 0 0 24px;
+        border-radius: 50%;
+        background: conic-gradient(#0f766e var(--score), #e2e8f0 0);
+        box-shadow: inset 0 0 0 6px #ffffff;
+    }
+    html body .stApp .case-study-avatar-icon {
+        width: 48px !important;
+        height: 48px !important;
+    }
+    @media (max-width: 760px) {
+        html body .stApp .brand-logo-image {
+            width: 42px !important;
+            height: 42px !important;
+        }
+        html body .stApp .desktop-orbit-item .nav-image-icon,
+        html body .stApp .desktop-orbit-center .nav-image-icon {
+            width: 22px !important;
+            height: 22px !important;
+        }
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+
 def get_secret_or_env(name: str, default: str = "") -> str:
     try:
         return str(st.secrets.get(name, os.getenv(name, default))).strip()
@@ -7284,6 +7528,146 @@ def image_data_uri(path_text: str) -> str:
         return ""
     encoded = base64.b64encode(image_path.read_bytes()).decode("ascii")
     return f"data:image/png;base64,{encoded}"
+
+
+def clean_hex_color(value: Any, fallback: str = "#0f766e") -> str:
+    color = str(value or "").strip()
+    return color if re.fullmatch(r"#[0-9A-Fa-f]{6}", color) else fallback
+
+
+def visual_icon_kind(value: Any) -> str:
+    key = re.sub(r"[^a-z0-9]+", "", str(value or "").lower())
+    return {
+        "ta": "goal",
+        "target": "goal",
+        "goal": "goal",
+        "life": "life",
+        "lf": "life",
+        "runway": "runway",
+        "ru": "runway",
+        "finance": "finance",
+        "fi": "finance",
+        "portfolio": "portfolio",
+        "pf": "portfolio",
+        "po": "portfolio",
+        "reit": "estate",
+        "realestate": "estate",
+        "re": "estate",
+        "property": "estate",
+        "risk": "risk",
+        "ri": "risk",
+        "rsk": "risk",
+        "scenario": "scenario",
+        "sc": "scenario",
+        "advisor": "case",
+        "casestudies": "case",
+        "case": "case",
+        "cs": "case",
+        "ar": "case",
+        "diary": "memory",
+        "memory": "memory",
+        "dy": "memory",
+        "mem": "memory",
+        "search": "search",
+        "sr": "search",
+        "compare": "compare",
+        "cp": "compare",
+        "details": "model",
+        "dt": "model",
+        "model": "model",
+        "mod": "model",
+        "data": "data",
+        "dat": "data",
+        "evidence": "evidence",
+        "evd": "evidence",
+        "decision": "decision",
+        "dec": "decision",
+        "capture": "capture",
+        "cap": "capture",
+        "action": "action",
+        "act": "action",
+        "outcome": "outcome",
+        "out": "outcome",
+        "ai": "ai",
+        "settings": "settings",
+        "se": "settings",
+        "guide": "guide",
+        "gd": "guide",
+        "language": "language",
+    }.get(key, "data")
+
+
+def visual_icon_svg(kind: Any, accent: str = "#0f766e", secondary: str = "#2563eb") -> str:
+    kind = visual_icon_kind(kind)
+    primary = clean_hex_color(accent)
+    secondary = clean_hex_color(secondary, "#2563eb")
+    common = (
+        f'<defs><linearGradient id="g" x1="8" y1="6" x2="56" y2="58">'
+        f'<stop offset="0" stop-color="{primary}"/><stop offset="1" stop-color="{secondary}"/>'
+        f'</linearGradient></defs>'
+        '<rect x="3" y="3" width="58" height="58" rx="16" fill="url(#g)"/>'
+        '<circle cx="18" cy="15" r="9" fill="#ffffff" opacity=".22"/>'
+    )
+    drawings = {
+        "goal": '<circle cx="32" cy="32" r="16" fill="none" stroke="#fff" stroke-width="4"/><circle cx="32" cy="32" r="7" fill="#fff"/><path d="M39 25l11-11M43 14h7v7" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>',
+        "life": '<path d="M32 48C20 39 14 32 14 24c0-6 4-10 10-10 4 0 7 2 8 5 1-3 4-5 8-5 6 0 10 4 10 10 0 8-6 15-18 24z" fill="#fff" opacity=".94"/>',
+        "runway": '<path d="M13 43h38" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M16 34l8-9 8 6 9-13 8 8" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="25" r="4" fill="#fff"/><circle cx="41" cy="18" r="4" fill="#fff"/>',
+        "finance": '<path d="M16 45h32a5 5 0 005-5V26a5 5 0 00-5-5H16a5 5 0 00-5 5v14a5 5 0 005 5z" fill="none" stroke="#fff" stroke-width="4"/><path d="M38 33h13" stroke="#fff" stroke-width="5" stroke-linecap="round"/><circle cx="22" cy="33" r="5" fill="#fff"/>',
+        "portfolio": '<path d="M33 13a19 19 0 11-18 25h18z" fill="#fff" opacity=".92"/><path d="M36 13a19 19 0 0116 16H36z" fill="#fff" opacity=".54"/><circle cx="33" cy="33" r="7" fill="url(#g)"/>',
+        "estate": '<path d="M13 31l19-16 19 16" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 29v20h26V29" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"/><path d="M29 49V37h7v12" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"/>',
+        "risk": '<path d="M32 13l22 39H10z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/><path d="M32 25v13" stroke="#fff" stroke-width="5" stroke-linecap="round"/><circle cx="32" cy="45" r="3" fill="#fff"/>',
+        "scenario": '<path d="M14 32h9c7 0 9-12 18-12h9" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M14 32h9c7 0 9 12 18 12h9" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M45 14l7 6-7 6M45 38l7 6-7 6" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>',
+        "case": '<rect x="16" y="14" width="32" height="38" rx="6" fill="#fff" opacity=".92"/><path d="M23 25h18M23 33h18M23 41h11" stroke="url(#g)" stroke-width="4" stroke-linecap="round"/><circle cx="42" cy="44" r="7" fill="url(#g)"/>',
+        "memory": '<path d="M18 13h25a5 5 0 015 5v33H18a5 5 0 01-5-5V18a5 5 0 015-5z" fill="#fff" opacity=".9"/><path d="M24 13v20l6-5 6 5V13" fill="url(#g)"/><path d="M23 42h18" stroke="url(#g)" stroke-width="4" stroke-linecap="round"/>',
+        "search": '<circle cx="28" cy="28" r="13" fill="none" stroke="#fff" stroke-width="5"/><path d="M39 39l12 12" stroke="#fff" stroke-width="5" stroke-linecap="round"/>',
+        "compare": '<path d="M17 46V26M32 46V16M47 46V34" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M13 48h38" stroke="#fff" stroke-width="4" stroke-linecap="round"/>',
+        "model": '<circle cx="32" cy="32" r="13" fill="none" stroke="#fff" stroke-width="5"/><circle cx="32" cy="32" r="4" fill="#fff"/><path d="M32 11v8M32 45v8M11 32h8M45 32h8M17 17l6 6M41 41l6 6M47 17l-6 6M23 41l-6 6" stroke="#fff" stroke-width="4" stroke-linecap="round"/>',
+        "data": '<rect x="15" y="15" width="34" height="34" rx="7" fill="none" stroke="#fff" stroke-width="4"/><path d="M24 24h16M24 32h16M24 40h10" stroke="#fff" stroke-width="4" stroke-linecap="round"/>',
+        "evidence": '<path d="M16 34l10 10 22-25" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 18h22" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".65"/>',
+        "decision": '<path d="M15 33h26" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M34 22l11 11-11 11" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="20" r="5" fill="#fff" opacity=".75"/><circle cx="20" cy="46" r="5" fill="#fff" opacity=".75"/>',
+        "capture": '<path d="M15 18h34a6 6 0 016 6v13a6 6 0 01-6 6H32l-10 8v-8h-7a6 6 0 01-6-6V24a6 6 0 016-6z" fill="#fff" opacity=".9"/><path d="M21 29h22M21 36h14" stroke="url(#g)" stroke-width="4" stroke-linecap="round"/>',
+        "action": '<path d="M15 47l34-30" stroke="#fff" stroke-width="6" stroke-linecap="round"/><path d="M35 16h15v15" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>',
+        "outcome": '<path d="M14 45h38" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".7"/><path d="M16 40l9-10 8 5 13-18" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="30" r="4" fill="#fff"/><circle cx="46" cy="17" r="4" fill="#fff"/>',
+        "ai": '<circle cx="20" cy="24" r="6" fill="#fff"/><circle cx="44" cy="24" r="6" fill="#fff"/><circle cx="32" cy="44" r="6" fill="#fff"/><path d="M25 27l14 14M39 27L25 41M26 24h12" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".72"/>',
+        "settings": '<path d="M18 22h28M18 32h28M18 42h28" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="27" cy="22" r="5" fill="#fff"/><circle cx="39" cy="32" r="5" fill="#fff"/><circle cx="30" cy="42" r="5" fill="#fff"/>',
+        "guide": '<path d="M18 13h24l8 8v30H18z" fill="#fff" opacity=".92"/><path d="M42 13v10h10M25 31h17M25 39h17" stroke="url(#g)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>',
+        "language": '<circle cx="32" cy="32" r="18" fill="none" stroke="#fff" stroke-width="4"/><path d="M14 32h36M32 14c7 7 7 29 0 36M32 14c-7 7-7 29 0 36" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>',
+    }
+    return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">{common}{drawings.get(kind, drawings["data"])}</svg>'
+
+
+def svg_data_uri(svg_text: str) -> str:
+    encoded = base64.b64encode(svg_text.encode("utf-8")).decode("ascii")
+    return f"data:image/svg+xml;base64,{encoded}"
+
+
+def visual_icon_html(kind: Any, accent: str = "#0f766e", class_name: str = "visual-icon", title: str = "") -> str:
+    title_attr = f' title="{escape(title, quote=True)}"' if title else ""
+    return (
+        f'<img class="{escape(class_name, quote=True)}" '
+        f'src="{svg_data_uri(visual_icon_svg(kind, accent))}" alt="" aria-hidden="true"{title_attr}>'
+    )
+
+
+def brand_logo_html() -> str:
+    svg = """
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+        <defs>
+            <linearGradient id="brand" x1="12" y1="10" x2="84" y2="88">
+                <stop offset="0" stop-color="#0f766e"/>
+                <stop offset=".52" stop-color="#0891b2"/>
+                <stop offset="1" stop-color="#2563eb"/>
+            </linearGradient>
+        </defs>
+        <rect x="5" y="5" width="86" height="86" rx="24" fill="url(#brand)"/>
+        <circle cx="28" cy="24" r="13" fill="#fff" opacity=".22"/>
+        <path d="M20 68c16-24 34-33 56-38" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity=".32"/>
+        <text x="49" y="61" text-anchor="middle" fill="#ffffff"
+              font-family="Century, Century Schoolbook, Georgia, serif"
+              font-size="38" font-style="italic" font-weight="700" letter-spacing="-1">LY</text>
+    </svg>
+    """
+    return f'<img class="brand-logo-image" src="{svg_data_uri(dedent(svg))}" alt="LY">'
 
 
 KOREAN_STOCK_MAP = {
@@ -8117,11 +8501,23 @@ def status_color(status: str) -> str:
 
 
 def metric_card(label: str, value: str, color: str = "#102033") -> None:
+    level_html = ""
+    value_text = str(value)
+    score_match = re.search(r"(-?\d+(?:\.\d+)?)\s*/\s*100", value_text)
+    pct_match = re.search(r"(-?\d+(?:\.\d+)?)\s*%", value_text)
+    if score_match:
+        level = max(0.0, min(100.0, float(score_match.group(1))))
+        level_html = f'<div class="metric-card-meter"><span style="--level:{level:.0f}%;"></span></div>'
+    elif pct_match:
+        pct_value = float(pct_match.group(1))
+        if 0 <= pct_value <= 100:
+            level_html = f'<div class="metric-card-meter"><span style="--level:{pct_value:.0f}%;"></span></div>'
     st.markdown(
         f"""
         <div class="metric-card">
             <div class="label">{escape(str(label))}</div>
-            <div class="value" style="color:{escape(str(color))};">{escape(str(value))}</div>
+            <div class="value" style="color:{escape(str(color))};">{escape(value_text)}</div>
+            {level_html}
         </div>
         """,
         unsafe_allow_html=True,
@@ -8942,8 +9338,8 @@ def render_portfolio_stock_search() -> None:
     st.markdown(
         f"""
         <div class="portfolio-sr-header" aria-label="{ui_html('SR · Portfolio Search')}">
-            <span>SR</span>
-            <b>{ui_html('SR · Portfolio Search')}</b>
+            <span class="portfolio-sr-icon" aria-hidden="true">{visual_icon_html("search", "#0f766e", "portfolio-sr-image-icon")}</span>
+            <b>{ui_html('Portfolio Search')}</b>
         </div>
         """,
         unsafe_allow_html=True,
@@ -10934,7 +11330,7 @@ def render_decision_capture_panel() -> None:
         <section class="decision-capture-panel" aria-label="Decision Capture">
             <div class="decision-capture-head">
                 <div class="decision-capture-title">
-                    <span>CAP</span>
+                    <span>{visual_icon_html("capture", "#0f766e", "decision-capture-icon")}</span>
                     <div>
                         <b>{escape(decision_text(language, "Decision Capture", "결정 포착"))}</b>
                         <small>{escape(decision_text(language, "Say the decision first. LY-Scope structures it before analysis.", "결정을 먼저 말하면 LY-Scope가 분석 전에 구조화합니다."))}</small>
@@ -11069,9 +11465,9 @@ def render_top_language_toggle() -> None:
     st.markdown(
         f"""
         <nav class="top-language-toggle" aria-label="Language switcher">
-            <span class="language-toggle-mark" aria-hidden="true">Aa</span>
+            <span class="language-toggle-mark" aria-hidden="true">{visual_icon_html("language", "#0f766e", "language-image-icon")}</span>
             <a class="{en_active.strip()}" href="{en_href}" target="_self" title="Switch to English" aria-label="Switch to English">EN</a>
-            <a class="{ko_active.strip()}" href="{ko_href}" target="_self" title="한국어로 전환" aria-label="한국어로 전환">한</a>
+            <a class="{ko_active.strip()}" href="{ko_href}" target="_self" title="Switch to Korean" aria-label="Switch to Korean">KR</a>
         </nav>
         """,
         unsafe_allow_html=True,
@@ -11086,7 +11482,7 @@ def render_nora_ontology(active_key: str) -> None:
         step_nodes.append(
             f'<div class="nora-node" role="button" tabindex="0" title="{escape(detail, quote=True)}" '
             f'style="--nora-color: {escape(step["color"])};">'
-            f'<div class="nora-glyph">{escape(step["glyph"])}</div>'
+            f'<div class="nora-glyph">{visual_icon_html(step["glyph"], step["color"], "nora-node-icon")}</div>'
             f'<strong>{ui_html(step["label"])}</strong>'
             f'<span>{ui_html(step["tag"])}</span>'
             f'<div class="nora-detail">{escape(detail)}</div>'
@@ -11094,11 +11490,22 @@ def render_nora_ontology(active_key: str) -> None:
         )
 
     module_links = []
+    module_colors = {
+        "life": "#14b8a6",
+        "finance": "#0ea5e9",
+        "portfolio": "#84cc16",
+        "reit": "#f59e0b",
+        "scenario": "#f97316",
+        "advisor": "#ec4899",
+        "diary": "#ec4899",
+    }
     for label, view in NORA_MODULE_MAP:
         active_class = " active" if view == active_key else ""
         href = escape(app_view_href(view), quote=True)
         module_links.append(
-            f'<a class="nora-module{active_class}" href="{href}" target="_self" title="{ui_html(label)}">{ui_html(label)}</a>'
+            f'<a class="nora-module{active_class}" href="{href}" target="_self" title="{ui_html(label)}">'
+            f'{visual_icon_html(view, module_colors.get(view, "#0f766e"), "module-image-icon")}'
+            f'<span>{ui_html(label)}</span></a>'
         )
 
     summary_label = "NORA Flow" if language == "en" else "NORA 흐름"
@@ -12885,6 +13292,24 @@ def render_advisor_report_style() -> None:
             color: #0f172a;
             line-height: 1.15;
         }
+        .advisor-scenario-top {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            min-width: 0;
+        }
+        .advisor-scenario-icon {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+            display: grid;
+            place-items: center;
+        }
+        .advisor-scenario-image-icon {
+            width: 34px;
+            height: 34px;
+            display: block;
+        }
         .advisor-scenario-card span {
             display: block;
             margin-top: 4px;
@@ -13087,11 +13512,14 @@ def render_advisor_scenario_board(reports: list[dict[str, Any]], selected_id: st
         review = advisor_scenario_review(report, language)
         score = max(0.0, min(100.0, float(result["planning_health_score"])))
         active_class = " active" if client.client_id == selected_id else ""
+        tone_color = {"risk": "#dc2626", "watch": "#d97706", "stable": "#0f766e"}.get(review["tone"], "#0f766e")
         cards.append(
             f'<a class="advisor-scenario-card {escape(review["tone"])}{active_class}" '
             f'href="{escape(advisor_client_href(client.client_id), quote=True)}" target="_self">'
-            f'<b>{escape(client.client_id)} · {escape(client.name.split()[0])}</b>'
-            f'<span>{escape(client.text("segment", language))}</span>'
+            f'<div class="advisor-scenario-top"><span class="advisor-scenario-icon">'
+            f'{visual_icon_html("case", tone_color, "advisor-scenario-image-icon")}</span>'
+            f'<div><b>{escape(client.client_id)} · {escape(client.name.split()[0])}</b>'
+            f'<span>{escape(client.text("segment", language))}</span></div></div>'
             f'<span class="advisor-scenario-pill">{escape(review["verdict"])}</span>'
             f'<div class="advisor-scenario-score"><i style="--score: {score:.0f}%;"></i></div>'
             f'<span>{escape(advisor_money_compact(review["stress_40"], client.currency, language))} @ -40%</span>'
@@ -13189,7 +13617,6 @@ def render_case_study_snapshot(report: dict[str, Any], language: str, advisor_la
     client = report["client"]
     result = report["result"]
     review = advisor_scenario_review(report, language)
-    initials = "".join(part[:1] for part in client.name.split()[:2]).upper()
     runway = float(result["emergency_months"])
     required = float(result["required_runway_months"])
     exposure = float(result["investment_exposure_ratio"]) * 100
@@ -13201,13 +13628,13 @@ def render_case_study_snapshot(report: dict[str, Any], language: str, advisor_la
         <div class="case-study-profile-card">
             <div class="case-study-profile-top">
                 <div class="case-study-person">
-                    <div class="case-study-avatar">{escape(initials)}</div>
+                    <div class="case-study-avatar" aria-label="{escape(client.name, quote=True)}">{visual_icon_html("case", "#0f766e", "case-study-avatar-icon")}</div>
                     <div>
                         <b>{escape(client.name)}</b>
                         <span>{escape(client.client_id)} · {escape(client.text('segment', language))}</span>
                     </div>
                 </div>
-                <em>{escape(report['status'])} · {float(result['planning_health_score']):.0f}/100</em>
+                <em><span class="case-study-score-ring" style="--score: {float(result['planning_health_score']):.0f}%;"></span>{escape(report['status'])} · {float(result['planning_health_score']):.0f}/100</em>
             </div>
             <div class="case-study-goal-grid">
                 <div class="case-study-goal-cell">
@@ -15044,7 +15471,7 @@ def render_life_entry_screen(standalone: bool = True) -> None:
             f"""
             <details class="home-goal-card" style="--goal-color: {escape(config['color'])};">
                 <summary>
-                    <span class="goal-number">{escape(config['icon'])}</span>
+                    <span class="goal-number">{visual_icon_html(goal_key, config['color'], 'goal-number-icon')}</span>
                     <span class="goal-summary">
                         <b>{escape(config[f'label_{language}'])}</b>
                         <i>{escape(config[f'short_{language}'])}</i>
@@ -15066,7 +15493,7 @@ def render_life_entry_screen(standalone: bool = True) -> None:
                 {homepage_image}
                 <div class="home-nav">
                     <div class="home-brand">
-                        <div class="home-brand-mark">N</div>
+                        <div class="home-brand-mark">{visual_icon_html("life", "#0f766e", "home-brand-icon")}</div>
                         <div>LY-Scope-Ver.2 <small>Decision Intelligence</small></div>
                     </div>
                 </div>
@@ -15327,7 +15754,8 @@ def render_circle_navigation(active_key: str) -> None:
         orbit_links.append(
             f'<a class="desktop-orbit-item{active_class}" href="{href}" target="_self" '
             f'aria-label="{ui_html(nav_item["label"])}" style="{style}">'
-            f'<b>{escape(nav_item["icon"])}</b><span>{ui_html(nav_item["label"])}</span></a>'
+            f'{visual_icon_html(nav_item["key"], orbit_item["accent"], "nav-image-icon")}'
+            f'<span>{ui_html(nav_item["label"])}</span></a>'
         )
 
     center_active = " active" if active_key == "diary" else ""
@@ -15339,7 +15767,7 @@ def render_circle_navigation(active_key: str) -> None:
             f'{"".join(orbit_links)}'
             f'<a class="desktop-orbit-item{center_active}" href="{diary_href}" target="_self" aria-label="{ui_html("Financial Diary")}" '
             'style="--accent: #ec4899; --accent-rgb: 236, 72, 153;">'
-            f'<b>DY</b><span>{ui_html("Diary")}</span></a>'
+            f'{visual_icon_html("diary", "#ec4899", "nav-image-icon")}<span>{ui_html("Diary")}</span></a>'
             '</div></div>'
         ),
         unsafe_allow_html=True,
@@ -15353,7 +15781,7 @@ def render_mobile_navigation(active_key: str) -> None:
         {"key": "portfolio", "label": "Port", "icon": "PF", "slot": "mobile-orbit-right"},
         {"key": "reit", "label": "Real Estate", "icon": "RE", "slot": "mobile-orbit-bottom-right"},
         {"key": "scenario", "label": "Scenario", "icon": "SC", "slot": "mobile-orbit-bottom-left"},
-        {"key": "advisor", "label": "Advisor", "icon": "AR", "slot": "mobile-orbit-left"},
+        {"key": "advisor", "label": "Case Studies", "icon": "CS", "slot": "mobile-orbit-left"},
     ]
     orbit_links = []
     for item in orbit_items:
@@ -15361,7 +15789,8 @@ def render_mobile_navigation(active_key: str) -> None:
         href = escape(app_view_href(item["key"]), quote=True)
         orbit_links.append(
             f'<a class="mobile-orbit-item {item["slot"]}{active_class}" href="{href}" target="_self" aria-label="{ui_html(item["label"])}">'
-            f'<b>{escape(item["icon"])}</b><span>{ui_html(item["label"])}</span></a>'
+            f'{visual_icon_html(item["key"], "#0f766e", "mobile-nav-image-icon")}'
+            f'<span>{ui_html(item["label"])}</span></a>'
         )
     center_active = " active" if active_key == "diary" else ""
     diary_href = escape(app_view_href("diary"), quote=True)
@@ -15372,7 +15801,7 @@ def render_mobile_navigation(active_key: str) -> None:
             '<div class="mobile-orbit-shell">'
             f'{"".join(orbit_links)}'
             f'<a class="mobile-orbit-center{center_active}" href="{diary_href}" target="_self" aria-label="{ui_html("Financial Diary")}">'
-            f'<b>{ui_html("Diary")}</b><span>{ui_html("Personal Memory")}</span></a></div>'
+            f'{visual_icon_html("diary", "#ec4899", "mobile-nav-image-icon")}<span>{ui_html("Personal Memory")}</span></a></div>'
             '</div>'
         ),
         unsafe_allow_html=True,
@@ -15512,6 +15941,7 @@ def render_finance_snapshot_ribbon(active_key: str) -> None:
         goal_sub = config[f"short_{language}"]
         goal_detail = config[f"strategy_{language}"]
         goal_tone = "good"
+        goal_level = 100.0
     else:
         goal_value = "No goal" if language == "en" else "목표 없음"
         goal_sub = "Choose first" if language == "en" else "먼저 선택"
@@ -15521,10 +15951,12 @@ def render_finance_snapshot_ribbon(active_key: str) -> None:
             else "목표 선택이 계산보다 먼저 전략의 기준을 정합니다."
         )
         goal_tone = "watch"
+        goal_level = 28.0
 
     if personal:
         emergency = float(personal.get("emergency_months") or 0)
         health = float(personal.get("financial_health_score") or 0)
+        required_runway = max(1.0, float(personal.get("required_runway_months") or 6))
         surplus = float(personal.get("monthly_surplus") or 0)
         runway_value = f"{emergency:.1f} mo" if language == "en" else f"{emergency:.1f}개월"
         runway_sub = f"Health {health:.0f}/100" if language == "en" else f"건강도 {health:.0f}/100"
@@ -15536,6 +15968,7 @@ def render_finance_snapshot_ribbon(active_key: str) -> None:
             "유동성과 계획 건강도는 현재 삶이 위험을 감당할 수 있는지 보여줍니다."
         )
         runway_tone = "good" if emergency >= 6 and health >= 70 else "mid" if emergency >= 3 and health >= 50 else "watch"
+        runway_level = max(5.0, min(100.0, (emergency / required_runway) * 100))
     else:
         runway_value = "Input" if language == "en" else "입력"
         runway_sub = "No finance data" if language == "en" else "재무 데이터 없음"
@@ -15545,6 +15978,7 @@ def render_finance_snapshot_ribbon(active_key: str) -> None:
             else "수입, 지출, 현금, 부채, 목표를 입력하면 생존기간과 건강도가 열립니다."
         )
         runway_tone = "watch"
+        runway_level = 18.0
 
     if total_value > 0:
         portfolio_value = fmt_money_compact(total_value, base_currency, language)
@@ -15559,6 +15993,7 @@ def render_finance_snapshot_ribbon(active_key: str) -> None:
             "포트폴리오 가치와 valuation 점수는 행동 전 시장 노출을 보여줍니다."
         )
         portfolio_tone = "good" if valuation_score is not None and valuation_score >= 5 else "watch" if valuation_score is not None and valuation_score <= -5 else "mid"
+        portfolio_level = max(22.0, min(100.0, holdings_count * 18.0 + (50.0 if valuation_score is not None else 22.0)))
     else:
         portfolio_value = "Add holdings" if language == "en" else "종목 추가"
         portfolio_sub = "No portfolio" if language == "en" else "포트폴리오 없음"
@@ -15568,19 +16003,23 @@ def render_finance_snapshot_ribbon(active_key: str) -> None:
             else "포트폴리오에서 티커나 회사명을 검색한 뒤 포지션을 추가하면 가치평가가 계산됩니다."
         )
         portfolio_tone = "watch"
+        portfolio_level = 16.0
 
     if scenario:
         risk_value = "Stress ready" if language == "en" else "스트레스 준비"
         risk_sub = "Scenario exists" if language == "en" else "시나리오 있음"
         risk_tone = "good"
+        risk_level = 88.0
     elif personal or total_value > 0:
         risk_value = "Watch" if language == "en" else "주의"
         risk_sub = "Scenario needed" if language == "en" else "시나리오 필요"
         risk_tone = "mid"
+        risk_level = 54.0
     else:
         risk_value = "Needs data" if language == "en" else "데이터 필요"
         risk_sub = "Finance + portfolio" if language == "en" else "재무 + 포트폴리오"
         risk_tone = "watch"
+        risk_level = 18.0
     risk_detail = (
         "Risk signal combines scenario, portfolio, finance, and memory readiness."
         if language == "en"
@@ -15588,19 +16027,22 @@ def render_finance_snapshot_ribbon(active_key: str) -> None:
     )
 
     cards = [
-        ("target", "Goal" if language == "en" else "목표", goal_value, goal_sub, goal_detail, goal_tone),
-        ("runway", "Runway" if language == "en" else "생존기간", runway_value, runway_sub, runway_detail, runway_tone),
-        ("portfolio", "Portfolio Value" if language == "en" else "포트폴리오 가치", portfolio_value, portfolio_sub, portfolio_detail, portfolio_tone),
-        ("risk", "Risk Signal" if language == "en" else "위험 신호", risk_value, risk_sub, risk_detail, risk_tone),
+        ("target", "Goal" if language == "en" else "목표", goal_value, goal_sub, goal_detail, goal_tone, goal_level),
+        ("runway", "Runway" if language == "en" else "생존기간", runway_value, runway_sub, runway_detail, runway_tone, runway_level),
+        ("portfolio", "Portfolio Value" if language == "en" else "포트폴리오 가치", portfolio_value, portfolio_sub, portfolio_detail, portfolio_tone, portfolio_level),
+        ("risk", "Risk Signal" if language == "en" else "위험 신호", risk_value, risk_sub, risk_detail, risk_tone, risk_level),
     ]
     card_html = []
-    for glyph, label, value, sub, detail, tone in cards:
+    tone_colors = {"good": "#0f766e", "mid": "#2563eb", "watch": "#d97706"}
+    for glyph, label, value, sub, detail, tone, level in cards:
+        level = max(0.0, min(100.0, float(level)))
         card_html.append(
             f'<div class="finance-snapshot-card {escape(tone)}" tabindex="0" title="{escape(detail, quote=True)}">'
-            f'<span class="finance-snapshot-glyph">{escape(glyph[:2].upper())}</span>'
+            f'<span class="finance-snapshot-glyph image-glyph">{visual_icon_html(glyph, tone_colors.get(tone, "#0f766e"), "finance-snapshot-icon")}</span>'
             f'<small>{escape(label)}</small>'
             f'<b>{escape(value)}</b>'
             f'<em>{escape(sub)}</em>'
+            f'<span class="finance-snapshot-meter" aria-hidden="true"><i style="--level: {level:.0f}%;"></i></span>'
             f'<span class="finance-snapshot-detail">{escape(detail)}</span>'
             '</div>'
         )
@@ -15632,11 +16074,12 @@ def render_rationality_gate() -> None:
         pillar_score = max(0.0, min(100.0, float(item["score"])))
         pillar_tone = rationality_tone(pillar_score)
         detail = str(item["detail"])
+        node_color = {"good": "#0f766e", "mid": "#2563eb", "watch": "#d97706"}[pillar_tone]
         pillar_nodes.append(
             f'<span class="rationality-node {pillar_tone}" tabindex="0" '
             f'title="{escape(ui(item["label"]) + ": " + detail, quote=True)}" '
             f'style="--value: {pillar_score:.0f}%;">'
-            f'<b>{escape(str(item["glyph"]))}</b></span>'
+            f'{visual_icon_html(item["glyph"], node_color, "rationality-icon")}</span>'
         )
         detail_items.append(
             f'<li><b>{ui_html(item["label"])}</b><span>{escape(detail)}</span></li>'
@@ -15678,7 +16121,7 @@ def render_life_compact_panel() -> None:
         cards.append(
             f'<a class="life-goal-link" style="--goal-color: {escape(config["color"])};" '
             f'href="{escape(goal_href(goal_key), quote=True)}" target="_self">'
-            f'<span>{escape(config["icon"])}</span><b>{escape(config[f"label_{language}"])}</b>'
+            f'<span>{visual_icon_html(goal_key, config["color"], "life-goal-icon")}</span><b>{escape(config[f"label_{language}"])}</b>'
             '</a>'
         )
     st.markdown(
@@ -15712,7 +16155,7 @@ def render_main_app() -> None:
         f"""
         <div class="brand-header">
             <div class="brand-mark">
-                <div class="brand-icon" aria-hidden="true"><span>LY</span></div>
+                <div class="brand-icon" aria-hidden="true">{brand_logo_html()}</div>
                 <div class="brand-copy">
                     <div class="brand-wordmark">
                         <div class="brand-name">LY-Scope</div>
