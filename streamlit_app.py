@@ -216,7 +216,25 @@ KO_TRANSLATIONS = {
     "Financial Health": "재무 건강도",
     "Cash flow, savings, debt, liquidity, and capacity.": "현금흐름, 저축, 부채, 유동성, 감당 능력.",
     "Financial Diary": "금융 다이어리",
-    "Advisor Reports": "어드바이저 리포트",
+    "Advisor Reports": "케이스 스터디",
+    "Case Studies": "케이스 스터디",
+    "NORA Case Study Lab": "NORA 케이스 스터디 Lab",
+    "Read fictional client cases through the current NORA web flow: goal, situation, evidence, decision, and memory.": "현재 NORA 웹 흐름에 맞춰 가상 고객 케이스를 목표, 상황, 근거, 결정, 기억 순서로 검토하세요.",
+    "Case Study Board": "케이스 스터디 보드",
+    "Pick a client, then read the goal and stress signal before opening details.": "고객을 선택한 뒤 세부내용보다 먼저 목표와 스트레스 신호를 확인하세요.",
+    "Customer Goal": "고객 목표",
+    "Crisis": "위기",
+    "NORA Case Path": "NORA 케이스 경로",
+    "Use Case as Decision Draft": "케이스를 결정 초안으로 사용",
+    "Case Study Details": "케이스 상세",
+    "Case Study Archive": "케이스 스터디 아카이브",
+    "Show table details": "표 상세 보기",
+    "Open this case in the Decision Capture flow.": "이 케이스를 Decision Capture 흐름에서 엽니다.",
+    "Purpose": "목적",
+    "Situation": "상황",
+    "Decision": "결정",
+    "Review": "검토",
+    "Visual Case Snapshot": "시각 케이스 스냅샷",
     "Advisor": "어드바이저",
     "Portfolio / SR": "포트폴리오 / SR",
     "Goal-first mobile map": "목표 중심 모바일 맵",
@@ -311,9 +329,9 @@ KO_TRANSLATIONS = {
     "Review formulas before trusting outputs.": "결과를 신뢰하기 전에 공식을 확인하세요.",
     "Check API and macro assumptions.": "API와 거시 가정을 확인하세요.",
     "Use this for professor/demo walkthroughs.": "교수님/데모 설명용으로 사용하세요.",
-    "Review virtual clients and export advisor PDF reports.": "가상 고객을 검토하고 어드바이저 PDF 리포트를 내보내세요.",
+    "Review virtual clients and export advisor PDF reports.": "가상 고객 케이스를 검토하고 PDF 리포트를 내보내세요.",
     "Review real estate value, income durability, and rate-sensitive exposure.": "부동산 가치, 소득 지속성, 금리 민감 노출을 검토하세요.",
-    "Review virtual clients through the LY-Scope-Ver.2 decision architecture and export PDF reports.": "LY-Scope-Ver.2 의사결정 아키텍처로 가상 고객을 검토하고 PDF 리포트를 내보내세요.",
+    "Review virtual clients through the LY-Scope-Ver.2 decision architecture and export PDF reports.": "LY-Scope-Ver.2 의사결정 아키텍처로 가상 고객 케이스를 검토하고 PDF 리포트를 내보내세요.",
     "These fictional reports use the existing Personal Finance engine plus a rule-based advisor layer. They are educational examples, not professional advice.": "이 가상 리포트는 기존 개인 재무 엔진과 규칙 기반 어드바이저 레이어를 사용합니다. 교육용 예시이며 전문 조언이 아닙니다.",
     "Select virtual client": "가상 고객 선택",
     "Advisor Interpretation": "어드바이저 해석",
@@ -12571,6 +12589,197 @@ def render_advisor_report_style() -> None:
     st.markdown(
         """
         <style>
+        .case-study-hero {
+            border: 1px solid rgba(148, 163, 184, 0.24);
+            border-radius: 10px;
+            padding: 18px;
+            margin: 0 0 16px;
+            background:
+                radial-gradient(circle at 8% 0%, rgba(20, 184, 166, 0.12), transparent 32%),
+                radial-gradient(circle at 94% 12%, rgba(59, 130, 246, 0.11), transparent 30%),
+                rgba(255, 255, 255, 0.98);
+            box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
+        }
+        .case-study-hero small {
+            display: block;
+            color: #0f766e;
+            font-size: 0.72rem;
+            line-height: 1;
+            font-weight: 950;
+            text-transform: uppercase;
+        }
+        .case-study-hero h1 {
+            margin: 8px 0 5px;
+            color: #0f172a;
+            font-size: 1.72rem;
+            line-height: 1.05;
+            font-weight: 950;
+        }
+        .case-study-hero p {
+            max-width: 760px;
+            margin: 0;
+            color: #475569;
+            font-size: 0.9rem;
+            line-height: 1.45;
+            font-weight: 720;
+        }
+        .case-study-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 14px;
+        }
+        .case-study-flow span {
+            display: inline-flex;
+            align-items: center;
+            min-height: 28px;
+            padding: 0 10px;
+            border-radius: 999px;
+            color: #0f4a5a;
+            background: #ecfeff;
+            border: 1px solid rgba(14, 116, 144, 0.14);
+            font-size: 0.72rem;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+        .case-study-snapshot {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+            gap: 14px;
+            margin: 14px 0 16px;
+        }
+        .case-study-profile-card,
+        .case-study-decision-card {
+            border-radius: 10px;
+            border: 1px solid rgba(148, 163, 184, 0.24);
+            background: rgba(255, 255, 255, 0.98);
+            padding: 16px;
+            box-shadow: 0 12px 26px rgba(15, 23, 42, 0.055);
+        }
+        .case-study-profile-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 13px;
+        }
+        .case-study-person {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+        .case-study-avatar {
+            flex: 0 0 48px;
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            background: linear-gradient(135deg, #0f766e, #2563eb);
+            font-size: 1rem;
+            font-weight: 950;
+        }
+        .case-study-person b {
+            display: block;
+            color: #0f172a;
+            font-size: 1.12rem;
+            line-height: 1.08;
+            font-weight: 950;
+        }
+        .case-study-person span,
+        .case-study-profile-top em {
+            display: block;
+            color: #64748b;
+            font-size: 0.75rem;
+            line-height: 1.2;
+            font-style: normal;
+            font-weight: 820;
+        }
+        .case-study-goal-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+        }
+        .case-study-goal-cell {
+            min-height: 94px;
+            border-radius: 9px;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            background: #f8fafc;
+            padding: 12px;
+        }
+        .case-study-goal-cell small,
+        .case-study-decision-card small {
+            display: block;
+            color: #64748b;
+            font-size: 0.66rem;
+            line-height: 1.05;
+            font-weight: 950;
+            text-transform: uppercase;
+        }
+        .case-study-goal-cell b,
+        .case-study-decision-card b {
+            display: block;
+            margin-top: 6px;
+            color: #0f172a;
+            font-size: 0.88rem;
+            line-height: 1.28;
+            font-weight: 880;
+        }
+        .case-study-decision-card {
+            border-color: rgba(15, 118, 110, 0.22);
+            background:
+                linear-gradient(135deg, rgba(236, 253, 245, 0.98), rgba(239, 246, 255, 0.96));
+        }
+        .case-study-decision-card strong {
+            display: block;
+            margin: 8px 0 10px;
+            color: #0f172a;
+            font-size: 1.24rem;
+            line-height: 1.08;
+            font-weight: 950;
+        }
+        .case-study-evidence-row {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .case-study-evidence-mini {
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            padding: 10px;
+        }
+        .case-study-evidence-mini span {
+            display: block;
+            color: #64748b;
+            font-size: 0.66rem;
+            font-weight: 900;
+        }
+        .case-study-evidence-mini b {
+            display: block;
+            margin-top: 4px;
+            color: #0f172a;
+            font-size: 0.9rem;
+            line-height: 1.15;
+            font-weight: 940;
+        }
+        .case-study-details {
+            margin: 10px 0 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            background: rgba(255, 255, 255, 0.96);
+            padding: 10px 14px;
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.045);
+        }
+        .case-study-details summary {
+            cursor: pointer;
+            color: #0f172a;
+            font-size: 0.86rem;
+            font-weight: 920;
+        }
         .advisor-report-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
@@ -12619,10 +12828,10 @@ def render_advisor_report_style() -> None:
             font-weight: 850;
         }
         .advisor-memory-card {
-            border: 1px solid rgba(20, 184, 166, 0.24);
+            border: 1px solid rgba(20, 184, 166, 0.18);
             border-radius: 8px;
-            background: linear-gradient(135deg, rgba(15, 118, 110, 0.96), rgba(15, 23, 42, 0.96));
-            color: #f8fafc;
+            background: linear-gradient(135deg, #0f766e, #164e63);
+            color: #ffffff;
             padding: 18px;
         }
         .advisor-memory-card h3 {
@@ -12645,7 +12854,7 @@ def render_advisor_report_style() -> None:
         }
         .advisor-scenario-board {
             display: grid;
-            grid-template-columns: repeat(5, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
             gap: 10px;
             margin: 16px 0 18px;
         }
@@ -12777,7 +12986,12 @@ def render_advisor_report_style() -> None:
             font-size: 0.92rem;
         }
         @media (max-width: 900px) {
+            .case-study-snapshot,
             .advisor-report-grid {
+                grid-template-columns: 1fr;
+            }
+            .case-study-goal-grid,
+            .case-study-evidence-row {
                 grid-template-columns: 1fr;
             }
             .advisor-scenario-board,
@@ -12864,12 +13078,8 @@ def advisor_scenario_review(report: dict[str, Any], language: str) -> dict[str, 
 
 
 def render_advisor_scenario_board(reports: list[dict[str, Any]], selected_id: str, language: str) -> None:
-    title = "Client Scenario Board" if language == "en" else "고객 시나리오 보드"
-    caption = (
-        "Pick a client, then read the stress verdict before opening the full report."
-        if language == "en"
-        else "고객을 선택한 뒤, 전체 리포트보다 먼저 스트레스 판정을 확인하세요."
-    )
+    title = ui("Case Study Board")
+    caption = ui("Pick a client, then read the goal and stress signal before opening details.")
     cards: list[str] = []
     for report in reports:
         client = report["client"]
@@ -12930,6 +13140,114 @@ def render_selected_client_stress_review(report: dict[str, Any], language: str) 
     )
 
 
+def case_study_statement(report: dict[str, Any], language: str) -> str:
+    client = report["client"]
+    weakest = report["weakest_signal"]["label"]
+    if language == "ko":
+        return (
+            f"{client.name} 케이스 스터디: {client.text('goal', language)} "
+            f"현재 상황은 {client.text('situation', language)} "
+            f"가장 약한 신호는 {weakest}이고, 결정 방향은 {report['decision_compass']}입니다. "
+            f"어드바이저 초점은 {client.text('advisor_focus', language)}입니다."
+        )
+    return (
+        f"Case study for {client.name}: {client.text('goal', language)} "
+        f"Current situation: {client.text('situation', language)} "
+        f"The weakest signal is {weakest}, and the decision direction is {report['decision_compass']}. "
+        f"Advisor focus: {client.text('advisor_focus', language)}."
+    )
+
+
+def apply_case_study_to_decision_capture(report: dict[str, Any]) -> None:
+    language = current_language()
+    statement = case_study_statement(report, language)
+    st.session_state.decision_capture_text = statement
+    st.session_state.decision_capture_amount_text = ""
+    st.session_state.decision_capture_draft = build_decision_capture_draft(statement, "")
+    set_active_nav_key("life")
+
+
+def render_case_study_hero(language: str) -> None:
+    flow = ["Purpose", "Situation", "Evidence", "Decision", "Memory"]
+    if language == "ko":
+        flow = ["목적", "상황", "근거", "결정", "기억"]
+    flow_html = "".join(f"<span>{escape(item)}</span>" for item in flow)
+    st.markdown(
+        f"""
+        <section class="case-study-hero">
+            <small>{ui_html("NORA Case Study Lab")}</small>
+            <h1>{ui_html("Case Studies")}</h1>
+            <p>{ui_html("Read fictional client cases through the current NORA web flow: goal, situation, evidence, decision, and memory.")}</p>
+            <div class="case-study-flow">{flow_html}</div>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_case_study_snapshot(report: dict[str, Any], language: str, advisor_label: Any) -> None:
+    client = report["client"]
+    result = report["result"]
+    review = advisor_scenario_review(report, language)
+    initials = "".join(part[:1] for part in client.name.split()[:2]).upper()
+    runway = float(result["emergency_months"])
+    required = float(result["required_runway_months"])
+    exposure = float(result["investment_exposure_ratio"]) * 100
+    portfolio_score = float(report["portfolio"]["score"])
+    weakest = report["weakest_signal"]
+
+    html = f"""
+    <section class="case-study-snapshot" aria-label="{ui_html('Visual Case Snapshot')}">
+        <div class="case-study-profile-card">
+            <div class="case-study-profile-top">
+                <div class="case-study-person">
+                    <div class="case-study-avatar">{escape(initials)}</div>
+                    <div>
+                        <b>{escape(client.name)}</b>
+                        <span>{escape(client.client_id)} · {escape(client.text('segment', language))}</span>
+                    </div>
+                </div>
+                <em>{escape(report['status'])} · {float(result['planning_health_score']):.0f}/100</em>
+            </div>
+            <div class="case-study-goal-grid">
+                <div class="case-study-goal-cell">
+                    <small>{ui_html('Customer Goal')}</small>
+                    <b>{escape(compact_text(client.text('goal', language), 145))}</b>
+                </div>
+                <div class="case-study-goal-cell">
+                    <small>{ui_html('Current Situation')}</small>
+                    <b>{escape(compact_text(client.text('situation', language), 145))}</b>
+                </div>
+                <div class="case-study-goal-cell">
+                    <small>{ui_html('Crisis')}</small>
+                    <b>{escape(str(weakest['label']))} · {float(weakest['score']):.0f}/100</b>
+                </div>
+            </div>
+        </div>
+        <div class="case-study-decision-card">
+            <small>{ui_html('NORA Case Path')}</small>
+            <strong>{escape(report['decision_compass'])}</strong>
+            <b>{escape(review['summary'])}</b>
+            <div class="case-study-evidence-row">
+                <div class="case-study-evidence-mini">
+                    <span>{escape(advisor_label('cash_runway', language))}</span>
+                    <b>{runway:.1f}/{required:.1f}</b>
+                </div>
+                <div class="case-study-evidence-mini">
+                    <span>{escape(advisor_label('investment_exposure', language))}</span>
+                    <b>{exposure:.1f}%</b>
+                </div>
+                <div class="case-study-evidence-mini">
+                    <span>{escape(advisor_label('portfolio_quality', language))}</span>
+                    <b>{portfolio_score:.0f}/100</b>
+                </div>
+            </div>
+        </div>
+    </section>
+    """
+    st.markdown(html, unsafe_allow_html=True)
+
+
 def render_advisor_reports_tab() -> None:
     from advisor_report_engine import (
         all_clients_pdf_bytes,
@@ -12961,18 +13279,7 @@ def render_advisor_reports_tab() -> None:
         "portfolio": advisor_label("portfolio_quality", advisor_language),
     }
 
-    st.markdown(
-        """
-        <div class="hero-panel">
-            <h1 style="margin:0 0 8px;">{}</h1>
-            <div class="hero-muted">{}</div>
-        </div>
-        """.format(
-            ui_html("Advisor Reports"),
-            ui_html("Review virtual clients through the LY-Scope-Ver.2 decision architecture and export PDF reports."),
-        ),
-        unsafe_allow_html=True,
-    )
+    render_case_study_hero(advisor_language)
     st.caption(
         ui("These fictional reports use the existing Personal Finance engine plus a rule-based advisor layer. They are educational examples, not professional advice.")
     )
@@ -12997,34 +13304,32 @@ def render_advisor_reports_tab() -> None:
         )
     score_df = pd.DataFrame(score_rows)
 
-    overview_cols = st.columns([2, 1])
-    with overview_cols[0]:
-        st.altair_chart(
-            alt.Chart(score_df)
-            .mark_bar(cornerRadiusTopRight=8, cornerRadiusBottomRight=8)
-            .encode(
-                y=alt.Y(f"{score_columns['client']}:N", sort="-x", title=None),
-                x=alt.X(
-                    f"{score_columns['planning']}:Q",
-                    scale=alt.Scale(domain=[0, 100]),
-                    title=ui("Planning Health Score"),
-                ),
-                color=alt.Color(
-                    f"{score_columns['status']}:N",
-                    legend=alt.Legend(title=score_columns["status"]),
-                ),
-                tooltip=[
-                    score_columns["name"],
-                    score_columns["segment"],
-                    alt.Tooltip(f"{score_columns['planning']}:Q", format=".1f"),
-                    alt.Tooltip(f"{score_columns['runway']}:Q", format=".1f"),
-                    alt.Tooltip(f"{score_columns['exposure']}:Q", format=".1f"),
-                ],
-            )
-            .properties(height=330),
-            width="stretch",
+    st.altair_chart(
+        alt.Chart(score_df)
+        .mark_bar(cornerRadiusTopRight=8, cornerRadiusBottomRight=8)
+        .encode(
+            y=alt.Y(f"{score_columns['client']}:N", sort="-x", title=None),
+            x=alt.X(
+                f"{score_columns['planning']}:Q",
+                scale=alt.Scale(domain=[0, 100]),
+                title=ui("Planning Health Score"),
+            ),
+            color=alt.Color(
+                f"{score_columns['status']}:N",
+                legend=alt.Legend(title=score_columns["status"]),
+            ),
+            tooltip=[
+                score_columns["name"],
+                score_columns["segment"],
+                alt.Tooltip(f"{score_columns['planning']}:Q", format=".1f"),
+                alt.Tooltip(f"{score_columns['runway']}:Q", format=".1f"),
+                alt.Tooltip(f"{score_columns['exposure']}:Q", format=".1f"),
+            ],
         )
-    with overview_cols[1]:
+        .properties(height=330),
+        width="stretch",
+    )
+    with st.expander(ui("Show table details"), expanded=False):
         st.dataframe(
             score_df[
                 [
@@ -13052,6 +13357,20 @@ def render_advisor_reports_tab() -> None:
     client = report["client"]
     result = report["result"]
 
+    render_case_study_snapshot(report, advisor_language, advisor_label)
+
+    action_cols = st.columns(2)
+    with action_cols[0]:
+        if st.button(ui("Use Case as Decision Draft"), width="stretch"):
+            apply_case_study_to_decision_capture(report)
+            st.rerun()
+    with action_cols[1]:
+        if st.button(ui("Load Client Into Finance"), width="stretch"):
+            apply_advisor_client_to_finance(report)
+            set_active_nav_key("finance")
+            st.rerun()
+    st.caption(ui("Open this case in the Decision Capture flow."))
+
     score_cards = "".join(
         "".join(
             line.strip()
@@ -13065,32 +13384,6 @@ def render_advisor_reports_tab() -> None:
         for card in report["scorecards"]
     )
     actions_html = "".join(f"<li>{escape(action)}</li>" for action in report["actions"])
-    st.markdown(
-        f"""
-        <div class="advisor-report-grid">
-            <div class="advisor-client-card">
-                <div class="advisor-kicker">{escape(client.client_id)} · {escape(client.text('segment', advisor_language))}</div>
-                <div class="advisor-title">{escape(client.name)}</div>
-                <div class="advisor-subtitle">{escape(client.text('situation', advisor_language))}</div>
-                <div class="advisor-status-strip">
-                    <span class="advisor-chip">{ui_html('Status')}: {escape(report['status'])}</span>
-                    <span class="advisor-chip">{ui_html('Age')}: {client.age}</span>
-                    <span class="advisor-chip">{ui_html('Currency')}: {escape(client.currency)}</span>
-                    <span class="advisor-chip">{ui_html('Net Worth')}: {escape(money_text(float(result['net_worth']), client.currency, advisor_language))}</span>
-                    <span class="advisor-chip">{escape(advisor_label('decision_compass', advisor_language))}: {escape(report['decision_compass'])}</span>
-                    <span class="advisor-chip">{escape(advisor_label('crisis_signal', advisor_language))}: {escape(report['weakest_signal']['label'])}</span>
-                </div>
-            </div>
-            <div class="advisor-memory-card">
-                <h3>{ui_html('Advisor Interpretation')}</h3>
-                <p>{escape(report['diagnosis'])}</p>
-                <p><b>{ui_html('Focus')}:</b> {escape(client.text('advisor_focus', advisor_language))}</p>
-                <ul class="advisor-action-list">{actions_html}</ul>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
     render_selected_client_stress_review(report, advisor_language)
     st.markdown(f'<div class="portfolio-score-grid">{score_cards}</div>', unsafe_allow_html=True)
 
@@ -13130,30 +13423,6 @@ def render_advisor_reports_tab() -> None:
             width="stretch",
         )
 
-    evidence_cols = st.columns(2)
-    with evidence_cols[0]:
-        st.subheader(ui("Evidence"))
-        st.dataframe(
-            [{advisor_label("evidence", advisor_language): item} for item in report["evidence"]],
-            hide_index=True,
-            width="stretch",
-        )
-    with evidence_cols[1]:
-        st.subheader(ui("Decision Path"))
-        st.dataframe(
-            [
-                {advisor_label("layer", advisor_language): advisor_label("user", advisor_language), advisor_label("reading", advisor_language): client.text("segment", advisor_language)},
-                {advisor_label("layer", advisor_language): advisor_label("data", advisor_language), advisor_label("reading", advisor_language): advisor_label("decision_path_data", advisor_language)},
-                {advisor_label("layer", advisor_language): advisor_label("model", advisor_language), advisor_label("reading", advisor_language): advisor_label("decision_path_model", advisor_language)},
-                {advisor_label("layer", advisor_language): advisor_label("evidence", advisor_language), advisor_label("reading", advisor_language): advisor_label("decision_path_evidence", advisor_language)},
-                {advisor_label("layer", advisor_language): advisor_label("ai_interpretation", advisor_language), advisor_label("reading", advisor_language): report["diagnosis"]},
-                {advisor_label("layer", advisor_language): advisor_label("decision", advisor_language), advisor_label("reading", advisor_language): report["actions"][0]},
-                {advisor_label("layer", advisor_language): advisor_label("memory", advisor_language), advisor_label("reading", advisor_language): advisor_label("decision_path_memory", advisor_language)},
-            ],
-            hide_index=True,
-            width="stretch",
-        )
-
     portfolio_rows = []
     for holding in report["portfolio"]["positions"]:
         upside = holding.get("valuation_upside")
@@ -13167,16 +13436,65 @@ def render_advisor_reports_tab() -> None:
                 ui("Valuation"): "N/A" if upside is None else f"{float(upside) * 100:+.1f}%",
             }
         )
-    if portfolio_rows:
-        st.subheader(ui("Portfolio / Valuation Sample"))
-        st.dataframe(portfolio_rows, hide_index=True, width="stretch")
-        st.caption(
-            f"{ui('Portfolio beta')} {float(report['portfolio']['weighted_beta']):.2f} · "
-            f"{ui('Largest holding')} {float(report['portfolio']['largest_weight']) * 100:.1f}% · "
-            f"{ui('Sector concentration')} {float(report['portfolio']['sector_concentration']) * 100:.1f}%"
-        )
 
-    with st.expander(ui("Selected client report text"), expanded=False):
+    with st.expander(ui("Case Study Details"), expanded=False):
+        st.markdown(
+            f"""
+            <div class="advisor-report-grid">
+                <div class="advisor-client-card">
+                    <div class="advisor-kicker">{escape(client.client_id)} · {escape(client.text('segment', advisor_language))}</div>
+                    <div class="advisor-title">{escape(client.name)}</div>
+                    <div class="advisor-subtitle">{escape(client.text('situation', advisor_language))}</div>
+                    <div class="advisor-status-strip">
+                        <span class="advisor-chip">{ui_html('Status')}: {escape(report['status'])}</span>
+                        <span class="advisor-chip">{ui_html('Age')}: {client.age}</span>
+                        <span class="advisor-chip">{ui_html('Currency')}: {escape(client.currency)}</span>
+                        <span class="advisor-chip">{ui_html('Net Worth')}: {escape(money_text(float(result['net_worth']), client.currency, advisor_language))}</span>
+                        <span class="advisor-chip">{escape(advisor_label('decision_compass', advisor_language))}: {escape(report['decision_compass'])}</span>
+                        <span class="advisor-chip">{escape(advisor_label('crisis_signal', advisor_language))}: {escape(report['weakest_signal']['label'])}</span>
+                    </div>
+                </div>
+                <div class="advisor-memory-card">
+                    <h3>{ui_html('Advisor Interpretation')}</h3>
+                    <p>{escape(report['diagnosis'])}</p>
+                    <p><b>{ui_html('Focus')}:</b> {escape(client.text('advisor_focus', advisor_language))}</p>
+                    <ul class="advisor-action-list">{actions_html}</ul>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        evidence_cols = st.columns(2)
+        with evidence_cols[0]:
+            st.subheader(ui("Evidence"))
+            st.dataframe(
+                [{advisor_label("evidence", advisor_language): item} for item in report["evidence"]],
+                hide_index=True,
+                width="stretch",
+            )
+        with evidence_cols[1]:
+            st.subheader(ui("Decision Path"))
+            st.dataframe(
+                [
+                    {advisor_label("layer", advisor_language): advisor_label("user", advisor_language), advisor_label("reading", advisor_language): client.text("segment", advisor_language)},
+                    {advisor_label("layer", advisor_language): advisor_label("data", advisor_language), advisor_label("reading", advisor_language): advisor_label("decision_path_data", advisor_language)},
+                    {advisor_label("layer", advisor_language): advisor_label("model", advisor_language), advisor_label("reading", advisor_language): advisor_label("decision_path_model", advisor_language)},
+                    {advisor_label("layer", advisor_language): advisor_label("evidence", advisor_language), advisor_label("reading", advisor_language): advisor_label("decision_path_evidence", advisor_language)},
+                    {advisor_label("layer", advisor_language): advisor_label("ai_interpretation", advisor_language), advisor_label("reading", advisor_language): report["diagnosis"]},
+                    {advisor_label("layer", advisor_language): advisor_label("decision", advisor_language), advisor_label("reading", advisor_language): report["actions"][0]},
+                    {advisor_label("layer", advisor_language): advisor_label("memory", advisor_language), advisor_label("reading", advisor_language): advisor_label("decision_path_memory", advisor_language)},
+                ],
+                hide_index=True,
+                width="stretch",
+            )
+        if portfolio_rows:
+            st.subheader(ui("Portfolio / Valuation Sample"))
+            st.dataframe(portfolio_rows, hide_index=True, width="stretch")
+            st.caption(
+                f"{ui('Portfolio beta')} {float(report['portfolio']['weighted_beta']):.2f} · "
+                f"{ui('Largest holding')} {float(report['portfolio']['largest_weight']) * 100:.1f}% · "
+                f"{ui('Sector concentration')} {float(report['portfolio']['sector_concentration']) * 100:.1f}%"
+            )
         st.text_area(
             ui("Selected client report text"),
             value=report["report_text"],
@@ -13193,7 +13511,7 @@ def render_advisor_reports_tab() -> None:
     except Exception as exc:
         pdf_error = str(exc)
 
-    button_cols = st.columns(3)
+    button_cols = st.columns(2)
     with button_cols[0]:
         st.download_button(
             ui("Download Selected Client PDF"),
@@ -13212,16 +13530,11 @@ def render_advisor_reports_tab() -> None:
             width="stretch",
             disabled=all_pdf is None,
         )
-    with button_cols[2]:
-        if st.button(ui("Load Client Into Finance"), width="stretch"):
-            apply_advisor_client_to_finance(report)
-            set_active_nav_key("finance")
-            st.rerun()
 
     if pdf_error:
         st.warning(f"PDF export is unavailable until reportlab is installed: {pdf_error}")
 
-    st.subheader(ui("All Virtual Client Results"))
+    st.subheader(ui("Case Study Archive"))
     for item in reports:
         item_client = item["client"]
         item_result = item["result"]
@@ -14798,7 +15111,7 @@ NAV_ITEMS = [
     {"key": "finance", "label": "Finance", "icon": "FI"},
     {"key": "portfolio", "label": "Portfolio", "icon": "PF"},
     {"key": "diary", "label": "Diary", "icon": "DY"},
-    {"key": "advisor", "label": "Advisor", "icon": "AR"},
+    {"key": "advisor", "label": "Case Studies", "icon": "CS"},
     {"key": "search", "label": "Search", "icon": "SR"},
     {"key": "compare", "label": "Compare", "icon": "CP"},
     {"key": "reit", "label": "Real Estate", "icon": "RE"},
@@ -14931,7 +15244,7 @@ NORA_MODULE_MAP = [
     ("Portfolio / SR", "portfolio"),
     ("Real Estate", "reit"),
     ("Scenario", "scenario"),
-    ("Advisor", "advisor"),
+    ("Case Studies", "advisor"),
     ("Memory", "diary"),
 ]
 
@@ -15071,7 +15384,7 @@ def render_mobile_view_summary(active_key: str) -> None:
         "life": "Life Context",
         "finance": "Finance Readiness",
         "portfolio": "Portfolio Check",
-        "advisor": "Advisor Reports",
+        "advisor": "Case Studies",
         "ai": "AI Coach",
         "diary": "Diary Memory",
         "scenario": "Scenario Lab",
