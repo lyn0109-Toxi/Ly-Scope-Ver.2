@@ -2,6 +2,7 @@ import math
 import os
 import json
 import base64
+import re
 from html import escape
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -224,12 +225,32 @@ KO_TRANSLATIONS = {
     "Developing": "형성 중",
     "Fragile": "취약",
     "Rationality means goal-fit, evidence, model discipline, risk awareness, and memory before action.": "합리성은 행동 전에 목표 적합성, 근거, 모델 절제, 위험 인식, 기억이 연결되는지를 뜻합니다.",
-    "Purpose → Evidence → Risk → Memory": "목적 → 근거 → 위험 → 기억",
+    "Capture → Purpose → Evidence → Decision → Memory": "포착 → 목적 → 근거 → 결정 → 기억",
     "Purpose Fit": "목적 적합성",
+    "Capture Quality": "포착 품질",
+    "Decision Capture": "결정 포착",
+    "User signal": "사용자 신호",
     "Evidence Quality": "근거 품질",
     "Model Discipline": "모델 절제",
     "Risk Awareness": "위험 인식",
+    "Decision Draft": "결정 초안",
     "Memory Feedback": "기억 피드백",
+    "Capture": "포착",
+    "Action": "행동",
+    "Action follow-through": "행동 실행",
+    "Outcome": "결과",
+    "What happened next?": "그 다음 결과는?",
+    "NORA starts with the customer purpose, then checks the strategy and current situation before any model.": "NORA는 고객의 목적에서 시작한 뒤 모델보다 먼저 전략과 현재 상황을 확인합니다.",
+    "Hover or click each visual node to read its role.": "각 시각 노드에 마우스를 올리거나 클릭하면 역할을 확인할 수 있습니다.",
+    "What does the customer want?": "고객은 무엇을 원하는가?",
+    "Strategy path": "전략 경로",
+    "Current reality": "현재 현실",
+    "Structured inputs": "구조화 입력",
+    "Calculation engine": "계산 엔진",
+    "Proof and assumptions": "근거와 가정",
+    "Reasoning layer": "추론 레이어",
+    "Action direction": "행동 방향",
+    "Decision log": "결정 기록",
     "Evidence": "근거",
     "Status": "상태",
     "Age": "나이",
@@ -6550,6 +6571,18 @@ st.markdown(
         left: 12px !important;
         transform: translateX(300px) !important;
     }
+    html body section[data-testid="stSidebar"][aria-expanded="false"] div[data-testid="stSidebarContent"] > div:not([data-testid="stSidebarHeader"]) {
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        overflow: hidden !important;
+    }
+    html body section[data-testid="stSidebar"][aria-expanded="false"] div[data-testid="stSidebarCollapseButton"],
+    html body section[data-testid="stSidebar"][aria-expanded="false"] div[data-testid="stSidebarCollapseButton"] * {
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
     html body section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"] button {
         width: 96px !important;
         height: 38px !important;
@@ -6954,6 +6987,204 @@ st.markdown(
         line-height: 1.12 !important;
         padding-bottom: 1px !important;
     }
+    html body .stApp .decision-capture-panel {
+        margin: 8px 0 14px;
+        padding: 16px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.975);
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.055);
+    }
+    html body .stApp .decision-capture-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+    html body .stApp .decision-capture-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+    }
+    html body .stApp .decision-capture-title span {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border-radius: 9px;
+        color: #ffffff;
+        background: linear-gradient(135deg, #0f766e, #2563eb);
+        font-size: 0.68rem;
+        font-weight: 950;
+    }
+    html body .stApp .decision-capture-title b {
+        display: block;
+        color: #0f172a;
+        font-size: 1.02rem;
+        line-height: 1.05;
+        font-weight: 950;
+    }
+    html body .stApp .decision-capture-title small,
+    html body .stApp .decision-capture-head em {
+        display: block;
+        color: #64748b;
+        font-size: 0.72rem;
+        line-height: 1.18;
+        font-style: normal;
+        font-weight: 760;
+    }
+    html body .stApp .decision-capture-flow {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 5px;
+        flex-wrap: wrap;
+        color: #64748b;
+        font-size: 0.70rem;
+        line-height: 1;
+        font-weight: 850;
+        text-align: right;
+    }
+    html body .stApp div[data-testid="stForm"] {
+        max-width: none !important;
+        border-radius: 10px !important;
+        background: rgba(255, 255, 255, 0.98) !important;
+        border: 1px solid rgba(148, 163, 184, 0.24) !important;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.055) !important;
+    }
+    html body .stApp div[data-testid="stForm"] div[data-testid="stTextInput"] label,
+    html body .stApp div[data-testid="stForm"] div[data-testid="stTextInput"] label *,
+    html body .stApp div[data-testid="stForm"] div[data-testid="stWidgetLabel"],
+    html body .stApp div[data-testid="stForm"] div[data-testid="stWidgetLabel"] *,
+    html body .stApp div[data-testid="stForm"] label,
+    html body .stApp div[data-testid="stForm"] label p,
+    html body .stApp div[data-testid="stForm"] label span {
+        color: #0f172a !important;
+        -webkit-text-fill-color: #0f172a !important;
+        opacity: 1 !important;
+        text-shadow: none !important;
+    }
+    html body .stApp div[data-testid="stForm"] div[data-baseweb="input"],
+    html body .stApp div[data-testid="stForm"] textarea {
+        color: #0f172a !important;
+        background: #ffffff !important;
+        border-color: rgba(148, 163, 184, 0.34) !important;
+        box-shadow: none !important;
+    }
+    html body .stApp .decision-draft-card {
+        margin: 8px 0 12px;
+        padding: 14px;
+        border-radius: 10px;
+        background: #ffffff;
+        border: 1px solid rgba(148, 163, 184, 0.20);
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.045);
+    }
+    html body .stApp .decision-draft-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(120px, 0.8fr));
+        gap: 10px;
+    }
+    html body .stApp .decision-draft-cell {
+        min-height: 76px;
+        padding: 12px;
+        border-radius: 9px;
+        background: #f8fafc;
+        border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+    html body .stApp .decision-draft-cell.primary {
+        background: linear-gradient(135deg, rgba(236, 253, 245, 0.96), rgba(239, 246, 255, 0.94));
+        border-color: rgba(15, 118, 110, 0.18);
+    }
+    html body .stApp .decision-draft-cell small,
+    html body .stApp .evidence-status-card small,
+    html body .stApp .action-chip small {
+        display: block;
+        color: #64748b;
+        font-size: 0.66rem;
+        line-height: 1.05;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+    html body .stApp .decision-draft-cell b {
+        display: block;
+        margin-top: 5px;
+        color: #0f172a;
+        font-size: 0.92rem;
+        line-height: 1.22;
+        font-weight: 920;
+        overflow-wrap: anywhere;
+    }
+    html body .stApp .decision-evidence-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 9px;
+        margin: 8px 0 12px;
+    }
+    html body .stApp .evidence-status-card {
+        min-height: 98px;
+        padding: 12px;
+        border-radius: 9px;
+        background: #ffffff;
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.035);
+    }
+    html body .stApp .evidence-status-card.verified { border-top: 4px solid #0f766e; }
+    html body .stApp .evidence-status-card.user { border-top: 4px solid #2563eb; }
+    html body .stApp .evidence-status-card.ai { border-top: 4px solid #7c3aed; }
+    html body .stApp .evidence-status-card.missing { border-top: 4px solid #d97706; }
+    html body .stApp .evidence-status-card b {
+        display: block;
+        margin-top: 5px;
+        color: #0f172a;
+        font-size: 0.86rem;
+        line-height: 1.22;
+        font-weight: 900;
+    }
+    html body .stApp .evidence-status-card span {
+        display: block;
+        margin-top: 5px;
+        color: #475569;
+        font-size: 0.72rem;
+        line-height: 1.30;
+        font-weight: 720;
+    }
+    html body .stApp .action-chip-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin: 8px 0 12px;
+    }
+    html body .stApp .action-chip {
+        min-height: 52px;
+        flex: 1 1 170px;
+        padding: 10px 12px;
+        border-radius: 9px;
+        background: #f8fafc;
+        border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+    html body .stApp .action-chip b {
+        display: block;
+        margin-top: 4px;
+        color: #0f172a;
+        font-size: 0.82rem;
+        line-height: 1.22;
+        font-weight: 880;
+    }
+    html body .stApp .evidence-footer {
+        margin: 10px 0 2px;
+        padding: 12px;
+        border-radius: 9px;
+        color: #334155;
+        background: #f8fafc;
+        border: 1px dashed rgba(100, 116, 139, 0.26);
+        font-size: 0.76rem;
+        line-height: 1.42;
+    }
+    html body .stApp .evidence-footer b {
+        color: #0f172a;
+    }
     @media (max-width: 760px) {
         html body .stApp .brand-header {
             min-height: 64px !important;
@@ -6973,6 +7204,16 @@ st.markdown(
         }
         html body .stApp .brand-subtitle {
             display: none !important;
+        }
+        html body .stApp .decision-capture-head,
+        html body .stApp .decision-capture-flow {
+            align-items: flex-start;
+            justify-content: flex-start;
+            text-align: left;
+        }
+        html body .stApp .decision-draft-grid,
+        html body .stApp .decision-evidence-grid {
+            grid-template-columns: 1fr !important;
         }
     }
     </style>
@@ -7260,6 +7501,11 @@ def init_state() -> None:
     st.session_state.setdefault("google_feedback_form_url", GOOGLE_FEEDBACK_FORM_URL)
     st.session_state.setdefault("google_feedback_form_url_draft", GOOGLE_FEEDBACK_FORM_URL)
     st.session_state.setdefault("comment_saved_notice", False)
+    st.session_state.setdefault("decision_capture_text", "")
+    st.session_state.setdefault("decision_capture_amount_text", "")
+    st.session_state.setdefault("decision_capture_draft", None)
+    st.session_state.setdefault("decision_capture_saved_notice", False)
+    st.session_state.setdefault("decision_outcome_saved_notice", False)
     st.session_state.setdefault("financial_diary", [])
     st.session_state.setdefault("ai_coach_messages", [])
     st.session_state.setdefault("pending_ai_question", None)
@@ -9650,6 +9896,8 @@ def build_financial_snapshot(note: str, mood: str, next_action: str) -> dict[str
             "highest_co_movement_pair": list(comp["highest_co_movement_pair"]),
         },
         "personal_finance": personal_result,
+        "decision_capture": st.session_state.get("decision_capture_draft") or None,
+        "outcome_review": {},
     }
 
 
@@ -9869,8 +10117,11 @@ def ai_coach_context_snapshot() -> dict[str, Any]:
     diary = st.session_state.get("financial_diary", [])
     scenario = st.session_state.get("last_scenario_packet")
     holdings = portfolio_holdings_snapshot()
+    decision_capture = st.session_state.get("decision_capture_draft") or {}
 
     missing: list[str] = []
+    if not decision_capture:
+        missing.append("Decision capture draft")
     if not personal:
         missing.append("Personal Finance baseline")
     if not holdings:
@@ -9896,6 +10147,7 @@ def ai_coach_context_snapshot() -> dict[str, Any]:
         "profile": profile,
         "scenario": scenario,
         "diary": diary,
+        "decision_capture": decision_capture,
         "missing": missing,
     }
 
@@ -9908,9 +10160,16 @@ def ai_coach_readiness(context: dict[str, Any]) -> dict[str, Any]:
     comp = portfolio["complementarity"]
     diary = context["diary"]
     scenario = context["scenario"]
+    decision_capture = context.get("decision_capture") or {}
 
     score = 0.0
     reasons: list[str] = []
+
+    if decision_capture:
+        score += 4
+        reasons.append("Decision capture draft exists.")
+    else:
+        reasons.append("Decision capture draft is missing.")
 
     if personal:
         health = float(personal.get("financial_health_score") or 0)
@@ -10011,31 +10270,38 @@ def rationality_gate_snapshot() -> dict[str, Any]:
     stocks = st.session_state.get("stocks", {})
     scenario = st.session_state.get("last_scenario_packet")
     diary = st.session_state.get("financial_diary", [])
+    decision_capture = st.session_state.get("decision_capture_draft") or {}
 
-    evidence_count = sum(bool(item) for item in (personal, holdings, stocks, scenario))
-    evidence_score = 35 + min(evidence_count, 4) * 13
+    evidence_count = sum(bool(item) for item in (decision_capture, personal, holdings, stocks, scenario))
+    evidence_score = 30 + min(evidence_count, 5) * 12
     model_score = 74 if personal or stocks or scenario else 40
     risk_score = 86 if scenario else 68 if personal or holdings else 38
     memory_score = 88 if diary else 42
 
     if language == "ko":
+        capture_detail = "고객의 고민이 결정 초안으로 포착되었습니다." if decision_capture else "아직 고객의 고민이 Capture되지 않았습니다."
         purpose_detail = "목표가 선택되어 판단 기준이 선명합니다." if goal else "아직 목표가 없어 판단 기준이 흔들릴 수 있습니다."
-        evidence_detail = f"현재 근거 입력 {evidence_count}/4: 재무, 포트폴리오, 종목, 시나리오."
+        evidence_detail = f"현재 근거 입력 {evidence_count}/5: Capture, 재무, 포트폴리오, 종목, 시나리오."
+        decision_detail = "결정 초안이 있어 행동 전 검토할 수 있습니다." if decision_capture else "결정 초안이 없어 해석이 행동으로 연결되기 어렵습니다."
         model_detail = "모델 결과가 존재해 해석 전 계산 기준을 확인할 수 있습니다." if model_score >= 70 else "아직 모델 결과가 부족해 해석보다 입력이 먼저입니다."
         risk_detail = "시나리오까지 포함되어 위험을 먼저 점검합니다." if scenario else "위험 점검은 시작됐지만 시나리오 스트레스가 아직 약합니다."
         memory_detail = "다이어리/기록이 있어 판단을 나중에 되돌아볼 수 있습니다." if diary else "아직 기록이 없어 같은 판단을 반복 검증하기 어렵습니다."
     else:
+        capture_detail = "The user's decision question has been captured as a draft." if decision_capture else "No decision question has been captured yet."
         purpose_detail = "A selected goal makes the judgment standard clearer." if goal else "No selected goal yet, so the judgment standard can drift."
-        evidence_detail = f"Current evidence inputs {evidence_count}/4: finance, portfolio, stock, scenario."
+        evidence_detail = f"Current evidence inputs {evidence_count}/5: capture, finance, portfolio, stock, scenario."
+        decision_detail = "A decision draft exists, so action can be reviewed before commitment." if decision_capture else "No decision draft exists, so interpretation is harder to turn into action."
         model_detail = "Model output exists, so calculations can be checked before interpretation." if model_score >= 70 else "Model output is still thin; inputs should come before interpretation."
         risk_detail = "Scenario stress is included, so risk is checked before action." if scenario else "Risk review has started, but scenario stress is still weak."
         memory_detail = "Diary or report memory exists for later review." if diary else "No memory yet, so repeated judgment is harder to audit."
 
     pillars = [
+        {"glyph": "CAP", "label": "Capture Quality", "score": 90 if decision_capture else 35, "detail": capture_detail},
         {"glyph": "WHY", "label": "Purpose Fit", "score": 92 if goal else 42, "detail": purpose_detail},
         {"glyph": "EVD", "label": "Evidence Quality", "score": evidence_score, "detail": evidence_detail},
         {"glyph": "MOD", "label": "Model Discipline", "score": model_score, "detail": model_detail},
         {"glyph": "RSK", "label": "Risk Awareness", "score": risk_score, "detail": risk_detail},
+        {"glyph": "DEC", "label": "Decision Draft", "score": 86 if decision_capture else 38, "detail": decision_detail},
         {"glyph": "MEM", "label": "Memory Feedback", "score": memory_score, "detail": memory_detail},
     ]
     score = sum(float(item["score"]) for item in pillars) / len(pillars)
@@ -10114,6 +10380,616 @@ def active_goal_key() -> str | None:
 def active_goal_params() -> dict[str, str]:
     goal = active_goal_key()
     return {"goal": goal} if goal else {}
+
+
+COMMON_DECISION_SYMBOLS = {
+    "tesla": "TSLA",
+    "tsla": "TSLA",
+    "nvidia": "NVDA",
+    "nvda": "NVDA",
+    "apple": "AAPL",
+    "aapl": "AAPL",
+    "microsoft": "MSFT",
+    "msft": "MSFT",
+    "google": "GOOGL",
+    "alphabet": "GOOGL",
+    "amazon": "AMZN",
+    "amzn": "AMZN",
+    "meta": "META",
+    "johnson": "JNJ",
+    "jnj": "JNJ",
+    "voo": "VOO",
+    "spy": "SPY",
+    "schd": "SCHD",
+    "삼성전자": "005930.KS",
+    "삼성": "005930.KS",
+    "하이닉스": "000660.KS",
+    "sk하이닉스": "000660.KS",
+    "현대차": "005380.KS",
+    "네이버": "035420.KS",
+    "카카오": "035720.KS",
+}
+
+
+def decision_text(language: str, en: str, ko: str) -> str:
+    return ko if language == "ko" else en
+
+
+def decision_goal_label(goal_key: str | None, language: str) -> str:
+    goal_key = normalized_goal_key(goal_key)
+    if not goal_key:
+        return decision_text(language, "Goal not selected", "목표 미선택")
+    config = NORA_GOAL_STRATEGIES[goal_key]
+    return str(config[f"label_{language}"])
+
+
+def parse_capture_amount(text: str) -> tuple[float | None, str]:
+    clean = text.strip()
+    if not clean:
+        return None, "USD"
+
+    normalized = clean.replace(",", "")
+    won_match = re.search(r"(\d+(?:\.\d+)?)\s*억", normalized)
+    if won_match:
+        return float(won_match.group(1)) * 100_000_000, "KRW"
+
+    manwon_match = re.search(r"(\d+(?:\.\d+)?)\s*(?:만\s*원|만원|만)", normalized)
+    if manwon_match:
+        return float(manwon_match.group(1)) * 10_000, "KRW"
+
+    krw_match = re.search(r"(?:₩|krw|원)\s*(\d+(?:\.\d+)?)", normalized, flags=re.IGNORECASE)
+    if krw_match:
+        return float(krw_match.group(1)), "KRW"
+
+    usd_match = re.search(r"(?:\$|usd)\s*(\d+(?:\.\d+)?)", normalized, flags=re.IGNORECASE)
+    if usd_match:
+        return float(usd_match.group(1)), "USD"
+
+    trailing_usd = re.search(r"(\d+(?:\.\d+)?)\s*(?:usd|달러)", normalized, flags=re.IGNORECASE)
+    if trailing_usd:
+        return float(trailing_usd.group(1)), "USD"
+
+    trailing_krw = re.search(r"(\d+(?:\.\d+)?)\s*(?:krw|원)", normalized, flags=re.IGNORECASE)
+    if trailing_krw:
+        return float(trailing_krw.group(1)), "KRW"
+
+    return None, st.session_state.get("portfolio_base_currency", "USD")
+
+
+def extract_decision_symbols(text: str) -> list[str]:
+    clean = text.strip()
+    lower = clean.lower()
+    symbols: list[str] = []
+
+    def add(symbol: str) -> None:
+        symbol = symbol.strip().upper()
+        if symbol and symbol not in symbols:
+            symbols.append(symbol)
+
+    for hint, symbol in COMMON_DECISION_SYMBOLS.items():
+        if hint in lower:
+            add(symbol)
+
+    for symbol, stock in st.session_state.get("stocks", {}).items():
+        if symbol.lower() in lower or str(stock.get("name", "")).lower() in lower:
+            add(symbol)
+
+    for symbol in st.session_state.get("portfolio", {}).keys():
+        stock = st.session_state.get("stocks", {}).get(symbol, {})
+        if symbol.lower() in lower or str(stock.get("name", "")).lower() in lower:
+            add(symbol)
+
+    excluded = {
+        "A",
+        "AI",
+        "AM",
+        "AND",
+        "API",
+        "BUT",
+        "DCF",
+        "ETF",
+        "I",
+        "IF",
+        "KRW",
+        "LY",
+        "NORA",
+        "OR",
+        "PBR",
+        "PER",
+        "REIT",
+        "THE",
+        "USD",
+    }
+    single_letter_tickers = {"C", "F", "O", "T", "V"}
+    for token in re.findall(r"\b[A-Z]{1,5}(?:\.[A-Z]{2})?\b", clean):
+        upper = token.upper()
+        if upper in excluded:
+            continue
+        if len(upper) == 1 and upper not in single_letter_tickers:
+            continue
+        add(upper)
+
+    korean_symbol = resolve_korean_ticker(clean)
+    if korean_symbol:
+        add(korean_symbol)
+
+    return symbols[:5]
+
+
+def infer_decision_kind(text: str, symbols: list[str]) -> str:
+    lower = text.lower()
+    real_estate_terms = (
+        "house",
+        "home",
+        "mortgage",
+        "property",
+        "real estate",
+        "부동산",
+        "주택",
+        "아파트",
+        "콘도",
+        "집값",
+        "내집",
+        "전세",
+        "월세",
+        "모기지",
+    )
+    if any(word in lower for word in real_estate_terms):
+        return "real_estate"
+    if any(word in lower for word in ("debt", "loan", "pay off", "repay", "부채", "대출", "상환")):
+        return "debt_cash"
+    if any(word in lower for word in ("sell", "reduce", "trim", "exit", "매도", "줄이", "정리")):
+        return "reduce_sell"
+    if any(word in lower for word in ("buy", "add", "purchase", "increase", "추가", "매수", "늘리")) or symbols:
+        return "add_buy"
+    if any(word in lower for word in ("income", "job", "career", "study", "tuition", "소득", "직장", "커리어", "학업")):
+        return "income_path"
+    return "decision_review"
+
+
+def infer_capture_goal(text: str, decision_kind: str) -> str | None:
+    active = active_goal_key()
+    if active:
+        return active
+    lower = text.lower()
+    if decision_kind == "real_estate":
+        return "real_estate_plan"
+    if decision_kind == "income_path":
+        return "build_income"
+    if decision_kind == "debt_cash":
+        return "protect_runway"
+    if any(word in lower for word in ("cash", "runway", "emergency", "expense", "liquidity", "no income", "현금", "유동성", "비상", "소득이", "수입이")):
+        return "protect_runway"
+    if decision_kind in {"add_buy", "reduce_sell"} or any(word in lower for word in ("stock", "portfolio", "invest", "주식", "투자", "포트폴리오")):
+        return "grow_capital"
+    return None
+
+
+def decision_kind_label(kind: str, language: str) -> str:
+    labels = {
+        "add_buy": ("Add or buy investment", "투자 추가/매수"),
+        "reduce_sell": ("Reduce or sell investment", "투자 축소/매도"),
+        "real_estate": ("Real estate decision", "부동산 의사결정"),
+        "debt_cash": ("Debt versus cash decision", "부채 상환/현금 선택"),
+        "income_path": ("Income path decision", "소득 경로 의사결정"),
+        "decision_review": ("Decision review", "의사결정 검토"),
+    }
+    en, ko = labels.get(kind, labels["decision_review"])
+    return decision_text(language, en, ko)
+
+
+def build_decision_capture_draft(statement: str, amount_text: str = "") -> dict[str, Any]:
+    language = current_language()
+    clean_statement = compact_text(statement, 1200)
+    amount, amount_currency = parse_capture_amount(f"{statement} {amount_text}")
+    symbols = extract_decision_symbols(statement)
+    kind = infer_decision_kind(statement, symbols)
+    goal_key = infer_capture_goal(statement, kind)
+    goal_label = decision_goal_label(goal_key, language)
+    holdings = portfolio_holdings_snapshot()
+    total_value, weighted_beta, valuation_score, _ = portfolio_metrics()
+    personal = st.session_state.get("last_personal_finance_result") or {}
+    scenario = st.session_state.get("last_scenario_packet")
+    base_currency = st.session_state.get("portfolio_base_currency", "USD")
+    now_text = datetime.now().strftime("%Y-%m-%d %H:%M")
+    review_date = (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
+
+    if kind == "add_buy":
+        decision_line = decision_text(language, "Review before adding risk", "위험 추가 전 검토")
+        benefit = decision_text(language, "Potential upside if the thesis is right.", "가정이 맞을 경우 상승 기회.")
+        default_risk = decision_text(language, "Cash runway and concentration can weaken.", "현금 생존기간과 집중도가 약해질 수 있음.")
+        next_step = decision_text(language, "Check 12-month cash needs, position size, and downside scenario before action.", "실행 전 12개월 현금수요, 포지션 크기, 하락 시나리오를 확인하세요.")
+    elif kind == "reduce_sell":
+        decision_line = decision_text(language, "Review partial reduction", "부분 축소 검토")
+        benefit = decision_text(language, "Risk and concentration may fall.", "위험과 집중도가 낮아질 수 있음.")
+        default_risk = decision_text(language, "Selling may reduce future upside or create tax impact.", "매도는 미래 상승 여력이나 세금에 영향을 줄 수 있음.")
+        next_step = decision_text(language, "Compare hold, partial trim, and full trim before deciding.", "보유, 부분 축소, 전량 축소를 비교하세요.")
+    elif kind == "real_estate":
+        decision_line = decision_text(language, "Review affordability and rate risk", "구매여력과 금리 위험 검토")
+        benefit = decision_text(language, "A property plan can support stability or long-term wealth.", "부동산 계획은 안정성 또는 장기 자산 형성에 기여할 수 있음.")
+        default_risk = decision_text(language, "Debt, taxes, insurance, maintenance, and liquidity risk can dominate.", "부채, 세금, 보험, 유지비, 유동성 위험이 커질 수 있음.")
+        next_step = decision_text(language, "Compare monthly ownership cost with rent and emergency reserve.", "월 보유비용, 임대비용, 비상자금을 비교하세요.")
+    elif kind == "debt_cash":
+        decision_line = decision_text(language, "Compare payoff versus liquidity", "상환과 유동성 비교")
+        benefit = decision_text(language, "Debt pressure may fall.", "부채 압력이 낮아질 수 있음.")
+        default_risk = decision_text(language, "Using too much cash can weaken resilience.", "현금을 과도하게 쓰면 회복력이 약해질 수 있음.")
+        next_step = decision_text(language, "Keep emergency cash visible before any payoff decision.", "상환 전 비상현금 수준을 먼저 확인하세요.")
+    elif kind == "income_path":
+        decision_line = decision_text(language, "Review income bridge", "소득 브릿지 검토")
+        benefit = decision_text(language, "A clearer income path can protect long-term planning.", "명확한 소득 경로는 장기 계획을 보호할 수 있음.")
+        default_risk = decision_text(language, "Runway can shorten if expenses are not updated.", "지출이 갱신되지 않으면 생존기간이 짧아질 수 있음.")
+        next_step = decision_text(language, "Update monthly expenses and target runway.", "월 지출과 목표 생존기간을 갱신하세요.")
+    else:
+        decision_line = decision_text(language, "Turn the thought into a decision draft", "생각을 결정 초안으로 전환")
+        benefit = decision_text(language, "The decision becomes easier to audit.", "의사결정을 나중에 검토하기 쉬워짐.")
+        default_risk = decision_text(language, "The issue is still too broad for a confident reading.", "아직 범위가 넓어 확신도 높은 판단이 어려움.")
+        next_step = decision_text(language, "Add the decision amount, deadline, and main constraint.", "결정 금액, 기한, 핵심 제약조건을 추가하세요.")
+
+    user_concern = default_risk
+    lower = statement.lower()
+    if any(word in lower for word in ("cash", "liquidity", "runway", "현금", "유동성", "생존")):
+        user_concern = decision_text(language, "The user's own concern is cash or liquidity pressure.", "사용자가 직접 말한 우려는 현금 또는 유동성 압력입니다.")
+    elif any(word in lower for word in ("risk", "drawdown", "loss", "위험", "손실", "하락")):
+        user_concern = decision_text(language, "The user's own concern is downside or loss risk.", "사용자가 직접 말한 우려는 하락 또는 손실 위험입니다.")
+
+    verified_data: list[str] = []
+    if goal_key:
+        verified_data.append(decision_text(language, f"Selected goal: {goal_label}", f"선택 목표: {goal_label}"))
+    if total_value > 0:
+        verified_data.append(
+            decision_text(
+                language,
+                f"Portfolio value: {fmt_money_compact(total_value, base_currency, language)}",
+                f"포트폴리오 가치: {fmt_money_compact(total_value, base_currency, language)}",
+            )
+        )
+    if weighted_beta:
+        verified_data.append(decision_text(language, f"Weighted beta: {fmt_number(weighted_beta)}", f"가중 베타: {fmt_number(weighted_beta)}"))
+    if valuation_score is not None:
+        verified_data.append(decision_text(language, f"Portfolio valuation: {valuation_score:+.1f}%", f"포트폴리오 valuation: {valuation_score:+.1f}%"))
+    if personal:
+        verified_data.append(
+            decision_text(
+                language,
+                f"Runway: {float(personal.get('emergency_months', 0)):.1f} months",
+                f"생존기간: {float(personal.get('emergency_months', 0)):.1f}개월",
+            )
+        )
+
+    symbol_notes: list[str] = []
+    weights = portfolio_analysis_weights()
+    for symbol in symbols:
+        if symbol in weights:
+            symbol_notes.append(
+                decision_text(
+                    language,
+                    f"{symbol} weight: {weights[symbol] * 100:.1f}%",
+                    f"{symbol} 비중: {weights[symbol] * 100:.1f}%",
+                )
+            )
+    verified_data.extend(symbol_notes)
+    if scenario:
+        verified_data.append(decision_text(language, "Scenario packet exists.", "시나리오 패킷이 있습니다."))
+
+    not_verified = []
+    if not personal:
+        not_verified.append(decision_text(language, "12-month cash need has not been calculated.", "12개월 현금수요가 아직 계산되지 않았습니다."))
+    if not scenario:
+        not_verified.append(decision_text(language, "Downside scenario has not been run.", "하락 시나리오가 아직 실행되지 않았습니다."))
+    if amount is None:
+        not_verified.append(decision_text(language, "Decision amount is not explicit.", "결정 금액이 명확하지 않습니다."))
+    if symbols and any(symbol not in st.session_state.get("stocks", {}) for symbol in symbols):
+        not_verified.append(decision_text(language, "Some mentioned tickers are not loaded in the app.", "언급된 일부 티커가 앱에 로드되지 않았습니다."))
+    not_verified.append(decision_text(language, "Tax impact, time horizon, and loss tolerance still need user confirmation.", "세금 영향, 투자기간, 손실감내 수준은 사용자 확인이 필요합니다."))
+
+    interpretations = []
+    if not verified_data:
+        interpretations.append(decision_text(language, "The draft is mostly based on the user's statement, not app data yet.", "현재 초안은 앱 데이터보다 사용자 발언에 더 크게 의존합니다."))
+    if symbol_notes:
+        heavy = [note for note in symbol_notes if re.search(r"([4-9]\d|\d{3,})\.\d%", note)]
+        if heavy:
+            interpretations.append(decision_text(language, "A mentioned holding may already be a large portfolio driver.", "언급된 종목이 이미 포트폴리오의 큰 동인일 수 있습니다."))
+    if valuation_score is not None and valuation_score < -5:
+        interpretations.append(decision_text(language, "The current valued portfolio appears expensive versus the app's blended fair value estimate.", "현재 valuation 기준 포트폴리오는 앱의 혼합 적정가 대비 비싸게 보입니다."))
+    if not scenario:
+        interpretations.append(decision_text(language, "The decision should remain a draft until at least one downside case is visible.", "최소 하나의 하락 케이스가 보이기 전까지는 결정 초안으로 유지하는 편이 좋습니다."))
+    if not interpretations:
+        interpretations.append(decision_text(language, "The app has enough context to compare options, but the user should confirm assumptions.", "옵션 비교에 필요한 맥락은 있으나 가정은 사용자가 확인해야 합니다."))
+
+    amount_label = (
+        decision_text(language, "Needs amount", "금액 필요")
+        if amount is None
+        else fmt_money_compact(amount, amount_currency, language)
+    )
+    negative_amount = (
+        decision_text(language, "Needs amount", "금액 필요")
+        if amount is None
+        else fmt_money_compact(-amount, amount_currency, language)
+    )
+    half_amount = (
+        decision_text(language, "Partial amount", "부분 금액")
+        if amount is None
+        else fmt_money_compact(-amount * 0.5, amount_currency, language)
+    )
+    scenario_rows = [
+        {
+            "scenario": decision_text(language, "Act now", "지금 실행"),
+            "benefit": benefit,
+            "risk": user_concern,
+            "cash_impact": negative_amount,
+            "reversible": decision_text(language, "Partial", "부분 가능"),
+        },
+        {
+            "scenario": decision_text(language, "Partial action", "부분 실행"),
+            "benefit": decision_text(language, "Keeps optionality.", "선택지를 유지."),
+            "risk": decision_text(language, "Upside and conviction are both reduced.", "상승 여력과 확신이 모두 줄어듦."),
+            "cash_impact": half_amount,
+            "reversible": decision_text(language, "More flexible", "더 유연"),
+        },
+        {
+            "scenario": decision_text(language, "Wait and review", "보류 후 검토"),
+            "benefit": decision_text(language, "Protects liquidity and gives time for evidence.", "유동성을 보호하고 근거를 확인할 시간 확보."),
+            "risk": decision_text(language, "Opportunity may pass.", "기회를 놓칠 수 있음."),
+            "cash_impact": fmt_money_compact(0, amount_currency, language) if amount is not None else "0",
+            "reversible": decision_text(language, "Yes", "가능"),
+        },
+    ]
+
+    action_items = [
+        next_step,
+        decision_text(language, "Separate user belief from verified data before acting.", "행동 전 사용자 믿음과 검증 데이터를 분리하세요."),
+        decision_text(language, "Save this draft as a Memory checkpoint after review.", "검토 후 이 초안을 메모리 체크포인트로 저장하세요."),
+    ]
+    if symbols:
+        action_items.insert(1, decision_text(language, f"Open Portfolio/Search for {', '.join(symbols)} valuation.", f"{', '.join(symbols)} valuation을 Portfolio/Search에서 확인하세요."))
+
+    confidence = decision_text(language, "Moderate", "중간") if personal and (holdings or symbols) else decision_text(language, "Low", "낮음")
+    return {
+        "display_language": language,
+        "created_at": now_text,
+        "user_statement": clean_statement,
+        "amount_text": compact_text(amount_text, 140),
+        "decision_kind": kind,
+        "decision_kind_label": decision_kind_label(kind, language),
+        "proposed_decision": decision_line,
+        "goal_key": goal_key,
+        "goal_label": goal_label,
+        "symbols": symbols,
+        "amount": amount,
+        "amount_currency": amount_currency,
+        "amount_label": amount_label,
+        "main_benefit": benefit,
+        "main_risk": user_concern,
+        "recommended_next_step": next_step,
+        "review_date": review_date,
+        "confidence": confidence,
+        "user_reported": [clean_statement],
+        "verified_data": verified_data or [decision_text(language, "No app-verified data attached yet.", "아직 앱 검증 데이터가 연결되지 않았습니다.")],
+        "ai_interpretation": interpretations,
+        "not_verified": not_verified,
+        "scenario_rows": scenario_rows,
+        "action_items": action_items,
+        "evidence_footer": {
+            "data_used": [
+                decision_text(language, f"Portfolio session data as of {now_text}", f"{now_text} 기준 포트폴리오 세션 데이터"),
+                decision_text(language, f"User statement recorded {now_text}", f"{now_text} 기록된 사용자 발언"),
+            ],
+            "not_verified": not_verified[:3],
+            "ai_confidence": confidence,
+            "last_updated": now_text,
+        },
+    }
+
+
+def render_decision_evidence_cards(draft: dict[str, Any]) -> None:
+    language = current_language()
+    cards = [
+        ("user", "USER SAID", "사용자 발언", draft.get("user_statement", "")),
+        ("verified", "VERIFIED DATA", "검증 데이터", " · ".join(draft.get("verified_data", [])[:3])),
+        ("ai", "AI INTERPRETATION", "AI 해석", " · ".join(draft.get("ai_interpretation", [])[:2])),
+        ("missing", "UNCERTAINTY", "불확실성", " · ".join(draft.get("not_verified", [])[:2])),
+    ]
+    html_cards = []
+    for tone, en_label, ko_label, body in cards:
+        html_cards.append(
+            f"""
+            <div class="evidence-status-card {tone}">
+                <small>{escape(decision_text(language, en_label, ko_label))}</small>
+                <b>{escape(compact_text(body, 120))}</b>
+                <span>{escape(decision_text(language, "Click details below for the full reasoning.", "아래 상세에서 전체 근거를 확인하세요."))}</span>
+            </div>
+            """
+        )
+    st.markdown(f'<div class="decision-evidence-grid">{"".join(html_cards)}</div>', unsafe_allow_html=True)
+
+
+def render_decision_draft_board(draft: dict[str, Any]) -> None:
+    language = current_language()
+    symbols_text = ", ".join(draft.get("symbols") or []) or decision_text(language, "No ticker", "티커 없음")
+    draft_html = f"""
+    <div class="decision-draft-card">
+        <div class="decision-draft-grid">
+            <div class="decision-draft-cell primary">
+                <small>{escape(decision_text(language, "PROPOSED DECISION", "결정 초안"))}</small>
+                <b>{escape(str(draft.get("proposed_decision", "")))}</b>
+            </div>
+            <div class="decision-draft-cell">
+                <small>{escape(decision_text(language, "GOAL", "목표"))}</small>
+                <b>{escape(str(draft.get("goal_label", "")))}</b>
+            </div>
+            <div class="decision-draft-cell">
+                <small>{escape(decision_text(language, "FOCUS", "대상"))}</small>
+                <b>{escape(symbols_text)}</b>
+            </div>
+            <div class="decision-draft-cell">
+                <small>{escape(decision_text(language, "REVIEW", "재검토"))}</small>
+                <b>{escape(str(draft.get("review_date", "")))}</b>
+            </div>
+        </div>
+    </div>
+    """
+    st.markdown(draft_html, unsafe_allow_html=True)
+    render_decision_evidence_cards(draft)
+
+    with st.expander(decision_text(language, "Decision Draft Details", "결정 초안 상세"), expanded=False):
+        st.write(f"**{decision_text(language, 'Decision type', '결정 유형')}:** {draft.get('decision_kind_label')}")
+        st.write(f"**{decision_text(language, 'Main benefit', '주요 장점')}:** {draft.get('main_benefit')}")
+        st.write(f"**{decision_text(language, 'Main risk', '주요 위험')}:** {draft.get('main_risk')}")
+        st.write(f"**{decision_text(language, 'Recommended next step', '다음 확인')}:** {draft.get('recommended_next_step')}")
+        st.write(f"**{decision_text(language, 'Confidence', '확신도')}:** {draft.get('confidence')}")
+        st.dataframe(draft.get("scenario_rows", []), hide_index=True, width="stretch")
+        st.json(
+            {
+                "user_reported": draft.get("user_reported", []),
+                "verified_data": draft.get("verified_data", []),
+                "ai_interpretation": draft.get("ai_interpretation", []),
+                "not_verified": draft.get("not_verified", []),
+            }
+        )
+
+    action_html = []
+    for index, item in enumerate(draft.get("action_items", []), start=1):
+        action_html.append(
+            f"""
+            <div class="action-chip">
+                <small>{escape(decision_text(language, f"Action {index}", f"행동 {index}"))}</small>
+                <b>{escape(str(item))}</b>
+            </div>
+            """
+        )
+    st.markdown(f'<div class="action-chip-row">{"".join(action_html)}</div>', unsafe_allow_html=True)
+    footer = draft.get("evidence_footer", {})
+    st.markdown(
+        f"""
+        <div class="evidence-footer">
+            <b>{escape(decision_text(language, "Evidence Footer", "근거 푸터"))}</b><br>
+            {escape(decision_text(language, "Data used", "사용 데이터"))}: {escape(" · ".join(footer.get("data_used", [])))}<br>
+            {escape(decision_text(language, "Not verified", "미검증"))}: {escape(" · ".join(footer.get("not_verified", [])))}<br>
+            {escape(decision_text(language, "AI confidence", "AI 확신도"))}: {escape(str(footer.get("ai_confidence", "")))} ·
+            {escape(decision_text(language, "Last updated", "마지막 업데이트"))}: {escape(str(footer.get("last_updated", "")))}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def save_decision_draft_to_diary() -> None:
+    draft = st.session_state.get("decision_capture_draft")
+    if not draft:
+        return
+    note = (
+        f"Decision Draft: {draft.get('proposed_decision')}\n"
+        f"User said: {draft.get('user_statement')}\n"
+        f"Main risk: {draft.get('main_risk')}\n"
+        f"Not verified: {'; '.join(draft.get('not_verified', [])[:4])}"
+    )
+    snapshot = build_financial_snapshot(
+        compact_text(note, 1800),
+        "Decision Draft",
+        str(draft.get("recommended_next_step", "")),
+    )
+    snapshot["decision_capture"] = draft
+    snapshot["outcome_review"] = {}
+    st.session_state.financial_diary.append(snapshot)
+    st.session_state.decision_capture_saved_notice = True
+    set_active_nav_key("diary")
+
+
+def queue_decision_draft_ai_question() -> None:
+    draft = st.session_state.get("decision_capture_draft") or {}
+    question = (
+        "Use this Decision Draft plus current Portfolio, Finance, Scenario, Evidence, and Diary context. "
+        "Separate user statement, verified data, AI interpretation, uncertainty, action, outcome, and memory. "
+        f"Draft: {json.dumps(draft, ensure_ascii=False)[:1800]}"
+    )
+    queue_ai_coach_question(question)
+
+
+def render_decision_capture_panel() -> None:
+    language = current_language()
+    flow_label = decision_text(language, "Capture → Draft → Evidence → Action → Memory", "포착 → 초안 → 근거 → 행동 → 기억")
+    if st.session_state.pop("decision_capture_saved_notice", False):
+        st.success(decision_text(language, "Decision card saved to Diary Memory.", "결정 카드가 다이어리 메모리에 저장되었습니다."))
+
+    st.markdown(
+        f"""
+        <section class="decision-capture-panel" aria-label="Decision Capture">
+            <div class="decision-capture-head">
+                <div class="decision-capture-title">
+                    <span>CAP</span>
+                    <div>
+                        <b>{escape(decision_text(language, "Decision Capture", "결정 포착"))}</b>
+                        <small>{escape(decision_text(language, "Say the decision first. LY-Scope structures it before analysis.", "결정을 먼저 말하면 LY-Scope가 분석 전에 구조화합니다."))}</small>
+                    </div>
+                </div>
+                <em class="decision-capture-flow">{escape(flow_label)}</em>
+            </div>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    with st.form("decision_capture_form"):
+        st.text_area(
+            decision_text(language, "What are you trying to decide?", "무엇을 결정하려고 하나요?"),
+            placeholder=decision_text(
+                language,
+                "Example: TSLA dropped a lot. I am considering buying more, but I worry about cash and concentration.",
+                "예: TSLA가 많이 떨어져서 추가 매수를 고민 중이지만 현금과 집중도가 걱정됩니다.",
+            ),
+            height=118,
+            key="decision_capture_text",
+        )
+        st.text_input(
+            decision_text(language, "Optional amount", "선택 입력: 금액"),
+            placeholder=decision_text(language, "Example: $5,000 or 2,000만원", "예: $5,000 또는 2,000만원"),
+            key="decision_capture_amount_text",
+        )
+        submitted = st.form_submit_button(
+            decision_text(language, "Create Decision Draft", "결정 초안 만들기"),
+            width="stretch",
+        )
+    if submitted:
+        statement = str(st.session_state.get("decision_capture_text", "")).strip()
+        if not statement:
+            st.warning(decision_text(language, "Write one decision question first.", "먼저 결정 질문을 한 문장으로 적어주세요."))
+        else:
+            st.session_state.decision_capture_draft = build_decision_capture_draft(
+                statement,
+                str(st.session_state.get("decision_capture_amount_text", "")),
+            )
+            st.rerun()
+
+    draft = st.session_state.get("decision_capture_draft")
+    if draft and draft.get("display_language") != language:
+        st.session_state.decision_capture_draft = build_decision_capture_draft(
+            str(draft.get("user_statement", "")),
+            str(draft.get("amount_text", "")),
+        )
+        draft = st.session_state.get("decision_capture_draft")
+    if draft:
+        render_decision_draft_board(draft)
+        action_cols = st.columns(3)
+        with action_cols[0]:
+            st.button(
+                decision_text(language, "Save Decision Card", "결정 카드 저장"),
+                width="stretch",
+                on_click=save_decision_draft_to_diary,
+            )
+        with action_cols[1]:
+            st.button(
+                decision_text(language, "Ask AI Coach", "AI 코치에게 묻기"),
+                width="stretch",
+                on_click=queue_decision_draft_ai_question,
+            )
+        with action_cols[2]:
+            st.download_button(
+                decision_text(language, "Download Draft JSON", "초안 JSON 다운로드"),
+                data=json.dumps(draft, indent=2, ensure_ascii=False),
+                file_name=f"ly_scope_decision_draft_{datetime.now().strftime('%Y%m%d')}.json",
+                mime="application/json",
+                width="stretch",
+            )
 
 
 def goal_href(goal: str) -> str:
@@ -10243,7 +11119,23 @@ def build_ai_coach_linked_guidance(
     personal = context.get("personal") or {}
     scenario = context.get("scenario")
     diary = context.get("diary", [])
+    decision_capture = context.get("decision_capture") or {}
     gain_loss = portfolio_gain_loss_summary(holdings)
+
+    if decision_capture:
+        decision_status = compact_text(str(decision_capture.get("proposed_decision") or "Draft captured"), 70)
+        decision_advice = (
+            "Review verified data and uncertainty before treating this thought as an action."
+            if language == "en"
+            else "이 생각을 행동으로 옮기기 전에 검증 데이터와 불확실성을 먼저 확인하세요."
+        )
+    else:
+        decision_status = "Needs decision draft" if language == "en" else "결정 초안 필요"
+        decision_advice = (
+            "Start with one plain-language decision question so NORA can connect purpose, evidence, action, and memory."
+            if language == "en"
+            else "NORA가 목적, 근거, 행동, 기억을 연결할 수 있도록 결정 질문을 한 문장으로 먼저 입력하세요."
+        )
 
     if not holdings:
         portfolio_status = "Needs holdings" if language == "en" else "보유 종목 필요"
@@ -10356,6 +11248,13 @@ def build_ai_coach_linked_guidance(
     if language == "ko":
         return [
             {
+                "title": "결정 초안",
+                "view": "life",
+                "status": decision_status,
+                "advice": decision_advice,
+                "question": "내 결정 초안을 사용자 발언, 검증 데이터, AI 해석, 불확실성, 다음 행동으로 나누어 검토해 주세요.",
+            },
+            {
                 "title": "포트폴리오 손익",
                 "view": "portfolio",
                 "status": portfolio_status,
@@ -10393,6 +11292,13 @@ def build_ai_coach_linked_guidance(
         ]
 
     return [
+        {
+            "title": "Decision Draft",
+            "view": "life",
+            "status": decision_status,
+            "advice": decision_advice,
+            "question": "Review my decision draft by separating user statement, verified data, AI interpretation, uncertainty, and next action.",
+        },
         {
             "title": "Portfolio P/L",
             "view": "portfolio",
@@ -10485,6 +11391,8 @@ def render_mobile_ai_coach_deck(context: dict[str, Any], readiness: dict[str, An
 
 def detect_ai_coach_intent(question: str) -> str:
     q = question.lower()
+    if any(token in q for token in ("decision", "draft", "capture", "decide", "action", "결정", "판단", "초안", "포착", "행동")):
+        return "decision"
     if any(token in q for token in ("ready", "readiness", "invest", "투자", "준비")):
         return "readiness"
     if any(token in q for token in ("risk", "위험", "beta", "volatility", "correlation", "diversification")):
@@ -10546,6 +11454,8 @@ def clean_restored_diary_entries(restored: Any) -> list[dict[str, Any]]:
                 "risk": clean_restored_json_value(entry.get("risk")),
                 "complementarity": clean_restored_json_value(entry.get("complementarity")),
                 "personal_finance": clean_restored_json_value(entry.get("personal_finance", {})),
+                "decision_capture": clean_restored_json_value(entry.get("decision_capture")),
+                "outcome_review": clean_restored_json_value(entry.get("outcome_review", {})),
             }
         )
     return cleaned_entries
@@ -10570,6 +11480,7 @@ def build_verified_ai_context(
     risk = portfolio.get("risk")
     comp = portfolio.get("complementarity")
     scenario = context.get("scenario")
+    decision_capture = context.get("decision_capture") or {}
     diary_entries = context.get("diary", [])[-3:]
 
     return {
@@ -10628,12 +11539,40 @@ def build_verified_ai_context(
             "portfolio": scenario.get("portfolio", {}),
             "interpretation": scenario.get("interpretation", []),
         },
+        "decision_capture": None
+        if not decision_capture
+        else {
+            "created_at": decision_capture.get("created_at"),
+            "user_statement": compact_text(decision_capture.get("user_statement"), 520),
+            "decision_kind": decision_capture.get("decision_kind"),
+            "proposed_decision": decision_capture.get("proposed_decision"),
+            "goal_label": decision_capture.get("goal_label"),
+            "symbols": list(decision_capture.get("symbols", []))[:8],
+            "amount": safe_float(decision_capture.get("amount"), 2),
+            "amount_currency": decision_capture.get("amount_currency"),
+            "main_benefit": compact_text(decision_capture.get("main_benefit"), 260),
+            "main_risk": compact_text(decision_capture.get("main_risk"), 260),
+            "recommended_next_step": compact_text(decision_capture.get("recommended_next_step"), 320),
+            "review_date": decision_capture.get("review_date"),
+            "confidence": decision_capture.get("confidence"),
+            "user_reported": [compact_text(item, 240) for item in decision_capture.get("user_reported", [])[:4]],
+            "verified_data": [compact_text(item, 240) for item in decision_capture.get("verified_data", [])[:8]],
+            "ai_interpretation": [compact_text(item, 260) for item in decision_capture.get("ai_interpretation", [])[:6]],
+            "not_verified": [compact_text(item, 260) for item in decision_capture.get("not_verified", [])[:8]],
+            "scenario_rows": decision_capture.get("scenario_rows", [])[:3],
+            "action_items": [compact_text(item, 260) for item in decision_capture.get("action_items", [])[:5]],
+            "memory_rule": "A decision draft becomes trusted memory only after action and outcome review are compared.",
+        },
         "diary_memory": [
             {
                 "time": entry.get("time"),
                 "mood": entry.get("mood"),
                 "next_action": compact_text(entry.get("next_action"), 220),
                 "note": compact_text(entry.get("note"), 320) if include_diary_text else "[hidden unless user opts in]",
+                "decision_capture": None
+                if not entry.get("decision_capture")
+                else compact_text((entry.get("decision_capture") or {}).get("proposed_decision"), 220),
+                "outcome_review": clean_restored_json_value(entry.get("outcome_review", {}), 2),
             }
             for entry in diary_entries
         ],
@@ -10688,6 +11627,9 @@ Rules:
 - If the user asks about F-1, work authorization, monetization, or company formation, give only general caution and tell them to consult the DSO and qualified counsel.
 - Ground every answer in the provided LY-Scope-Ver.2 context.
 - Use linked_app_guidance to point the user toward the Portfolio, Personal Finance, Scenario, Diary, or Calculation Details view when relevant.
+- If decision_capture exists, treat it as the user's current decision draft.
+- Keep user statement, app-verified data, AI interpretation, uncertainty, next action, outcome review, and memory separate.
+- Do not turn a decision draft into a buy/sell recommendation.
 - If data is missing, say so clearly.
 - Keep the answer useful on mobile: concise, structured, and direct.
 - Return only JSON matching the requested schema.
@@ -10853,8 +11795,18 @@ def ai_coach_response(question: str) -> str:
     diary = context["diary"]
     missing = context["missing"]
     base_currency = portfolio["base_currency"]
+    decision_capture = context.get("decision_capture") or {}
 
     evidence: list[str] = []
+    if decision_capture:
+        evidence.append(f"Decision draft: {decision_capture.get('proposed_decision')}.")
+        evidence.append(f"User statement: {compact_text(decision_capture.get('user_statement'), 220)}.")
+        verified_line = "; ".join(decision_capture.get("verified_data", [])[:3])
+        if verified_line:
+            evidence.append(f"Draft verified data: {verified_line}.")
+        uncertainty_line = "; ".join(decision_capture.get("not_verified", [])[:3])
+        if uncertainty_line:
+            evidence.append(f"Draft uncertainty: {uncertainty_line}.")
     if personal:
         evidence.extend(
             [
@@ -10888,7 +11840,19 @@ def ai_coach_response(question: str) -> str:
         if latest.get("next_action"):
             evidence.append(f"Latest next action: {latest.get('next_action')}.")
 
-    if intent == "readiness":
+    if intent == "decision":
+        if decision_capture:
+            short = (
+                f"The current captured decision is **{decision_capture.get('proposed_decision')}**. "
+                "NORA is keeping it as a draft until verified data, downside risk, and user constraints are checked."
+            )
+            next_step = str(decision_capture.get("recommended_next_step") or "Run the relevant evidence screen before action.")
+        else:
+            short = (
+                "No decision draft has been captured yet. Start with one plain sentence about what you are trying to decide."
+            )
+            next_step = "Open Goal/Life, write the decision question, then create a Decision Draft before using AI interpretation."
+    elif intent == "readiness":
         short = (
             f"Your current investment readiness is **{readiness['label']}** "
             f"with a rule-based score of **{readiness['score']:.0f}/100**. "
@@ -11193,6 +12157,7 @@ def render_ai_coach() -> None:
     st.subheader("Quick Questions" if language == "en" else "빠른 질문")
     quick_questions = (
         [
+            "Review my decision draft.",
             "Am I investment ready?",
             "Explain my biggest risk.",
             "What happens in my latest scenario?",
@@ -11202,6 +12167,7 @@ def render_ai_coach() -> None:
         ]
         if language == "en"
         else [
+            "내 결정 초안을 검토해 주세요.",
             "지금 투자 준비가 되었나요?",
             "가장 큰 위험은 무엇인가요?",
             "최근 시나리오에서는 어떤 일이 생기나요?",
@@ -11296,10 +12262,11 @@ def ai_reasoning_readiness_tab() -> None:
         st.subheader("AI Coach Foundations")
         st.dataframe(
             [
+                {"Layer": "Decision Capture", "Current foundation": "Plain-language decision draft, evidence split, uncertainty list", "Future question": "What exactly am I trying to decide?"},
                 {"Layer": "Scenario", "Current foundation": "What-if Scenario Lab", "Future question": "What if income falls, FX moves, or rates rise?"},
                 {"Layer": "Portfolio", "Current foundation": "Valuation score, beta, covariance, correlation", "Future question": "Where is my risk concentrated?"},
                 {"Layer": "Personal finance", "Current foundation": "Surplus, emergency fund, DTI, health score", "Future question": "Can my life absorb this investment risk?"},
-                {"Layer": "Memory", "Current foundation": "Financial Diary JSON", "Future question": "How has my thinking changed over time?"},
+                {"Layer": "Outcome / Memory", "Current foundation": "Financial Diary JSON plus outcome review", "Future question": "Did the decision work, and what should I remember?"},
                 {"Layer": "Explainability", "Current foundation": "Calculation Details", "Future question": "Which formula and assumption produced this signal?"},
             ],
             hide_index=True,
@@ -11557,10 +12524,11 @@ def calculation_details_tab() -> None:
 
             **Reasoning context should include:**
 
+            - Decision capture: user statement, proposed draft, verified data, AI interpretation, and uncertainty.
             - Portfolio holdings, weights, valuation score, beta, covariance, and correlation.
             - Personal finance readiness: surplus, emergency fund, savings rate, debt-to-income, and health score.
             - Real estate exposure, income durability, LTV, and interest-rate sensitivity.
-            - Diary snapshots, notes, and next actions when the user chooses to restore them.
+            - Diary snapshots, notes, next actions, and outcome reviews when the user chooses to restore them.
             - Macro assumptions such as risk-free rate, equity risk premium, and FX rate.
 
             The What-if Scenario Lab is the first working version of this layer. It turns user-selected shocks
@@ -12279,6 +13247,7 @@ def build_current_situation_report_text() -> str:
     personal = st.session_state.get("last_personal_finance_result") or {}
     context = ai_coach_context_snapshot()
     readiness = ai_coach_readiness(context)
+    decision_capture = context.get("decision_capture") or {}
 
     lines = [
         f"LY-Scope-Ver.2 Current Situation Report - {now_text}",
@@ -12366,8 +13335,30 @@ def build_current_situation_report_text() -> str:
     else:
         lines.append("- Personal Finance baseline has not been calculated yet.")
 
+    lines.append("")
+    lines.append("5. Decision Capture")
+    if decision_capture:
+        lines.extend(
+            [
+                f"- User statement: {compact_text(decision_capture.get('user_statement'), 320)}",
+                f"- Decision draft: {decision_capture.get('proposed_decision')}",
+                f"- Goal link: {decision_capture.get('goal_label')}",
+                f"- Main risk: {decision_capture.get('main_risk')}",
+                f"- Next step: {decision_capture.get('recommended_next_step')}",
+                f"- Review date: {decision_capture.get('review_date')}",
+            ]
+        )
+        if decision_capture.get("verified_data"):
+            lines.append("- Verified data attached:")
+            lines.extend(f"  - {item}" for item in decision_capture.get("verified_data", [])[:4])
+        if decision_capture.get("not_verified"):
+            lines.append("- Not verified yet:")
+            lines.extend(f"  - {item}" for item in decision_capture.get("not_verified", [])[:4])
+    else:
+        lines.append("- No decision draft has been captured yet.")
+
     missing = context.get("missing", [])
-    lines.extend(["", "5. Missing Inputs"])
+    lines.extend(["", "6. Missing Inputs"])
     if missing:
         lines.extend(f"- {item}" for item in missing)
     else:
@@ -12376,7 +13367,7 @@ def build_current_situation_report_text() -> str:
     lines.extend(
         [
             "",
-            "6. Next Reflection Prompt",
+            "7. Next Reflection Prompt",
             "- What changed since the last review?",
             "- Is my investment risk aligned with my cash flow and emergency reserve?",
             "- What is one safe next step before changing the portfolio?",
@@ -12477,6 +13468,103 @@ def render_mobile_saved_diary_cards(entries: list[dict[str, Any]]) -> None:
         )
 
 
+def render_decision_outcome_review() -> None:
+    language = current_language()
+    if st.session_state.pop("decision_outcome_saved_notice", False):
+        st.success(decision_text(language, "Outcome review saved to Memory.", "결과 리뷰가 메모리에 저장되었습니다."))
+
+    decision_entries = [
+        (idx, entry)
+        for idx, entry in enumerate(st.session_state.get("financial_diary", []), start=1)
+        if entry.get("decision_capture")
+    ]
+    if not decision_entries:
+        return
+
+    st.subheader(decision_text(language, "Outcome Review", "결과 리뷰"))
+    selected_idx = st.selectbox(
+        decision_text(language, "Select a saved decision card", "저장된 결정 카드 선택"),
+        options=[idx for idx, _ in decision_entries],
+        format_func=lambda idx: (
+            f"Entry {idx} · "
+            f"{compact_text((st.session_state.financial_diary[idx - 1].get('decision_capture') or {}).get('proposed_decision'), 70)}"
+        ),
+        key="decision_outcome_entry_index",
+    )
+    entry = st.session_state.financial_diary[int(selected_idx) - 1]
+    draft = entry.get("decision_capture") or {}
+    outcome = entry.get("outcome_review") or {}
+
+    st.markdown(
+        f"""
+        <div class="decision-draft-card">
+            <div class="decision-draft-grid">
+                <div class="decision-draft-cell primary">
+                    <small>{escape(decision_text(language, "DECISION", "결정"))}</small>
+                    <b>{escape(str(draft.get("proposed_decision", "")))}</b>
+                </div>
+                <div class="decision-draft-cell">
+                    <small>{escape(decision_text(language, "EXPECTED", "예상"))}</small>
+                    <b>{escape(str(draft.get("main_benefit", "")))}</b>
+                </div>
+                <div class="decision-draft-cell">
+                    <small>{escape(decision_text(language, "RISK ACCEPTED", "수용 위험"))}</small>
+                    <b>{escape(str(draft.get("main_risk", "")))}</b>
+                </div>
+                <div class="decision-draft-cell">
+                    <small>{escape(decision_text(language, "REVIEW DATE", "리뷰 날짜"))}</small>
+                    <b>{escape(str(draft.get("review_date", "")))}</b>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    with st.form("decision_outcome_form"):
+        expected = st.text_input(
+            decision_text(language, "Expected outcome", "예상 결과"),
+            value=str(outcome.get("expected_outcome") or draft.get("main_benefit") or ""),
+        )
+        actual = st.text_area(
+            decision_text(language, "Actual outcome", "실제 결과"),
+            value=str(outcome.get("actual_outcome") or ""),
+            height=90,
+        )
+        changed = st.text_area(
+            decision_text(language, "What changed?", "무엇이 바뀌었나요?"),
+            value=str(outcome.get("what_changed") or ""),
+            height=80,
+        )
+        misunderstood = st.text_area(
+            decision_text(language, "What did I misunderstand?", "무엇을 잘못 이해했나요?"),
+            value=str(outcome.get("what_misunderstood") or ""),
+            height=80,
+        )
+        same_decision = st.selectbox(
+            decision_text(language, "Would I make the same decision again?", "다시 같은 결정을 할까요?"),
+            options=[
+                decision_text(language, "Not reviewed", "미검토"),
+                decision_text(language, "Yes", "예"),
+                decision_text(language, "Partially", "부분적으로"),
+                decision_text(language, "No", "아니오"),
+            ],
+            index=0,
+        )
+        saved = st.form_submit_button(decision_text(language, "Save Outcome Review", "결과 리뷰 저장"), width="stretch")
+    if saved:
+        entry["outcome_review"] = {
+            "reviewed_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+            "expected_outcome": compact_text(expected, 600),
+            "actual_outcome": compact_text(actual, 1200),
+            "what_changed": compact_text(changed, 1000),
+            "what_misunderstood": compact_text(misunderstood, 1000),
+            "would_make_same_decision": same_decision,
+        }
+        st.session_state.decision_outcome_saved_notice = True
+        st.rerun()
+
+
 def financial_diary_tab() -> None:
     st.markdown(
         """
@@ -12487,6 +13575,8 @@ def financial_diary_tab() -> None:
         """,
         unsafe_allow_html=True,
     )
+    if st.session_state.pop("decision_capture_saved_notice", False):
+        st.success(decision_text(current_language(), "Decision card saved to Diary Memory.", "결정 카드가 다이어리 메모리에 저장되었습니다."))
     st.caption(
         "Diary entries are stored in the current Streamlit session unless downloaded. Avoid entering sensitive personal information in a public or shared browser."
     )
@@ -12599,6 +13689,8 @@ def financial_diary_tab() -> None:
         except Exception as exc:
             st.warning(f"Could not restore diary file: {exc}")
 
+    render_decision_outcome_review()
+
     st.subheader("Saved Entries")
     if not st.session_state.financial_diary:
         st.info("No diary entries yet. Save a snapshot after reviewing your portfolio or personal finance status.")
@@ -12635,6 +13727,17 @@ def financial_diary_tab() -> None:
         with st.expander(f"Entry {idx}: {entry.get('time')} - {entry.get('mood')}", expanded=False):
             st.write(f"**Note:** {entry.get('note') or 'No note'}")
             st.write(f"**Next Action:** {entry.get('next_action') or 'No action recorded'}")
+            decision_capture = entry.get("decision_capture") or {}
+            if decision_capture:
+                st.write(f"**Decision Draft:** {decision_capture.get('proposed_decision')}")
+                st.write(f"**User Said:** {decision_capture.get('user_statement')}")
+                st.write(f"**Evidence Used:** {'; '.join(decision_capture.get('verified_data', [])[:4])}")
+                st.write(f"**Uncertainty:** {'; '.join(decision_capture.get('not_verified', [])[:4])}")
+                outcome_review = entry.get("outcome_review") or {}
+                if outcome_review:
+                    st.write(f"**Outcome Review:** {outcome_review.get('would_make_same_decision')}")
+                    st.write(f"**Actual Outcome:** {outcome_review.get('actual_outcome') or 'Not recorded'}")
+                    st.write(f"**What Changed:** {outcome_review.get('what_changed') or 'Not recorded'}")
             portfolio = entry.get("portfolio", {})
             base_currency = entry.get("base_currency", "USD")
             gain_loss = portfolio.get("gain_loss") or {}
@@ -13687,6 +14790,7 @@ def render_life_entry_screen(standalone: bool = True) -> None:
             "Educational prototype only; not financial, investment, legal, or tax advice."
         )
     )
+    render_decision_capture_panel()
 
 
 NAV_ITEMS = [
@@ -13724,6 +14828,14 @@ DESKTOP_ORBIT_ITEMS = [
 
 NORA_ONTOLOGY_STEPS = [
     {
+        "glyph": "CAP",
+        "label": "Decision Capture",
+        "tag": "User signal",
+        "color": "#14b8a6",
+        "detail_en": "The customer's plain-language thought, worry, question, or intent before it becomes structured data.",
+        "detail_ko": "구조화된 데이터가 되기 전 고객의 자연스러운 생각, 걱정, 질문, 의도.",
+    },
+    {
         "glyph": "WHY",
         "label": "Customer Purpose",
         "tag": "What does the customer want?",
@@ -13752,8 +14864,8 @@ NORA_ONTOLOGY_STEPS = [
         "label": "Data",
         "tag": "Structured inputs",
         "color": "#a7f3d0",
-        "detail_en": "Cash flow, assets, debt, stocks, REITs, real estate, goals, and diary snapshots.",
-        "detail_ko": "현금흐름, 자산, 부채, 주식, REIT, 부동산, 목표, 다이어리 스냅샷.",
+        "detail_en": "Cash flow, assets, debt, stocks, real estate, goals, decision drafts, and diary snapshots.",
+        "detail_ko": "현금흐름, 자산, 부채, 주식, 부동산, 목표, 결정 초안, 다이어리 스냅샷.",
     },
     {
         "glyph": "MOD",
@@ -13786,6 +14898,22 @@ NORA_ONTOLOGY_STEPS = [
         "color": "#f9a8d4",
         "detail_en": "Next action, watch item, avoid item, and decision status, without pretending to be advice.",
         "detail_ko": "조언처럼 단정하지 않고 다음 행동, 관찰 항목, 피할 항목, 결정 상태를 정리.",
+    },
+    {
+        "glyph": "ACT",
+        "label": "Action",
+        "tag": "Action follow-through",
+        "color": "#fb7185",
+        "detail_en": "Whether the customer waited, acted partially, acted fully, or changed course after seeing evidence.",
+        "detail_ko": "근거를 본 뒤 고객이 보류, 부분 실행, 전체 실행, 방향 전환 중 무엇을 했는지.",
+    },
+    {
+        "glyph": "OUT",
+        "label": "Outcome",
+        "tag": "What happened next?",
+        "color": "#38bdf8",
+        "detail_en": "Observed result, changed facts, misunderstood assumptions, and whether the same decision would be repeated.",
+        "detail_ko": "관찰된 결과, 바뀐 사실, 잘못 이해한 가정, 같은 결정을 반복할지 여부.",
     },
     {
         "glyph": "MEM",
@@ -14178,7 +15306,7 @@ def render_rationality_gate() -> None:
     tone = rationality_tone(score)
     tone_color = {"good": "#0f766e", "mid": "#2563eb", "watch": "#d97706"}[tone]
     pillar_nodes = []
-    path_labels = ["Purpose", "Evidence", "Risk", "Memory"]
+    path_labels = ["Capture", "Purpose", "Evidence", "Decision", "Memory"]
     path_html = "".join(
         f'<span>{ui_html(label)}</span>'
         + ('<i aria-hidden="true">&rarr;</i>' if index < len(path_labels) - 1 else "")
@@ -14206,7 +15334,7 @@ def render_rationality_gate() -> None:
         <section class="rationality-gate {tone}" style="--rational-color: {tone_color};" aria-label="{ui_html('Rationality Gate')}">
             <div class="rationality-gate-main">
                 <b>{ui_html('Rationality Gate')}</b>
-                <div class="rationality-path" aria-label="{ui_html('Purpose → Evidence → Risk → Memory')}">{path_html}</div>
+                <div class="rationality-path" aria-label="{ui_html('Capture → Purpose → Evidence → Decision → Memory')}">{path_html}</div>
             </div>
             <div class="rationality-score">
                 <strong>{score:.0f}</strong><small>/100</small>
@@ -14231,6 +15359,7 @@ def render_life_compact_panel() -> None:
         if language == "en"
         else "오늘의 전략을 바꿀 목표를 선택하세요."
     )
+    render_decision_capture_panel()
     cards = []
     for goal_key, config in NORA_GOAL_STRATEGIES.items():
         cards.append(
