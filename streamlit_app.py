@@ -6721,6 +6721,260 @@ st.markdown(
             grid-template-columns: 1fr !important;
         }
     }
+    /* Readability polish: separate the LY mark from the name, quiet the page texture,
+       and keep the visual data cards crisp. */
+    html body .stApp {
+        background:
+            linear-gradient(90deg, rgba(14, 116, 144, 0.026) 1px, transparent 1px),
+            linear-gradient(0deg, rgba(14, 116, 144, 0.020) 1px, transparent 1px),
+            radial-gradient(circle at 0% 0%, rgba(224, 242, 254, 0.62), transparent 30%),
+            radial-gradient(circle at 100% 9%, rgba(236, 253, 245, 0.52), transparent 28%),
+            linear-gradient(135deg, #f9fcff 0%, #f8fcfb 56%, #fffdf6 100%) !important;
+        background-size: 64px 64px, 64px 64px, auto, auto, auto !important;
+    }
+    html body .stApp::before,
+    html body .stApp::after {
+        opacity: 0.045 !important;
+        filter: saturate(0.82);
+    }
+    html body header[data-testid="stHeader"] {
+        background: transparent !important;
+        box-shadow: none !important;
+        pointer-events: none !important;
+    }
+    html body header[data-testid="stHeader"] div[data-testid="stToolbar"] {
+        display: none !important;
+    }
+    html body .stApp .block-container {
+        max-width: 1180px !important;
+        padding-top: 0.85rem !important;
+    }
+    html body .stApp .top-language-toggle {
+        top: 12px !important;
+        right: 16px !important;
+        padding: 4px !important;
+        gap: 4px !important;
+        background: rgba(255, 255, 255, 0.92) !important;
+        border-color: rgba(148, 163, 184, 0.22) !important;
+        box-shadow: 0 12px 26px rgba(15, 23, 42, 0.10) !important;
+    }
+    html body .stApp .top-language-toggle .language-toggle-mark,
+    html body .stApp .top-language-toggle a {
+        width: 30px !important;
+        height: 30px !important;
+        color: #0f766e !important;
+        -webkit-text-fill-color: #0f766e !important;
+        border-color: rgba(15, 118, 110, 0.18) !important;
+    }
+    html body .stApp .top-language-toggle a.active {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        background: #0f766e !important;
+        border-color: rgba(15, 118, 110, 0.38) !important;
+        box-shadow: none !important;
+    }
+    html body .stApp .brand-header {
+        width: 100% !important;
+        min-height: 72px !important;
+        margin: 0 auto 16px !important;
+        padding: 14px clamp(16px, 2.8vw, 30px) !important;
+        border-radius: 10px !important;
+        overflow: hidden !important;
+        background: rgba(255, 255, 255, 0.965) !important;
+        border: 1px solid rgba(148, 163, 184, 0.22) !important;
+        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.065) !important;
+    }
+    html body .stApp .brand-header::after {
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        height: 3px !important;
+        opacity: 0.78 !important;
+        background: linear-gradient(90deg, rgba(15,118,110,0.08), rgba(37,99,235,0.62), rgba(34,211,238,0.70), rgba(15,118,110,0.52), rgba(15,118,110,0.08)) !important;
+        box-shadow: none !important;
+    }
+    html body .stApp .brand-mark {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 14px !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+    html body .stApp .brand-icon {
+        flex: 0 0 48px !important;
+        width: 48px !important;
+        height: 48px !important;
+        border-radius: 14px !important;
+        display: grid !important;
+        place-items: center !important;
+        overflow: hidden !important;
+        background:
+            radial-gradient(circle at 30% 20%, rgba(255,255,255,0.45), transparent 32%),
+            linear-gradient(135deg, #0f766e 0%, #0891b2 52%, #2563eb 100%) !important;
+        border: 1px solid rgba(14, 165, 233, 0.22) !important;
+        box-shadow: 0 10px 24px rgba(14, 116, 144, 0.16) !important;
+    }
+    html body .stApp .brand-icon::before,
+    html body .stApp .brand-icon::after {
+        content: none !important;
+        display: none !important;
+    }
+    html body .stApp .brand-icon span {
+        display: block !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        font-family: Century, "Century Schoolbook", Georgia, serif !important;
+        font-size: 1.28rem !important;
+        line-height: 1 !important;
+        font-weight: 950 !important;
+        letter-spacing: 0 !important;
+        transform: translateY(-1px);
+    }
+    html body .stApp .brand-copy {
+        min-width: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    html body .stApp .brand-wordmark {
+        display: flex !important;
+        align-items: baseline !important;
+        justify-content: flex-start !important;
+        gap: 8px !important;
+        min-width: 0 !important;
+        flex-wrap: wrap !important;
+    }
+    html body .stApp .brand-name {
+        color: #0f172a !important;
+        -webkit-text-fill-color: #0f172a !important;
+        font-family: Century, "Century Schoolbook", Georgia, serif !important;
+        font-size: clamp(1.45rem, 2vw, 1.82rem) !important;
+        line-height: 1.02 !important;
+        font-weight: 950 !important;
+        white-space: nowrap !important;
+        text-shadow: none !important;
+    }
+    html body .stApp .brand-version {
+        display: inline-flex !important;
+        align-items: center !important;
+        min-height: 22px !important;
+        padding: 0 8px !important;
+        border-radius: 999px !important;
+        color: #0f766e !important;
+        -webkit-text-fill-color: #0f766e !important;
+        background: #ecfeff !important;
+        border: 1px solid rgba(14, 116, 144, 0.18) !important;
+        font-size: 0.74rem !important;
+        line-height: 1 !important;
+        font-weight: 900 !important;
+        white-space: nowrap !important;
+    }
+    html body .stApp .brand-subtitle {
+        display: block !important;
+        margin-top: 4px !important;
+        color: #64748b !important;
+        -webkit-text-fill-color: #64748b !important;
+        font-size: 0.62rem !important;
+        line-height: 1.1 !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        text-align: left !important;
+        max-width: 100% !important;
+    }
+    html body .stApp .finance-snapshot-ribbon {
+        gap: 12px !important;
+        margin: 10px 0 16px !important;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)) !important;
+    }
+    html body .stApp .finance-snapshot-card {
+        min-height: 98px !important;
+        padding: 14px !important;
+        background: rgba(255, 255, 255, 0.975) !important;
+        border-color: rgba(148, 163, 184, 0.24) !important;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.055) !important;
+    }
+    html body .stApp .finance-snapshot-card small,
+    html body .stApp .finance-snapshot-card b,
+    html body .stApp .finance-snapshot-card em {
+        display: block !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+    }
+    html body .stApp .finance-snapshot-card small {
+        color: #64748b !important;
+        -webkit-text-fill-color: #64748b !important;
+        font-size: 0.68rem !important;
+        letter-spacing: 0.01em !important;
+    }
+    html body .stApp .finance-snapshot-card b {
+        color: #0f172a !important;
+        -webkit-text-fill-color: #0f172a !important;
+        font-size: 1.02rem !important;
+        line-height: 1.16 !important;
+        padding-bottom: 1px !important;
+    }
+    html body .stApp .finance-snapshot-card em {
+        color: #475569 !important;
+        -webkit-text-fill-color: #475569 !important;
+        font-size: 0.72rem !important;
+    }
+    html body .stApp .goal-strategy-strip,
+    html body .stApp .rationality-gate,
+    html body .stApp .nora-ontology,
+    html body .stApp .section-header,
+    html body .stApp .metric-card,
+    html body .stApp .portfolio-score-card {
+        background: rgba(255, 255, 255, 0.975) !important;
+        border-color: rgba(148, 163, 184, 0.22) !important;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.055) !important;
+    }
+    html body .stApp .desktop-orbit-center,
+    html body .stApp .desktop-orbit-item {
+        background: rgba(255, 255, 255, 0.96) !important;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05) !important;
+    }
+    html body .stApp .desktop-orbit-item.active,
+    html body .stApp .desktop-orbit-center.active,
+    html body .stApp .nora-module.active {
+        box-shadow: 0 10px 24px rgba(15, 118, 110, 0.14) !important;
+    }
+    html body .stApp .rationality-score strong,
+    html body .stApp .rationality-score small,
+    html body .stApp .rationality-score em {
+        display: block !important;
+        min-width: 0 !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+    }
+    html body .stApp .rationality-score strong {
+        line-height: 1.12 !important;
+        padding-bottom: 1px !important;
+    }
+    @media (max-width: 760px) {
+        html body .stApp .brand-header {
+            min-height: 64px !important;
+            padding: 12px 14px !important;
+        }
+        html body .stApp .brand-icon {
+            flex-basis: 42px !important;
+            width: 42px !important;
+            height: 42px !important;
+            border-radius: 12px !important;
+        }
+        html body .stApp .brand-icon span {
+            font-size: 1.08rem !important;
+        }
+        html body .stApp .brand-name {
+            font-size: 1.30rem !important;
+        }
+        html body .stApp .brand-subtitle {
+            display: none !important;
+        }
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -14016,9 +14270,12 @@ def render_main_app() -> None:
         f"""
         <div class="brand-header">
             <div class="brand-mark">
-                <div class="brand-icon" aria-hidden="true"></div>
-                <div>
-                    <div class="brand-name">LY-Scope<span class="scope-accent">-Ver.2</span></div>
+                <div class="brand-icon" aria-hidden="true"><span>LY</span></div>
+                <div class="brand-copy">
+                    <div class="brand-wordmark">
+                        <div class="brand-name">LY-Scope</div>
+                        <div class="brand-version">Ver.2</div>
+                    </div>
                     <div class="brand-subtitle">{brand_subtitle}</div>
                 </div>
             </div>
