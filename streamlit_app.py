@@ -6302,10 +6302,203 @@ st.markdown(
         opacity: 1;
         transform: translateY(0);
     }
+    html body .stApp .client-visual-report {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+        align-items: stretch;
+        margin: 8px 0 12px;
+    }
+    html body .stApp .client-report-cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(210px, 1fr));
+        gap: 10px;
+        min-width: 0;
+    }
+    html body .stApp .client-report-card {
+        --report-color: #0f766e;
+        min-height: 138px;
+        position: relative;
+        padding: 13px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.045);
+        overflow: visible;
+        outline: none;
+    }
+    html body .stApp .client-report-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        border-radius: 8px 8px 0 0;
+        background: var(--report-color);
+    }
+    html body .stApp .client-report-main {
+        display: grid;
+        grid-template-columns: 38px minmax(0, 1fr);
+        gap: 10px;
+        align-items: center;
+    }
+    html body .stApp .client-report-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    html body .stApp .client-report-text small {
+        display: block;
+        color: #64748b;
+        font-size: 0.67rem;
+        line-height: 1;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+    html body .stApp .client-report-text b {
+        display: block;
+        margin-top: 4px;
+        color: #0f172a;
+        font-size: 1.08rem;
+        line-height: 1.08;
+        font-weight: 950;
+        overflow-wrap: anywhere;
+    }
+    html body .stApp .client-report-text em {
+        display: block;
+        margin-top: 4px;
+        color: #475569;
+        font-size: 0.74rem;
+        line-height: 1.2;
+        font-style: normal;
+        font-weight: 740;
+        overflow-wrap: anywhere;
+    }
+    html body .stApp .client-report-meter {
+        height: 8px;
+        margin-top: 14px;
+        border-radius: 999px;
+        overflow: hidden;
+        background: #e2e8f0;
+    }
+    html body .stApp .client-report-meter i {
+        display: block;
+        width: var(--level);
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--report-color), #38bdf8);
+    }
+    html body .stApp .client-report-detail {
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        top: calc(100% + 8px);
+        z-index: 40;
+        padding: 10px 11px;
+        border-radius: 8px;
+        color: #334155;
+        background: #ffffff;
+        border: 1px solid rgba(148, 163, 184, 0.24);
+        box-shadow: 0 18px 34px rgba(15, 23, 42, 0.12);
+        font-size: 0.74rem;
+        line-height: 1.38;
+        opacity: 0;
+        transform: translateY(-3px);
+        pointer-events: none;
+        transition: opacity 140ms ease, transform 140ms ease;
+    }
+    html body .stApp .client-report-card:hover .client-report-detail,
+    html body .stApp .client-report-card:focus .client-report-detail {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    html body .stApp .client-direction-rail {
+        min-height: 92px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        padding: 12px;
+        border-radius: 8px;
+        background:
+            linear-gradient(90deg, rgba(15, 118, 110, 0.06), rgba(37, 99, 235, 0.05)),
+            rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(148, 163, 184, 0.20);
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.045);
+    }
+    html body .stApp .client-direction-step {
+        min-width: 0;
+        display: grid;
+        grid-template-columns: 32px minmax(0, 1fr);
+        grid-template-rows: auto auto 6px;
+        align-items: start;
+        column-gap: 8px;
+        row-gap: 4px;
+    }
+    html body .stApp .client-direction-step span {
+        grid-row: 1 / 4;
+        width: 32px;
+        height: 32px;
+        overflow: hidden;
+    }
+    html body .stApp .client-direction-step b {
+        color: #0f172a;
+        font-size: 0.80rem;
+        line-height: 1.12;
+        font-weight: 900;
+        overflow-wrap: anywhere;
+    }
+    html body .stApp .client-direction-step em {
+        color: #64748b;
+        font-size: 0.68rem;
+        line-height: 1.18;
+        font-style: normal;
+        font-weight: 700;
+        overflow-wrap: anywhere;
+    }
+    html body .stApp .client-direction-step i {
+        display: block;
+        width: var(--level);
+        height: 6px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--step-color), #38bdf8);
+    }
+    html body .stApp .client-report-evidence {
+        grid-column: 1 / -1;
+        border-radius: 8px;
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        background: rgba(255, 255, 255, 0.78);
+        overflow: hidden;
+    }
+    html body .stApp .client-report-evidence summary {
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        color: #0f172a;
+        font-size: 0.78rem;
+        font-weight: 900;
+        cursor: pointer;
+        list-style: none;
+    }
+    html body .stApp .client-report-evidence summary::-webkit-details-marker {
+        display: none;
+    }
+    html body .stApp .client-report-evidence ul {
+        margin: 0;
+        padding: 8px 12px 12px 28px;
+        color: #475569;
+        font-size: 0.76rem;
+        line-height: 1.4;
+    }
     html body .stApp .goal-strategy-strip,
     html body .stApp .rationality-gate,
     html body .stApp .nora-ontology,
     html body .stApp .life-compact-panel,
+    html body .stApp .client-report-card,
+    html body .stApp .client-direction-rail,
     html body .stApp .metric-card,
     html body .stApp .portfolio-score-card {
         border-radius: 8px !important;
@@ -6387,6 +6580,13 @@ st.markdown(
     @media (max-width: 900px) {
         html body .stApp .finance-snapshot-ribbon {
             grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        html body .stApp .client-visual-report {
+            grid-template-columns: 1fr;
+        }
+        html body .stApp .client-report-cards,
+        html body .stApp .client-direction-rail {
+            grid-template-columns: 1fr;
         }
         html body .stApp .home-goal-layout {
             grid-template-columns: 1fr;
@@ -7466,6 +7666,13 @@ st.markdown(
     html body .stApp .case-study-avatar-icon {
         width: 48px !important;
         height: 48px !important;
+    }
+    html body .stApp .client-report-image-icon,
+    html body .stApp .client-direction-image-icon {
+        width: 100% !important;
+        height: 100% !important;
+        display: block !important;
+        object-fit: contain !important;
     }
     @media (max-width: 760px) {
         html body .stApp .brand-logo-image {
@@ -15883,6 +16090,498 @@ def render_mobile_view_summary(active_key: str) -> None:
     )
 
 
+def level_pct(value: float) -> float:
+    return max(0.0, min(100.0, float(value)))
+
+
+def finance_result_from_current_inputs() -> tuple[dict[str, Any], str]:
+    finance_keys = [
+        "pf_monthly_income",
+        "pf_fixed_expenses",
+        "pf_variable_expenses",
+        "pf_cash_savings",
+        "pf_taxable_investments",
+        "pf_retirement_accounts",
+        "pf_real_estate_value",
+        "pf_credit_card_debt",
+        "pf_student_loan",
+        "pf_auto_loan",
+        "pf_mortgage",
+        "pf_monthly_debt_payment",
+        "pf_monthly_savings_goal",
+        "pf_target_goal_amount",
+        "pf_current_goal_savings",
+        "pf_investment_risk_score",
+        "pf_runway_target_months",
+        "pf_study_months_remaining",
+    ]
+    if not all(key in st.session_state for key in finance_keys):
+        return st.session_state.get("last_personal_finance_result") or {}, st.session_state.get("pf_display_currency", "USD")
+    try:
+        from personal_finance_engine import PersonalFinanceProfile, calculate_personal_finance
+
+        profile = PersonalFinanceProfile(
+            monthly_income=float(st.session_state.get("pf_monthly_income") or 0),
+            fixed_expenses=float(st.session_state.get("pf_fixed_expenses") or 0),
+            variable_expenses=float(st.session_state.get("pf_variable_expenses") or 0),
+            cash_savings=float(st.session_state.get("pf_cash_savings") or 0),
+            taxable_investments=float(st.session_state.get("pf_taxable_investments") or 0),
+            retirement_accounts=float(st.session_state.get("pf_retirement_accounts") or 0),
+            real_estate_value=float(st.session_state.get("pf_real_estate_value") or 0),
+            credit_card_debt=float(st.session_state.get("pf_credit_card_debt") or 0),
+            student_loan=float(st.session_state.get("pf_student_loan") or 0),
+            auto_loan=float(st.session_state.get("pf_auto_loan") or 0),
+            mortgage=float(st.session_state.get("pf_mortgage") or 0),
+            monthly_debt_payment=float(st.session_state.get("pf_monthly_debt_payment") or 0),
+            monthly_savings_goal=float(st.session_state.get("pf_monthly_savings_goal") or 0),
+            target_goal_amount=max(1.0, float(st.session_state.get("pf_target_goal_amount") or 1)),
+            current_goal_savings=float(st.session_state.get("pf_current_goal_savings") or 0),
+            investment_risk_score=float(st.session_state.get("pf_investment_risk_score") or 0),
+            runway_target_months=max(1.0, float(st.session_state.get("pf_runway_target_months") or 6)),
+            study_months_remaining=max(0.0, float(st.session_state.get("pf_study_months_remaining") or 0)),
+        )
+        return calculate_personal_finance(profile), st.session_state.get("pf_display_currency", "USD")
+    except Exception:
+        return st.session_state.get("last_personal_finance_result") or {}, st.session_state.get("pf_display_currency", "USD")
+
+
+def client_report_state() -> dict[str, Any]:
+    language = current_language()
+    goal = active_goal_key()
+    goal_config = NORA_GOAL_STRATEGIES.get(goal or "")
+    base_currency = st.session_state.get("portfolio_base_currency", "USD")
+    personal, personal_currency = finance_result_from_current_inputs()
+    personal_currency = personal_currency or base_currency
+    scenario = st.session_state.get("last_scenario_packet")
+    total_value, weighted_beta, valuation_score, sector_values = portfolio_metrics()
+    holdings = portfolio_holdings_snapshot() if st.session_state.get("portfolio") else []
+    resilience = portfolio_resilience_summary(holdings, sector_values, weighted_beta, valuation_score)
+
+    no_income = bool(personal.get("no_income_mode"))
+    monthly_surplus = float(personal.get("monthly_surplus") or 0)
+    emergency = float(personal.get("emergency_months") or 0)
+    required_runway = max(1.0, float(personal.get("required_runway_months") or 6))
+    runway_gap = float(personal.get("runway_gap_months") or 0)
+    planning_health = float(
+        personal.get("planning_health_score")
+        or personal.get("financial_health_score")
+        or 0
+    )
+    investment_exposure = float(personal.get("investment_exposure_ratio") or 0)
+    top_holding_weight = float(resilience.get("top_holding_weight") or 0) if resilience else 0.0
+    top_sector_weight = float(resilience.get("top_sector_weight") or 0) if resilience else 0.0
+
+    if personal:
+        if no_income and monthly_surplus < 0:
+            problem_title = "소득 공백" if language == "ko" else "Income Gap"
+            problem_sub = (
+                f"{fmt_money_compact(abs(monthly_surplus), personal_currency, language)}/월 소진"
+                if language == "ko"
+                else f"{fmt_money_compact(abs(monthly_surplus), personal_currency, language)}/mo burn"
+            )
+            problem_detail = (
+                "현재 돈을 벌지 않는 기간에는 저축률보다 현금 생존기간과 강제매도 위험이 핵심 문제입니다."
+                if language == "ko"
+                else "During a no-income period, cash runway and forced-selling risk matter more than savings-rate benchmarks."
+            )
+            problem_level = 82
+            problem_color = "#d97706"
+        elif monthly_surplus < 0:
+            problem_title = "현금흐름 적자" if language == "ko" else "Cashflow Leak"
+            problem_sub = (
+                f"{fmt_money_compact(abs(monthly_surplus), personal_currency, language)}/월 부족"
+                if language == "ko"
+                else f"{fmt_money_compact(abs(monthly_surplus), personal_currency, language)}/mo gap"
+            )
+            problem_detail = (
+                "월 지출이 월 수입보다 커서 투자 판단보다 지출 속도와 현금 완충력이 먼저입니다."
+                if language == "ko"
+                else "Monthly outflow is above monthly income, so burn rate and cash buffer come before asset decisions."
+            )
+            problem_level = 88
+            problem_color = "#dc2626"
+        elif emergency < required_runway:
+            problem_title = "생존기간 부족" if language == "ko" else "Runway Gap"
+            problem_sub = (
+                f"{emergency:.1f}/{required_runway:.1f}개월"
+                if language == "ko"
+                else f"{emergency:.1f}/{required_runway:.1f} months"
+            )
+            problem_detail = (
+                "목표 생존기간보다 현금 완충 기간이 짧아 큰 포트폴리오 결정보다 현금 계획이 먼저입니다."
+                if language == "ko"
+                else "Cash runway is below the selected target, so the cash plan should precede large portfolio decisions."
+            )
+            problem_level = 76
+            problem_color = "#d97706"
+        elif investment_exposure >= 0.60:
+            problem_title = "시장 노출 높음" if language == "ko" else "Market Heavy"
+            problem_sub = f"{investment_exposure * 100:.0f}%"
+            problem_detail = (
+                "총자산 중 투자자산 비중이 높아 생활비와 시장 하락이 같은 시점에 겹칠 수 있습니다."
+                if language == "ko"
+                else "Investment exposure is high, so living-cost needs and market drawdown can collide."
+            )
+            problem_level = 68
+            problem_color = "#d97706"
+        else:
+            problem_title = "큰 결함 없음" if language == "ko" else "No Major Gap"
+            problem_sub = (
+                f"건강도 {planning_health:.0f}/100"
+                if language == "ko"
+                else f"Health {planning_health:.0f}/100"
+            )
+            problem_detail = (
+                "현재 입력값에서는 유동성, 부채, 현금흐름의 큰 단절은 보이지 않습니다."
+                if language == "ko"
+                else "Current inputs do not show a major break in liquidity, debt, or cash flow."
+            )
+            problem_level = max(30, 100 - planning_health)
+            problem_color = "#0f766e"
+    else:
+        problem_title = "상황 입력 필요" if language == "ko" else "Situation Missing"
+        problem_sub = "재무 입력 먼저" if language == "ko" else "Finance first"
+        problem_detail = (
+            "수입, 지출, 현금, 투자자산을 입력해야 현재 문제가 실제로 현금흐름인지, 포트폴리오인지 구분됩니다."
+            if language == "ko"
+            else "Enter income, spending, cash, and investments before the app can separate cashflow risk from portfolio risk."
+        )
+        problem_level = 72
+        problem_color = "#d97706"
+
+    scenario_delta = None
+    if scenario:
+        try:
+            scenario_delta = float(scenario.get("portfolio", {}).get("scenario_delta_pct"))
+        except (TypeError, ValueError):
+            scenario_delta = None
+
+    if scenario_delta is not None:
+        if scenario_delta <= -25:
+            crisis_title = "충격 손실" if language == "ko" else "Stress Loss"
+            crisis_sub = f"{scenario_delta:+.1f}%"
+            crisis_detail = (
+                "최근 시나리오에서 자산 하락 폭이 큽니다. 생활비 충당을 위해 투자자산을 팔아야 하는지 먼저 봐야 합니다."
+                if language == "ko"
+                else "The latest stress case shows a large drawdown. Check whether living needs could force asset sales."
+            )
+            crisis_level = min(100, abs(scenario_delta) * 2.8)
+            crisis_color = "#dc2626"
+        elif scenario_delta < 0:
+            crisis_title = "하락 주의" if language == "ko" else "Stress Watch"
+            crisis_sub = f"{scenario_delta:+.1f}%"
+            crisis_detail = (
+                "시나리오 손실은 감당 가능 범위일 수 있지만, 반복 검토와 현금 완충 확인이 필요합니다."
+                if language == "ko"
+                else "The stress loss may be usable, but it still needs repeat review and cash-buffer confirmation."
+            )
+            crisis_level = max(42, min(82, abs(scenario_delta) * 2.2))
+            crisis_color = "#d97706"
+        else:
+            crisis_title = "충격 감당" if language == "ko" else "Stress Usable"
+            crisis_sub = f"{scenario_delta:+.1f}%"
+            crisis_detail = (
+                "최근 시나리오에서는 큰 위험 신호가 낮습니다. 다음은 실제 생활비와 포트폴리오 집중도 확인입니다."
+                if language == "ko"
+                else "The latest scenario does not show a large stress signal. Next, confirm living costs and concentration."
+            )
+            crisis_level = 28
+            crisis_color = "#0f766e"
+    elif no_income and investment_exposure >= 0.55:
+        crisis_title = "강제매도 위험" if language == "ko" else "Forced Sale Risk"
+        crisis_sub = "생활비 + 하락장" if language == "ko" else "Living costs + drawdown"
+        crisis_detail = (
+            "수입이 없는 기간에 주식 비중이 높으면 시장 하락 때 생활비 때문에 불리한 가격에 팔 위험이 생깁니다."
+            if language == "ko"
+            else "A no-income period with high stock exposure creates the risk of selling assets at poor prices during a drawdown."
+        )
+        crisis_level = 86
+        crisis_color = "#dc2626"
+    elif total_value > 0 and not scenario:
+        crisis_title = "하락 미검증" if language == "ko" else "Downside Untested"
+        crisis_sub = "-30% 필요" if language == "ko" else "-30% needed"
+        crisis_detail = (
+            "포트폴리오가 입력됐지만 하락 시나리오가 없어 위기 때 자본과 생존기간이 어떻게 바뀌는지 아직 모릅니다."
+            if language == "ko"
+            else "Portfolio data exists, but no downside scenario shows how capital and runway change in crisis."
+        )
+        crisis_level = 66
+        crisis_color = "#d97706"
+    elif not personal:
+        crisis_title = "블라인드 스팟" if language == "ko" else "Blind Spot"
+        crisis_sub = "위기 미측정" if language == "ko" else "Risk unknown"
+        crisis_detail = (
+            "상황 입력이 부족해 위기가 부족한 현금인지, 높은 투자 노출인지, 목표 불일치인지 아직 구분되지 않습니다."
+            if language == "ko"
+            else "Without situation inputs, the app cannot tell whether the crisis is cash, market exposure, or goal mismatch."
+        )
+        crisis_level = 70
+        crisis_color = "#d97706"
+    elif top_holding_weight >= 0.40 or top_sector_weight >= 0.60:
+        crisis_title = "집중 위험" if language == "ko" else "Concentration Risk"
+        crisis_sub = (
+            f"최대 {max(top_holding_weight, top_sector_weight) * 100:.0f}%"
+            if language == "ko"
+            else f"Top {max(top_holding_weight, top_sector_weight) * 100:.0f}%"
+        )
+        crisis_detail = (
+            "한 종목이나 한 섹터가 결과를 크게 좌우합니다. 고객이 이해하기 쉬운 한도 규칙이 필요합니다."
+            if language == "ko"
+            else "One holding or sector can dominate the result. A simple client-readable limit rule is needed."
+        )
+        crisis_level = 74
+        crisis_color = "#d97706"
+    else:
+        crisis_title = "큰 위기 낮음" if language == "ko" else "Low Crisis Signal"
+        crisis_sub = "시나리오 권장" if language == "ko" else "Scenario advised"
+        crisis_detail = (
+            "현재 입력상 큰 위기 신호는 낮지만, 하락 시나리오는 아직 별도로 확인하는 편이 좋습니다."
+            if language == "ko"
+            else "Current inputs show a lower crisis signal, but a downside scenario is still worth running."
+        )
+        crisis_level = 34
+        crisis_color = "#0f766e"
+
+    if not personal:
+        direction_title = "상황 입력" if language == "ko" else "Enter Situation"
+        direction_sub = "수입·지출·현금" if language == "ko" else "Income, spend, cash"
+        direction_detail = (
+            "첫 방향은 계산 가능한 현재 상황을 만드는 것입니다. Finance에서 입력 후 다시 계산을 누르세요."
+            if language == "ko"
+            else "The first direction is to make the current situation calculable. Enter Finance inputs and apply the calculation."
+        )
+        direction_level = 48
+    elif no_income:
+        direction_title = "생존기간 우선" if language == "ko" else "Runway First"
+        direction_sub = "현금 바닥선 고정" if language == "ko" else "Lock cash floor"
+        direction_detail = (
+            "생활비를 버틸 현금 바닥선을 먼저 정하고, 그 다음 포트폴리오 하락과 소득 회복 계획을 봅니다."
+            if language == "ko"
+            else "Set the cash floor for living costs first, then review portfolio drawdown and income recovery."
+        )
+        direction_level = 92
+    elif goal == "grow_capital" and total_value > 0:
+        direction_title = "품질 성장" if language == "ko" else "Quality Growth"
+        direction_sub = "집중도·가치평가" if language == "ko" else "Concentration + valuation"
+        direction_detail = (
+            "성장은 가능하지만 종목 집중도, 베타, valuation, 하락 감당력을 함께 봐야 합니다."
+            if language == "ko"
+            else "Growth can be reviewed, but concentration, beta, valuation, and downside capacity should stay visible."
+        )
+        direction_level = 78
+    elif goal_config:
+        direction_title = goal_config[f"label_{language}"]
+        direction_sub = goal_config[f"short_{language}"]
+        direction_detail = goal_config[f"strategy_{language}"]
+        direction_level = 72
+    else:
+        direction_title = "목표 선택" if language == "ko" else "Choose Goal"
+        direction_sub = "전략 기준 필요" if language == "ko" else "Strategy anchor needed"
+        direction_detail = (
+            "고객이 원하는 목적을 먼저 선택해야 같은 데이터도 다르게 해석할 수 있습니다."
+            if language == "ko"
+            else "Choose the customer's purpose first, because the same data means different things under different goals."
+        )
+        direction_level = 44
+
+    runway_priority = 94 if no_income or monthly_surplus < 0 else 72 if emergency < required_runway else 42
+    portfolio_priority = 88 if investment_exposure >= 0.55 or top_holding_weight >= 0.40 else 64 if total_value > 0 else 30
+    scenario_priority = 90 if total_value > 0 and not scenario else 58 if scenario else 36
+    direction_steps = [
+        {
+            "icon": "runway",
+            "title": "현금 바닥선" if language == "ko" else "Cash Floor",
+            "sub": "생활비 생존기간" if language == "ko" else "Living runway",
+            "level": runway_priority,
+            "color": "#0f766e",
+        },
+        {
+            "icon": "portfolio",
+            "title": "포트폴리오 한도" if language == "ko" else "Portfolio Guard",
+            "sub": "집중도와 하락" if language == "ko" else "Concentration + downside",
+            "level": portfolio_priority,
+            "color": "#2563eb",
+        },
+        {
+            "icon": "scenario",
+            "title": "위기 리허설" if language == "ko" else "Crisis Rehearsal",
+            "sub": "-30%와 소득 공백" if language == "ko" else "-30% and income gap",
+            "level": scenario_priority,
+            "color": "#d97706",
+        },
+    ]
+
+    evidence = []
+    if personal:
+        evidence.extend(
+            [
+                (
+                    f"월 잉여 현금 {fmt_money_compact(monthly_surplus, personal_currency, language)}"
+                    if language == "ko"
+                    else f"Monthly surplus {fmt_money_compact(monthly_surplus, personal_currency, language)}"
+                ),
+                (
+                    f"현금 생존기간 {emergency:.1f}개월 / 필요 {required_runway:.1f}개월"
+                    if language == "ko"
+                    else f"Cash runway {emergency:.1f} months / required {required_runway:.1f} months"
+                ),
+                (
+                    f"투자자산 노출 {investment_exposure * 100:.1f}%"
+                    if language == "ko"
+                    else f"Investment exposure {investment_exposure * 100:.1f}%"
+                ),
+            ]
+        )
+        if no_income:
+            evidence.append(
+                "무소득 학업/전환 모드: 저축률보다 생존기간과 하락 감당력이 우선"
+                if language == "ko"
+                else "No-income transition mode: runway and drawdown capacity come before savings rate"
+            )
+        if runway_gap:
+            evidence.append(
+                f"생존기간 차이 {runway_gap:+.1f}개월"
+                if language == "ko"
+                else f"Runway gap {runway_gap:+.1f} months"
+            )
+    else:
+        evidence.append(
+            "Finance 입력이 없어 현금흐름과 생존기간은 아직 계산 전입니다."
+            if language == "ko"
+            else "Finance inputs are missing, so cashflow and runway are not yet calculated."
+        )
+
+    if total_value > 0:
+        evidence.append(
+            (
+                f"포트폴리오 {fmt_money_compact(total_value, base_currency, language)}, 베타 {fmt_number(weighted_beta)}, valuation {valuation_score:+.1f}%"
+                if valuation_score is not None
+                else f"포트폴리오 {fmt_money_compact(total_value, base_currency, language)}, 베타 {fmt_number(weighted_beta)}"
+            )
+            if language == "ko"
+            else (
+                f"Portfolio {fmt_money_compact(total_value, base_currency, language)}, beta {fmt_number(weighted_beta)}, valuation {valuation_score:+.1f}%"
+                if valuation_score is not None
+                else f"Portfolio {fmt_money_compact(total_value, base_currency, language)}, beta {fmt_number(weighted_beta)}"
+            )
+        )
+        if resilience:
+            evidence.append(
+                (
+                    f"최대 종목 {top_holding_weight * 100:.1f}%, 최대 섹터 {top_sector_weight * 100:.1f}%"
+                    if language == "ko"
+                    else f"Top holding {top_holding_weight * 100:.1f}%, top sector {top_sector_weight * 100:.1f}%"
+                )
+            )
+    else:
+        evidence.append(
+            "Portfolio 입력이 없어 시장 하락 충격은 아직 제한적으로만 볼 수 있습니다."
+            if language == "ko"
+            else "Portfolio inputs are missing, so market drawdown can only be read in a limited way."
+        )
+
+    evidence.append(
+        (
+            f"최근 시나리오 {scenario_delta:+.1f}%"
+            if scenario_delta is not None
+            else "시나리오 미실행"
+        )
+        if language == "ko"
+        else (
+            f"Latest scenario {scenario_delta:+.1f}%"
+            if scenario_delta is not None
+            else "No scenario run yet"
+        )
+    )
+
+    return {
+        "cards": [
+            {
+                "icon": "risk",
+                "label": "문제" if language == "ko" else "Problem",
+                "title": problem_title,
+                "sub": problem_sub,
+                "detail": problem_detail,
+                "level": problem_level,
+                "color": problem_color,
+            },
+            {
+                "icon": "scenario",
+                "label": "위기" if language == "ko" else "Crisis",
+                "title": crisis_title,
+                "sub": crisis_sub,
+                "detail": crisis_detail,
+                "level": crisis_level,
+                "color": crisis_color,
+            },
+            {
+                "icon": "decision",
+                "label": "방향" if language == "ko" else "Direction",
+                "title": direction_title,
+                "sub": direction_sub,
+                "detail": direction_detail,
+                "level": direction_level,
+                "color": "#0f766e" if direction_level >= 75 else "#2563eb",
+            },
+        ],
+        "direction_steps": direction_steps,
+        "evidence": evidence[:7],
+    }
+
+
+def render_client_visual_report() -> None:
+    language = current_language()
+    report = client_report_state()
+    card_html = []
+    for card in report["cards"]:
+        level = level_pct(float(card["level"]))
+        color = clean_hex_color(card["color"], "#0f766e")
+        card_html.append(
+            f'<div class="client-report-card" tabindex="0" style="--report-color: {color};" '
+            f'title="{escape(str(card["detail"]), quote=True)}">'
+            '<div class="client-report-main">'
+            f'<span class="client-report-icon">{visual_icon_html(card["icon"], color, "client-report-image-icon")}</span>'
+            '<div class="client-report-text">'
+            f'<small>{escape(str(card["label"]))}</small>'
+            f'<b>{escape(str(card["title"]))}</b>'
+            f'<em>{escape(str(card["sub"]))}</em>'
+            '</div></div>'
+            f'<div class="client-report-meter" aria-hidden="true"><i style="--level: {level:.0f}%;"></i></div>'
+            f'<span class="client-report-detail">{escape(str(card["detail"]))}</span>'
+            '</div>'
+        )
+
+    step_html = []
+    for step in report["direction_steps"]:
+        level = level_pct(float(step["level"]))
+        color = clean_hex_color(step["color"], "#0f766e")
+        step_html.append(
+            f'<div class="client-direction-step" style="--step-color: {color};">'
+            f'<span>{visual_icon_html(step["icon"], color, "client-direction-image-icon")}</span>'
+            f'<b>{escape(str(step["title"]))}</b>'
+            f'<em>{escape(str(step["sub"]))}</em>'
+            f'<i style="--level: {level:.0f}%;"></i>'
+            '</div>'
+        )
+
+    evidence_title = "근거 보기" if language == "ko" else "Show Evidence"
+    evidence_note = "계산값은 필요할 때만 확인" if language == "ko" else "Numbers stay behind the visual layer"
+    evidence_items = "".join(f"<li>{escape(str(item))}</li>" for item in report["evidence"])
+    st.markdown(
+        f"""
+        <section class="client-visual-report" aria-label="{escape('고객 시각 리포트' if language == 'ko' else 'Client Visual Report')}">
+            <div class="client-report-cards">{"".join(card_html)}</div>
+            <div class="client-direction-rail">{"".join(step_html)}</div>
+            <details class="client-report-evidence">
+                <summary><span>{escape(evidence_title)}</span><span>{escape(evidence_note)}</span></summary>
+                <ul>{evidence_items}</ul>
+            </details>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_goal_strategy_strip(active_key: str) -> None:
     language = current_language()
     goal = active_goal_key()
@@ -16171,6 +16870,7 @@ def render_main_app() -> None:
 
     active_view = active_nav_key()
     render_finance_snapshot_ribbon(active_view)
+    render_client_visual_report()
     render_goal_strategy_strip(active_view)
     render_rationality_gate()
     render_nora_ontology(active_view)
