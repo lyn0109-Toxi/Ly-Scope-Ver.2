@@ -102,6 +102,7 @@ KO_TRANSLATIONS = {
     "Customer purpose comes before data.": "데이터보다 고객 목적이 먼저입니다.",
     "NORA asks purpose first, then turns the strategy and situation into evidence.": "NORA는 목적을 먼저 묻고, 전략과 상황을 근거로 바꿉니다.",
     "NORA starts with the customer purpose, then checks the strategy and current situation before any model.": "NORA는 고객의 목적에서 시작하고, 어떤 모델보다 먼저 전략과 현재 상황을 확인합니다.",
+    "LY-Scope starts with the customer goal, then checks the strategy and current situation before any model.": "LY-Scope는 고객의 목표에서 시작하고, 어떤 모델보다 먼저 전략과 현재 상황을 확인합니다.",
     "A calm visual map for current situation, direction, crisis signals, and memory.": "현재 상황, 목표 방향, 위험 신호, 메모리를 차분하게 보여주는 시각 맵입니다.",
     "Current Situation": "현재 상황",
     "Capital, cash flow, portfolio, and goal context in one view.": "자본, 현금흐름, 포트폴리오, 목표 맥락을 한눈에 봅니다.",
@@ -5718,6 +5719,17 @@ st.markdown(
         font-size: 0.96rem;
         line-height: 1.15;
     }
+    html body .stApp .goal-strategy-return {
+        display: inline-block;
+        color: #0f172a !important;
+        -webkit-text-fill-color: #0f172a !important;
+        text-decoration: none !important;
+    }
+    html body .stApp .goal-strategy-return:hover b,
+    html body .stApp .goal-strategy-return:focus b {
+        color: var(--goal-color) !important;
+        -webkit-text-fill-color: var(--goal-color) !important;
+    }
     html body .stApp .goal-strategy-main span {
         display: block;
         margin-top: 3px;
@@ -5943,6 +5955,40 @@ st.markdown(
         color: #64748b;
         font-size: 0.78rem;
         font-weight: 700;
+    }
+    html body .stApp .nora-ontology summary .ly-flow-summary-path {
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+        flex-wrap: wrap;
+        min-width: 0;
+    }
+    html body .stApp .nora-ontology summary .ly-flow-summary-path i {
+        color: #94a3b8;
+        font-style: normal;
+        line-height: 1;
+    }
+    html body .stApp .nora-ontology summary .ly-flow-return {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        padding: 4px 9px;
+        border-radius: 999px;
+        color: #0f766e !important;
+        -webkit-text-fill-color: #0f766e !important;
+        background: #ecfeff;
+        border: 1px solid rgba(14, 165, 233, 0.18);
+        text-decoration: none !important;
+        font-size: 0.74rem;
+        font-weight: 900;
+    }
+    html body .stApp .nora-ontology summary .ly-flow-return:hover,
+    html body .stApp .nora-ontology summary .ly-flow-return:focus {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        background: #0f766e;
+        outline: none;
     }
     html body .stApp .nora-ontology-body {
         padding: 0 14px 14px;
@@ -7718,12 +7764,18 @@ EQUITY_RISK_PREMIUM = DEFAULT_EQUITY_RISK_PREMIUM
 
 GUIDE_PDF_PATH = Path(__file__).with_name("LY-Scope-Ver.2_User_Guide.pdf")
 GUIDE_SCREENSHOT_DIR = Path(__file__).with_name("guide_assets") / "screenshots"
-HOMEPAGE_BG_PATH = Path(__file__).parent / "assets" / "homepage_life_design_20260829.png"
+APP_ASSET_DIR = Path(__file__).parent / "assets"
+HOMEPAGE_BG_PATH = APP_ASSET_DIR / "ly_visual_life_path_app.jpg"
+APP_BACKGROUND_PATH = APP_ASSET_DIR / "ly_visual_data_corridor_app.jpg"
+CLIENT_REPORT_BG_PATH = APP_ASSET_DIR / "ly_visual_lens_report_app.jpg"
+ONTOLOGY_BG_PATH = APP_ASSET_DIR / "ly_visual_system_nodes_app.jpg"
+DIRECTION_FLOW_BG_PATH = APP_ASSET_DIR / "ly_visual_direction_arrow_app.jpg"
+GOAL_STRATEGY_SITUATION_PATH = APP_ASSET_DIR / "ly_visual_goal_strategy_situation_app.jpg"
 USE_HOMEPAGE_REFERENCE_IMAGE = True
 DEVELOPER_NAME = "Young Lee"
 DEVELOPER_EMAIL = "lyn0109@gmail.com"
-APP_BUILD_STAMP = "2026-08-29-public-url"
-LIFE_ENTRY_VERSION = "life-homepage-2026-08-29-image-v1"
+APP_BUILD_STAMP = "2026-09-02-modern-visual-ui"
+LIFE_ENTRY_VERSION = "life-homepage-2026-09-02-modern-visual-ui-v1"
 MAX_DIARY_RESTORE_BYTES = 250_000
 MAX_DIARY_RESTORE_ENTRIES = 50
 
@@ -7733,8 +7785,307 @@ def image_data_uri(path_text: str) -> str:
     image_path = Path(path_text)
     if not image_path.exists():
         return ""
+    mime = {
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".png": "image/png",
+        ".webp": "image/webp",
+    }.get(image_path.suffix.lower(), "image/png")
     encoded = base64.b64encode(image_path.read_bytes()).decode("ascii")
-    return f"data:image/png;base64,{encoded}"
+    return f"data:{mime};base64,{encoded}"
+
+
+def render_visual_asset_theme() -> None:
+    app_bg = image_data_uri(str(APP_BACKGROUND_PATH))
+    report_bg = image_data_uri(str(CLIENT_REPORT_BG_PATH))
+    ontology_bg = image_data_uri(str(ONTOLOGY_BG_PATH))
+    direction_bg = image_data_uri(str(DIRECTION_FLOW_BG_PATH))
+
+    st.markdown(
+        f"""
+        <style>
+        html body .stApp {{
+            background:
+                linear-gradient(90deg, rgba(15, 118, 110, 0.026) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(15, 118, 110, 0.020) 1px, transparent 1px),
+                linear-gradient(135deg, #f7fbff 0%, #fbfdff 45%, #f8fafc 100%) !important;
+            background-size: 72px 72px, 72px 72px, auto !important;
+            color: #0f172a !important;
+        }}
+        html body .stApp,
+        html body .stApp * {{
+            font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Arial, sans-serif !important;
+            letter-spacing: 0 !important;
+        }}
+        html body span[data-testid="stIconMaterial"],
+        html body span[data-testid="stIconMaterial"] *,
+        html body .material-symbols-rounded,
+        html body .material-icons {{
+            font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Icons" !important;
+        }}
+        html body .stApp .brand-name,
+        html body .stApp .brand-icon span,
+        html body .stApp .home-brand,
+        html body .stApp .homepage-visual .life-title,
+        html body .stApp .life-compact-panel h1 {{
+            font-family: Century, "Century Schoolbook", Georgia, serif !important;
+        }}
+        html body .stApp::before {{
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.78)),
+                url("{direction_bg}") center 88px / min(980px, 70vw) auto no-repeat !important;
+            opacity: 0.10 !important;
+            animation: none !important;
+            clip-path: none !important;
+        }}
+        html body .stApp::after {{
+            content: "";
+            position: fixed;
+            right: -160px !important;
+            bottom: -120px !important;
+            top: auto !important;
+            width: min(620px, 48vw) !important;
+            height: 360px !important;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                linear-gradient(90deg, rgba(255,255,255,0.55), rgba(255,255,255,0.18)),
+                url("{report_bg}") right bottom / contain no-repeat !important;
+            opacity: 0.07 !important;
+            animation: none !important;
+            clip-path: none !important;
+        }}
+        html body .stApp .block-container {{
+            max-width: 1180px !important;
+            padding-top: 0.8rem !important;
+        }}
+        html body .stApp .homepage-visual {{
+            max-width: 1120px !important;
+            min-height: 560px !important;
+            border-radius: 8px !important;
+            border: 1px solid rgba(148, 163, 184, 0.20) !important;
+            background:
+                linear-gradient(90deg, rgba(255,255,255,0.985) 0%, rgba(255,255,255,0.94) 56%, rgba(255,255,255,0.82) 100%),
+                url("{app_bg}") right center / 56% auto no-repeat,
+                #ffffff !important;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.085) !important;
+            overflow: hidden !important;
+        }}
+        html body .stApp .homepage-visual.has-home-image::before {{
+            display: block !important;
+            opacity: 1 !important;
+            background:
+                linear-gradient(90deg, rgba(255,255,255,0.99) 0%, rgba(255,255,255,0.93) 44%, rgba(255,255,255,0.64) 100%) !important;
+        }}
+        html body .stApp .homepage-visual.has-home-image .homepage-bg-img {{
+            display: block !important;
+            position: absolute !important;
+            inset: 0 0 0 auto !important;
+            width: 52% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            object-position: center center !important;
+            opacity: 0.16 !important;
+            filter: saturate(0.82) contrast(0.98) !important;
+        }}
+        html body .stApp .home-flow-visual {{
+            width: min(380px, 100%);
+            margin: 18px 0 12px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(148, 163, 184, 0.20);
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.075);
+        }}
+        html body .stApp .home-flow-visual img {{
+            display: block;
+            width: 100%;
+            height: auto;
+            opacity: 0.94;
+        }}
+        html body .stApp .goal-compass {{
+            display: none !important;
+        }}
+        html body .stApp .goal-compass-caption,
+        html body .stApp .home-skip-link {{
+            display: inline-flex !important;
+            align-items: center;
+            min-height: 28px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            color: #334155 !important;
+            -webkit-text-fill-color: #334155 !important;
+            background: rgba(255, 255, 255, 0.84);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            backdrop-filter: blur(8px);
+        }}
+        html body .stApp .home-skip-link:hover,
+        html body .stApp .home-skip-link:focus {{
+            color: #0f766e !important;
+            -webkit-text-fill-color: #0f766e !important;
+            background: #ffffff;
+            text-decoration: none !important;
+        }}
+        html body .stApp .home-nav {{
+            border-bottom-color: rgba(148, 163, 184, 0.12) !important;
+            background: rgba(255, 255, 255, 0.96) !important;
+        }}
+        html body .stApp .home-goal-layout {{
+            grid-template-columns: minmax(0, 0.88fr) minmax(360px, 1fr) !important;
+            gap: 34px !important;
+            padding: 38px !important;
+        }}
+        html body .stApp .home-goal-card {{
+            border-radius: 8px !important;
+            background: rgba(255, 255, 255, 0.96) !important;
+            box-shadow: 0 10px 26px rgba(15, 23, 42, 0.055) !important;
+            transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+        }}
+        html body .stApp .home-goal-card:hover,
+        html body .stApp .home-goal-card:focus-within {{
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.095) !important;
+        }}
+        html body .stApp .brand-header {{
+            background:
+                linear-gradient(90deg, rgba(255,255,255,0.99), rgba(255,255,255,0.96)),
+                #ffffff !important;
+            border: 1px solid rgba(148, 163, 184, 0.18) !important;
+            box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06) !important;
+            overflow: hidden !important;
+        }}
+        html body .stApp .brand-header::after {{
+            height: 2px !important;
+            background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.52), rgba(15, 118, 110, 0.28), transparent) !important;
+        }}
+        html body .stApp .brand-mark {{
+            isolation: isolate;
+        }}
+        html body .stApp .finance-snapshot-ribbon {{
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)) !important;
+            gap: 10px !important;
+        }}
+        html body .stApp .finance-snapshot-card {{
+            min-height: 94px !important;
+            border-radius: 8px !important;
+            border: 1px solid rgba(148, 163, 184, 0.18) !important;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.050) !important;
+        }}
+        html body .stApp .finance-snapshot-card small,
+        html body .stApp .client-report-text small {{
+            font-size: 0.66rem !important;
+            font-weight: 760 !important;
+            color: #64748b !important;
+        }}
+        html body .stApp .finance-snapshot-card b,
+        html body .stApp .client-report-text b {{
+            font-weight: 800 !important;
+            letter-spacing: 0 !important;
+        }}
+        html body .stApp .finance-snapshot-card em,
+        html body .stApp .client-report-text em,
+        html body .stApp .client-direction-step em {{
+            font-weight: 560 !important;
+            color: #64748b !important;
+        }}
+        html body .stApp .client-visual-report {{
+            position: relative;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            background:
+                linear-gradient(90deg, rgba(255,255,255,0.99) 0%, rgba(255,255,255,0.97) 66%, rgba(255,255,255,0.86) 100%),
+                url("{report_bg}") right center / 360px auto no-repeat,
+                #ffffff !important;
+            box-shadow: 0 14px 34px rgba(15, 23, 42, 0.065);
+        }}
+        html body .stApp .client-report-cards {{
+            gap: 12px !important;
+        }}
+        html body .stApp .client-report-card,
+        html body .stApp .finance-snapshot-card,
+        html body .stApp .metric-card,
+        html body .stApp .portfolio-score-card {{
+            background: rgba(255, 255, 255, 0.982) !important;
+            backdrop-filter: blur(10px);
+            border-color: rgba(148, 163, 184, 0.18) !important;
+        }}
+        html body .stApp .client-report-card {{
+            min-height: 132px !important;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.055) !important;
+        }}
+        html body .stApp .client-report-icon,
+        html body .stApp .finance-snapshot-glyph {{
+            border-radius: 8px !important;
+            box-shadow: none !important;
+        }}
+        html body .stApp .client-report-meter,
+        html body .stApp .finance-snapshot-meter {{
+            height: 6px !important;
+            background: #e8edf3 !important;
+        }}
+        html body .stApp .client-direction-rail {{
+            min-height: 84px !important;
+            background:
+                linear-gradient(90deg, rgba(255,255,255,0.985), rgba(255,255,255,0.92)),
+                url("{direction_bg}") center center / 74% auto no-repeat,
+                #ffffff !important;
+            border-color: rgba(148, 163, 184, 0.16) !important;
+        }}
+        html body .stApp .nora-ontology {{
+            background:
+                linear-gradient(90deg, rgba(255,255,255,0.985), rgba(255,255,255,0.94)),
+                url("{ontology_bg}") right center / 420px auto no-repeat,
+                #ffffff !important;
+            border-color: rgba(148, 163, 184, 0.16) !important;
+        }}
+        html body .stApp .nora-node {{
+            background: rgba(255, 255, 255, 0.94) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.040);
+        }}
+        html body section[data-testid="stSidebar"] {{
+            background:
+                linear-gradient(180deg, rgba(255,255,255,0.96), rgba(240, 249, 255, 0.92)) !important;
+            border-right: 1px solid rgba(148, 163, 184, 0.18) !important;
+        }}
+        @media (max-width: 900px) {{
+            html body .stApp {{
+                background:
+                    linear-gradient(90deg, rgba(15, 118, 110, 0.026) 1px, transparent 1px),
+                    linear-gradient(0deg, rgba(15, 118, 110, 0.020) 1px, transparent 1px),
+                    linear-gradient(135deg, #f7fbff 0%, #fbfdff 45%, #f8fafc 100%) !important;
+            }}
+            html body .stApp::before,
+            html body .stApp::after {{
+                display: none !important;
+            }}
+            html body .stApp .homepage-visual {{
+                min-height: auto !important;
+            }}
+            html body .stApp .homepage-visual.has-home-image .homepage-bg-img {{
+                display: none !important;
+            }}
+            html body .stApp .home-goal-layout {{
+                grid-template-columns: 1fr !important;
+                padding: 22px !important;
+                gap: 18px !important;
+            }}
+            html body .stApp .client-visual-report,
+            html body .stApp .client-direction-rail,
+            html body .stApp .nora-ontology {{
+                background: rgba(255, 255, 255, 0.96) !important;
+            }}
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def clean_hex_color(value: Any, fallback: str = "#0f766e") -> str:
@@ -11622,6 +11973,12 @@ def goal_href(goal: str) -> str:
     return f"?{urlencode(params)}"
 
 
+def life_entry_href() -> str:
+    params = {"mode": "intro"}
+    params.update(language_params())
+    return f"?{urlencode(params)}"
+
+
 def app_view_href(view: str) -> str:
     params = {"view": view, "mode": "dashboard"}
     params.update(language_params())
@@ -11683,6 +12040,7 @@ def render_top_language_toggle() -> None:
 
 def render_nora_ontology(active_key: str) -> None:
     language = current_language()
+    start_href = escape(life_entry_href(), quote=True)
     step_nodes = []
     for step in NORA_ONTOLOGY_STEPS:
         detail = step["detail_ko"] if language == "ko" else step["detail_en"]
@@ -11715,17 +12073,26 @@ def render_nora_ontology(active_key: str) -> None:
             f'<span>{ui_html(label)}</span></a>'
         )
 
-    summary_label = "NORA Flow" if language == "en" else "NORA 흐름"
-    summary_path = "Goal → Strategy → Situation" if language == "en" else "목표 → 전략 → 상황"
+    summary_label = "LY-Scope Goal Flow" if language == "en" else "LY-Scope 목표 흐름"
+    goal_label = "Goal" if language == "en" else "목표"
+    strategy_label = "Strategy" if language == "en" else "전략"
+    situation_label = "Situation" if language == "en" else "상황"
+    summary_path = (
+        f'<a class="ly-flow-return" href="{start_href}" target="_self">{escape(goal_label)}</a>'
+        '<i aria-hidden="true">→</i>'
+        f'<a class="ly-flow-return" href="{start_href}" target="_self">{escape(strategy_label)}</a>'
+        '<i aria-hidden="true">→</i>'
+        f'<span>{escape(situation_label)}</span>'
+    )
     ontology_html = (
         f'<details class="nora-ontology nora-ontology-minimal" aria-label="{ui_html("NORA Ontology")}">'
         '<summary>'
         f'<b>{escape(summary_label)}</b>'
-        f'<span>{escape(summary_path)}</span>'
+        f'<span class="ly-flow-summary-path">{summary_path}</span>'
         '</summary>'
         '<div class="nora-ontology-body">'
         '<div class="nora-ontology-caption">'
-        f'{ui_html("NORA starts with the customer purpose, then checks the strategy and current situation before any model.")}'
+        f'{ui_html("LY-Scope starts with the customer goal, then checks the strategy and current situation before any model.")}'
         f'<br>{ui_html("Hover or click each visual node to read its role.")}'
         '</div>'
         f'<div class="nora-path">{"".join(step_nodes)}</div>'
@@ -15407,20 +15774,21 @@ def render_sidebar_path_menu() -> None:
     situation_active = active_focus == "situation" or (
         active_focus is None and active_view == "finance"
     )
+    start_href = life_entry_href()
 
     path_items = [
         {
             "step": "01",
             "label": ui("Goal"),
-            "caption": ui("Choose the customer purpose first."),
-            "href": sidebar_focus_href("life", "goal"),
+            "caption": "Return to goal start." if language == "en" else "목표 선택 화면으로 돌아가기.",
+            "href": start_href,
             "active": active_focus == "goal" or (active_focus is None and active_view == "life"),
         },
         {
             "step": "02",
             "label": ui("Strategy"),
             "caption": strategy_caption,
-            "href": sidebar_focus_href(strategy_view, "strategy", strategy_goal),
+            "href": start_href,
             "active": strategy_active,
         },
         {
@@ -15448,8 +15816,8 @@ def render_sidebar_path_menu() -> None:
             '</a>'
         )
 
-    st.markdown(f"### {ui('NORA Path')}")
-    st.caption(ui("Goal → Strategy → Situation → AI Coach"))
+    st.markdown(f"### {'LY-Scope Path' if language == 'en' else 'LY-Scope 경로'}")
+    st.caption("LY-Scope Goal Flow → AI Coach" if language == "en" else "LY-Scope 목표 흐름 → AI 코치")
     st.markdown(
         f"""
         <div class="nora-sidebar-path">
@@ -15644,6 +16012,7 @@ def render_footer() -> None:
 
 
 def render_life_entry_screen(standalone: bool = True) -> None:
+    render_visual_asset_theme()
     shell_style = (
         """
         <style>
@@ -15660,6 +16029,12 @@ def render_life_entry_screen(standalone: bool = True) -> None:
     homepage_image = (
         f'<img class="homepage-bg-img" src="{homepage_bg}" alt="LY-Scope-Ver.2 life design homepage preview">'
         if homepage_bg
+        else ""
+    )
+    flow_visual_bg = image_data_uri(str(GOAL_STRATEGY_SITUATION_PATH))
+    flow_visual_image = (
+        f'<div class="home-flow-visual" aria-hidden="true"><img src="{flow_visual_bg}" alt=""></div>'
+        if flow_visual_bg
         else ""
     )
     language = current_language()
@@ -15709,6 +16084,7 @@ def render_life_entry_screen(standalone: bool = True) -> None:
                         <div class="life-kicker">{'Goal comes before strategy.' if language == 'en' else '전략보다 목표가 먼저입니다.'}</div>
                         <h1 class="life-title">{life_title}</h1>
                         <div class="life-copy">{escape(life_copy)}</div>
+                        {flow_visual_image}
                         <div class="goal-compass" aria-hidden="true">
                             <span class="goal-compass-ring one"></span>
                             <span class="goal-compass-ring two"></span>
@@ -15902,6 +16278,10 @@ def dashboard_mode_requested() -> bool:
     if mode in {"dashboard", "app"}:
         return True
     return view in valid_keys and view != "life"
+
+
+def intro_mode_requested() -> bool:
+    return query_param_value("mode") == "intro"
 
 
 def active_nav_key() -> str:
@@ -16591,8 +16971,8 @@ def render_goal_strategy_strip(active_key: str) -> None:
         short = config[f"short_{language}"]
         strategy = config[f"strategy_{language}"]
         color = config["color"]
-        target_href = escape(goal_href(goal), quote=True)
-        target_text = "Open strategy screen" if language == "en" else "전략 화면 열기"
+        target_href = escape(life_entry_href(), quote=True)
+        target_text = "Change goal or strategy" if language == "en" else "목표/전략 다시 선택"
     else:
         label = "Choose a Goal" if language == "en" else "목표 선택"
         short = "Strategy follows the goal." if language == "en" else "목표가 정해지면 전략이 달라집니다."
@@ -16611,7 +16991,9 @@ def render_goal_strategy_strip(active_key: str) -> None:
         <section class="goal-strategy-strip" style="--goal-color: {escape(color)};" aria-label="Selected goal strategy">
             <div class="goal-strategy-mark"></div>
             <div class="goal-strategy-main">
-                <b>{escape(label)}</b>
+                <a class="goal-strategy-return" href="{target_href}" target="_self" title="{escape(target_text, quote=True)}">
+                    <b>{escape(label)}</b>
+                </a>
                 <span>{escape(short)}</span>
             </div>
             <details class="goal-strategy-detail">
@@ -16844,6 +17226,7 @@ def render_main_app() -> None:
     sync_selected_detail_from_query()
 
     render_sidebar()
+    render_visual_asset_theme()
 
     brand_subtitle = (
         "개인 의사결정 인텔리전스"
@@ -16914,10 +17297,15 @@ def render_main_app() -> None:
 
 init_state()
 render_top_language_toggle()
-if dashboard_mode_requested():
+if intro_mode_requested():
+    st.session_state.life_entry_complete = False
+    st.session_state.life_entry_version_seen = ""
+elif dashboard_mode_requested():
     st.session_state.life_entry_complete = True
     st.session_state.life_entry_version_seen = LIFE_ENTRY_VERSION
 show_life_entry = (
+    intro_mode_requested()
+    or
     not st.session_state.life_entry_complete
     or st.session_state.life_entry_version_seen != LIFE_ENTRY_VERSION
 )
