@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from html import escape
+import re
 
 import altair as alt
 import pandas as pd
@@ -11,7 +12,7 @@ from personal_finance_engine import PersonalFinanceProfile, calculate_personal_f
 KO_TRANSLATIONS = {
     "Mobile Finance Readiness": "모바일 재무 준비도",
     "Start here before portfolio decisions. These cards compress cash flow, liquidity, debt pressure, and risk capacity into a phone-first view.": "포트폴리오 결정을 내리기 전에 여기서 시작하세요. 이 카드는 현금흐름, 유동성, 부채 압박, 위험 감당력을 모바일 중심으로 요약합니다.",
-    "Health": "건강도",
+    "Health": "재무 건전성",
     "Financial score": "재무 점수",
     "Planning score": "계획 점수",
     "Surplus": "잉여 현금",
@@ -30,14 +31,14 @@ KO_TRANSLATIONS = {
     "Personal Finance": "개인 재무",
     "Understand liquidity, debt pressure, savings behavior, goals, and investment risk capacity before making portfolio decisions.": "포트폴리오 결정을 내리기 전에 유동성, 부채 압박, 저축 습관, 목표, 투자 위험 감당력을 이해하세요.",
     "Educational prototype only. Do not enter sensitive personal financial information. This module does not provide financial, tax, legal, or investment advice.": "교육용 프로토타입입니다. 민감한 개인 금융 정보를 입력하지 마세요. 이 모듈은 금융, 세무, 법률, 투자 조언을 제공하지 않습니다.",
-    "Financial Inputs": "재무 입력",
-    "Apply Situation Calculation": "상황 계산 다시 적용",
+    "Financial Inputs": "소득·지출·자산",
+    "Apply Situation Calculation": "계산 결과 반영",
     "Calculation Applied": "계산 반영 완료",
-    "Latest inputs are reflected in the visual result, scores, and AI Coach context.": "최신 입력값이 시각 결과, 점수, AI Coach 기준에 반영되어 있습니다.",
-    "Inputs changed. Click Apply Situation Calculation to refresh the visual result, scores, and AI Coach context.": "입력값이 바뀌었습니다. 시각 결과, 점수, AI Coach 기준을 새로 반영하려면 상황 계산 다시 적용을 누르세요.",
-    "Life Stage Setup": "라이프 단계 설정",
+    "Latest inputs are reflected in the visual result, scores, and AI Coach context.": "입력값이 차트, 점수, AI 코치 분석에 반영되었습니다.",
+    "Inputs changed. Click Apply Situation Calculation to refresh the visual result, scores, and AI Coach context.": "아직 반영하지 않은 입력값이 있습니다. 계산 결과 반영을 누르면 차트, 점수, AI 코치 분석이 갱신됩니다.",
+    "Life Stage Setup": "생활비 계획",
     "Display Currency": "표시 통화",
-    "Runway Target Months": "목표 생존기간",
+    "Runway Target Months": "생활비 확보 목표 (개월)",
     "Study Months Remaining": "남은 학업 기간",
     "Use No-Income Study Example": "무소득 학업 예시 적용",
     "No-income mode turns on automatically when monthly income is 0 and monthly expenses are above 0.": "월수입이 0이고 월지출이 있으면 무소득 모드가 자동으로 켜집니다.",
@@ -54,34 +55,34 @@ KO_TRANSLATIONS = {
     "Credit Card Debt": "신용카드 부채",
     "Student Loan": "학자금 대출",
     "Auto Loan": "자동차 대출",
-    "Mortgage": "모기지",
+    "Mortgage": "주택담보대출",
     "Goal": "목표",
     "Target Goal Amount": "목표 금액",
     "Current Goal Savings": "현재 목표 저축액",
-    "Financial Snapshot": "재무 스냅샷",
+    "Financial Snapshot": "재무 현황",
     "Net Worth": "순자산",
     "Monthly Surplus": "월 잉여 현금",
-    "Financial Health Score": "재무 건강 점수",
-    "Planning Health Score": "계획 건강 점수",
+    "Financial Health Score": "재무 건전성 점수",
+    "Planning Health Score": "재무 계획 안정성 점수",
     "Emergency Fund": "비상자금",
-    "Study Runway Gap": "학업 생존기간 차이",
+    "Study Runway Gap": "생활비 확보 목표 대비 여유 기간",
     "Investment Exposure": "투자 노출도",
     "Cash Buffer": "현금 완충력",
-    "Visual Situation Map": "시각 상황 지도",
-    "Cash Runway Under Expense Stress": "지출 변화별 현금 생존기간",
+    "Visual Situation Map": "지출 증가와 주가 하락의 영향",
+    "Cash Runway Under Expense Stress": "지출 변화에 따른 생활비 충당 기간",
     "Capital After Stock Drawdown": "주식 하락 후 자본",
     "Current": "현재",
     "Expense +20%": "지출 +20%",
     "Expense +50%": "지출 +50%",
     "Remaining Capital": "남은 자본",
     "Stock Drawdown": "주식 하락",
-    "Health Score Breakdown": "건강 점수 분해",
+    "Health Score Breakdown": "재무 건전성 항목별 점수",
     "Liquidity": "유동성",
     "Goal Progress": "목표 진행률",
     "Risk Capacity": "위험 감당력",
-    "Runway Readiness": "생존기간 준비도",
+    "Runway Readiness": "생활비 확보 수준",
     "Investment Exposure Balance": "투자 노출 균형",
-    "Decision-Support Insights": "의사결정 지원 인사이트",
+    "Decision-Support Insights": "재무 현황 해석",
     "No major warning signals from the current inputs.": "현재 입력값 기준 주요 경고 신호가 없습니다.",
     "No-income planning mode is active: runway and drawdown resilience matter more than savings rate.": "무소득 계획 모드입니다. 저축률보다 현금 생존기간과 자산 하락 회복력이 더 중요합니다.",
     "Taxable investment exposure is above 60% of assets; review drawdown risk before relying on assets for living expenses.": "과세 투자자산 비중이 전체 자산의 60%를 넘습니다. 생활비를 투자자산에 의존하기 전에 하락 위험을 점검하세요.",
@@ -97,6 +98,28 @@ KO_TRANSLATIONS = {
     "Investment Readiness": "투자 준비도",
     "Personal Finance answers whether the user can afford investment risk. Stock and real estate analysis answer which assets may fit the user's goals and risk capacity.": "개인 재무는 사용자가 투자 위험을 감당할 수 있는지 답합니다. 주식과 부동산 분석은 어떤 자산이 사용자의 목표와 위험 감당력에 맞을 수 있는지 보여줍니다.",
 }
+
+KO_TRANSLATIONS.update({
+    "Savings Rate": "저축률",
+    "Debt-to-Income": "소득 대비 부채 상환 비율",
+    "Months": "개월",
+    "months": "개월",
+    "Scenario": "시나리오",
+    "Target": "목표 기간",
+    "Dimension": "평가 항목",
+    "Score": "점수",
+    "Emergency fund is below 3 months of living expenses.": "비상자금이 생활비 3개월분보다 적습니다.",
+    "Emergency fund is strong relative to monthly expenses.": "현재 월지출에 비해 비상자금이 충분한 편입니다.",
+    "Debt payments are high relative to monthly income.": "월소득에 비해 부채 상환 부담이 높습니다.",
+    "Debt burden appears manageable relative to income.": "현재 소득 기준으로 부채 상환 부담은 감당 가능한 수준으로 보입니다.",
+    "Savings-rate benchmarks are not meaningful while earned income is zero.": "근로소득이 없는 기간에는 일반적인 저축률 기준을 적용하기 어렵습니다.",
+    "Savings rate is below the common 10% starting benchmark.": "저축률이 참고 기준인 10%보다 낮습니다.",
+    "Savings rate is strong and supports long-term planning.": "저축률이 양호하여 장기 재무 계획에 도움이 됩니다.",
+    "Investment risk capacity appears limited until liquidity or debt improves.": "유동성이나 부채 상황이 개선되기 전까지는 투자 위험을 감당할 여력이 제한적입니다.",
+    "Risk capacity appears stronger based on liquidity, debt, and savings behavior.": "유동성, 부채, 저축 현황을 보면 투자 위험을 감당할 여력이 비교적 양호합니다.",
+    "No-income planning mode is active: runway and drawdown resilience matter more than savings rate.": "소득이 없는 기간에는 저축률보다 생활비 충당 기간과 자산 하락에 대한 대응 여력을 우선 확인합니다.",
+    "Taxable investment exposure is above 60% of assets; review drawdown risk before relying on assets for living expenses.": "과세 투자자산 비중이 총자산의 60% 이상입니다. 투자자산으로 생활비를 충당하기 전에 가격 하락 위험을 점검하세요.",
+})
 
 FINANCE_DEFAULTS = {
     "pf_display_currency": "USD",
@@ -123,19 +146,15 @@ FINANCE_DEFAULTS = {
 
 def tr(text: str) -> str:
     if st.session_state.get("app_language") == "ko":
+        match = re.fullmatch(r"Cash runway is ([0-9.]+) months (below|above) the selected planning target\.", text)
+        if match:
+            difference = "부족합니다" if match[2] == "below" else "여유가 있습니다"
+            return f"생활비 충당 기간이 설정한 목표보다 {match[1]}개월 {difference}."
         return KO_TRANSLATIONS.get(text, text)
     return text
 
 
 def tr_insight(text: str) -> str:
-    if st.session_state.get("app_language") != "ko":
-        return text
-    if text.startswith("Cash runway is ") and " months below " in text:
-        months = text.split()[3]
-        return f"현금 생존기간이 선택한 계획 목표보다 {months}개월 부족합니다."
-    if text.startswith("Cash runway is ") and " months above " in text:
-        months = text.split()[3]
-        return f"현금 생존기간이 선택한 계획 목표보다 {months}개월 더 여유 있습니다."
     return tr(text)
 
 
@@ -287,10 +306,15 @@ def render_visual_situation_map(profile: PersonalFinanceProfile, result: dict[st
         alt.Chart(runway_data)
         .mark_bar(cornerRadiusTopLeft=8, cornerRadiusTopRight=8)
         .encode(
-            x=alt.X("Scenario:N", sort=None, title=None),
-            y=alt.Y("Months:Q", title="Months"),
-            color=alt.Color("Scenario:N", legend=None),
-            tooltip=["Scenario", alt.Tooltip("Months:Q", format=".1f"), alt.Tooltip("Target:Q", format=".1f")],
+            x=alt.X("Scenario:N", sort=None, title=None, axis=alt.Axis(labelAngle=0)),
+            y=alt.Y("Months:Q", title=tr("Months")),
+            color=alt.Color("Scenario:N", legend=None, scale=alt.Scale(
+                domain=[label for label, _ in expense_scenarios],
+                range=["#218b7e", "#277eaf", "#d89437"],
+            )),
+            tooltip=[alt.Tooltip("Scenario:N", title=tr("Scenario")),
+                     alt.Tooltip("Months:Q", title=tr("Months"), format=".1f"),
+                     alt.Tooltip("Target:Q", title=tr("Target"), format=".1f")],
         )
     )
     runway_target = (
@@ -322,8 +346,9 @@ def render_visual_situation_map(profile: PersonalFinanceProfile, result: dict[st
         .encode(
             x=alt.X("Drawdown:Q", title=tr("Stock Drawdown")),
             y=alt.Y("Remaining Capital:Q", title=tr("Remaining Capital")),
-            color=alt.value("#7c3aed"),
-            tooltip=["Stock Drawdown", alt.Tooltip("Remaining Capital:Q", format=",.0f")],
+            color=alt.value("#1976a3"),
+            tooltip=[alt.Tooltip("Stock Drawdown:N", title=tr("Stock Drawdown")),
+                     alt.Tooltip("Remaining Capital:Q", title=tr("Remaining Capital"), format=",.0f")],
         )
     )
 
@@ -352,8 +377,6 @@ def render_personal_finance() -> None:
             "Educational prototype only. Do not enter sensitive personal financial information. This module does not provide financial, tax, legal, or investment advice."
         )
     )
-    mobile_summary_slot = st.container()
-
     st.subheader(tr("Life Stage Setup"))
     preset_cols = st.columns([1, 2])
     with preset_cols[0]:
@@ -443,6 +466,7 @@ def render_personal_finance() -> None:
     with control_cols[1]:
         apply_clicked = st.button(
             tr("Apply Situation Calculation"),
+            icon=":material/calculate:",
             key="apply_situation_calculation",
             type="primary",
             width="stretch",
@@ -471,9 +495,6 @@ def render_personal_finance() -> None:
     result = st.session_state.get("last_personal_finance_result") or store_personal_finance_calculation(profile)
     applied_profile = applied_personal_finance_profile(profile)
 
-    with mobile_summary_slot:
-        mobile_finance_deck(result)
-
     st.subheader(tr("Financial Snapshot"))
     c1, c2, c3 = st.columns(3)
     with c1:
@@ -495,7 +516,7 @@ def render_personal_finance() -> None:
 
     c4, c5, c6, c7 = st.columns(4)
     with c4:
-        pf_metric(tr("Emergency Fund"), f"{float(result['emergency_months']):.1f} months")
+        pf_metric(tr("Emergency Fund"), f"{float(result['emergency_months']):.1f} {tr('months')}")
     with c5:
         pf_metric(tr("Savings Rate"), percent(float(result["savings_rate"])))
     with c6:
@@ -506,7 +527,7 @@ def render_personal_finance() -> None:
     if result.get("no_income_mode"):
         gap_cols = st.columns(3)
         with gap_cols[0]:
-            pf_metric(tr("Study Runway Gap"), f"{float(result['runway_gap_months']):+.1f} months")
+            pf_metric(tr("Study Runway Gap"), f"{float(result['runway_gap_months']):+.1f} {tr('months')}")
         with gap_cols[1]:
             pf_metric(tr("Cash Buffer"), percent(float(result["cash_to_assets_ratio"])))
         with gap_cols[2]:
@@ -530,10 +551,13 @@ def render_personal_finance() -> None:
         alt.Chart(scores)
         .mark_bar(cornerRadiusTopLeft=8, cornerRadiusTopRight=8)
         .encode(
-            x=alt.X("Dimension:N", sort=None),
-            y=alt.Y("Score:Q", scale=alt.Scale(domain=[0, 100])),
-            color=alt.Color("Dimension:N", legend=None),
-            tooltip=["Dimension", alt.Tooltip("Score:Q", format=".1f")],
+            y=alt.Y("Dimension:N", sort=None, title=None),
+            x=alt.X("Score:Q", title=tr("Score"), scale=alt.Scale(domain=[0, 100])),
+            color=alt.Color("Dimension:N", legend=None, scale=alt.Scale(
+                range=["#218b7e", "#277eaf", "#218b7e", "#d89437", "#277eaf", "#218b7e", "#277eaf"],
+            )),
+            tooltip=[alt.Tooltip("Dimension:N", title=tr("Dimension")),
+                     alt.Tooltip("Score:Q", title=tr("Score"), format=".1f")],
         )
         .properties(height=330)
     )

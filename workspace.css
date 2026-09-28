@@ -1,0 +1,271 @@
+/* Workspace surfaces override the legacy presentation theme, not calculations. */
+html body .stApp {
+    background: #f7f8fa !important;
+    color: #202c35 !important;
+}
+html body .stApp::before, html body .stApp::after {
+    display: none !important;
+}
+html body .stApp [data-testid="stElementContainer"]:has([data-testid="stMarkdownContainer"] > style:only-child) {
+    display: none;
+}
+html body .stApp .block-container {
+    max-width: 1280px !important;
+    padding: 24px 32px 48px !important;
+}
+html body .stApp [data-testid="stMainBlockContainer"] > [data-testid="stVerticalBlock"] {
+    gap: 16px;
+}
+html body section[data-testid="stSidebar"] {
+    background: #fff !important;
+    border-right: 1px solid #dde3e8 !important;
+}
+html body section[data-testid="stSidebar"] [data-testid="stSidebarUserContent"] {
+    padding: 16px 20px 32px;
+}
+html body .v2-sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 8px 20px;
+    border-bottom: 1px solid #e6ebee;
+}
+html body .v2-sidebar-brand > div {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+}
+html body .v2-sidebar-brand svg { width: 100%; height: 100%; }
+html body .v2-sidebar-brand b { display: block; font-size: 22px; color: #202c35; }
+html body .v2-sidebar-brand small { display: block; font-size: 12px; color: #67757e; }
+html body .st-key-v2_navigation,
+html body .st-key-v2_navigation [data-testid="stVerticalBlock"] { gap: 5px !important; }
+html body .st-key-v2_navigation [data-testid="stCaptionContainer"] p {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #687780 !important;
+    margin: 14px 10px 2px !important;
+}
+html body .st-key-v2_navigation button {
+    display: flex !important;
+    width: 100% !important;
+    min-height: 42px !important;
+    height: auto !important;
+    padding: 9px 12px !important;
+    gap: 12px !important;
+    border: 1px solid transparent !important;
+    border-radius: 6px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #42515d !important;
+    -webkit-text-fill-color: #42515d !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    transform: none !important;
+}
+html body .st-key-v2_navigation button > div { justify-content: flex-start !important; min-width: 0; }
+html body .st-key-v2_navigation button p {
+    font-size: 14px !important;
+    font-weight: 550 !important;
+    line-height: 1.4 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    text-align: left !important;
+}
+html body .st-key-v2_navigation button [data-testid="stIconMaterial"] {
+    display: inline-flex !important;
+    width: 22px !important;
+    min-width: 22px !important;
+    font-size: 21px !important;
+}
+html body .st-key-v2_navigation button[kind="primary"] {
+    background: #e6f3f0 !important;
+    color: #126e65 !important;
+    -webkit-text-fill-color: #126e65 !important;
+    border-color: #cfe7e1 !important;
+}
+html body .st-key-v2_navigation button:hover { background: #f0f4f5 !important; }
+html body .st-key-v2_market_children {
+    margin-left: 18px;
+    padding-left: 8px;
+    border-left: 1px solid #d8e4e1;
+    width: calc(100% - 18px) !important;
+}
+html body .st-key-v2_language {
+    max-width: 196px;
+    margin-left: auto;
+}
+html body .st-key-v2_language [data-testid="stHorizontalBlock"] {
+    flex-wrap: nowrap !important;
+    gap: 4px !important;
+}
+html body .st-key-v2_language [data-testid="stColumn"] {
+    min-width: 0 !important;
+    flex: 1 1 0 !important;
+}
+html body .st-key-v2_language button {
+    min-height: 36px !important;
+    padding: 5px 10px !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    font-size: 13px !important;
+}
+html body .st-key-v2_language button[kind="primary"] {
+    background: #146e65 !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+}
+html body .stApp .brand-header {
+    display: flex !important;
+    justify-content: flex-start !important;
+    min-height: 64px !important;
+    padding: 0 0 20px !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid #dce3e7 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+html body .stApp .brand-header::after { display: none !important; }
+html body .stApp .brand-name { font-size: 28px !important; font-family: inherit !important; }
+html body .stApp .brand-subtitle { font-size: 12px !important; font-weight: 500 !important; }
+html body .stApp .brand-icon { width: 40px !important; height: 40px !important; }
+html body .stApp .brand-mark { flex-direction: row !important; gap: 14px !important; }
+html body .stApp .brand-logo-image { max-width: 100% !important; max-height: 100% !important; }
+html body .stApp .hero-panel,
+html body .stApp .life-compact-panel,
+html body .stApp .client-visual-report {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 12px 0 !important;
+    margin: 0 !important;
+}
+html body .stApp .hero-panel h1,
+html body .stApp .life-compact-panel h1 {
+    font-size: 26px !important;
+    line-height: 1.35 !important;
+    font-family: inherit !important;
+}
+html body .stApp .hero-muted { font-size: 14px !important; line-height: 1.65 !important; }
+html body .stApp h3 { font-size: 19px !important; line-height: 1.45 !important; }
+html body .stApp .goal-strategy-strip {
+    border: 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid #e0e6e9 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 10px 0 !important;
+    min-height: 48px !important;
+}
+html body .stApp .finance-snapshot-card,
+html body .stApp .metric-card,
+html body .stApp .client-report-card {
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    background: #fff !important;
+}
+html body .stApp .metric-label { font-size: 13px !important; color: #63717b !important; }
+html body .stApp .metric-value { font-size: 25px !important; line-height: 1.3 !important; overflow-wrap: anywhere; }
+html body .stApp .finance-snapshot-card b { font-size: 18px !important; line-height: 1.4 !important; }
+html body .stApp .finance-snapshot-card small,
+html body .stApp .client-report-text small { font-size: 12px !important; }
+html body .stApp .finance-snapshot-card em { font-size: 12px !important; }
+html body .stApp button { box-shadow: none !important; border-radius: 6px !important; }
+html body .stApp div[data-testid="stButton"] button:not([kind="primary"]),
+html body .stApp div[data-testid="stDownloadButton"] button {
+    background: #fff !important;
+    border: 1px solid #cdd8dd !important;
+    color: #344a53 !important;
+    -webkit-text-fill-color: #344a53 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+html body .stApp div[data-testid="stButton"] button:not([kind="primary"]) *,
+html body .stApp div[data-testid="stDownloadButton"] button * {
+    color: inherit !important;
+    -webkit-text-fill-color: inherit !important;
+}
+html body .stApp section[data-testid="stSidebar"] .st-key-v2_navigation div[data-testid="stButton"] button {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    color: #42515d !important;
+    -webkit-text-fill-color: #42515d !important;
+}
+html body .stApp section[data-testid="stSidebar"] .st-key-v2_navigation div[data-testid="stButton"] button[kind="primary"] {
+    background: #e6f3f0 !important;
+    border-color: #cfe7e1 !important;
+    color: #126e65 !important;
+    -webkit-text-fill-color: #126e65 !important;
+}
+html body .stApp section[data-testid="stSidebar"] .st-key-v2_navigation div[data-testid="stButton"] button * {
+    color: inherit !important;
+    -webkit-text-fill-color: inherit !important;
+}
+html body .stApp span[data-testid="stIconMaterial"] {
+    font-size: 22px !important;
+    line-height: 1 !important;
+    color: inherit !important;
+    -webkit-text-fill-color: inherit !important;
+}
+html body .stApp span[data-testid="stIconMaterial"]::before { display: none !important; }
+html body .stApp section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"] button::after {
+    content: none !important;
+}
+html body .stApp section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"],
+html body .stApp section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"] button {
+    width: 36px !important;
+    min-width: 36px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+html body .stApp section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"] button span[data-testid="stIconMaterial"] {
+    color: #50616b !important;
+    -webkit-text-fill-color: #50616b !important;
+}
+html body .stApp section[data-testid="stSidebar"][aria-expanded="true"] div[data-testid="stSidebarContent"] {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+html body .stApp section[data-testid="stSidebar"][aria-expanded="false"] div[data-testid="stSidebarCollapseButton"] button span[data-testid="stIconMaterial"] {
+    font-size: 0 !important;
+    width: 22px !important;
+    height: 22px !important;
+}
+html body .stApp section[data-testid="stSidebar"][aria-expanded="false"] div[data-testid="stSidebarCollapseButton"] button span[data-testid="stIconMaterial"]::before {
+    display: block !important;
+    content: "menu" !important;
+    font-size: 22px !important;
+    line-height: 1 !important;
+    background: none !important;
+    mask: none !important;
+    -webkit-mask: none !important;
+}
+html body .stApp button:focus-visible, html body .stApp a:focus-visible {
+    outline: 2px solid #168477 !important;
+    outline-offset: 3px;
+}
+@media (max-width: 768px) {
+    html body .stApp .block-container { padding: 16px 16px 40px !important; }
+    html body .stApp .brand-name { font-size: 24px !important; }
+    html body .stApp .brand-mark { min-width: 0; }
+    html body .stApp .hero-panel h1 { font-size: 24px !important; }
+    html body .stApp .finance-snapshot-ribbon { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    html body .stApp .finance-snapshot-card { min-width: 0 !important; padding: 12px !important; }
+    html body .stApp .finance-snapshot-card b { font-size: 16px !important; overflow-wrap: anywhere; }
+    html body .stApp .finance-snapshot-card em { white-space: normal !important; }
+    html body .stApp .goal-strategy-main { min-width: 0 !important; }
+    html body .stApp .goal-strategy-main span { white-space: normal !important; }
+    html body .stApp .client-report-cards,
+    html body .stApp .client-direction-rail { grid-template-columns: 1fr !important; }
+    html body .stApp .hero-muted { overflow-wrap: anywhere; }
+}
+@media (prefers-reduced-motion: reduce) {
+    html body .stApp * { animation: none !important; transition: none !important; }
+}

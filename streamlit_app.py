@@ -66,7 +66,7 @@ KO_TRANSLATIONS = {
     "Please enter a comment first.": "먼저 의견을 입력해 주세요.",
     "Saved comments": "저장된 의견",
     "Your Life. Your Money. Your Future.": "당신의 삶. 당신의 돈. 당신의 미래.",
-    "Personal Decision Intelligence Application": "개인 의사결정 인텔리전스 앱",
+    "Personal Decision Intelligence Application": "개인 재무 의사결정 지원 앱",
     "Design Your": "설계하세요",
     "Financial Life": "금융 생활",
     "LY-Scope-Ver.2 is a Personal Decision Intelligence Application for financial foundation, goals, market assets, real estate, scenarios, risk, evidence, decisions, and memory.": "LY-Scope-Ver.2는 재무 기반, 목표, 시장 자산, 부동산, 시나리오, 위험, 근거, 결정, 메모리를 연결하는 개인 의사결정 인텔리전스 앱입니다.",
@@ -86,7 +86,7 @@ KO_TRANSLATIONS = {
     "Why": "이유",
     "Path": "경로",
     "Inputs": "입력",
-    "Proof": "증명",
+    "Proof": "근거",
     "Review": "검토",
     "NORA Purpose Control Center": "NORA 목적 컨트롤 센터",
     "NORA starts with what the customer wants, then connects the plan, current situation, evidence, decision, and memory.": "NORA는 고객이 원하는 것에서 시작한 뒤 플랜, 현재 상황, 근거, 결정, 메모리를 연결합니다.",
@@ -215,11 +215,11 @@ KO_TRANSLATIONS = {
     "Income, real estate exposure, and rate sensitivity lens.": "소득, 부동산 노출, 금리 민감도 관점.",
     "Portfolio Diversification": "포트폴리오 분산",
     "Risk, covariance, correlation, and complementarity.": "위험, 공분산, 상관관계, 보완성.",
-    "Financial Health": "재무 건강도",
+    "Financial Health": "재무 건전성",
     "Cash flow, savings, debt, liquidity, and capacity.": "현금흐름, 저축, 부채, 유동성, 감당 능력.",
     "Financial Diary": "금융 다이어리",
     "Advisor Reports": "케이스 스터디",
-    "Case Studies": "케이스 스터디",
+    "Case Studies": "사례 분석",
     "NORA Case Study Lab": "NORA 케이스 스터디 Lab",
     "Read fictional client cases through the current NORA web flow: goal, situation, evidence, decision, and memory.": "현재 NORA 웹 흐름에 맞춰 가상 고객 케이스를 목표, 상황, 근거, 결정, 기억 순서로 검토하세요.",
     "Case Study Board": "케이스 스터디 보드",
@@ -293,7 +293,7 @@ KO_TRANSLATIONS = {
     "Goal → Strategy → Situation → AI Coach": "목표 → 전략 → 상황 → AI 코치",
     "Choose the customer purpose first.": "고객의 목표를 먼저 선택합니다.",
     "Follow the plan selected by the goal.": "목표가 선택한 전략을 따라갑니다.",
-    "Read cash flow, capital, risk, and runway.": "현재 현금흐름, 자본, 위험, 생존기간을 확인합니다.",
+    "Read cash flow, capital, risk, and runway.": "현금흐름, 자산, 위험, 생활비 충당 기간을 확인합니다.",
     "Ask for a linked interpretation.": "근거를 쉬운 해석으로 바꿉니다.",
     "Selected goal": "선택된 목표",
     "No goal selected": "선택된 목표 없음",
@@ -308,7 +308,7 @@ KO_TRANSLATIONS = {
     "Analysis": "분석",
     "Stress Test": "스트레스 테스트",
     "Rule-Based Beta": "규칙 기반 베타",
-    "Memory": "메모리",
+    "Memory": "의사결정 기록",
     "Personal Memory": "개인 메모리",
     "Mobile App Mode · Orbit V2": "모바일 앱 모드 · Orbit V2",
     "Port": "자산",
@@ -345,9 +345,9 @@ KO_TRANSLATIONS = {
     "Reading": "판독",
     "Name": "이름",
     "Segment": "고객군",
-    "Planning Health": "계획 건강도",
-    "Planning Health Score": "계획 건강도 점수",
-    "Cash Runway": "현금 생존기간",
+    "Planning Health": "재무 계획 안정성",
+    "Planning Health Score": "재무 계획 안정성 점수",
+    "Cash Runway": "생활비 충당 기간",
     "Goal Progress": "목표 진행률",
     "Investment Exposure": "투자 노출도",
     "Portfolio Quality": "포트폴리오 품질",
@@ -411,6 +411,70 @@ KO_TRANSLATIONS = {
     "Hover or click each visual node to read its role.": "각 시각 노드에 마우스를 올리거나 클릭하면 역할을 볼 수 있습니다.",
     "LY-Scope-Ver.2 is provided for educational and informational use only and does not constitute or provide financial, investment, legal, tax, accounting, or professional advice. Do not enter sensitive personal financial information into this prototype. Market data and charts may be provided by third-party services such as Finnhub, TradingView, and Yahoo Finance/yfinance, subject to their own terms. All trademarks, company names, and ticker symbols remain the property of their respective owners. This interface uses original CSS/HTML design elements and does not claim ownership of third-party data, logos, or trademarks. Data may be delayed, incomplete, or unavailable and should be verified independently.": "LY-Scope-Ver.2는 교육 및 정보 제공용이며 금융, 투자, 법률, 세무, 회계 또는 전문 조언을 제공하지 않습니다. 이 프로토타입에 민감한 개인 금융 정보를 입력하지 마세요. 시장 데이터와 차트는 Finnhub, TradingView, Yahoo Finance/yfinance 등 제3자 서비스에서 제공될 수 있으며 각 서비스 약관을 따릅니다. 모든 상표, 회사명, 티커 심볼은 각 소유자의 자산입니다. 이 인터페이스는 자체 CSS/HTML 디자인 요소를 사용하며 제3자 데이터, 로고, 상표의 소유권을 주장하지 않습니다. 데이터는 지연되거나 불완전하거나 제공되지 않을 수 있으므로 독립적으로 검증해야 합니다.",
 }
+
+
+KO_TRANSLATIONS.update({
+    "Overview and calculation evidence": "전체 현황과 계산 근거",
+    "Purpose and strategy": "목표와 실행 계획",
+    "Decisions": "판단과 기록",
+    "Resources": "도움말 및 설정",
+    "Stock Search": "종목 검색",
+    "Personal Finance": "개인 재무",
+    "View Life Design Intro": "LY-Scope 소개",
+    "Support Lists": "비교 종목과 보유 자산",
+    "Read cash flow, capital, risk, and runway.": "현금흐름, 자산, 위험, 생활비 충당 기간을 확인합니다.",
+    "Rationality Gate": "의사결정 준비도",
+    "Capture": "고민 정리",
+    "Capture Quality": "고민 정리 수준",
+    "Model Discipline": "계산 근거 점검",
+    "Memory Feedback": "기록과 되돌아보기",
+    "What-if Scenario Lab": "시나리오 비교",
+    "Stress-test life and portfolio assumptions before a future AI coach explains the trade-offs.": "소득, 지출, 시장 변화가 재무 상황과 포트폴리오에 미치는 영향을 비교합니다.",
+    "This is educational scenario analysis, not a forecast or investment recommendation. It helps users see which assumptions can move portfolio value, liquidity, debt pressure, and risk capacity.": "교육용 시나리오 분석이며 예측이나 투자 권유가 아닙니다. 가정의 변화가 포트폴리오 가치, 유동성, 부채 부담, 위험 감당력에 미치는 영향을 살펴봅니다.",
+    "Scenario Controls": "시나리오 가정",
+    "Monthly income change": "월소득 변화",
+    "Living expense change": "생활비 변화",
+    "One-time cash shock": "일회성 현금 지출",
+    "Portfolio market move": "포트폴리오 가격 변화",
+    "USD/KRW rate change": "원·달러 환율 변화",
+    "Apply portfolio move to taxable investments": "가격 변화를 과세 투자자산에도 적용",
+    "Interest-rate move": "금리 변화 (bp)",
+    "Rate-sensitive allocation": "금리 민감 자산 비중 (%)",
+    "Price impact per +100 bps": "금리 1%p 상승 시 가격 변화 (%)",
+    "Portfolio Stress Result": "포트폴리오 변화 결과",
+    "Current Portfolio": "현재 포트폴리오",
+    "Scenario Portfolio": "시나리오 적용 후",
+    "Estimated Change": "예상 변화율",
+    "Rate-Sleeve Effect": "금리 민감 자산의 영향",
+    "Holding": "보유 종목",
+    "Currency": "통화",
+    "Current Value": "현재 가치",
+    "Scenario Value": "시나리오 적용 가치",
+    "Change": "변화",
+    "Personal Finance Stress Result": "개인 재무 변화 결과",
+    "Health Score": "재무 건전성 점수",
+    "Score Change": "점수 변화",
+    "Monthly Surplus": "월 잉여 현금",
+    "Emergency Fund": "생활비 충당 기간",
+    "months": "개월",
+    "Add holdings in the Portfolio tab to stress-test portfolio value, FX exposure, and rate-sensitive allocation.": "포트폴리오에 보유 종목을 추가하면 자산 가치, 환율, 금리 변화의 영향을 확인할 수 있습니다.",
+    "Open the Personal Finance tab once to create a baseline before running life-level stress tests.": "개인 재무에서 기준 소득과 자산을 입력한 뒤 시나리오를 비교하세요.",
+    "AI-Ready Scenario Interpretation": "시나리오 해석",
+    "Portfolio stress is severe: selected assumptions create a decline greater than 20%.": "선택한 가정에서 포트폴리오 가치가 20% 이상 하락하여 충격이 큰 것으로 나타납니다.",
+    "Portfolio stress is moderate: selected assumptions reduce portfolio value.": "선택한 가정에서 포트폴리오 가치가 하락합니다.",
+    "Portfolio scenario is positive under the selected market and FX assumptions.": "선택한 시장·환율 가정에서는 포트폴리오 가치가 감소하지 않습니다.",
+    "FX movement is material; separate market return from currency translation effects.": "환율 변화의 영향이 큽니다. 자산 수익률과 환산 손익을 구분해 확인하세요.",
+    "Higher rates pressure the rate-sensitive sleeve under the selected assumption.": "선택한 가정에서 금리 상승이 금리 민감 자산의 가치에 부담을 줍니다.",
+    "No-income planning mode: use runway target and drawdown resilience as the primary stress signals.": "소득이 없는 기간에는 생활비 확보 목표와 자산 하락에 대한 대응 여력을 우선 점검합니다.",
+    "Runway warning: cash reserve is below the selected no-income planning target.": "생활비 주의: 확보한 현금이 무소득 기간의 생활비 목표에 못 미칩니다.",
+    "Investment exposure warning: taxable investments remain above 60% of assets during a no-income period.": "자산 배분 주의: 무소득 기간에도 과세 투자자산 비중이 총자산의 60% 이상입니다.",
+    "Liquidity warning: emergency fund falls below 3 months of living expenses.": "유동성 주의: 비상자금이 생활비 3개월분보다 적습니다.",
+    "Debt-pressure warning: debt-to-income rises above the common 36% reference level.": "부채 부담 주의: 소득 대비 부채 상환 비율이 참고 기준인 36%를 넘습니다.",
+    "Risk-capacity warning: financial health score suggests limited ability to absorb volatility.": "위험 감당력 주의: 재무 건전성 점수상 시장 변동을 감당할 여력이 제한적입니다.",
+    "Add portfolio holdings and Personal Finance inputs to generate richer scenario interpretation.": "포트폴리오와 개인 재무를 입력하면 시나리오 영향을 더 구체적으로 확인할 수 있습니다.",
+    "Structured Scenario Packet for Future AI Coach": "시나리오 계산 데이터",
+    "Download Scenario JSON": "시나리오 데이터 다운로드",
+})
 
 
 def normalized_language(value: Any) -> str | None:
@@ -7774,7 +7838,7 @@ GOAL_STRATEGY_SITUATION_PATH = APP_ASSET_DIR / "ly_visual_goal_strategy_situatio
 USE_HOMEPAGE_REFERENCE_IMAGE = True
 DEVELOPER_NAME = "Young Lee"
 DEVELOPER_EMAIL = "lyn0109@gmail.com"
-APP_BUILD_STAMP = "2026-09-02-modern-visual-ui"
+APP_BUILD_STAMP = "2026-09-28-workspace-korean-polish"
 LIFE_ENTRY_VERSION = "life-homepage-2026-09-02-modern-visual-ui-v1"
 MAX_DIARY_RESTORE_BYTES = 250_000
 MAX_DIARY_RESTORE_ENTRIES = 50
@@ -8086,6 +8150,11 @@ def render_visual_asset_theme() -> None:
         """,
         unsafe_allow_html=True,
     )
+
+
+def render_workspace_theme() -> None:
+    stylesheet = Path(__file__).with_name("workspace.css").read_text(encoding="utf-8")
+    st.markdown(f"<style>{stylesheet}</style>", unsafe_allow_html=True)
 
 
 def clean_hex_color(value: Any, fallback: str = "#0f766e") -> str:
@@ -9059,6 +9128,7 @@ def status_color(status: str) -> str:
 
 
 def metric_card(label: str, value: str, color: str = "#102033") -> None:
+    label = ui(label)
     level_html = ""
     value_text = str(value)
     score_match = re.search(r"(-?\d+(?:\.\d+)?)\s*/\s*100", value_text)
@@ -10875,17 +10945,17 @@ def build_financial_snapshot(note: str, mood: str, next_action: str) -> dict[str
 
 def what_if_scenario_tab() -> None:
     st.markdown(
-        """
+        f"""
         <div class="hero-panel">
-            <h1 style="margin:0 0 8px;">What-if Scenario Lab</h1>
-            <div class="hero-muted">Stress-test life and portfolio assumptions before a future AI coach explains the trade-offs.</div>
+            <h1 style="margin:0 0 8px;">{ui_html('What-if Scenario Lab')}</h1>
+            <div class="hero-muted">{ui_html('Stress-test life and portfolio assumptions before a future AI coach explains the trade-offs.')}</div>
         </div>
         """,
         unsafe_allow_html=True,
     )
     st.info(
-        "This is educational scenario analysis, not a forecast or investment recommendation. "
-        "It helps users see which assumptions can move portfolio value, liquidity, debt pressure, and risk capacity."
+        ui("This is educational scenario analysis, not a forecast or investment recommendation. "
+           "It helps users see which assumptions can move portfolio value, liquidity, debt pressure, and risk capacity.")
     )
 
     base_currency = st.session_state.get("portfolio_base_currency", "USD")
@@ -10901,21 +10971,29 @@ def what_if_scenario_tab() -> None:
         if any(keyword in descriptor for keyword in rate_sensitive_keywords):
             rate_sensitive_value += value
     detected_rate_allocation = int(round(rate_sensitive_value / current_total * 100)) if current_total > 0 else 20
+    defaults = {
+        "scenario_income": -10, "scenario_expenses": 10, "scenario_cash": 0.0,
+        "scenario_portfolio": -15, "scenario_fx": 0, "scenario_apply_drawdown": True,
+        "scenario_rate": 100, "scenario_allocation": detected_rate_allocation,
+        "scenario_sensitivity": -6,
+    }
+    for key, value in defaults.items():
+        st.session_state.setdefault(key, value)
 
-    st.subheader("Scenario Controls")
+    st.subheader(ui("Scenario Controls"))
     c1, c2, c3 = st.columns(3)
     with c1:
-        income_change_pct = st.slider("Monthly income change", -60, 20, -10, 5, format="%d%%")
-        expense_change_pct = st.slider("Living expense change", -20, 60, 10, 5, format="%d%%")
-        cash_shock = st.number_input("One-time cash shock", min_value=0.0, value=0.0, step=500.0)
+        income_change_pct = st.slider(ui("Monthly income change"), -60, 20, step=5, format="%d%%", key="scenario_income")
+        expense_change_pct = st.slider(ui("Living expense change"), -20, 60, step=5, format="%d%%", key="scenario_expenses")
+        cash_shock = st.number_input(ui("One-time cash shock"), min_value=0.0, step=500.0, key="scenario_cash")
     with c2:
-        portfolio_change_pct = st.slider("Portfolio market move", -50, 30, -15, 5, format="%d%%")
-        fx_change_pct = st.slider("USD/KRW rate change", -30, 30, 0, 5, format="%d%%")
-        apply_drawdown_to_pf = st.checkbox("Apply portfolio move to taxable investments", value=True)
+        portfolio_change_pct = st.slider(ui("Portfolio market move"), -50, 30, step=5, format="%d%%", key="scenario_portfolio")
+        fx_change_pct = st.slider(ui("USD/KRW rate change"), -30, 30, step=5, format="%d%%", key="scenario_fx")
+        apply_drawdown_to_pf = st.checkbox(ui("Apply portfolio move to taxable investments"), key="scenario_apply_drawdown")
     with c3:
-        rate_change_bps = st.slider("Interest-rate move", -200, 300, 100, 25)
-        rate_sensitive_allocation = st.slider("Rate-sensitive allocation", 0, 100, detected_rate_allocation, 5)
-        rate_price_sensitivity = st.slider("Price impact per +100 bps", -15, 5, -6, 1)
+        rate_change_bps = st.slider(ui("Interest-rate move"), -200, 300, step=25, key="scenario_rate")
+        rate_sensitive_allocation = st.slider(ui("Rate-sensitive allocation"), 0, 100, step=5, key="scenario_allocation")
+        rate_price_sensitivity = st.slider(ui("Price impact per +100 bps"), -15, 5, step=1, key="scenario_sensitivity")
 
     scenario_usdkrw = usdkrw * (1 + fx_change_pct / 100)
     projected_rows: list[dict[str, Any]] = []
@@ -10949,7 +11027,7 @@ def what_if_scenario_tab() -> None:
     total_delta = projected_total - current_total
     total_delta_pct = total_delta / current_total * 100 if current_total > 0 else 0.0
 
-    st.subheader("Portfolio Stress Result")
+    st.subheader(ui("Portfolio Stress Result"))
     if current_total > 0:
         p1, p2, p3, p4 = st.columns(4)
         with p1:
@@ -10964,11 +11042,11 @@ def what_if_scenario_tab() -> None:
             f"FX baseline: USD/KRW {usdkrw:,.2f} from {fx_source} ({fx_date}). "
             f"Scenario FX: USD/KRW {scenario_usdkrw:,.2f}."
         )
-        st.dataframe(projected_rows, hide_index=True, width="stretch")
+        st.dataframe(pd.DataFrame(projected_rows).rename(columns=ui), hide_index=True, width="stretch")
     else:
-        st.warning("Add holdings in the Portfolio tab to stress-test portfolio value, FX exposure, and rate-sensitive allocation.")
+        st.warning(ui("Add holdings in the Portfolio tab to stress-test portfolio value, FX exposure, and rate-sensitive allocation."))
 
-    st.subheader("Personal Finance Stress Result")
+    st.subheader(ui("Personal Finance Stress Result"))
     personal_profile = st.session_state.get("last_personal_finance_profile")
     personal_result = st.session_state.get("last_personal_finance_result")
     stressed_result: dict[str, Any] | None = None
@@ -11000,13 +11078,13 @@ def what_if_scenario_tab() -> None:
         with pf2:
             metric_card("Score Change", f"{health_delta:+.1f}", "#10b981" if health_delta >= 0 else "#ef4444")
         with pf3:
-            metric_card("Monthly Surplus", fmt_money(float(stressed_result["monthly_surplus"])), "#10b981" if surplus_delta >= 0 else "#ef4444")
+            metric_card("Monthly Surplus", fmt_money(float(stressed_result["monthly_surplus"]), st.session_state.get("pf_display_currency", "USD")), "#10b981" if surplus_delta >= 0 else "#ef4444")
         with pf4:
-            metric_card("Emergency Fund", f"{float(stressed_result['emergency_months']):.1f} months", "#10b981" if float(stressed_result["emergency_months"]) >= 3 else "#ef4444")
+            metric_card("Emergency Fund", f"{float(stressed_result['emergency_months']):.1f} {ui('months')}", "#10b981" if float(stressed_result["emergency_months"]) >= 3 else "#ef4444")
     else:
-        st.warning("Open the Personal Finance tab once to create a baseline before running life-level stress tests.")
+        st.warning(ui("Open the Personal Finance tab once to create a baseline before running life-level stress tests."))
 
-    st.subheader("AI-Ready Scenario Interpretation")
+    st.subheader(ui("AI-Ready Scenario Interpretation"))
     interpretation: list[str] = []
     if current_total > 0:
         if total_delta_pct <= -20:
@@ -11041,7 +11119,7 @@ def what_if_scenario_tab() -> None:
     if not interpretation:
         interpretation.append("Add portfolio holdings and Personal Finance inputs to generate richer scenario interpretation.")
     for item in interpretation:
-        st.write(f"- {item}")
+        st.write(f"- {ui(item)}")
 
     scenario_packet = {
         "created_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
@@ -11069,10 +11147,10 @@ def what_if_scenario_tab() -> None:
         "interpretation": interpretation,
     }
     st.session_state.last_scenario_packet = scenario_packet
-    with st.expander("Structured Scenario Packet for Future AI Coach"):
+    with st.expander(ui("Structured Scenario Packet for Future AI Coach")):
         st.json(scenario_packet)
         st.download_button(
-            "Download Scenario JSON",
+            ui("Download Scenario JSON"),
             data=json.dumps(scenario_packet, indent=2, ensure_ascii=False),
             file_name="ly_scope_ver2_scenario_packet.json",
             mime="application/json",
@@ -11251,9 +11329,9 @@ def rationality_gate_snapshot() -> dict[str, Any]:
     memory_score = 88 if diary else 42
 
     if language == "ko":
-        capture_detail = "고객의 고민이 결정 초안으로 포착되었습니다." if decision_capture else "아직 고객의 고민이 Capture되지 않았습니다."
+        capture_detail = "입력한 고민이 의사결정 초안으로 정리되었습니다." if decision_capture else "아직 고민이나 의사결정 질문을 입력하지 않았습니다."
         purpose_detail = "목표가 선택되어 판단 기준이 선명합니다." if goal else "아직 목표가 없어 판단 기준이 흔들릴 수 있습니다."
-        evidence_detail = f"현재 근거 입력 {evidence_count}/5: Capture, 재무, 포트폴리오, 종목, 시나리오."
+        evidence_detail = f"현재 근거 입력 {evidence_count}/5: 고민 정리, 재무, 포트폴리오, 종목, 시나리오."
         decision_detail = "결정 초안이 있어 행동 전 검토할 수 있습니다." if decision_capture else "결정 초안이 없어 해석이 행동으로 연결되기 어렵습니다."
         model_detail = "모델 결과가 존재해 해석 전 계산 기준을 확인할 수 있습니다." if model_score >= 70 else "아직 모델 결과가 부족해 해석보다 입력이 먼저입니다."
         risk_detail = "시나리오까지 포함되어 위험을 먼저 점검합니다." if scenario else "위험 점검은 시작됐지만 시나리오 스트레스가 아직 약합니다."
@@ -11292,7 +11370,7 @@ NORA_GOAL_STRATEGIES = {
         "color": "#0f766e",
         "view": "finance",
         "label_en": "Protect Runway",
-        "label_ko": "생존기간 보호",
+        "label_ko": "생활비 확보",
         "short_en": "Cash safety first",
         "short_ko": "현금 우선",
         "strategy_en": "Check burn rate, emergency cash, debt pressure, and forced-selling risk before reviewing assets.",
@@ -11569,7 +11647,7 @@ def build_decision_capture_draft(statement: str, amount_text: str = "") -> dict[
     if kind == "add_buy":
         decision_line = decision_text(language, "Review before adding risk", "위험 추가 전 검토")
         benefit = decision_text(language, "Potential upside if the thesis is right.", "가정이 맞을 경우 상승 기회.")
-        default_risk = decision_text(language, "Cash runway and concentration can weaken.", "현금 생존기간과 집중도가 약해질 수 있음.")
+        default_risk = decision_text(language, "Cash runway and concentration can weaken.", "생활비 충당 기간이 줄고 자산 집중 위험이 커질 수 있습니다.")
         next_step = decision_text(language, "Check 12-month cash needs, position size, and downside scenario before action.", "실행 전 12개월 현금수요, 포지션 크기, 하락 시나리오를 확인하세요.")
     elif kind == "reduce_sell":
         decision_line = decision_text(language, "Review partial reduction", "부분 축소 검토")
@@ -11589,8 +11667,8 @@ def build_decision_capture_draft(statement: str, amount_text: str = "") -> dict[
     elif kind == "income_path":
         decision_line = decision_text(language, "Review income bridge", "소득 브릿지 검토")
         benefit = decision_text(language, "A clearer income path can protect long-term planning.", "명확한 소득 경로는 장기 계획을 보호할 수 있음.")
-        default_risk = decision_text(language, "Runway can shorten if expenses are not updated.", "지출이 갱신되지 않으면 생존기간이 짧아질 수 있음.")
-        next_step = decision_text(language, "Update monthly expenses and target runway.", "월 지출과 목표 생존기간을 갱신하세요.")
+        default_risk = decision_text(language, "Runway can shorten if expenses are not updated.", "실제 지출을 반영하지 않으면 예상보다 생활비 충당 기간이 짧아질 수 있습니다.")
+        next_step = decision_text(language, "Update monthly expenses and target runway.", "월지출과 생활비 확보 목표 기간을 갱신하세요.")
     else:
         decision_line = decision_text(language, "Turn the thought into a decision draft", "생각을 결정 초안으로 전환")
         benefit = decision_text(language, "The decision becomes easier to audit.", "의사결정을 나중에 검토하기 쉬워짐.")
@@ -11624,7 +11702,7 @@ def build_decision_capture_draft(statement: str, amount_text: str = "") -> dict[
             decision_text(
                 language,
                 f"Runway: {float(personal.get('emergency_months', 0)):.1f} months",
-                f"생존기간: {float(personal.get('emergency_months', 0)):.1f}개월",
+                f"생활비 충당 기간: {float(personal.get('emergency_months', 0)):.1f}개월",
             )
         )
 
@@ -12022,20 +12100,15 @@ def language_toggle_href(language: str) -> str:
 
 def render_top_language_toggle() -> None:
     language = current_language()
-    en_active = " active" if language == "en" else ""
-    ko_active = " active" if language == "ko" else ""
-    en_href = escape(language_toggle_href("en"), quote=True)
-    ko_href = escape(language_toggle_href("ko"), quote=True)
-    st.markdown(
-        f"""
-        <nav class="top-language-toggle" aria-label="Language switcher">
-            <span class="language-toggle-mark" aria-hidden="true">{visual_icon_html("language", "#0f766e", "language-image-icon")}</span>
-            <a class="{en_active.strip()}" href="{en_href}" target="_self" title="Switch to English" aria-label="Switch to English">EN</a>
-            <a class="{ko_active.strip()}" href="{ko_href}" target="_self" title="Switch to Korean" aria-label="Switch to Korean">KR</a>
-        </nav>
-        """,
-        unsafe_allow_html=True,
-    )
+    with st.container(key="v2_language"):
+        columns = st.columns(2)
+        for column, (code, label) in zip(columns, LANGUAGE_OPTIONS.items()):
+            with column:
+                st.button(
+                    label, key=f"v2_language_{code}", width="stretch",
+                    type="primary" if language == code else "secondary",
+                    on_click=set_language, args=(code,),
+                )
 
 
 def render_nora_ontology(active_key: str) -> None:
@@ -12172,7 +12245,7 @@ def build_ai_coach_linked_guidance(
         health = float(personal.get("financial_health_score") or 0)
         emergency = float(personal.get("emergency_months") or 0)
         surplus = float(personal.get("monthly_surplus") or 0)
-        personal_status = f"Health {health:.1f}/100" if language == "en" else f"건강도 {health:.1f}/100"
+        personal_status = f"Health {health:.1f}/100" if language == "en" else f"재무 건전성 {health:.1f}/100"
         if emergency < 3:
             personal_advice = (
                 "Emergency reserve is the first readiness checkpoint before adding investment risk."
@@ -14124,7 +14197,7 @@ def render_selected_client_stress_review(report: dict[str, Any], language: str) 
     title = "Scenario Verdict" if language == "en" else "시나리오 판정"
     loss_label = "Stress loss" if language == "en" else "스트레스 손실"
     weakest_label = "Weakest signal" if language == "en" else "가장 약한 신호"
-    runway_label = "Runway" if language == "en" else "생존기간"
+    runway_label = "Runway" if language == "en" else "생활비 충당 기간"
     month_unit = "mo" if language == "en" else "개월"
     st.markdown(
         f"""
@@ -15882,15 +15955,16 @@ def google_feedback_form_href(comment: dict[str, Any] | None = None) -> str:
 
 def render_sidebar() -> None:
     with st.sidebar:
-        st.markdown("## LY-Scope-Ver.2")
-        st.caption(ui("Use the Menu button at the upper-left to open or close this sidebar."))
-
-        if st.button(ui("View Life Design Intro"), width="stretch"):
-            st.session_state.life_entry_complete = False
-            st.session_state.life_entry_version_seen = ""
-            st.rerun()
-
-        render_sidebar_path_menu()
+        st.markdown(
+            f'<div class="v2-sidebar-brand"><div>{brand_logo_html()}</div>'
+            '<span><b>LY-Scope</b><small>Ver.2</small></span></div>',
+            unsafe_allow_html=True,
+        )
+        render_workspace_navigation()
+        with st.expander(ui("Purpose and strategy"), expanded=False):
+            render_sidebar_path_menu()
+            st.button(ui("View Life Design Intro"), icon=":material/open_in_new:",
+                      width="stretch", on_click=open_life_intro, key="v2_intro")
 
         with st.expander(ui("Support Lists"), expanded=False):
             st.markdown(f"#### {ui('Selected stocks')}")
@@ -16132,6 +16206,56 @@ NAV_ITEMS = [
     {"key": "settings", "label": "Settings", "icon": "SE"},
 ]
 
+WORKSPACE_NAV_GROUPS = [
+    ("Planning", [("life", "Goals", "flag"), ("finance", "Personal Finance", "account_balance_wallet")]),
+    ("Analysis", [("reit", "Real Estate", "apartment"), ("scenario", "Scenario", "route"),
+                  ("advisor", "Case Studies", "assignment_ind")]),
+    ("Decisions", [("ai", "AI Coach", "psychology"), ("diary", "Financial Diary", "edit_note"),
+                   ("details", "Calculation Details", "calculate")]),
+    ("Resources", [("guide", "Guide", "help_outline"), ("settings", "Settings", "settings")]),
+]
+MARKET_NAV_ITEMS = [("search", "Stock Search", "query_stats"),
+                    ("compare", "Compare", "compare_arrows"),
+                    ("portfolio", "Portfolio", "donut_large")]
+
+
+def open_life_intro() -> None:
+    st.query_params["mode"] = "intro"
+    st.session_state.life_entry_complete = False
+
+
+def toggle_market_menu() -> None:
+    st.session_state.v2_market_expanded = not st.session_state.get("v2_market_expanded", False)
+
+
+def render_workspace_navigation() -> None:
+    active = active_nav_key()
+    market_keys = {item[0] for item in MARKET_NAV_ITEMS}
+    if st.session_state.get("_v2_previous_view") != active and active in market_keys:
+        st.session_state.v2_market_expanded = True
+    st.session_state._v2_previous_view = active
+
+    def nav_button(item: tuple[str, str, str]) -> None:
+        key, label, icon = item
+        st.button(ui(label), key=f"v2_nav_{key}", icon=f":material/{icon}:",
+                  type="primary" if key == active else "secondary", width="stretch",
+                  on_click=set_active_nav_key, args=(key,))
+
+    with st.container(key="v2_navigation"):
+        for group, items in WORKSPACE_NAV_GROUPS:
+            st.caption(ui(group))
+            if group == "Analysis":
+                expanded = st.session_state.get("v2_market_expanded", False)
+                st.button(ui("Market Assets"), key="v2_market_toggle", width="stretch",
+                          icon=":material/expand_less:" if expanded else ":material/expand_more:",
+                          on_click=toggle_market_menu)
+                if expanded:
+                    with st.container(key="v2_market_children"):
+                        for item in MARKET_NAV_ITEMS:
+                            nav_button(item)
+            for item in items:
+                nav_button(item)
+
 PRIMARY_NAV_KEYS = ("life", "finance", "portfolio", "reit", "scenario", "advisor")
 
 DESKTOP_ORBIT_ITEMS = [
@@ -16196,7 +16320,7 @@ NORA_ONTOLOGY_STEPS = [
         "tag": "Calculation engine",
         "color": "#fde68a",
         "detail_en": "Valuation, runway, stress, portfolio quality, concentration, and goal projection.",
-        "detail_ko": "가치평가, 생존기간, 스트레스, 포트폴리오 품질, 집중도, 목표 전망.",
+        "detail_ko": "가치평가, 생활비 충당 기간, 충격 분석, 포트폴리오 품질, 집중도, 목표 전망.",
     },
     {
         "glyph": "EVD",
@@ -16302,6 +16426,9 @@ def set_active_nav_key(view: str) -> None:
     if view not in valid_keys:
         view = "life"
     st.session_state.active_view = view
+    st.session_state.life_entry_complete = True
+    st.session_state.life_entry_version_seen = LIFE_ENTRY_VERSION
+    st.session_state._v2_scroll_to_top = True
     try:
         st.query_params["view"] = view
         st.query_params["mode"] = "dashboard"
@@ -16560,7 +16687,7 @@ def client_report_state() -> dict[str, Any]:
                 else f"{fmt_money_compact(abs(monthly_surplus), personal_currency, language)}/mo burn"
             )
             problem_detail = (
-                "현재 돈을 벌지 않는 기간에는 저축률보다 현금 생존기간과 강제매도 위험이 핵심 문제입니다."
+                "소득이 없는 기간에는 저축률보다 생활비 충당 기간과 자산을 급히 매도해야 할 위험을 먼저 확인합니다."
                 if language == "ko"
                 else "During a no-income period, cash runway and forced-selling risk matter more than savings-rate benchmarks."
             )
@@ -16581,14 +16708,14 @@ def client_report_state() -> dict[str, Any]:
             problem_level = 88
             problem_color = "#dc2626"
         elif emergency < required_runway:
-            problem_title = "생존기간 부족" if language == "ko" else "Runway Gap"
+            problem_title = "생활비 확보 부족" if language == "ko" else "Runway Gap"
             problem_sub = (
                 f"{emergency:.1f}/{required_runway:.1f}개월"
                 if language == "ko"
                 else f"{emergency:.1f}/{required_runway:.1f} months"
             )
             problem_detail = (
-                "목표 생존기간보다 현금 완충 기간이 짧아 큰 포트폴리오 결정보다 현금 계획이 먼저입니다."
+                "확보한 생활비가 목표 기간에 못 미칩니다. 큰 투자 결정 전에 현금 확보 계획을 점검하세요."
                 if language == "ko"
                 else "Cash runway is below the selected target, so the cash plan should precede large portfolio decisions."
             )
@@ -16605,9 +16732,9 @@ def client_report_state() -> dict[str, Any]:
             problem_level = 68
             problem_color = "#d97706"
         else:
-            problem_title = "큰 결함 없음" if language == "ko" else "No Major Gap"
+            problem_title = "주요 위험 신호 없음" if language == "ko" else "No Major Gap"
             problem_sub = (
-                f"건강도 {planning_health:.0f}/100"
+                f"재무 건전성 {planning_health:.0f}/100"
                 if language == "ko"
                 else f"Health {planning_health:.0f}/100"
             )
@@ -16681,14 +16808,14 @@ def client_report_state() -> dict[str, Any]:
         crisis_title = "하락 미검증" if language == "ko" else "Downside Untested"
         crisis_sub = "-30% 필요" if language == "ko" else "-30% needed"
         crisis_detail = (
-            "포트폴리오가 입력됐지만 하락 시나리오가 없어 위기 때 자본과 생존기간이 어떻게 바뀌는지 아직 모릅니다."
+            "포트폴리오는 입력됐지만 하락 시나리오를 검토하지 않았습니다. 시장 하락이 자산과 생활비 충당 기간에 미치는 영향을 확인하세요."
             if language == "ko"
             else "Portfolio data exists, but no downside scenario shows how capital and runway change in crisis."
         )
         crisis_level = 66
         crisis_color = "#d97706"
     elif not personal:
-        crisis_title = "블라인드 스팟" if language == "ko" else "Blind Spot"
+        crisis_title = "위험 판단 자료 부족" if language == "ko" else "Blind Spot"
         crisis_sub = "위기 미측정" if language == "ko" else "Risk unknown"
         crisis_detail = (
             "상황 입력이 부족해 위기가 부족한 현금인지, 높은 투자 노출인지, 목표 불일치인지 아직 구분되지 않습니다."
@@ -16732,10 +16859,10 @@ def client_report_state() -> dict[str, Any]:
         )
         direction_level = 48
     elif no_income:
-        direction_title = "생존기간 우선" if language == "ko" else "Runway First"
-        direction_sub = "현금 바닥선 고정" if language == "ko" else "Lock cash floor"
+        direction_title = "생활비 확보 우선" if language == "ko" else "Runway First"
+        direction_sub = "최소 필요 현금 설정" if language == "ko" else "Lock cash floor"
         direction_detail = (
-            "생활비를 버틸 현금 바닥선을 먼저 정하고, 그 다음 포트폴리오 하락과 소득 회복 계획을 봅니다."
+            "생활비로 확보할 최소 현금을 먼저 정한 뒤, 포트폴리오 하락과 소득 회복 계획을 검토합니다."
             if language == "ko"
             else "Set the cash floor for living costs first, then review portfolio drawdown and income recovery."
         )
@@ -16770,8 +16897,8 @@ def client_report_state() -> dict[str, Any]:
     direction_steps = [
         {
             "icon": "runway",
-            "title": "현금 바닥선" if language == "ko" else "Cash Floor",
-            "sub": "생활비 생존기간" if language == "ko" else "Living runway",
+            "title": "필수 현금 확보" if language == "ko" else "Cash Floor",
+            "sub": "생활비 충당 기간" if language == "ko" else "Living runway",
             "level": runway_priority,
             "color": "#0f766e",
         },
@@ -16784,7 +16911,7 @@ def client_report_state() -> dict[str, Any]:
         },
         {
             "icon": "scenario",
-            "title": "위기 리허설" if language == "ko" else "Crisis Rehearsal",
+            "title": "위기 시나리오 점검" if language == "ko" else "Crisis Rehearsal",
             "sub": "-30%와 소득 공백" if language == "ko" else "-30% and income gap",
             "level": scenario_priority,
             "color": "#d97706",
@@ -16801,7 +16928,7 @@ def client_report_state() -> dict[str, Any]:
                     else f"Monthly surplus {fmt_money_compact(monthly_surplus, personal_currency, language)}"
                 ),
                 (
-                    f"현금 생존기간 {emergency:.1f}개월 / 필요 {required_runway:.1f}개월"
+                    f"생활비 충당 기간 {emergency:.1f}개월 / 목표 {required_runway:.1f}개월"
                     if language == "ko"
                     else f"Cash runway {emergency:.1f} months / required {required_runway:.1f} months"
                 ),
@@ -16814,19 +16941,19 @@ def client_report_state() -> dict[str, Any]:
         )
         if no_income:
             evidence.append(
-                "무소득 학업/전환 모드: 저축률보다 생존기간과 하락 감당력이 우선"
+                "무소득 학업·전환 기간: 저축률보다 생활비 확보와 자산 하락에 대한 대응 여력을 우선 확인"
                 if language == "ko"
                 else "No-income transition mode: runway and drawdown capacity come before savings rate"
             )
         if runway_gap:
             evidence.append(
-                f"생존기간 차이 {runway_gap:+.1f}개월"
+                f"목표 대비 생활비 확보 기간 {runway_gap:+.1f}개월"
                 if language == "ko"
                 else f"Runway gap {runway_gap:+.1f} months"
             )
     else:
         evidence.append(
-            "Finance 입력이 없어 현금흐름과 생존기간은 아직 계산 전입니다."
+            "재무 입력이 없어 현금흐름과 생활비 충당 기간을 아직 계산하지 않았습니다."
             if language == "ko"
             else "Finance inputs are missing, so cashflow and runway are not yet calculated."
         )
@@ -17040,13 +17167,13 @@ def render_finance_snapshot_ribbon(active_key: str) -> None:
         required_runway = max(1.0, float(personal.get("required_runway_months") or 6))
         surplus = float(personal.get("monthly_surplus") or 0)
         runway_value = f"{emergency:.1f} mo" if language == "en" else f"{emergency:.1f}개월"
-        runway_sub = f"Health {health:.0f}/100" if language == "en" else f"건강도 {health:.0f}/100"
+        runway_sub = f"Health {health:.0f}/100" if language == "en" else f"재무 건전성 {health:.0f}/100"
         runway_detail = (
-            f"Monthly surplus: {fmt_money_compact(surplus, 'KRW' if base_currency == 'KRW' else 'USD', language)}. "
+            f"Monthly surplus: {fmt_money_compact(surplus, st.session_state.get('pf_display_currency', 'USD'), language)}. "
             "Liquidity and planning health show whether the life situation can absorb risk."
             if language == "en"
-            else f"월 잉여 현금: {fmt_money_compact(surplus, 'KRW' if base_currency == 'KRW' else 'USD', language)}. "
-            "유동성과 계획 건강도는 현재 삶이 위험을 감당할 수 있는지 보여줍니다."
+            else f"월 잉여 현금: {fmt_money_compact(surplus, st.session_state.get('pf_display_currency', 'USD'), language)}. "
+            "유동성과 재무 계획 안정성은 현재 재무 상황이 위험을 감당할 수 있는지 보여줍니다."
         )
         runway_tone = "good" if emergency >= 6 and health >= 70 else "mid" if emergency >= 3 and health >= 50 else "watch"
         runway_level = max(5.0, min(100.0, (emergency / required_runway) * 100))
@@ -17056,7 +17183,7 @@ def render_finance_snapshot_ribbon(active_key: str) -> None:
         runway_detail = (
             "Enter income, expenses, cash, debt, and goals to unlock runway and health."
             if language == "en"
-            else "수입, 지출, 현금, 부채, 목표를 입력하면 생존기간과 건강도가 열립니다."
+            else "수입, 지출, 현금, 부채, 목표를 입력하면 생활비 충당 기간과 재무 건전성을 확인할 수 있습니다."
         )
         runway_tone = "watch"
         runway_level = 18.0
@@ -17071,7 +17198,7 @@ def render_finance_snapshot_ribbon(active_key: str) -> None:
             "Portfolio value and valuation score show market exposure before action."
             if language == "en"
             else f"{holdings_count}개 보유. 가중 베타 {beta_text}. "
-            "포트폴리오 가치와 valuation 점수는 행동 전 시장 노출을 보여줍니다."
+            "포트폴리오 가치와 가치평가 점수로 투자 전 시장 노출을 확인합니다."
         )
         portfolio_tone = "good" if valuation_score is not None and valuation_score >= 5 else "watch" if valuation_score is not None and valuation_score <= -5 else "mid"
         portfolio_level = max(22.0, min(100.0, holdings_count * 18.0 + (50.0 if valuation_score is not None else 22.0)))
@@ -17109,7 +17236,7 @@ def render_finance_snapshot_ribbon(active_key: str) -> None:
 
     cards = [
         ("target", "Goal" if language == "en" else "목표", goal_value, goal_sub, goal_detail, goal_tone, goal_level),
-        ("runway", "Runway" if language == "en" else "생존기간", runway_value, runway_sub, runway_detail, runway_tone, runway_level),
+        ("runway", "Runway" if language == "en" else "생활비 충당 기간", runway_value, runway_sub, runway_detail, runway_tone, runway_level),
         ("portfolio", "Portfolio Value" if language == "en" else "포트폴리오 가치", portfolio_value, portfolio_sub, portfolio_detail, portfolio_tone, portfolio_level),
         ("risk", "Risk Signal" if language == "en" else "위험 신호", risk_value, risk_sub, risk_detail, risk_tone, risk_level),
     ]
@@ -17190,11 +17317,11 @@ def render_rationality_gate() -> None:
 
 def render_life_compact_panel() -> None:
     language = current_language()
-    compact_title = "Goal Board" if language == "en" else "Goal 보드"
+    compact_title = "Goal Board" if language == "en" else "나의 재무 목표"
     compact_copy = (
         "Pick the goal that should drive today's strategy."
         if language == "en"
-        else "오늘의 전략을 바꿀 목표를 선택하세요."
+        else "지금 우선적으로 준비할 재무 목표를 선택하세요."
     )
     render_decision_capture_panel()
     cards = []
@@ -17227,9 +17354,10 @@ def render_main_app() -> None:
 
     render_sidebar()
     render_visual_asset_theme()
+    render_workspace_theme()
 
     brand_subtitle = (
-        "개인 의사결정 인텔리전스"
+        "목표 기반 재무 의사결정"
         if current_language() == "ko"
         else "PERSONAL DECISION INTELLIGENCE"
     )
@@ -17252,14 +17380,15 @@ def render_main_app() -> None:
     )
 
     active_view = active_nav_key()
-    render_finance_snapshot_ribbon(active_view)
-    render_client_visual_report()
     render_goal_strategy_strip(active_view)
-    render_rationality_gate()
-    render_nora_ontology(active_view)
-    render_mobile_navigation(active_view)
-    render_circle_navigation(active_view)
-    render_mobile_view_summary(active_view)
+    if active_view == "life":
+        render_finance_snapshot_ribbon(active_view)
+    with st.expander(ui("Overview and calculation evidence"), expanded=False):
+        if active_view != "life":
+            render_finance_snapshot_ribbon(active_view)
+        render_client_visual_report()
+        render_rationality_gate()
+        render_nora_ontology(active_view)
 
     if active_view == "life":
         render_life_compact_panel()
@@ -17293,9 +17422,24 @@ def render_main_app() -> None:
         guide_tab()
 
     render_footer()
+    if st.session_state.pop("_v2_scroll_to_top", False):
+        # Native menu callbacks retain the session; reset only the workspace scroll.
+        st.html(
+            """<script>
+            requestAnimationFrame(() => {
+                document.querySelector('[data-testid="stMain"]')?.scrollTo({top: 0, behavior: 'instant'});
+            });
+            </script>""",
+            unsafe_allow_javascript=True,
+        )
 
 
 init_state()
+# Keep financial form values when Streamlit removes widgets on another screen.
+for input_key in list(st.session_state):
+    if input_key.startswith(("pf_", "scenario_")):
+        st.session_state[input_key] = st.session_state[input_key]
+render_workspace_theme()
 render_top_language_toggle()
 if intro_mode_requested():
     st.session_state.life_entry_complete = False
@@ -17305,9 +17449,6 @@ elif dashboard_mode_requested():
     st.session_state.life_entry_version_seen = LIFE_ENTRY_VERSION
 show_life_entry = (
     intro_mode_requested()
-    or
-    not st.session_state.life_entry_complete
-    or st.session_state.life_entry_version_seen != LIFE_ENTRY_VERSION
 )
 if show_life_entry:
     render_life_entry_screen()
