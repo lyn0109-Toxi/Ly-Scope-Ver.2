@@ -477,6 +477,53 @@ KO_TRANSLATIONS.update({
 })
 
 
+KO_TRANSLATIONS.update({
+    "Back to Goals": "목표로 돌아가기", "Open stock details": "종목 상세",
+    "Add to Compare": "비교에 추가", "Added to Compare": "비교에 추가됨",
+    "Compare selected": "비교에 추가됨", "Add to Portfolio": "포트폴리오에 추가",
+    "In Portfolio": "보유 목록에 있음", "Portfolio selected": "포트폴리오에 추가됨",
+    "Open Compare": "비교 열기", "Open Portfolio": "포트폴리오 열기",
+    "Current Price": "현재가", "Daily Change": "일간 변동률", "Change": "변동률",
+    "Blended Fair Value": "종합 추정 적정가", "Fair Value": "적정 가치",
+    "Undervalued": "저평가 추정", "Overvalued": "고평가 추정", "All": "전체",
+    "Metric": "지표", "Market Cap": "시가총액", "Dividend Yield": "배당수익률",
+    "Beta": "베타", "Growth Rate": "성장률", "Price Movement": "주가 추이",
+    "Key Statistics": "주요 지표", "Valuation Triangulation": "가치평가 모델 비교",
+    "Data source": "데이터 출처", "Chart": "차트", "Retrieved at": "조회 시각",
+    "Unavailable": "확인 불가", "Valuation filter": "가치평가 필터",
+    "P/E proxy (not peer data)": "PER 대용치 (동종기업 데이터 아님)",
+    "Dividend yield uses annual cash dividend divided by price. Missing inputs are shown as N/A.": "배당수익률은 연간 현금배당 ÷ 현재가로 산출합니다. 데이터가 없으면 N/A로 표시합니다.",
+    "Stock search uses Yahoo Finance fallback data. Company-name search and peer data may be limited.": "Yahoo Finance 대체 데이터를 사용합니다. 회사명 검색과 동종기업 데이터가 제한될 수 있습니다.",
+    "Enter a ticker above to generate the company analysis dashboard.": "종목 코드를 입력하면 분석 결과가 표시됩니다.",
+    "Side-by-Side Comparison": "종목 비교",
+    "Select stocks to compare from the Search tab. You can compare up to 3 stocks.": "종목 검색에서 비교할 종목을 추가하세요. 최대 3개까지 비교할 수 있습니다.",
+    "Financial Diary": "금융 다이어리", "Current Situation Report": "현재 재무 현황 보고서",
+    "Auto-generated report from Portfolio and Personal Finance": "포트폴리오·개인 재무 종합 보고서",
+    "Use Report as Diary Note": "보고서로 메모 작성", "Save Current Situation Report": "보고서 임시 저장",
+    "Ask AI Coach": "AI 코치에게 묻기", "Download Report PDF": "보고서 PDF 다운로드",
+    "Today's financial feeling": "오늘의 재무 상황에 대한 생각", "Diary note": "다이어리 메모",
+    "Next action": "다음 실행 항목", "Save Financial Snapshot": "현황 임시 저장",
+    "Download Diary JSON": "다이어리 백업 다운로드", "Restore diary JSON": "다이어리 백업 복원",
+    "Saved Entries": "현재 세션에 저장된 기록", "Time": "기록 시각", "Mood": "상태",
+    "Calm": "차분함", "Curious": "궁금함", "Cautious": "신중함", "Confident": "자신 있음",
+    "Concerned": "걱정됨", "Planning": "계획", "Decision Draft": "의사결정 초안",
+    "Portfolio Value": "포트폴리오 가치", "Unrealized P/L": "평가 손익",
+    "Unrealized Return": "평가 수익률", "Cost Basis": "매입 금액", "Return": "수익률",
+    "Valuation Score": "가치평가 점수", "Financial Health": "재무 건전성",
+    "Snapshot saved to your Financial Diary for this session.": "현재 세션에 임시 저장했습니다. 계속 보관하려면 백업을 다운로드하세요.",
+    "Current situation report saved to your Financial Diary.": "보고서를 현재 세션에 임시 저장했습니다. 백업을 다운로드해 보관하세요.",
+    "No diary entries yet. Save a snapshot after reviewing your portfolio or personal finance status.": "저장된 기록이 없습니다. 포트폴리오나 개인 재무를 검토한 후 기록해 보세요.",
+    "Diary restored for this session.": "백업을 현재 세션으로 복원했습니다.",
+    "Concentrated": "집중도 높음", "Sector Allocation": "업종별 비중",
+    "Portfolio Risk": "포트폴리오 위험", "Stock Complementarity": "종목 간 분산 효과",
+    "Strong": "양호", "Watch": "점검 필요", "Score": "점수",
+    "Top holding balance": "종목 집중도", "Sector spread": "업종 분산",
+    "Beta balance": "시장 민감도", "Valuation buffer": "가치평가 여유",
+    "Top holding concentration is high. Review whether one position dominates the total outcome.": "특정 종목의 비중이 높습니다. 한 종목이 전체 결과에 과도한 영향을 미치는지 확인하세요.",
+    "Top sector concentration is high. Review whether one theme dominates the portfolio.": "특정 업종의 비중이 높습니다. 포트폴리오가 한 업종에 치우쳐 있는지 확인하세요.",
+})
+
+
 def normalized_language(value: Any) -> str | None:
     if isinstance(value, list):
         value = value[0] if value else None
@@ -510,6 +557,11 @@ def ui(text: str) -> str:
 
 def ui_html(text: str) -> str:
     return escape(ui(text))
+
+
+def ui_option_formatter():
+    translations = KO_TRANSLATIONS if current_language() == "ko" else {}
+    return lambda value: translations.get(value, value)
 
 
 def set_language(language: str) -> None:
@@ -7838,7 +7890,7 @@ GOAL_STRATEGY_SITUATION_PATH = APP_ASSET_DIR / "ly_visual_goal_strategy_situatio
 USE_HOMEPAGE_REFERENCE_IMAGE = True
 DEVELOPER_NAME = "Young Lee"
 DEVELOPER_EMAIL = "lyn0109@gmail.com"
-APP_BUILD_STAMP = "2026-09-28-workspace-korean-polish"
+APP_BUILD_STAMP = "2026-09-29-goals-state-data-quality"
 LIFE_ENTRY_VERSION = "life-homepage-2026-09-02-modern-visual-ui-v1"
 MAX_DIARY_RESTORE_BYTES = 250_000
 MAX_DIARY_RESTORE_ENTRIES = 50
@@ -8967,7 +9019,7 @@ def load_korean_stock(query: str) -> dict[str, Any]:
     trailing_eps = positive_float(info.get("trailingEps")) or 0
     book_value = positive_float(info.get("bookValue")) or 0
     dividend_rate = positive_float(info.get("dividendRate")) or 0
-    dividend_yield = (float(info.get("dividendYield") or 0) * 100)
+    dividend_yield = yahoo_dividend_yield(info, price or 0)
     pe = positive_float(info.get("trailingPE")) or positive_float(info.get("forwardPE"))
     beta = positive_float(info.get("beta")) or 1.0
     growth_rate = info.get("earningsGrowth")
@@ -9007,6 +9059,20 @@ def load_korean_stock(query: str) -> dict[str, Any]:
     return calculate_valuation(stock)
 
 
+def yahoo_dividend_yield(info: dict[str, Any], price: float) -> float | None:
+    # Derive percent from annual cash dividends; provider yield units have changed.
+    for key in ("dividendRate", "trailingAnnualDividendRate"):
+        value = info.get(key)
+        if value is not None:
+            try:
+                rate = float(value)
+                if math.isfinite(rate) and rate >= 0 and price > 0:
+                    return rate / price * 100
+            except (TypeError, ValueError):
+                pass
+    return None
+
+
 def load_yahoo_stock(query: str) -> dict[str, Any]:
     symbol = query.strip().upper()
     if not symbol:
@@ -9044,7 +9110,7 @@ def load_yahoo_stock(query: str) -> dict[str, Any]:
     trailing_eps = positive_float(info.get("trailingEps")) or 0
     book_value = positive_float(info.get("bookValue")) or 0
     dividend_rate = positive_float(info.get("dividendRate")) or 0
-    dividend_yield = float(info.get("dividendYield") or 0) * 100
+    dividend_yield = yahoo_dividend_yield(info, price)
     pe = positive_float(info.get("trailingPE")) or positive_float(info.get("forwardPE"))
     beta = positive_float(info.get("beta")) or 1.0
     growth_rate = info.get("earningsGrowth")
@@ -9072,6 +9138,8 @@ def load_yahoo_stock(query: str) -> dict[str, Any]:
         "market": "US",
         "currency": info.get("currency") or "USD",
         "data_quality": "Yahoo Finance fallback price history",
+        "data_source": "Yahoo Finance",
+        "retrieved_at": datetime.now().isoformat(timespec="seconds"),
     }
     return calculate_valuation(stock)
 
@@ -9130,7 +9198,7 @@ def status_color(status: str) -> str:
 def metric_card(label: str, value: str, color: str = "#102033") -> None:
     label = ui(label)
     level_html = ""
-    value_text = str(value)
+    value_text = ui(str(value))
     score_match = re.search(r"(-?\d+(?:\.\d+)?)\s*/\s*100", value_text)
     pct_match = re.search(r"(-?\d+(?:\.\d+)?)\s*%", value_text)
     if score_match:
@@ -9315,6 +9383,8 @@ def add_portfolio_position_from_search(symbol: str) -> None:
         "shares": max(float(shares), 0.0),
         "purchase_price": purchase_price,
     }
+    st.session_state[f"shares_{symbol}"] = shares
+    st.session_state[f"purchase_price_{symbol}"] = purchase_price
     st.session_state.pop(f"sidebar_portfolio_{symbol}", None)
     st.session_state.portfolio_search_notice = ui("Position added to portfolio.")
     sync_selection_state_to_query()
@@ -9324,6 +9394,8 @@ def remove_portfolio(symbol: str) -> None:
     if symbol in st.session_state.portfolio:
         del st.session_state.portfolio[symbol]
     st.session_state.pop(f"sidebar_portfolio_{symbol}", None)
+    st.session_state.pop(f"shares_{symbol}", None)
+    st.session_state.pop(f"purchase_price_{symbol}", None)
     sync_selection_state_to_query()
 
 
@@ -9385,6 +9457,8 @@ def apply_quick_portfolio_entries(raw_text: str, input_mode: str) -> tuple[int, 
                     else float(existing.get("purchase_price") or 0)
                 ),
             }
+            st.session_state[f"shares_{symbol}"] = portfolio[symbol]["shares"]
+            st.session_state[f"purchase_price_{symbol}"] = portfolio[symbol]["purchase_price"]
             added += 1
         except Exception as exc:
             errors.append(f"Line {line_number}: {query} could not be loaded ({exc}).")
@@ -9395,6 +9469,13 @@ def apply_quick_portfolio_entries(raw_text: str, input_mode: str) -> tuple[int, 
 
 
 def render_quick_portfolio_entry() -> None:
+    if st.session_state.pop("_clear_quick_portfolio", False):
+        st.session_state.portfolio_quick_entry = ""
+    for message in st.session_state.pop("_quick_portfolio_errors", []):
+        st.warning(message)
+    added_notice = st.session_state.pop("_quick_portfolio_added", 0)
+    if added_notice:
+        st.success(f"{added_notice}개 보유 종목을 반영했습니다." if current_language() == "ko" else f"Updated {added_notice} holdings.")
     with st.expander(ui("Quick Portfolio Entry"), expanded=not bool(st.session_state.portfolio)):
         st.caption(
             ui(
@@ -9408,7 +9489,7 @@ def render_quick_portfolio_entry() -> None:
                 ["Current value amount", "Share count"],
                 horizontal=False,
                 key="portfolio_quick_input_mode",
-                format_func=ui,
+                format_func=ui_option_formatter(),
             )
         with mode_cols[1]:
             st.text_area(
@@ -9425,8 +9506,9 @@ def render_quick_portfolio_entry() -> None:
                     st.session_state.get("portfolio_quick_input_mode", "Current value amount"),
                 )
                 if count:
-                    st.session_state.portfolio_quick_entry = ""
-                    st.success(f"Added or updated {count} holding(s).")
+                    st.session_state._clear_quick_portfolio = not errors
+                    st.session_state._quick_portfolio_added = count
+                    st.session_state._quick_portfolio_errors = errors
                     st.rerun()
                 if errors:
                     for error in errors[:5]:
@@ -9493,7 +9575,7 @@ def render_stock_card(stock: dict[str, Any]) -> None:
     with st.container(border=True):
         st.markdown(
             f"""
-            <a class="stock-card-link" href="{detail_href}" target="_self">
+            <div class="stock-card-link">
             <div class="stock-card-panel">
                 <div class="stock-card-head">
                     <div class="company-logo">{logo_text}</div>
@@ -9513,15 +9595,16 @@ def render_stock_card(stock: dict[str, Any]) -> None:
                     <span>Market Cap<b>{fmt_market_cap(stock['market_cap'], stock.get('currency', 'USD'))}</b></span>
                     <span>PER<b>{fmt_number(stock['pe'])}</b></span>
                 </div>
-                <div class="click-hint">Click this stock card to view details and price movement.</div>
             </div>
-            </a>
+            </div>
             """,
             unsafe_allow_html=True,
         )
+        st.button(ui("Open stock details"), key=f"stock_details_{symbol}",
+                  on_click=select_detail_and_open_search, args=(symbol,), width="stretch")
         c1, c2 = st.columns(2)
         c1.button(
-            "Added to Compare" if compare_active else "Add to Compare",
+            ui("Added to Compare" if compare_active else "Add to Compare"),
             key=f"compare_{symbol}",
             on_click=add_compare,
             args=(symbol,),
@@ -9529,7 +9612,7 @@ def render_stock_card(stock: dict[str, Any]) -> None:
             disabled=compare_active,
         )
         c2.button(
-            "In Portfolio" if portfolio_active else "Add to Portfolio",
+            ui("In Portfolio" if portfolio_active else "Add to Portfolio"),
             key=f"portfolio_{symbol}",
             on_click=add_portfolio,
             args=(symbol,),
@@ -10041,7 +10124,7 @@ def render_portfolio_stock_search() -> None:
                 ["Current value amount", "Share count"],
                 horizontal=False,
                 key=mode_key,
-                format_func=ui,
+                format_func=ui_option_formatter(),
             )
         with position_cols[1]:
             st.number_input(
@@ -10086,18 +10169,8 @@ def render_portfolio_stock_search() -> None:
 
 
 def render_search_return_button() -> None:
-    menu_href = escape(app_view_href("life"), quote=True)
-    st.markdown(
-        f"""
-        <div class="search-return-row">
-            <a class="search-return-link" href="{menu_href}" target="_self" aria-label="Back to Menu">
-                <span class="search-return-arrow" aria-hidden="true">&larr;</span>
-                <span>Menu</span>
-            </a>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.button(ui("Back to Goals"), icon=":material/arrow_back:", key="search_back_goals",
+              on_click=set_active_nav_key, args=("life",))
 
 
 def render_stock_detail(stock: dict[str, Any]) -> None:
@@ -10121,7 +10194,7 @@ def render_stock_detail(stock: dict[str, Any]) -> None:
     portfolio_active = symbol in st.session_state.portfolio
     action_cols = st.columns(4)
     action_cols[0].button(
-        "Compare selected" if compare_active else "Add to Compare",
+        ui("Compare selected" if compare_active else "Add to Compare"),
         key=f"detail_compare_{symbol}",
         on_click=add_compare,
         args=(symbol,),
@@ -10129,7 +10202,7 @@ def render_stock_detail(stock: dict[str, Any]) -> None:
         disabled=compare_active,
     )
     action_cols[1].button(
-        "Portfolio selected" if portfolio_active else "Add to Portfolio",
+        ui("Portfolio selected" if portfolio_active else "Add to Portfolio"),
         key=f"detail_portfolio_{symbol}",
         on_click=add_portfolio,
         args=(symbol,),
@@ -10137,14 +10210,14 @@ def render_stock_detail(stock: dict[str, Any]) -> None:
         disabled=portfolio_active,
     )
     action_cols[2].button(
-        "Open Compare",
+        ui("Open Compare"),
         key=f"detail_open_compare_{symbol}",
         on_click=add_compare_and_open,
         args=(symbol,),
         width="stretch",
     )
     action_cols[3].button(
-        "Open Portfolio",
+        ui("Open Portfolio"),
         key=f"detail_open_portfolio_{symbol}",
         on_click=add_portfolio_and_open,
         args=(symbol,),
@@ -10161,22 +10234,24 @@ def render_stock_detail(stock: dict[str, Any]) -> None:
     with c4:
         metric_card("Valuation", stock["valuation_status"], status_color(stock["valuation_status"]))
 
-    st.markdown("#### Price Movement")
+    st.subheader(ui("Price Movement"))
     render_tradingview_chart(stock["symbol"])
-    st.caption("Interactive chart powered by TradingView. Financial metrics and valuation data remain powered by Finnhub.")
+    source = stock.get("data_source") or ("Yahoo Finance" if "Yahoo" in str(stock.get("data_quality", "")) or stock.get("market") == "KR" else "Finnhub")
+    st.caption(f"{ui('Data source')}: {source}. {ui('Chart')}: TradingView. {ui('Retrieved at')}: {stock.get('retrieved_at', ui('Unavailable'))}.")
 
-    st.markdown("#### Key Statistics")
+    st.subheader(ui("Key Statistics"))
     stats = {
         "Market Cap": fmt_market_cap(stock["market_cap"], stock.get("currency", "USD")),
         "PER (TTM)": fmt_number(stock["pe"]),
-        "Dividend Yield": f"{float(stock['dividend_yield'] or 0):.2f}%",
+        "Dividend Yield": "N/A" if stock.get("dividend_yield") is None else f"{stock['dividend_yield']:.2f}%",
         "Beta": fmt_number(stock["beta"]),
         "EPS": stock_money(stock, float(stock["eps"] or 0)),
         "Growth Rate": f"{float(stock['growth_rate'] or 0) * 100:.1f}%",
     }
-    st.dataframe([stats], hide_index=True, width="stretch")
+    st.dataframe([{ui(key): value for key, value in stats.items()}], hide_index=True, width="stretch")
+    st.caption(ui("Dividend yield uses annual cash dividend divided by price. Missing inputs are shown as N/A."))
 
-    st.markdown("#### Valuation Triangulation")
+    st.subheader(ui("Valuation Triangulation"))
     st.dataframe(
         [
             {
@@ -10191,7 +10266,7 @@ def render_stock_detail(stock: dict[str, Any]) -> None:
             },
             {
                 "Approach": "Market",
-                "Model": "Peer P/E",
+                "Model": "Peer P/E" if stock.get("peers") else ui("P/E proxy (not peer data)"),
                 "Value": stock_money(stock, tri["market_value"]) if tri["market_value"] else "N/A",
             },
         ],
@@ -10216,24 +10291,20 @@ def search_tab() -> None:
             st.rerun()
 
     if not FINNHUB_API_KEY:
-        st.info(
-            "FINNHUB_API_KEY is not configured, so LY-Scope-Ver.2 uses Yahoo Finance fallback data "
-            "for ticker-based stock search. Add FINNHUB_API_KEY in Streamlit Cloud Secrets for richer "
-            "company search, peer metrics, and live Finnhub fields."
-        )
+        st.caption(ui("Stock search uses Yahoo Finance fallback data. Company-name search and peer data may be limited."))
 
     if selected_symbol and selected_symbol in st.session_state.stocks:
         render_stock_detail(st.session_state.stocks[selected_symbol])
 
     filters = ["All", "Undervalued", "Fair Value", "Overvalued"]
-    selected_filter = st.radio("Valuation filter", filters, horizontal=True)
+    selected_filter = st.radio(ui("Valuation filter"), filters, horizontal=True, format_func=ui_option_formatter())
 
     stocks = list(st.session_state.stocks.values())
     if selected_filter != "All":
         stocks = [s for s in stocks if s["valuation_status"] == selected_filter]
 
     if not stocks:
-        st.info("Enter a ticker above to generate the company analysis dashboard.")
+        st.info(ui("Enter a ticker above to generate the company analysis dashboard."))
         return
 
     for row_start in range(0, len(stocks), 3):
@@ -10244,10 +10315,10 @@ def search_tab() -> None:
 
 
 def compare_tab() -> None:
-    st.header("Side-by-Side Comparison")
+    st.header(ui("Side-by-Side Comparison"))
     selected = [st.session_state.stocks[s] for s in st.session_state.compare if s in st.session_state.stocks]
     if not selected:
-        st.info("Select stocks to compare from the Search tab. You can compare up to 3 stocks.")
+        st.info(ui("Select stocks to compare from the Search tab. You can compare up to 3 stocks."))
         return
 
     rows = []
@@ -10256,14 +10327,14 @@ def compare_tab() -> None:
         ("Change", lambda s: f"{s['change_pct']:+.2f}%"),
         ("Market Cap", lambda s: fmt_market_cap(s["market_cap"], s.get("currency", "USD"))),
         ("PER", lambda s: fmt_number(s["pe"])),
-        ("Dividend Yield", lambda s: f"{float(s['dividend_yield'] or 0):.2f}%"),
+        ("Dividend Yield", lambda s: "N/A" if s.get("dividend_yield") is None else f"{s['dividend_yield']:.2f}%"),
         ("Beta", lambda s: fmt_number(s["beta"])),
         ("EPS", lambda s: stock_money(s, float(s["eps"] or 0))),
         ("Fair Value", lambda s: stock_money(s, s["fair_price"]) if s["fair_price"] else "N/A"),
-        ("Valuation", lambda s: s["valuation_status"]),
+        ("Valuation", lambda s: ui(s["valuation_status"])),
     ]
     for label, getter in metrics:
-        row = {"Metric": label}
+        row = {ui("Metric"): ui(label)}
         for stock in selected:
             row[f"{stock['name']} ({stock['symbol']})"] = getter(stock)
         rows.append(row)
@@ -10271,7 +10342,7 @@ def compare_tab() -> None:
 
     cols = st.columns(len(selected))
     for col, stock in zip(cols, selected):
-        col.button("Remove " + stock["symbol"], key=f"remove_compare_{stock['symbol']}", on_click=remove_compare, args=(stock["symbol"],))
+        col.button(ui("Remove") + " " + stock["symbol"], key=f"remove_compare_{stock['symbol']}", on_click=remove_compare, args=(stock["symbol"],))
 
 
 def portfolio_market_values() -> dict[str, float]:
@@ -10789,12 +10860,13 @@ def render_portfolio_resilience_panel(summary: dict[str, Any] | None) -> None:
         metric_card(ui("Top Sector"), f"{float(summary['top_sector_weight']) * 100:.1f}%")
 
     component_data = pd.DataFrame(summary["components"])
+    component_data["Dimension"] = component_data["Dimension"].map(ui)
     chart = (
         alt.Chart(component_data)
         .mark_bar(cornerRadiusTopRight=8, cornerRadiusBottomRight=8)
         .encode(
             y=alt.Y("Dimension:N", sort=None, title=None),
-            x=alt.X("Score:Q", scale=alt.Scale(domain=[0, 100])),
+            x=alt.X("Score:Q", title=ui("Score"), scale=alt.Scale(domain=[0, 100])),
             color=alt.Color("Dimension:N", legend=None),
             tooltip=["Dimension", alt.Tooltip("Score:Q", format=".1f")],
         )
@@ -10803,9 +10875,9 @@ def render_portfolio_resilience_panel(summary: dict[str, Any] | None) -> None:
     st.altair_chart(chart, width="stretch")
 
     if float(summary["top_holding_weight"]) >= 0.40:
-        st.warning("Top holding concentration is high. Review whether one position dominates the total outcome.")
+        st.warning(ui("Top holding concentration is high. Review whether one position dominates the total outcome."))
     if float(summary["top_sector_weight"]) >= 0.60:
-        st.warning("Top sector concentration is high. Review whether one theme dominates the portfolio.")
+        st.warning(ui("Top sector concentration is high. Review whether one theme dominates the portfolio."))
 
 
 def mobile_signed_class(value: Any) -> str:
@@ -11211,6 +11283,7 @@ def ai_coach_readiness(context: dict[str, Any]) -> dict[str, Any]:
     diary = context["diary"]
     scenario = context["scenario"]
     decision_capture = context.get("decision_capture") or {}
+
 
     score = 0.0
     reasons: list[str] = []
@@ -11850,7 +11923,7 @@ def render_decision_evidence_cards(draft: dict[str, Any]) -> None:
             </div>
             """
         )
-    st.markdown(f'<div class="decision-evidence-grid">{"".join(html_cards)}</div>', unsafe_allow_html=True)
+    st.html(f'<div class="decision-evidence-grid">{"".join(html_cards)}</div>')
 
 
 def render_decision_draft_board(draft: dict[str, Any]) -> None:
@@ -11907,7 +11980,7 @@ def render_decision_draft_board(draft: dict[str, Any]) -> None:
             </div>
             """
         )
-    st.markdown(f'<div class="action-chip-row">{"".join(action_html)}</div>', unsafe_allow_html=True)
+    st.html(f'<div class="action-chip-row">{"".join(action_html)}</div>')
     footer = draft.get("evidence_footer", {})
     st.markdown(
         f"""
@@ -14636,6 +14709,56 @@ def build_current_situation_report_text() -> str:
     readiness = ai_coach_readiness(context)
     decision_capture = context.get("decision_capture") or {}
 
+    if current_language() == "ko":
+        finance_currency = st.session_state.get("pf_display_currency", "USD")
+        lines = [f"LY-Scope Ver.2 현재 재무 현황 보고서 · {now_text}", "", "1. 포트폴리오",
+                 f"- 총 시장가치: {fmt_money(total_value, base_currency)}",
+                 f"- 가중 베타: {fmt_number(weighted_beta)}",
+                 "- 가치평가 점수: " + ("N/A" if valuation_score is None else f"{valuation_score:+.1f}%")]
+        for item in holdings:
+            lines.append(f"- {item['symbol']}: {item['shares']:g}주, 비중 {item['base_weight'] * 100:.1f}%")
+        if gain_loss["total_cost_basis"] is not None:
+            lines.extend([f"- 매입 금액: {fmt_money(gain_loss['total_cost_basis'], base_currency)}",
+                          f"- 평가 손익: {fmt_signed_money(gain_loss['unrealized_gain'], base_currency)}"])
+        else:
+            lines.append("- 평균 매입가가 입력되지 않아 평가 손익을 계산하지 않았습니다.")
+        lines.extend(["", "2. 개인 재무"])
+        if personal:
+            lines.extend([f"- 재무 건전성: {personal['financial_health_score']:.1f}/100",
+                          f"- 월 잉여 현금: {fmt_money(personal['monthly_surplus'], finance_currency)}",
+                          f"- 비상자금: 생활비 {personal['emergency_months']:.1f}개월분",
+                          f"- 소득 대비 부채 상환액: {personal['debt_to_income'] * 100:.1f}%",
+                          f"- 저축률: {personal['savings_rate'] * 100:.1f}%"])
+        else:
+            lines.append("- 개인 재무 계산이 아직 없습니다.")
+        lines.extend(["", "3. 포트폴리오 위험"])
+        if risk:
+            lines.extend([f"- 과거 자료 기준 연환산 변동성: {risk['annual_vol'] * 100:.1f}%",
+                          f"- 과거 자료 기준 연환산 수익률: {risk['historical_annual_return'] * 100:+.1f}%"])
+        else:
+            lines.append("- 가격 이력이 있는 종목이 2개 이상 있어야 공분산 기반 위험을 계산합니다.")
+        plan = st.session_state.get("goal_plan")
+        lines.extend(["", "4. 재무 목표"])
+        if plan:
+            lines.extend([f"- 목표: {plan['name']} ({plan['deadline']})",
+                          f"- 목표 금액: {fmt_money(plan['target'], plan['currency'])}",
+                          f"- 예상 자금: {fmt_money(plan['result']['projected'], plan['currency'])}",
+                          f"- 필요한 월 적립액: {fmt_money(plan['result']['required_monthly'], plan['currency'])}",
+                          "- 고정수익률 가정의 추정치이며 달성 확률이나 수익 보장이 아닙니다."])
+        else:
+            lines.append("- 아직 계산한 목표가 없습니다.")
+        lines.extend(["", "5. 의사결정 메모"])
+        if decision_capture:
+            lines.extend([f"- 사용자 메모: {decision_capture.get('user_statement', '')}",
+                          f"- 검토 항목: {decision_capture.get('proposed_decision', '')}",
+                          f"- 다음 확인: {decision_capture.get('recommended_next_step', '')}"])
+        else:
+            lines.append("- 작성된 의사결정 메모가 없습니다.")
+        lines.extend(["", "6. 다음 점검", "- 이전 검토 이후 바뀐 가정과 금액을 확인하세요.",
+                      "- 생활비와 비상자금, 투자 규모가 서로 맞는지 검토하세요.",
+                      "", "이 보고서는 교육·정보 제공용이며 투자, 금융, 법률, 세무 조언이 아닙니다."])
+        return "\n".join(lines)
+
     lines = [
         f"LY-Scope-Ver.2 Current Situation Report - {now_text}",
         "",
@@ -14713,7 +14836,7 @@ def build_current_situation_report_text() -> str:
         lines.extend(
             [
                 f"- Financial health score: {float(personal.get('financial_health_score', 0)):.1f}/100",
-                f"- Monthly surplus: {fmt_money(float(personal.get('monthly_surplus', 0)))}",
+                f"- Monthly surplus: {fmt_money(float(personal.get('monthly_surplus', 0)), st.session_state.get('pf_display_currency', 'USD'))}",
                 f"- Emergency fund: {float(personal.get('emergency_months', 0)):.1f} months",
                 f"- Debt-to-income: {float(personal.get('debt_to_income', 0)) * 100:.1f}%",
                 f"- Savings rate: {float(personal.get('savings_rate', 0)) * 100:.1f}%",
@@ -14744,6 +14867,14 @@ def build_current_situation_report_text() -> str:
     else:
         lines.append("- No decision draft has been captured yet.")
 
+    plan = st.session_state.get("goal_plan")
+    if plan:
+        lines.extend(["", "Goal outlook",
+                      f"- Goal: {plan['name']} ({plan['deadline']})",
+                      f"- Target: {fmt_money(plan['target'], plan['currency'])}",
+                      f"- Projected amount: {fmt_money(plan['result']['projected'], plan['currency'])}",
+                      f"- Required monthly saving: {fmt_money(plan['result']['required_monthly'], plan['currency'])}",
+                      "- Fixed-return estimate, not a probability or guarantee."])
     missing = context.get("missing", [])
     lines.extend(["", "6. Missing Inputs"])
     if missing:
@@ -14953,30 +15084,20 @@ def render_decision_outcome_review() -> None:
 
 
 def financial_diary_tab() -> None:
-    st.markdown(
-        """
-        <div class="hero-panel">
-            <h1 style="margin:0 0 8px;">Financial Diary</h1>
-            <div class="hero-muted">Save snapshots of your financial life, portfolio structure, risk signals, and personal notes over time.</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.title(ui("Financial Diary"))
     if st.session_state.pop("decision_capture_saved_notice", False):
         st.success(decision_text(current_language(), "Decision card saved to Diary Memory.", "결정 카드가 다이어리 메모리에 저장되었습니다."))
-    st.caption(
-        "Diary entries are stored in the current Streamlit session unless downloaded. Avoid entering sensitive personal information in a public or shared browser."
-    )
+    st.info("기록은 현재 접속 세션에만 임시 저장됩니다. 새로고침·서버 재시작 시 사라질 수 있으니 백업을 다운로드해 보관하세요. 민감한 금융정보는 입력하지 마세요."
+            if current_language() == "ko" else "Entries are temporary in this session. A reload or server restart may clear them. Download a backup to keep them. Do not enter sensitive financial information.")
 
-    st.subheader("Current Situation Report")
+    st.subheader(ui("Current Situation Report"))
     report_text = build_current_situation_report_text()
-    render_mobile_diary_deck(report_text)
+    st.session_state.diary_current_report = report_text
     st.text_area(
-        "Auto-generated report from Portfolio and Personal Finance",
-        value=report_text,
+        ui("Auto-generated report from Portfolio and Personal Finance"),
         height=260,
         key="diary_current_report",
-        help="This report uses current portfolio, cost basis, unrealized P/L, risk, and personal finance context.",
+        disabled=True,
     )
     current_report_pdf = None
     current_report_pdf_error = ""
@@ -14994,28 +15115,28 @@ def financial_diary_tab() -> None:
 
     report_cols = st.columns(4)
     with report_cols[0]:
-        if st.button("Use Report as Diary Note", width="stretch"):
+        if st.button(ui("Use Report as Diary Note"), width="stretch"):
             st.session_state.diary_note = st.session_state.get("diary_current_report", report_text)
-            st.session_state.diary_next_action = "Review portfolio P/L, personal finance readiness, and one safe next step."
+            st.session_state.diary_next_action = "포트폴리오 손익과 재무 상태를 검토합니다." if current_language() == "ko" else "Review portfolio P/L and personal finance readiness."
             st.rerun()
     with report_cols[1]:
-        if st.button("Save Current Situation Report", width="stretch"):
+        if st.button(ui("Save Current Situation Report"), width="stretch"):
             snapshot = build_financial_snapshot(
                 st.session_state.get("diary_current_report", report_text).strip(),
                 "Planning",
                 "Review portfolio P/L, personal finance readiness, and one safe next step.",
             )
             st.session_state.financial_diary.append(snapshot)
-            st.success("Current situation report saved to your Financial Diary.")
+            st.success(ui("Current situation report saved to your Financial Diary."))
     with report_cols[2]:
         st.button(
-            "Ask AI Coach",
+            ui("Ask AI Coach"),
             width="stretch",
             on_click=queue_current_report_ai_question,
         )
     with report_cols[3]:
         st.download_button(
-            "Download Report PDF",
+            ui("Download Report PDF"),
             data=current_report_pdf or b"",
             file_name=f"ly_scope_ver2_current_situation_{datetime.now().strftime('%Y%m%d')}.pdf",
             mime="application/pdf",
@@ -15026,33 +15147,34 @@ def financial_diary_tab() -> None:
         st.caption(f"PDF export is unavailable until reportlab is installed: {current_report_pdf_error}")
 
     mood = st.selectbox(
-        "Today's financial feeling",
+        ui("Today's financial feeling"),
         ["Calm", "Curious", "Cautious", "Confident", "Concerned", "Planning"],
         key="diary_mood",
+        format_func=ui_option_formatter(),
     )
     note = st.text_area(
-        "Diary note",
-        placeholder="Example: I reviewed my portfolio today and noticed that growth stocks still dominate my risk profile.",
+        ui("Diary note"),
+        placeholder="검토한 내용과 생각을 기록하세요." if current_language() == "ko" else "Record what you reviewed and what changed.",
         height=130,
         key="diary_note",
     )
     next_action = st.text_input(
-        "Next action",
-        placeholder="Example: Review cash reserve and reduce concentration risk next week.",
+        ui("Next action"),
+        placeholder="다음에 확인할 일을 적어 주세요." if current_language() == "ko" else "What will you review next?",
         key="diary_next_action",
     )
 
     save_col, download_col = st.columns([1, 2])
     with save_col:
-        if st.button("Save Financial Snapshot", width="stretch"):
+        if st.button(ui("Save Financial Snapshot"), width="stretch"):
             snapshot = build_financial_snapshot(note.strip(), mood, next_action.strip())
             st.session_state.financial_diary.append(snapshot)
-            st.success("Snapshot saved to your Financial Diary for this session.")
+            st.success(ui("Snapshot saved to your Financial Diary for this session."))
 
     diary_json = json.dumps(st.session_state.financial_diary, indent=2, ensure_ascii=False)
     with download_col:
         st.download_button(
-            "Download Diary JSON",
+            ui("Download Diary JSON"),
             data=diary_json,
             file_name=f"ly_scope_ver2_financial_diary_{datetime.now().strftime('%Y%m%d')}.json",
             mime="application/json",
@@ -15060,7 +15182,7 @@ def financial_diary_tab() -> None:
             disabled=not bool(st.session_state.financial_diary),
         )
 
-    uploaded = st.file_uploader("Restore diary JSON", type=["json"], key="diary_restore")
+    uploaded = st.file_uploader(ui("Restore diary JSON"), type=["json"], key="diary_restore")
     if uploaded is not None:
         try:
             if getattr(uploaded, "size", 0) and uploaded.size > MAX_DIARY_RESTORE_BYTES:
@@ -15072,15 +15194,15 @@ def financial_diary_tab() -> None:
                 return
             restored = json.loads(raw_bytes.decode("utf-8"))
             st.session_state.financial_diary = clean_restored_diary_entries(restored)
-            st.success("Diary restored for this session.")
+            st.success(ui("Diary restored for this session."))
         except Exception as exc:
             st.warning(f"Could not restore diary file: {exc}")
 
     render_decision_outcome_review()
 
-    st.subheader("Saved Entries")
+    st.subheader(ui("Saved Entries"))
     if not st.session_state.financial_diary:
-        st.info("No diary entries yet. Save a snapshot after reviewing your portfolio or personal finance status.")
+        st.info(ui("No diary entries yet. Save a snapshot after reviewing your portfolio or personal finance status."))
         return
 
     summary_rows = []
@@ -15107,8 +15229,7 @@ def financial_diary_tab() -> None:
                 else f"{float(personal.get('financial_health_score', 0)):.1f}/100",
             }
         )
-    render_mobile_saved_diary_cards(st.session_state.financial_diary)
-    st.dataframe(summary_rows, hide_index=True, width="stretch")
+    st.dataframe([{ui(key): ui(value) if isinstance(value, str) else value for key, value in row.items()} for row in summary_rows], hide_index=True, width="stretch")
 
     for idx, entry in reversed(list(enumerate(st.session_state.financial_diary, start=1))):
         with st.expander(f"Entry {idx}: {entry.get('time')} - {entry.get('mood')}", expanded=False):
@@ -15194,6 +15315,17 @@ def render_portfolio_charts() -> None:
     render_tradingview_chart(selected)
 
 
+def sync_holding_input(symbol: str) -> None:
+    holding = st.session_state.portfolio.get(symbol)
+    if holding is not None:
+        holding["shares"] = float(st.session_state.get(f"shares_{symbol}", holding["shares"]))
+        holding["purchase_price"] = float(st.session_state.get(f"purchase_price_{symbol}", holding["purchase_price"]))
+
+
+def sync_exchange_rate() -> None:
+    st.session_state.manual_usdkrw = float(st.session_state.fx_rate_input)
+
+
 def portfolio_tab() -> None:
     st.markdown(
         f"""
@@ -15226,10 +15358,14 @@ def portfolio_tab() -> None:
             ui("Manual USD/KRW rate"),
             min_value=1.0,
             step=1.0,
-            key="manual_usdkrw",
+            value=float(st.session_state.get("manual_usdkrw", 1350.0)),
+            key="fx_rate_input",
+            on_change=sync_exchange_rate,
         )
 
     usdkrw, fx_source, fx_date = effective_usdkrw()
+    if not st.session_state.use_live_fx and usdkrw < 100:
+        st.warning("USD/KRW 환율이 매우 낮습니다. 계산에 사용할 환율을 확인하세요." if current_language() == "ko" else "USD/KRW is unusually low. Check the exchange rate used for conversion.")
     if current_language() == "ko":
         fx_source_text = "수동 입력" if fx_source == "Manual fallback" else fx_source
         fx_date_text = "사용자 입력" if fx_date == "User input" else fx_date
@@ -15248,7 +15384,7 @@ def portfolio_tab() -> None:
         ["Share-based", "Equal-weighted"],
         horizontal=True,
         key="portfolio_weighting_mode",
-        format_func=ui,
+        format_func=ui_option_formatter(),
         help=(
             "Share-based uses shares x current price. Equal-weighted assigns the same analysis weight "
             "to each holding, which is useful for classroom portfolio analysis."
@@ -15337,6 +15473,8 @@ def portfolio_tab() -> None:
                 value=float(holding.get("shares") or 0),
                 step=1.0,
                 key=f"shares_{symbol}",
+                on_change=sync_holding_input,
+                args=(symbol,),
             )
         with input_cols[1]:
             purchase_step = 100.0 if currency == "KRW" else 1.0
@@ -15346,6 +15484,8 @@ def portfolio_tab() -> None:
                 value=float(holding.get("purchase_price") or 0),
                 step=purchase_step,
                 key=f"purchase_price_{symbol}",
+                on_change=sync_holding_input,
+                args=(symbol,),
                 help="Enter the average price you paid per share. Leave 0 if you do not want to calculate profit/loss yet.",
             )
         st.session_state.portfolio[symbol]["shares"] = shares
@@ -17098,7 +17238,6 @@ def render_goal_strategy_strip(active_key: str) -> None:
         short = config[f"short_{language}"]
         strategy = config[f"strategy_{language}"]
         color = config["color"]
-        target_href = escape(life_entry_href(), quote=True)
         target_text = "Change goal or strategy" if language == "en" else "목표/전략 다시 선택"
     else:
         label = "Choose a Goal" if language == "en" else "목표 선택"
@@ -17109,29 +17248,36 @@ def render_goal_strategy_strip(active_key: str) -> None:
             else "첫 화면에서 목표를 선택하면 재무, 포트폴리오, 소득, 부동산 분석의 우선순위가 달라집니다."
         )
         color = "#64748b"
-        target_href = escape(app_view_href("life"), quote=True)
         target_text = "Choose goal" if language == "en" else "목표 선택"
 
+    plan = st.session_state.get("goal_plan")
+    if plan:
+        label = plan["name"] or ("Financial goal" if language == "en" else "재무 목표")
+        short = f"{plan['deadline']} · {fmt_money(plan['target'], plan['currency'])}"
+        strategy = "Fixed-return projection, not a probability." if language == "en" else "입력 가정에 따른 전망이며 달성 확률이 아닙니다."
+        target_text = "Edit goal" if language == "en" else "목표 수정"
     detail_label = "Detail" if language == "en" else "상세"
     st.markdown(
         f"""
         <section class="goal-strategy-strip" style="--goal-color: {escape(color)};" aria-label="Selected goal strategy">
             <div class="goal-strategy-mark"></div>
             <div class="goal-strategy-main">
-                <a class="goal-strategy-return" href="{target_href}" target="_self" title="{escape(target_text, quote=True)}">
-                    <b>{escape(label)}</b>
-                </a>
+                <b>{escape(label)}</b>
                 <span>{escape(short)}</span>
             </div>
             <details class="goal-strategy-detail">
                 <summary>{escape(detail_label)}</summary>
                 <p>{escape(strategy)}</p>
-                <a href="{target_href}" target="_self">{escape(target_text)}</a>
             </details>
         </section>
         """,
         unsafe_allow_html=True,
     )
+
+
+    if active_key != "life":
+        st.button(target_text, key="goal_strip_change", icon=":material/flag:",
+                  on_click=set_active_nav_key, args=("life",))
 
 
 def render_finance_snapshot_ribbon(active_key: str) -> None:
@@ -17160,6 +17306,14 @@ def render_finance_snapshot_ribbon(active_key: str) -> None:
         )
         goal_tone = "watch"
         goal_level = 28.0
+
+    plan = st.session_state.get("goal_plan")
+    if plan:
+        goal_value = plan["name"] or ("Financial goal" if language == "en" else "재무 목표")
+        goal_sub = plan["deadline"]
+        goal_detail = fmt_money(plan["target"], plan["currency"])
+        goal_tone = "good" if plan["result"]["on_track"] else "watch"
+        goal_level = min(100.0, plan["current"] / plan["target"] * 100)
 
     if personal:
         emergency = float(personal.get("emergency_months") or 0)
@@ -17323,29 +17477,24 @@ def render_life_compact_panel() -> None:
         if language == "en"
         else "지금 우선적으로 준비할 재무 목표를 선택하세요."
     )
-    render_decision_capture_panel()
-    cards = []
-    for goal_key, config in NORA_GOAL_STRATEGIES.items():
-        cards.append(
-            f'<a class="life-goal-link" style="--goal-color: {escape(config["color"])};" '
-            f'href="{escape(goal_href(goal_key), quote=True)}" target="_self">'
-            f'<span>{visual_icon_html(goal_key, config["color"], "life-goal-icon")}</span><b>{escape(config[f"label_{language}"])}</b>'
-            '</a>'
-        )
-    st.markdown(
-        f"""
-        <div class="life-compact-panel">
-            <h1>{escape(compact_title)}</h1>
-            <p>
-                {escape(compact_copy)}
-            </p>
-            <div class="life-goal-board">
-                {"".join(cards)}
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.title(compact_title)
+    from goal_planning import render_goal_planner
+
+    render_goal_planner(language)
+    st.subheader("연결된 분석" if language == "ko" else "Related analysis")
+    icons = ["savings", "trending_up", "payments", "home"]
+    for column, (goal_key, config), icon in zip(st.columns(4), NORA_GOAL_STRATEGIES.items(), icons):
+        column.button(config[f"label_{language}"], key=f"goal_open_{goal_key}",
+                      icon=f":material/{icon}:", width="stretch",
+                      on_click=open_goal_workspace, args=(goal_key,))
+    with st.expander("의사결정 메모" if language == "ko" else "Decision notes"):
+        render_decision_capture_panel()
+
+
+def open_goal_workspace(goal_key: str) -> None:
+    st.session_state.nora_goal = goal_key
+    st.query_params["goal"] = goal_key
+    set_active_nav_key(NORA_GOAL_STRATEGIES[goal_key]["view"])
 
 
 def render_main_app() -> None:
@@ -17436,8 +17585,14 @@ def render_main_app() -> None:
 
 init_state()
 # Keep financial form values when Streamlit removes widgets on another screen.
+_persistent_input_keys = {
+    "manual_usdkrw", "use_live_fx", "portfolio_base_currency", "portfolio_weighting_mode",
+    "portfolio_quick_input_mode", "portfolio_quick_entry", "portfolio_stock_search_query",
+    "diary_note", "diary_mood", "diary_next_action", "decision_capture_text", "decision_capture_amount_text",
+    "goal_name", "goal_currency", "goal_target", "goal_current", "goal_monthly", "goal_return", "goal_drag", "goal_deadline",
+}
 for input_key in list(st.session_state):
-    if input_key.startswith(("pf_", "scenario_")):
+    if input_key.startswith(("pf_", "scenario_", "shares_", "purchase_price_", "portfolio_search_position_", "portfolio_search_purchase_price_")) or input_key in _persistent_input_keys:
         st.session_state[input_key] = st.session_state[input_key]
 render_workspace_theme()
 render_top_language_toggle()
