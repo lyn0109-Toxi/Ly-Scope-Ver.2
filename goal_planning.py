@@ -35,6 +35,62 @@ def project_goal(current: float, monthly: float, target: float, months: int,
             "path": path}
 
 
+def goal_cashflow_check(plan: dict, state) -> dict:
+    """Compare a goal with applied cash flow, never silently convert currencies."""
+    profile = state.get("last_personal_finance_profile")
+    currency = state.get("last_personal_finance_currency")
+    if not profile or not currency:
+        return {"status": "missing"}
+    if currency != state.get("pf_display_currency", currency) or any(
+        state.get(f"pf_{key}", value) != value for key, value in profile.items()
+    ):
+        return {"status": "pending"}
+    if currency != plan["currency"]:
+        return {"status": "currency_mismatch"}
+    surplus = profile["monthly_income"] - sum(profile[key] for key in (
+        "fixed_expenses", "variable_expenses", "monthly_debt_payment"))
+    available = max(0.0, surplus)
+    required = plan.get("result", {}).get("required_monthly", 0.0)
+    status = "shortfall" if plan["monthly"] > available + 0.005 else "covered"
+    if status == "covered" and required > available + 0.005:
+        status = "required_shortfall"
+    return {"status": status,
+            "surplus": surplus, "available": available,
+            "contribution_gap": max(0.0, plan["monthly"] - available),
+            "required_gap": max(0.0, required - available)}
+
+
+def goal_cashflow_message(plan: dict, state, language: str) -> tuple[str, str]:
+    check = goal_cashflow_check(plan, state)
+    ko = language == "ko"
+    status = check["status"]
+    messages = {
+        "missing": ("info", "개인 재무 계산을 적용하면 월 적립액과 잉여 현금을 비교할 수 있습니다." if ko else
+                    "Apply a Personal Finance calculation to compare contributions with monthly surplus."),
+        "pending": ("warning", "개인 재무 입력이 변경되었습니다. 계산을 다시 적용해야 적립 여력을 확인할 수 있습니다." if ko else
+                    "Personal Finance inputs changed. Apply the calculation again before checking contribution capacity."),
+        "currency_mismatch": ("info", "목표와 개인 재무의 통화가 달라 적립 여력을 직접 비교하지 않았습니다. 환율과 자금 출처를 별도로 확인하세요." if ko else
+                              "Goal and Personal Finance currencies differ. Contribution capacity was not compared; check FX and funding sources separately."),
+    }
+    if status in messages:
+        return messages[status]
+    symbol = "₩" if plan["currency"] == "KRW" else "$"
+    surplus = f"{'-' if check['surplus'] < 0 else ''}{symbol}{abs(check['surplus']):,.2f}"
+    gap = f"{symbol}{check['contribution_gap']:,.2f}"
+    if status == "shortfall":
+        return "warning", (
+            f"적립 재원 점검: 최근 개인 재무 계산의 월 잉여 현금은 {surplus}입니다. 계획한 월 적립액 중 {gap}의 재원이 부족합니다. 목표 전망에는 이 부족분이나 생활비 인출을 반영하지 않았습니다."
+            if ko else f"Funding check: applied monthly surplus is {surplus}. Planned contributions exceed available surplus by {gap}. The projection does not account for this funding gap or living-cost withdrawals.")
+    if status == "required_shortfall":
+        required_gap = f"{symbol}{check['required_gap']:,.2f}"
+        return "warning", (
+            f"목표 달성에 필요한 월 적립액은 최근 계산한 월 잉여 현금 {surplus}보다 {required_gap} 많습니다. 현재 적립액을 늘리는 것만으로 해결되는지, 기한이나 목표 금액도 조정해야 하는지 점검하세요."
+            if ko else f"Required monthly saving exceeds applied monthly surplus of {surplus} by {required_gap}. Review the funding source, deadline, or target amount.")
+    return "info", (
+        f"최근 개인 재무 계산의 월 잉여 현금 {surplus} 범위 안의 적립 계획입니다. 다른 목표와 자금이 중복 배정되지 않았는지는 별도로 확인하세요."
+        if ko else f"Planned contributions fit within applied monthly surplus of {surplus}. Check separately that the same funds are not allocated to other goals.")
+
+
 def render_goal_planner(language: str) -> None:
     import altair as alt
     import pandas as pd
@@ -101,10 +157,16 @@ def render_goal_planner(language: str) -> None:
     cols[0].metric(text("Projected amount", "목표 시점 예상 자금"), money(result["projected"]))
     cols[1].metric(text("Surplus / shortfall", "목표 대비 초과·부족액"), money(result["gap"]))
     cols[2].metric(text("Required monthly saving", "필요한 월 적립액"), money(result["required_monthly"]))
-    if result["on_track"]:
+    cashflow_check = goal_cashflow_check(plan, st.session_state)
+    if result["on_track"] and cashflow_check["status"] == "shortfall":
+        st.info(text("The numerical target is met, but contribution funding needs review.",
+                     "계산상 목표 금액에는 도달하지만, 월 적립액의 재원을 먼저 점검해야 합니다."))
+    elif result["on_track"]:
         st.success(text("On track under these assumptions.", "입력한 가정이 유지되면 목표에 도달할 전망입니다."))
     else:
         st.warning(text("Projected savings fall short of the target.", "현재 가정에서는 목표 금액에 미달할 전망입니다."))
+    severity, message = goal_cashflow_message(plan, st.session_state, language)
+    getattr(st, severity)(message.replace("$", r"\$"))
     frame = pd.DataFrame(result["path"])
     chart = alt.Chart(frame).transform_fold(["Projected savings", "Target"], as_=["Series", "Amount"])
     chart = chart.mark_line(strokeWidth=2).encode(
