@@ -275,8 +275,27 @@ html body .stApp button:focus-visible, html body .stApp a:focus-visible {
     outline: 2px solid #168477 !important;
     outline-offset: 3px;
 }
+html body .stApp .st-key-case_study_mode button {
+    background: #fff !important;
+    color: #42515d !important;
+    -webkit-text-fill-color: #42515d !important;
+    border: 1px solid #d9e2e6 !important;
+    min-height: 40px !important;
+    padding: 8px 14px !important;
+    box-shadow: none !important;
+}
+html body .stApp .st-key-case_study_mode button[kind="segmented_controlActive"] {
+    background: #e6f3f0 !important;
+    color: #126e65 !important;
+    -webkit-text-fill-color: #126e65 !important;
+    border-color: #90c4ba !important;
+}
 @media (max-width: 768px) {
-    html body .stApp .block-container { padding: 16px 16px 40px !important; }
+    html body .stApp header[data-testid="stHeader"] {
+        background: #f7f8fa !important;
+        border-bottom: 1px solid #e5e9ec !important;
+    }
+    html body .stApp .block-container { padding: 76px 16px 40px !important; }
     html body .stApp .brand-name { font-size: 24px !important; }
     html body .stApp .brand-mark { min-width: 0; }
     html body .stApp .hero-panel h1 { font-size: 24px !important; }
