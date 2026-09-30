@@ -1,0 +1,15 @@
+{
+  "notice": "All characters and amounts are fictional test fixtures, not user data or financial recommendations. Returns are test assumptions.",
+  "cases": [
+    {"id":"G01","name":"하린","age":25,"goal":"비상자금 확보","currency":"USD","target":10000,"current":4000,"monthly":500,"months":12,"annual_return":0,"annual_drag":0,"finance_currency":"USD","income":3200,"fixed":1700,"variable":700,"debt_payment":0,"check":"수익률 0%, 목표 정확히 도달"},
+    {"id":"G02","name":"민준","age":34,"goal":"첫 주택 계약금","currency":"USD","target":80000,"current":25000,"monthly":600,"months":60,"annual_return":6,"annual_drag":1,"finance_currency":"USD","income":6200,"fixed":2500,"variable":1300,"debt_payment":500,"check":"비용 차감 복리와 부족액"},
+    {"id":"G03","name":"서연","age":40,"goal":"은퇴 전 자산 마련","currency":"USD","target":1000000,"current":200000,"monthly":1200,"months":240,"annual_return":6,"annual_drag":0.5,"finance_currency":"USD","income":7500,"fixed":3000,"variable":1800,"debt_payment":700,"check":"20년 장기 복리; 은퇴 후 인출은 별도"},
+    {"id":"G04","name":"도윤","age":38,"goal":"자녀 대학 교육비","currency":"KRW","target":100000000,"current":15000000,"monthly":500000,"months":120,"annual_return":4.5,"annual_drag":0.5,"finance_currency":"KRW","income":5500000,"fixed":2500000,"variable":1300000,"debt_payment":700000,"check":"원화 큰 금액과 한국어 차트"},
+    {"id":"G05","name":"지아","age":29,"goal":"차량 구매 자금","currency":"USD","target":30000,"current":5000,"monthly":900,"months":24,"annual_return":3,"annual_drag":0.5,"finance_currency":"USD","income":4300,"fixed":1900,"variable":800,"debt_payment":600,"check":"단기 목표와 필요 적립액"},
+    {"id":"G06","name":"지훈","age":32,"goal":"대학원 유학 준비","currency":"USD","target":60000,"current":22000,"monthly":1800,"months":24,"annual_return":0,"annual_drag":0,"finance_currency":"USD","income":4800,"fixed":2300,"variable":1000,"debt_payment":700,"check":"계산상 달성하나 월 잉여 현금 부족"},
+    {"id":"G07","name":"나은","age":36,"goal":"창업 준비금","currency":"USD","target":50000,"current":15000,"monthly":1200,"months":36,"annual_return":5,"annual_drag":1,"finance_currency":"USD","income":3000,"fixed":2000,"variable":800,"debt_payment":500,"check":"현금흐름 적자 상태의 적립 계획"},
+    {"id":"G08","name":"현우","age":45,"goal":"휴직 생활비 준비","currency":"USD","target":40000,"current":50000,"monthly":1000,"months":12,"annual_return":0,"annual_drag":0,"finance_currency":"USD","income":0,"fixed":2200,"variable":800,"debt_payment":0,"check":"무소득과 인출 미반영 한계"},
+    {"id":"G09","name":"수빈","age":37,"goal":"해외 이주 준비금","currency":"KRW","target":70000000,"current":40000000,"monthly":1000000,"months":24,"annual_return":-5,"annual_drag":0.5,"finance_currency":"USD","income":7000,"fixed":3000,"variable":1500,"debt_payment":500,"check":"음수 수익률과 목표/소득 통화 불일치"},
+    {"id":"G10","name":"태오","age":30,"goal":"직무 자격증 취득","currency":"USD","target":5000,"current":7000,"monthly":0,"months":6,"annual_return":-2,"annual_drag":0.5,"finance_currency":"USD","income":3500,"fixed":1900,"variable":900,"debt_payment":0,"check":"기확보 목표와 추가 적립액 0"}
+  ]
+}

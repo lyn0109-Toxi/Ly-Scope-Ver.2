@@ -231,6 +231,7 @@ def store_personal_finance_calculation(profile: PersonalFinanceProfile) -> dict[
     result = calculate_personal_finance(profile)
     st.session_state["last_personal_finance_profile"] = profile.__dict__.copy()
     st.session_state["last_personal_finance_result"] = result
+    st.session_state["last_personal_finance_currency"] = st.session_state.get("pf_display_currency", "USD")
     st.session_state["last_personal_finance_signature"] = finance_profile_signature(profile)
     return result
 

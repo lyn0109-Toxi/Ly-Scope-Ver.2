@@ -7890,7 +7890,7 @@ GOAL_STRATEGY_SITUATION_PATH = APP_ASSET_DIR / "ly_visual_goal_strategy_situatio
 USE_HOMEPAGE_REFERENCE_IMAGE = True
 DEVELOPER_NAME = "Young Lee"
 DEVELOPER_EMAIL = "lyn0109@gmail.com"
-APP_BUILD_STAMP = "2026-09-29-goals-state-data-quality"
+APP_BUILD_STAMP = "2026-09-29-goal-case-studies"
 LIFE_ENTRY_VERSION = "life-homepage-2026-09-02-modern-visual-ui-v1"
 MAX_DIARY_RESTORE_BYTES = 250_000
 MAX_DIARY_RESTORE_ENTRIES = 50
@@ -13708,6 +13708,7 @@ def apply_advisor_client_to_finance(report: dict[str, Any]) -> None:
             "pf_study_months_remaining": profile.study_months_remaining,
             "last_personal_finance_profile": profile.__dict__,
             "last_personal_finance_result": report["result"],
+            "last_personal_finance_currency": client.currency,
         }
     )
 
@@ -14396,6 +14397,20 @@ def render_case_study_snapshot(report: dict[str, Any], language: str, advisor_la
 
 
 def render_advisor_reports_tab() -> None:
+    language = current_language()
+    mode = st.segmented_control(
+        "사례 분석" if language == "ko" else "Case studies",
+        ["goals", "profiles"],
+        format_func=lambda value: ({"goals": "재무 목표 검증", "profiles": "재무 프로필 사례"} if language == "ko" else
+                                   {"goals": "Goal validation", "profiles": "Financial profiles"})[value],
+        default="profiles" if query_param_value("client") else "goals",
+        key="case_study_mode",
+    )
+    if mode != "profiles":
+        from goal_case_studies import render_goal_case_studies
+        render_goal_case_studies(language)
+        return
+
     from advisor_report_engine import (
         all_clients_pdf_bytes,
         build_all_client_reports,
@@ -14745,6 +14760,8 @@ def build_current_situation_report_text() -> str:
                           f"- 예상 자금: {fmt_money(plan['result']['projected'], plan['currency'])}",
                           f"- 필요한 월 적립액: {fmt_money(plan['result']['required_monthly'], plan['currency'])}",
                           "- 고정수익률 가정의 추정치이며 달성 확률이나 수익 보장이 아닙니다."])
+            from goal_planning import goal_cashflow_message
+            lines.append("- " + goal_cashflow_message(plan, st.session_state, "ko")[1])
         else:
             lines.append("- 아직 계산한 목표가 없습니다.")
         lines.extend(["", "5. 의사결정 메모"])
@@ -14875,6 +14892,8 @@ def build_current_situation_report_text() -> str:
                       f"- Projected amount: {fmt_money(plan['result']['projected'], plan['currency'])}",
                       f"- Required monthly saving: {fmt_money(plan['result']['required_monthly'], plan['currency'])}",
                       "- Fixed-return estimate, not a probability or guarantee."])
+        from goal_planning import goal_cashflow_message
+        lines.append("- " + goal_cashflow_message(plan, st.session_state, "en")[1])
     missing = context.get("missing", [])
     lines.extend(["", "6. Missing Inputs"])
     if missing:
