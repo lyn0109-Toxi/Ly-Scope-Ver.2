@@ -95,8 +95,15 @@ def render_goal_case_studies(language):
         name = case_map[case_id]["name"] if ko else labels[0]
         return f"{case_id} · {name} · {labels[2] if ko else labels[1]}"
 
+    # A language-specific widget refreshes the displayed label without losing the case.
+    widget_key = f"validation_case_id_{language}"
+    st.session_state[widget_key] = st.session_state["validation_case_id"]
+
+    def select_case():
+        st.session_state["validation_case_id"] = st.session_state[widget_key]
+
     selected = st.selectbox(text("Select a case", "케이스 선택"), list(case_map),
-                            format_func=case_label, key="validation_case_id")
+                            format_func=case_label, key=widget_key, on_change=select_case)
     case = case_map[selected]
     result = calculate_case(case)
     labels = CASE_LABELS[selected]
